@@ -1,0 +1,189 @@
+<odoo>
+	<data>
+    <record id='airframe_custom_tree' model='ir.ui.view'>
+              <field name="name">aircraft.acquisition.tree.custom</field>
+              <field name="model">aircraft.acquisition</field>
+              <field name="arch" type="xml">
+                  <tree string="List Airframe">
+                    <field name='name'/>
+                    <field name='aircraft_name'/>
+                    <field name='aircraft_type_id'/> 
+                    <field name='date_manufacture'/>
+                    <field name='engine_type_id'/>
+                    <field name='propeller_type_id'/>
+<!--                     <field name='msn'/>
+                    <field name='esn1'/>
+                    <field name='rgb1'/>
+                    <field name='esn2'/>
+                    <field name='rgb2'/> -->
+                    <field name='ownership'/>
+                    <field name='delivery_date'/>
+                    <field name='lessor'/>
+                    <field name='start_lease'/>
+                    <field name='normal_termination'/>
+                  </tree>
+              </field>
+      </record>
+
+     <record id='airframe_custom_form' model='ir.ui.view'>
+          <field name="name">aircraft.acquisition.custom</field>
+          <field name="model">aircraft.acquisition</field>
+          <field name="arch" type="xml">
+        	<form string="Form Airframes">
+            	<sheet>
+	              <div class="oe_title">
+	                    <label for="name" string="Registration Number" />
+	                        <h1>
+	                            <field name="name" select="1"/>
+	                        </h1>
+	              </div>
+	            <group>
+	           	<group>
+	           	  <field name='aircraft_name'/>
+	              <field name='category'/>
+	              <field name='aircraft_type_id'/> 
+	           		<field name='date_manufacture'/>
+	           		<!-- <field name='propeller_type_id' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+	           	</group>
+	            <group>
+	              <field name='ownership'/>
+	              <field name='delivery_date' attrs="{'invisible':[('ownership', '!=', 'owner')]}"/>
+	              <field name='lessor' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+	              <field name='start_lease' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+	              <field name='normal_termination' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+	            </group>
+	            <group>
+	              <!-- <field name='rh_ldg'  attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+	              <!-- <field name='lh_ldg' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+	              <!-- <field name='n_ldg' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+	            </group>
+	            <group>
+	              <!-- <field name='propeller1' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+	              <!-- <field name='propeller2' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+	            </group>
+	           </group>
+	           <notebook tabpos="up" colspan="4">
+	             <page string='Engine #1'>
+	              <group>
+	                <group>
+	                <field name='engine_type_id'/>
+	              
+	                <field name='engine1_tsn' string='TSN'/>
+	                <field name='engine1_csn' string='CSN'/>
+	                <field name='engine1_tslsv' string='TSLSV OH'/>
+	                <field name='engine1_tslsv_hsi' string='TSLSV HSI'/>
+	                <field name='engine1_cslsv' string='CSLSV OH'/>
+	                <field name='engine1_cslsv_hsi' string='CSLSV HSI'/>
+	                <field name='engine1_lastoh' string='Last OH'/>
+	                <field name='engine1_hsi' string='Last HSI'/>
+	                </group>
+	              </group>
+	            </page>
+	            <page string='Engine #2'>
+	              <group>
+	              <group>
+	                <field name='engine2_type_id'/>
+	                <field name='engine2_tsn' string='TSN'/>
+	                <field name='engine2_csn' string='CSN'/>
+	                <field name='engine2_tslsv' string='TSLSV OH'/>
+	                <field name='engine2_tslsv_hsi' string='TSLSV HSI'/>
+	                <field name='engine2_cslsv' string='CSLSV OH'/>
+	                <field name='engine2_cslsv_hsi' string='CSLSV HSI'/>
+	                <field name='engine2_lastoh' string='Last OH'/>
+	                <field name='engine2_hsi' string='Last HSI'/>
+	                </group>
+	                </group>
+	            </page>
+	             <page string='Auxiliary #1'>
+	              <group>
+	                <group>
+	                <field name='engine_type_id' string='Auxiliary Name'/>
+	              
+	                <field name='engine1_tsn' string='TSN'/>
+	                <field name='engine1_csn' string='CSN'/>
+	                <field name='engine1_tslsv' string='TSLSV OH'/>
+	                <field name='engine1_tslsv_hsi' string='TSLSV HSI'/>
+	                <field name='engine1_cslsv' string='CSLSV OH'/>
+	                <field name='engine1_cslsv_hsi' string='CSLSV HSI'/>
+	                <field name='engine1_lastoh' string='Last OH'/>
+	                <field name='engine1_hsi' string='Last HSI'/>
+	                </group>
+	              </group>
+	            </page>
+	            <page string='Auxiliary #2'>
+	              <group>
+	              <group>
+	                <field name='engine2_type_id' string='Auxiliary Name'/>
+	                <field name='engine2_tsn' string='TSN'/>
+	                <field name='engine2_csn' string='CSN'/>
+	                <field name='engine2_tslsv' string='TSLSV OH'/>
+	                <field name='engine2_tslsv_hsi' string='TSLSV HSI'/>
+	                <field name='engine2_cslsv' string='CSLSV OH'/>
+	                <field name='engine2_cslsv_hsi' string='CSLSV HSI'/>
+	                <field name='engine2_lastoh' string='Last OH'/>
+	                <field name='engine2_hsi' string='Last HSI'/>
+	                </group>
+	                </group>
+	            </page>
+	        <!--    <page string='Propeller #1' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+	              <group>
+	                <group>
+	                <field name='propeller1_tsn' string='TSN'/>
+	                <field name='propeller1_tslsv' string='TSLSV'/> 
+	                <field name='propeller1_lastoh' string='Last OH'/>
+	                </group>
+	               </group>
+	            </page>
+	             <page string='Propeller #2' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+	                <group>
+	                <group>
+	                <field name='propeller2'/>
+	                <field name='propeller2_tsn' string='TSN'/>
+	                <field name='propeller2_tslsv' string='TSLSV'/>
+	                <field name='propeller2_lastoh' string='Last OH'/>
+	              </group>
+	                </group>
+	            </page>
+	            <page string='Documents Certificate'>
+	              <field name='document_ids'>
+	                <tree editable='button'>
+	                  <field name='document_id' string='Document Name'/>
+	                  <field name='file_data' widget='binary' file_name='file_name'/>
+	                  <field name='date_expired'/>
+	                </tree>
+	              </field>
+	            </page> -->
+	          </notebook>
+           	</sheet>
+          </form>
+          </field>
+      </record>
+
+    <record id="airframe_action_custom_tree" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="airframe_custom_tree"/>
+        <!-- <field name="act_window_id" ref="fleet_action"/> -->
+    </record>
+
+    <record id="airframe_action_custom" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="airframe_custom_form"/>
+        <!-- <field name="act_window_id" ref="fleet_action"/> -->
+    </record>
+    <record id="airframe_current_custom_tree" model="ir.actions.act_window.view">
+        <field eval="3" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="pelita_master_data.aircraft_acquisition_view_tree"/>
+        <field name="act_window_id" ref="pelita_master_data.aircraft_acquisition_action"/>
+    </record>
+
+    <record id="airframe_action_current" model="ir.actions.act_window.view">
+        <field eval="4" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="pelita_master_data.aircraft_acquisition_view_form"/>
+        <field name="act_window_id" ref="pelita_master_data.aircraft_acquisition_action"/>
+    </record>
+	</data>
+</odoo>

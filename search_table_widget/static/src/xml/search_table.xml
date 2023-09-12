@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="SearchTable">
+        <t t-if="widget.get('effective_readonly')">
+            <table t-att-id="'datatable'" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <t t-esc="'Name'" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="widget.comodels" t-as="comodel">
+                        <td class="">
+                            <t t-esc="comodel.name" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </t>
+        <t t-if="!widget.get('effective_readonly')">
+            <table t-att-id="'datatable'" class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <t t-esc="widget.comodels" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="widget.comodels" t-as="comodel">
+                        <td class="">
+                            <t t-esc="comodel.name" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </t>
+    </t>
+
+    <t t-name="DataTable">
+        <table t-att-id="'datatable'" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="" t-foreach="widget.theads" t-as="thead">
+                        <t t-esc="thead" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="widget.comodels" t-as="comodel">
+                    <td class="" t-foreach="widget.theads" t-as="thead">
+                        <t t-esc="comodel[thead]" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </t>
+    <img t-name="ListView.row.image" t-att-height="widget.height || 25" t-att-class="img" t-att-src="src" />
+</templates>

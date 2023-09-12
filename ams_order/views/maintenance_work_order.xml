@@ -1,0 +1,156 @@
+<odoo>
+  <data>
+    
+    <record id='mwork_order_ams_tree' model='ir.ui.view'>
+              <field name="name">ams.mwo.tree</field>
+              <field name="model">ams.mwo</field>
+              <field name="arch" type="xml">
+                  <tree string="Maintenance Work Order" default_order="create_date desc">
+                    <field name='name'/>
+                    <!-- <field name='mwo_no'/> -->
+                    <field name='ref'/>
+                    <field name='schedule'/>
+                    <field name='create_date'/>
+                    <field name='write_date'/>
+                  </tree>
+              </field>
+      </record>
+
+      <record model="ir.ui.view" id="mwork_order_ams_search_view">
+        <field name="name">ams.mwo.search</field>
+        <field name="model">ams.mwo</field>
+        <field name="arch" type="xml">
+            <search>
+                  <field name='name'/>
+                  <!-- <field name='mwo_no'/> -->
+                  <field name='ref'/>
+                  <field name='schedule'/>             
+            </search>
+        </field>
+      </record>
+
+     <record id='mwork_order_ams_form' model='ir.ui.view'>
+          <field name="name">ams.mwo.custom</field>
+          <field name="model">ams.mwo</field>
+          <field name="arch" type="xml">
+                <form string="Maintenance Work Order">
+                  <header>
+                    <field name="id" attrs="{'invisible':True}"/>
+                    <button name="confrim" attrs="{'invisible':[('states','!=','draft')]}" icon="fa-check" type="object" string="Confirm" groups="ams_order.group_wo_confrim" />
+                    <button name="next_stage" icon="fa-check" type="object" string="Progress" attrs="{'invisible':['|',('states','=','draft'),'|',('id','=',False),('status','!=','request')]}" />
+                    <button name="next_stage" icon="fa-check" type="object" string="Done" attrs="{'invisible':['|',('states','=','draft'),'|',('id','=',False),('status','!=','progress')]}" />
+                    <field name="states" widget="statusbar" statusbar_visible="draft,confrimed"/>
+                  </header>                  
+                  <group>
+                    <group>
+                      <field name="mwo_no"/>
+                      <field name="date" attrs="{'required':True}"/>
+                      <field name="mwo_type"/>
+                    </group>
+                    <group string="Maintenance planning at">
+                      <field name="start_date"/>
+                      <field name="end_date"/>
+                      <field name="is_unserviceable"/>
+                    </group>
+                    <group>
+                      <field name="location"/>
+                      <field name="ref" attrs="{'required':True}"/>
+                      <field name="schedule"/>
+                      <field name="upload_name" invisible="1"/>
+                      <field widget="binary" name="upload" filename="upload_name"/>                      
+                    </group>
+                  </group>
+                  <group>
+                  <group>
+                    <field name="status"/>
+                  </group>
+                  <group>
+                    <field name="ac"/>
+                  </group>
+                  <group>
+                    <field name="recorded" readonly="1" />
+                  </group>
+                  </group>
+                  <notebook>
+                    <page string="Description">
+                      <group col="4" string="Description Ketentuan">
+                        <field name="macam" colspan="4"/>
+                        <field name="syarat"/>
+                        <field name="waktu"/>
+                        <field name="harga"/>
+                        <field name="pembayaran"/>
+                        <field name="sangsi" string="Sanksi" colspan="4"/>
+                      </group>
+                    </page>
+                    <page string="PIHAK PERTAMA">
+                      <group string="PIHAK PERTAMA">
+                        <field name="nama_pihak"/>
+                        <field name="jabatan"/>
+                        <field name="perusahaan"/>
+                        <field name="alamat"/>
+                      </group>
+                    </page>
+                    <page string="PIHAK KEDUA">
+                      <group string="PIHAK KEDUA">
+                        <field name="nama_pihak2"/>
+                        <field name="jabatan2"/>
+                        <field name="perusahaan2"/>
+                        <field name="alamat2"/>
+                      </group>
+                    </page>
+                    <page string="Checklist">
+                      <group>
+                        <field name="checklist_id"/>
+                        <field name="todo_ids" attrs="{'invisible':[('todo_ids','=',[])]}"/>
+                        <field name="desc" attrs="{'invisible':[('desc','=',False)]}"/>
+                        <!-- <field name="file" attrs="{'invisible':[('checklist_id','=',False)]}"/> -->
+                        <field name="file_name" invisible="1"/>
+                        <field widget="binary" name="file" filename="file_name" attrs="{'invisible':[('checklist_id','=',False)]}"/>
+                      </group>
+                    </page>
+                  </notebook>
+                </form>                
+          </field>
+      </record>
+
+
+
+
+     <record id='mwork_order_ams_form_carapembayaran' model='ir.ui.view'>
+          <field name="name">cara.pembayaran.custom</field>
+          <field name="model">cara.pembayaran</field>
+          <field name="arch" type="xml">
+                <form string="Cara Pembayaran">
+                  <group>
+                    <field name="name"/>
+                  </group>
+                </form>                
+          </field>
+      </record>
+
+
+      <record model="ir.actions.act_window" id="mwork_order_ams_action">
+        <field name="res_model">ams.mwo</field>
+        <field name="name">Maintenance Work Order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click for Create New Maintenance Work Order
+              </p>
+          </field>
+      </record>   
+
+      <record id="partner_mwo_inherit_form" model ="ir.ui.view">
+          <field name="name">inherit.partner.form</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form" />
+          <field name="arch" type="xml">
+              <field name="website" position="before">
+                  <field name="company_code" attrs="{'invisible':[('company_type','!=','company')]}"/>
+              </field>
+          </field>
+      </record>
+
+  </data>
+</odoo>

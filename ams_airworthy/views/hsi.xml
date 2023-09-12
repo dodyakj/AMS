@@ -1,0 +1,40 @@
+<odoo>
+	<data>
+	    <record model="ir.ui.view" id="airworthy_hsi_form">
+	    	<field name="name">airworthy.hsi.form</field>
+	    	<field name="model">airworthy.hsi</field>
+	    	<field name="arch" type="xml">
+	    		<form string="Hot Section Inspection">
+	    			<sheet>
+	    				<group>
+	    					<field name="id" invisible="1"/>
+	    					<field name="engine_id" attrs="{'invisible':[('engine_id','=',False)]}"/>
+	    					<field name="date"/>
+							<field name="finish_date"/>
+							<field name="work_with" widget="radio"/>
+							<field name="wo_id" attrs="{'invisible':[('work_with','!=','wo')]}"/>
+							<field name="mwo_id" attrs="{'invisible':[('work_with','!=','mwo')]}"/>
+							<field name="part_ids">
+								<tree string="Part Replace" editable="bottom">
+									<field name="is_hsi"/>
+									<field name="part_id" attrs="{'invisible':True}"/>
+									<field name="product_id" attrs="{'invisible':True}"/>
+									<field name="part_name" attrs="{'readonly':True}"/>
+									<field name="old_serial_number" attrs="{'readonly':True}"/>
+									<field name="new_serial_number" attrs="{'readonly':[('is_hsi','=',False)]}" domain="[('product_id','=',product_id)]"/>
+									<field name="hours"/>
+									<field name="cycles"/>
+								</tree>
+							</field>
+	    				</group>
+					  <footer>
+			              <button string="Save" name="action_save" class="oe_link btn-primary" attrs="{'invisible':[('id','!=',False)]}"/>
+			              <button string="Cancel" class="oe_link btn-primary" special="cancel" attrs="{'invisible':[('id','!=',False)]}"/>
+			          </footer>
+	    			</sheet>
+	    		</form>
+	    	</field>
+	    </record>
+
+	</data>
+</odoo>

@@ -1,0 +1,470 @@
+<odoo>
+<data>    
+<template id="ams_document.table_bordered">
+    <link href="/ams_document/static/src/css/table.css" rel="stylesheet"/>
+</template>
+
+
+<template id="internal_layout">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call-assets="ams_document.table_bordered"/>
+    <t t-call="ams_document.external_layout_header" />
+    <t t-raw="0" />
+    <t t-call="ams_document.external_layout_footer" />
+</template>
+
+<template id="external_layout_header">
+    <div class="header">
+    </div>
+</template>
+
+<template id="external_layout_footer">
+        <div class="footer">
+            <div class="row">
+                <div class="col-xs-2 pull-left">
+                    <small>
+                        <span>Page</span>
+                        <span class="page" />
+                        of
+                        <span class="topage" />
+                    </small>
+                </div>
+            </div>
+        </div>    
+</template>
+
+
+
+    <template id="report_eo">
+            <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="data">
+                <t t-call="ams_document.internal_layout">
+                     <div class="page">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="5" rowspan="1">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                                        </div>
+                                        <div class="col-xs-9 text-right" style="margin-top:20px;">
+                                            <h1>ENGINEERING ORDER</h1>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><strong>E.O Number : </strong><span t-field="data.eo_number"/></td>
+                                <td colspan="2"><strong>Aircraft : </strong><span t-field="data.aircraft_id.aircraft_name"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5"><strong>E.O. Title : </strong><span t-field="data.eo_tittle"/></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td colspan="2"> <strong>Printed / Typed Name</strong></td>
+                                <td><strong>Signature</strong></td>
+                                <td><strong>Date</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Prepared by</strong></td>
+                                <td colspan="2"><span t-field="data.prepared_by"/></td>
+                                <td><t t-if="data.prepared_by">✓</t></td>
+                                <td><span t-field="data.date_prepared"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Checked by</strong></td>
+                                <td colspan="2"><span t-field="data.checked_by"/></td>
+                                <td><t t-if="data.checked_by">✓</t></td>
+                                <td><span t-field="data.date_checked"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Approved by</strong></td>
+                                <td colspan="2"><span t-field="data.approved_by"/></td>
+                                <td><t t-if="data.approved_by">✓</t></td>
+                                <td><span t-field="data.date_approved"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <strong>Major  :</strong> <div t-field="data.major"/>
+                                        </div>
+                                        <t t-if="compliance_sheet"></t>
+                                        <div class="col-xs-2 col-xs-offset-2 text-center">
+                                            <strong>Minor  :</strong> <div t-field="data.minor"/>
+                                        </div>
+                                            <strong>DGCA Approval  :</strong> <div t-field="data.dgca_approval"/>
+                                        <div class="col-xs-2 col-xs-offset-3 text-right">
+                                        </div>
+                                       <!--  <div class="col-md-4 text-left"></div>
+                                        <div class="col-md-4 text-center"></div>
+                                        <div class="col-md-4 text-right"></div> -->
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="row">
+                                        <div class="col-xs-2"><strong>Effectivity :</strong></div>
+                                        <div class="col-xs-2 col-xs-offset-3 text-center"><strong>Aircraft Serial Number :</strong> <div t-field="data.aircraft_sn"/></div>
+                                        <div class="col-xs-3 col-xs-offset-2 text-right"><strong>Reg.</strong> <div t-field="data.reg"/></div>
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" rowspan="1" style="height:100px">
+                                    <strong>Description : </strong><br/><span t-field="data.desc"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" rowspan="1" style="height:85px">
+                                    <strong>Reason :</strong> <br/><span t-field="data.reason"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="height:45px"><strong>Compliance :</strong> <br/><span t-field="data.dgca_approval"/></td>
+                                <td colspan="2" style="height:45px"><strong>Estimated Cost :</strong> <br/><span t-field="data.dgca_approval"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="height:45px"><strong>Drawing Required :</strong> <br/><span t-field="data.dgca_approval"/></td>
+                                <td colspan="2" style="height:45px"><strong>Estimated Man hours :</strong> <br/><span t-field="data.dgca_approval"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="height:55px"><strong>Weight &amp; Balance Affected :</strong></td>
+                                <td colspan="2" style="height:55px">
+                                    <strong>AD List Affected :</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" rowspan="4"><strong>Publication Affected :</strong></td>
+                                <td colspan="2">
+                                    <tr>
+                                        <td><strong>Qty</strong></td>
+                                        <td><strong>Distribution</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Chieft</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Chieft</td>
+                                    </tr>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" rowspan="1" style="height:45px"><strong>Parts Required :</strong> </td>
+                                <td rowspan="1" style="height:45px"></td>
+                                <td rowspan="1" style="height:45px"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" rowspan="2"><strong>Remark &amp; Reference :</strong> <span t-field="data.remark_ref"/></td>
+                                <td colspan="2">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <t t-if="data.compliance_sheet">                            
+                            <p style="page-break-after:always;">   </p>
+                               <div class="row">
+                                    <div class="col-xs-3 text-right">
+                                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 55px;"/>
+                                    </div>
+                                    <div class="col-xs-5 text-center">
+                                        <h3>
+                                        PT. PELITA AIR SERVICE <br/>
+                                        Engineering Departement <br/>
+                                        Techinical Service AD/ASB
+                                        </h3>
+                                        
+                                    </div>
+                                    <div class="col-xs-4 text-right" style="margin-top:20px;">
+                                        <h6>F0601.01.AUG.2000</h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <center>
+                                            <h1 style="text-decoration: underline">
+                                            COMPLETION SHEET
+                                            </h1>
+                                        </center>
+                                    </div>
+                                </div>
+                                <table class="table">
+                                    <tr>
+                                        <td style="width:40px;border-top:1px solid black" class="tbl">NUMBER</td>
+                                        <td style="width:10px;border-top:1px solid black" class="tb">:</td>
+                                        <td class="tb" style="border-top:1px solid black"> <t t-esc="data.eo_number"/></td>
+                                        <td style="width:40px;border-top:1px solid black" class="tbl">AIRCRAFT TYPE</td>
+                                        <td style="width:10px;border-top:1px solid black" class="tb">:</td>
+                                        <td class="tbr" style="border-top:1px solid black"><t t-esc="data.aircraft_id.aircraft_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40px;" class="tbl">DATE OF ISSUE</td>
+                                        <td style="width:10px" class="tb">:</td>
+                                        <td class="tb"><t t-esc="data.create_date"/></td>
+                                        <td style="width:40px;" class="tbl">AC/REG.</td>
+                                        <td style="width:10px" class="tb">:</td>
+                                        <td class="tbr"><t t-esc="data.reg"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40px;" class="tbl">SYSTEM</td>
+                                        <td style="width:10px" class="tb">:</td>
+                                        <td colspan="4" class="tbr"><t t-esc="data.ata_code"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40px;" class="tbl">SUBJECT</td>
+                                        <td style="width:10px" class="tb">:</td>
+                                        <td colspan="4" class="tbr"><t t-esc="data.eo_tittle"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40px;" class="tbl">REFERENCE</td>
+                                        <td style="width:10px" class="tb">:</td>
+                                        <td colspan="4" class="tbr"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="height:75px" class="tblr">
+                                            <strong>
+                                                ACCOMPLISMENT INSTRUCTIONS : 
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="height:95px" class="tblr">
+                                            <strong>
+                                                RESULT OF INSPECTION/MODIFICATION : 
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="height:75px" class="tblr">
+                                            <strong>
+                                                REMARKS :  
+                                            </strong>
+                                            <t t-esc="data.remark_ref"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" class="tblr">
+                                            THE MENTIONED ABOVED HAS BEEN CARRIED OUT IN ACCORDANCE WITH REQUIREMENT OF THE CIVIL AVIATION SAFETY REGULATION.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="tblr">DATE :</td>
+                                        <td colspan="2" class="tblr">A/C HRS :</td>
+                                        <td colspan="2" class="tblr">A/C LDGS :</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="tblr">
+                                            <strong>SIGN 1</strong><br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                            <br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                        </td>
+                                        <td colspan="2" class="tblr">
+                                            <strong>SIGN 2</strong><br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                            <br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                        </td>
+                                        <td colspan="2" class="tblr">
+                                            <strong>SIGN 3</strong><br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                            <br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </t>
+
+                     </div>
+                </t>
+            </t>
+        </t>
+    </template>
+  </data>
+  <data>
+
+        <record id="paperformat_engineering_order" model="report.paperformat">
+            <field name="name">Engineering Order Report</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="print_eo_pdf"
+                string="Engineering Order"
+                model="document.eo"
+                report_type="qweb-html"
+                file="ams_document.report_eo"
+                name="ams_document.report_eo"
+                paperformat="ams_document.paperformat_engineering_order"
+            />
+
+
+
+
+
+    <record model="ir.ui.view" id="document_eo_type_tree">
+      <field name="name">document.eo.tree</field>
+      <field name="model">document.eo</field>
+      <field name="arch" type="xml">
+        <tree>
+			<field name="eo_number"/>
+			<field name="eo_tittle"/>
+			<field name="aircraft_id"/>
+			<field name="prepared_by"/>
+			<field name="checked_by"/>
+			<field name="approved_by"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="document_eo_type_search_view">
+        <field name="name">document.eo.search</field>
+        <field name="model">document.eo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="eo_number"/>
+                <field name="eo_tittle"/>
+                <field name="aircraft_id"/>
+                <field name="prepared_by"/>
+                <field name="checked_by"/>
+                <field name="approved_by"/>             
+            </search>
+        </field>
+      </record>
+
+
+    <record model="ir.ui.view" id="document_eo_type_form">
+        <field name="name">document.eo.form</field>
+        <field name="model">document.eo</field>
+        <field name="arch" type="xml">
+            <form string="Engineering Order">
+                <field name="states" attrs="{'invisible':True}"/>
+                <header>
+                    <button string="Prepair" name="prepared_by_" type="object" attrs="{'invisible':[('states','!=','prepared_by')]}" />
+                    <button string="Check" name="checked_by_" type="object" attrs="{'invisible':[('states','!=','checked_by')]}" />
+                    <button string="Approve" name="approved_by_" type="object" attrs="{'invisible':[('states','!=','approved_by')]}" />
+                    <!-- <button string="Print" name="print_eo_pdf" type="object" attrs="{'invisible':[('states','!=','print')]}" /> -->
+                </header>
+                <sheet string="Engineering Order">
+                	<group col="4" string="Tittle Engineering Order">
+						<field name="eo_number"/>
+						<field name="eo_tittle"/>
+						<field name="aircraft_id"/>
+                	</group>
+                	<group col="4" string="Printed / Type Name">
+						<field name="prepared_by"/>
+						<field name="date_prepared"/>
+						<field name="checked_by"/>
+						<field name="date_checked"/>
+						<field name="approved_by"/>
+						<field name="date_approved"/>
+                	</group>
+                	<group col="6">
+						<field name="major"/>
+						<field name="minor"/>
+						<field name="dgca_approval"/>
+                	</group>
+                	<group col="6" string="Effectivity">
+						<field name="aircraft_sn"/>
+						<field name="reg"/>
+                	</group>
+                	<group col="2" string="Description">
+						<field name="desc"/>
+						<field name="reason"/>
+                	</group>
+                	<group col="4">
+						<field name="compliance"/>
+						<field name="estimated_cost"/>
+						<field name="drawing_req"/>
+						<field name="estimated_man"/>
+                	</group>
+                	<group col="4">
+						<field name="weight_balance" widget="radio" options="{'horizontal': true}"/>
+						<field name="ad_list" widget="radio" options="{'horizontal': true}"/>
+						<field name="arm" attrs="{'invisible':[('weight_balance','!=','yes')]}"/>
+						<field name="weight" attrs="{'invisible':[('weight_balance','!=','yes')]}"/>
+						<field name="accumulated_weight" attrs="{'invisible':[('weight_balance','!=','yes')]}"/>
+	            	</group>
+	            	<group col="2">
+						<field name="publication_aff"/>
+						<field name="part_req"/>
+						<field name="remark_ref"/>
+                        <field name="file_uploads" filename="filename"/>
+                        <field name="filename" invisible="1"/>
+	            	</group>
+                    Compliance Sheet 
+                    <field name="compliance_sheet"/>
+                    <group string="Compliance Sheet" attrs="{'invisible':[('compliance_sheet','!=', True)]}">
+                        <field name="ata_code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+	
+    <record model="ir.actions.act_window" id="document_eo_action">
+        <field name="name">Enginering Order</field>
+        <field name="res_model">document.eo</field>
+	    <field name="view_type">form</field>
+	  	<field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Enginering Order
+            </p>
+        </field>
+    </record>
+
+  </data>
+</odoo>

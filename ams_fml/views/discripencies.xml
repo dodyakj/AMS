@@ -1,0 +1,144 @@
+<odoo>
+	<data>
+
+	
+		<record model='ir.ui.view' id='ams_discripencies_tree'>
+			<field name='name'>ams.discripencies.tree</field>
+			<field name='model'>ams.discripencies</field>
+			<field name='arch' type='xml'>
+				<tree string='description' create="false" delete="0" colors="red:status!='done'">
+					<field name="fleet_id"/>
+					<field name="name"/>
+					<field name="root_cause"/>
+					<!-- <field name="action_take"/> -->
+					<field name="status"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ams_discripencies_search_view">
+        <field name="name">ams.discripencies.search</field>
+        <field name="model">ams.discripencies</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="fleet_id"/>
+				<field name="name"/>
+				<field name="root_cause"/>
+				<!-- <field name="action_take"/> -->
+				<field name="status"/>             
+            </search>
+        </field>
+      </record>
+
+
+		<record model="ir.ui.view" id="form_discripencies">
+		    <field name="name">ams.discripencies.form</field>
+		    <field name="model">ams.discripencies</field>
+		        <field name="arch" type="xml">
+		        	<form create="false" delete="0" duplicate="0" edit="0">
+		        		<sheet>
+		        			<div class="oe_button_box" name="button_box">
+			              <button name="do_corrective"
+			                  type="object"
+			                  class="oe_stat_button"
+			                  icon="fa-book"
+			                  help="show Document of this engine"
+			                  string="Document">
+			                  <!-- <field name="some_count" widget="statinfo" string="Document"/> -->
+			              </button>
+            			</div>
+		        			<group>
+		        				<field name="id" attrs="{'invisible':True}"/>
+		        				<field name="fml_id" attrs="{'invisible':[('id','=',False)]}"/>
+										<field name="fleet_id"/>
+		        				<field name="name"/>
+		        				<field name="action_take"/>
+		        				<field name="status"/>
+		        				<field name="component"/>
+		        			</group>
+		        		</sheet>
+		        	</form>
+		        </field>
+		</record>
+
+		<record id="discripencies_action" model="ir.actions.act_window">
+			<field name="name">Discrepancies Log</field>
+			<field name="res_model">ams.discripencies</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+	
+
+
+		<record model="ir.ui.view" id="ams_fml_log_form_inheritdis">
+		    <field name="name">ams_fml.log.form.inheritdis</field>
+		    <field name="model">ams_fml.log</field>
+		    <field name="inherit_id" ref="ams_fml_log_forms" /> 
+	        <field name="arch" type="xml">
+                <xpath  expr="//form/notebook/page[3]" position="replace">
+                	<page string="Discrepancies">
+	                	<field name="discripencies" string="Discrepancies">
+	                		<tree>
+				        			<field name="name" string="Discrepancies"/>
+				        			<field name="action_take"/>
+				        			<field name="status"/>
+				        			<field name="component"/>
+	                		</tree>
+	                	</field>
+                	</page>
+                </xpath>   
+	        </field>
+		</record>
+
+		<record id="corrective_action_action" model="ir.actions.act_window">
+			<field name="name">Corrective Action</field>
+			<field name="res_model">ams.corrective_action</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record model='ir.ui.view' id='ams_corrective_action_form'>
+			<field name="name">ams.corrective_action.form</field>
+		    <field name="model">ams.corrective_action</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<!-- ('engine_id','=',context.get('engine_id')),('engine_id','!=',False) -->
+							<field name="discripencies" attrs="{'readonly':[('discripencies','=',False)]}"/>
+							<field name="action"/>
+							<field name="instruction_type" widget='radio' options="{'horizontal':True}" />							
+							<field name="wo_id" attrs="{'invisible':[('instruction_type','=','mwo')]}" />
+							<field name="mwo_id" attrs="{'invisible':[('instruction_type','=','wo')]}" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model='ir.ui.view' id='ams_corrective_action_tree'>
+			<field name='name'>ams.corrective_action.tree</field>
+			<field name='model'>ams.corrective_action</field>
+			<field name='arch' type='xml'>
+				<tree string='Corrective Action'>
+					<field name="discripencies"/>
+					<field name="action"/>
+					<field name="wo_id"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="ams_corrective_search_view">
+        <field name="name">ams.corrective_action.search</field>
+        <field name="model">ams.corrective_action</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="discripencies"/>
+								<field name="action"/>
+								<field name="wo_id"/>            
+            </search>
+        </field>
+      </record>
+
+	</data>
+</odoo>

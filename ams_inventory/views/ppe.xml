@@ -1,0 +1,207 @@
+<odoo>
+  <data>
+
+    <record model='ir.ui.view' id='ppe_master_tree'>
+      <field name='name'>ppe.master.tree</field>
+      <field name='model'>ppe.master</field>
+      <field name='arch' type='xml'>
+        <tree string='PPE'>
+          <field name="date"/>
+          <field name="stocked_id"/>
+          <field name="location_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ppe_master_search_view">
+        <field name="name">ppe.master.search</field>
+        <field name="model">ppe.master</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="date"/>
+              <field name="stocked_id"/>
+              <field name="location_id"/>             
+            </search>
+        </field>
+    </record>
+
+    <record model='ir.ui.view' id='ppe_stock_tree'>
+      <field name='name'>ppe.stock.tree</field>
+      <field name='model'>ppe.stock</field>
+      <field name='arch' type='xml'>
+        <tree string='PPE Stock' create="false" delete="false">
+          <field name="name"/>
+          <field name="amount"/>
+          <!-- <field name="date"/> -->
+          <!-- <field name="stocked_id"/> -->
+          <!-- <field name="location_id"/> -->
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="pppe_stock_search_view">
+        <field name="name">ppe.stock.search</field>
+        <field name="model">ppe.stock</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="name"/>
+              <field name="amount"/>             
+            </search>
+        </field>
+    </record>
+    
+    <record model='ir.ui.view' id='ppe_usage_tree'>
+      <field name='name'>ppe.usage.tree</field>
+      <field name='model'>ppe.usage</field>
+      <field name='arch' type='xml'>
+        <tree string='PPE Usage'>
+          <field name="date"/>
+          <field name="employee_id"/>
+          <field name="location_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ppe_usage_search_view">
+        <field name="name">ppe.usage.search</field>
+        <field name="model">ppe.usage</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="date"/>
+              <field name="employee_id"/>
+              <field name="location_id"/>             
+            </search>
+        </field>
+    </record>
+
+    <record id='ppe_master_form' model='ir.ui.view'>
+      <field name="name">ppe.master.custom</field>
+      <field name="model">ppe.master</field>
+      <field name="arch" type="xml">
+      <form string="PPE">
+        <group>
+          <field name="date"/>
+          <field name="stocked_id"/>
+          <field name="location_id"/>
+          <field name="ppe_id" string="PPE">
+            <tree string="PPE" editable="bottom">
+              <field name="name"/>
+              <field name="amount"/>
+              <!-- <field name="location_id" attrs="{'invisible':True}"/> -->
+              <!-- <field name="stocked_id"  attrs="{'invisible':True}"/> -->
+            </tree>
+          </field>
+        </group>
+      </form>                
+      </field>
+    </record>
+
+    <record id='ppe_stock_form' model='ir.ui.view'>
+      <field name="name">ppe.stock.custom</field>
+      <field name="model">ppe.stock</field>
+      <field name="arch" type="xml">
+      <form string="PPE Stock" create="0" edit="0">
+        <group>
+          <field name="name"/>
+          <field name="amount"/>
+          <field name="stocked_id"/>
+          <field name="location_id"/>
+        </group>
+      </form>                
+      </field>
+    </record>
+
+    <record id='ppe_usage_form' model='ir.ui.view'>
+      <field name="name">ppe.usage.custom</field>
+      <field name="model">ppe.usage</field>
+      <field name="arch" type="xml">
+      <form string="PPE Stock">
+        <group>
+          <field name="date"/>
+          <field name="employee_id"/>
+          <field name="location_id"/>
+          <field name="ppe_id" string="PPE">
+            <tree editable="bottom">
+              <field name="name"/>
+              <field name="amount"/>
+              <!-- <field name="location_id"  attrs="{'invisible':True}"/>
+              <field name="stocked_id"  attrs="{'invisible':True}"/> -->
+            </tree>
+          </field>
+        </group>
+      </form>                
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ppe_master_inherit_form">
+      <field name="name">product_ppe_view_inherit.form</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="ams_base.product_normal_form_views" />
+      <field name="arch" type="xml">
+                <xpath expr="//div[@name='options']" position="inside">
+                  <div>
+                      <field name="is_ppe"/>
+                      <label for="is_ppe"/>
+                  </div>
+                </xpath>
+        
+      </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="ppe_master_action">
+      <field name="name">PPE</field>
+      <field name="res_model">ppe.master</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        Click for Create New PPE
+        </p>
+      </field>
+    </record> 
+
+    <record model="ir.actions.act_window" id="ppe_master_product_action">
+      <field name="name">Master PPE</field>
+      <field name="res_model">product.product</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">
+        [('is_ppe', '!=', False)]
+      </field>      
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        Click for Create New Master PPE
+        </p>
+      </field>
+    </record> 
+
+    <record model="ir.actions.act_window" id="ppe_stock_action">
+      <field name="name">PPE Stock</field>
+      <field name="res_model">ppe.stock</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">
+        [('m_ppe', '!=', False)]
+      </field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        Click for Create New PPE Stock
+        </p>
+      </field>
+    </record> 
+
+    <record model="ir.actions.act_window" id="ppe_usage_action">
+      <field name="name">PPE Usage</field>
+      <field name="res_model">ppe.usage</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        Click for Create New PPE Usage
+        </p>
+      </field>
+    </record> 
+
+  </data>
+</odoo>

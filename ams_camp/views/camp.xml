@@ -1,0 +1,61 @@
+<odoo>
+  <data>
+    
+    <record model='ir.ui.view' id='ams_camp_tree'>
+      <field name='name'>ams.camp.tree</field>
+      <field name='model'>ams.camp</field>
+      <field name='arch' type='xml'>
+        <tree string='Maintenance Program'>
+          <field name="aircraft_model_id"/>
+          <field name="date_issued"/>
+          <field name="number"/>
+          <!-- <field name="file"/> -->
+          <field name="file_name" invisible="1"/>
+          <field widget="document" name="file" filename="file_name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ams_camp_search_view">
+        <field name="name">ams.camp.search</field>
+        <field name="model">ams.camp</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="aircraft_model_id"/>
+              <field name="date_issued"/>
+              <field name="number"/>
+              <!-- <field name="file"/> -->
+              <field name="file_name" invisible="1"/>
+              <field widget="document" name="file" filename="file_name"/>             
+            </search>
+        </field>
+      </record>
+
+    <record model="ir.ui.view" id="ams_camp_form">
+      <field name="name">ams.camp.form</field>
+      <field name="model">ams.camp</field>
+      <field name="arch" type="xml">
+        <form string="Maintenance Program">
+          <sheet>
+            <group>
+              <field name="aircraft_model_id"/>
+              <field name="date_issued"/>
+              <field name="number"/>
+              <!-- <field name="file"/> -->
+              <field name="file_name" invisible="1"/>
+              <field widget="document" name="file" filename="file_name"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="camp_action" model="ir.actions.act_window">
+      <field name="name">Maintenance Program</field>
+      <field name="res_model">ams.camp</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+  </data>
+</odoo>

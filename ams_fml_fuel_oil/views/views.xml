@@ -1,0 +1,83 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="ams_fml_log_form_inherit_fuel_oil">
+      <field name="name">ams_fml.log.form.inherit.fuel.oil</field>
+      <field name="model">ams_fml.log</field>
+      <field name="inherit_id" ref="ams_fml.ams_fml_log_forms" /> 
+      <field name="arch" type="xml">
+        <xpath expr="//form/notebook/page[2]/notebook" position="inside">
+          <page string="Fuel &amp; Oil">
+            <group>
+              <group string="Fuel" col="1">
+                <field name="fuel_lines_fw" nolabel="1" attrs="{'invisible':[('ac_type','!=','fixedwing')]}">
+                  <tree editable="bottom">
+                    <field name="uplift" />
+                    <field name="uplift_uom" domain="[('id','in', [%(product.product_uom_gal)d,%(product.product_uom_litre)d])]" options="{'no_create': True,'no_quick_create ': True,'no_create_edit  ': True,'no_open': True}"/>
+                    <field name="total_fw" />
+                    <field name="total_fw_uom" domain="[('id','in', [%(product.product_uom_kgm)d,%(product.product_uom_lb)d])]" options="{'no_create': True,'no_quick_create ': True,'no_create_edit  ': True,'no_open': True}"/>
+                    <field name="cons" />
+                    <field name="cons_uom" domain="[('id','in', [%(product.product_uom_gal)d,%(product.product_uom_litre)d])]" options="{'no_create': True,'no_quick_create ': True,'no_create_edit  ': True,'no_open': True}"/>
+                    <field name="rem" />
+                    <field name="rem_uom" domain="[('id','in', [%(product.product_uom_gal)d,%(product.product_uom_litre)d])]" options="{'no_create': True,'no_quick_create ': True,'no_create_edit  ': True,'no_open': True}"/>
+                  </tree>
+                </field>
+                <field name="fuel_lines_rw" nolabel="1" attrs="{'invisible':[('ac_type','=','fixedwing')]}">
+                  <tree editable="bottom">
+                    <field name="added" />
+                    <field name="added_uom" domain="[('id','in', [%(product.product_uom_gal)d,%(product.product_uom_litre)d])]" options="{'no_create': True,'no_quick_create ': True,'no_create_edit  ': True,'no_open': True}" />
+                    <field name="total_rw" />
+                    <field name="total_rw_uom" domain="[('id','in', [%(product.product_uom_kgm)d,%(product.product_uom_lb)d])]" options="{'no_create': True,'no_quick_create ': True,'no_create_edit  ': True,'no_open': True}"/>
+                  </tree>
+                </field>
+              </group>
+            </group>
+            <group>
+              <group string="Oil">
+                <notebook>
+                  <page string="Engine#1" attrs="{'invisible':[('engine1_id','=',False)]}">
+                    <field name="oil_lines_engine_1" nolabel="1" domain="[('engine_number','=','engine_1')]" context="{'engine_number': 'engine_1'}">
+                      <tree editable="bottom">
+                        <field name="engine_number" invisible="1" />
+                        <field name="added" />
+                        <field name="added_uom" domain="[('id','in', [%(product.product_uom_tin)d,%(product.product_uom_litre)d])]" options="{'no_create': True,'no_quick_create ': True,'no_create_edit  ': True,'no_open': True}" />
+                      </tree>
+                    </field>
+                  </page>
+                  <page string="Engine#2" attrs="{'invisible':[('engine2_id','=',False)]}">
+                    <field name="oil_lines_engine_2" nolabel="1" domain="[('engine_number','=','engine_2')]" context="{'engine_number': 'engine_2'}">
+                      <tree editable="bottom">
+                        <field name="engine_number" invisible="1" />
+                        <field name="added" />
+                        <field name="added_uom" domain="[('id','in', [%(product.product_uom_tin)d,%(product.product_uom_litre)d])]" options="{'no_create': True,'no_quick_create ': True,'no_create_edit  ': True,'no_open': True}"/>
+                      </tree>
+                    </field>
+                  </page>
+                  <page string="Engine#3" attrs="{'invisible':[('engine3_id','=',False)]}">
+                    <field name="oil_lines_engine_3" nolabel="1" domain="[('engine_number','=','engine_3')]" context="{'engine_number': 'engine_3'}">
+                      <tree editable="bottom">
+                        <field name="engine_number" invisible="1" />
+                        <field name="added" />
+                        <field name="added_uom" domain="[('id','in', [%(product.product_uom_tin)d,%(product.product_uom_litre)d])]" options="{'no_create': True,'no_quick_create ': True,'no_create_edit  ': True,'no_open': True}" />
+                      </tree>
+                    </field>
+                  </page>
+                  <page string="Engine#4" attrs="{'invisible':[('engine4_id','=',False)]}">
+                    <field name="oil_lines_engine_4" nolabel="1" domain="[('engine_number','=','engine_4')]" context="{'engine_number': 'engine_4'}">
+                      <tree editable="bottom">
+                        <field name="engine_number" invisible="1" />
+                        <field name="added" />
+                        <field name="added_uom"  domain="[('id','in', [%(product.product_uom_tin)d,%(product.product_uom_litre)d])]" options="{'no_create': True,'no_quick_create ': True,'no_create_edit  ': True,'no_open': True}"/>
+                      </tree>
+                    </field>
+                  </page>
+                </notebook>
+              </group>
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

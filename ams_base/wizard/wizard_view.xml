@@ -1,0 +1,27 @@
+<odoo>
+<data>
+<!-- Membuat form wizard -->
+
+	<record model="ir.ui.view" id="engineconfirm_wizard_form_view">
+		<field name="name">engine.confirm.form</field>
+		<field name="model">engine.confirm</field>
+		<field name="arch" type="xml">
+		<form string="Kirim Tagihan">
+                <group>
+			
+                	<field name="reason"/>
+                </group>
+			<footer>
+			<div>
+				<button name="kirim" type="object" string="OK" class="oe_highlight"/>
+				or
+				<button special="cancel" string="Cancel"/>
+			</div>
+			</footer>
+		</form>
+		</field>
+	</record>
+
+    
+</data>
+</odoo>

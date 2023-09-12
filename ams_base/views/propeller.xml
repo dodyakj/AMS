@@ -1,0 +1,263 @@
+<odoo>
+  <data>
+    <record id='propeller_customs_tree' model='ir.ui.view'>
+              <field name="name">propeller_type.tree</field>
+              <field name="model">propeller.type</field>
+              <field name="arch" type="xml">
+                 <tree string="Form propeller Spare">
+                     <field name='name'/>
+                     <field name="serial_number"/>
+                     <field name="create_date"/>
+                     <field name="write_date"/>
+                     <!-- <field name="total_hours"/> -->
+                     <!-- <field name="total_cycles" string="Total Cycles"/> -->
+                     <field name="propeller_tsn"/>
+                     <!-- <field name="propeller_csn"/> -->
+                     <!-- <field name='acquisition_id'/> -->
+                     <field name='description'/>
+                     <!-- <field name='date_pemasangan'/> -->
+                     <!-- <field name='date_penurunan'/> -->
+                </tree>
+              </field>
+      </record>
+
+      <record model="ir.ui.view" id="propeller_customs_search_view">
+        <field name="name">propeller.type.search</field>
+        <field name="model">propeller.type</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name='name'/>
+              <field name="serial_number"/>
+              <field name="total_hours"/>
+              <!-- <field name="total_cycles"/> -->
+              <!-- <field name="propeller_tsn"/> -->
+              <!-- <field name="propeller_csn"/>              -->
+            </search>
+        </field>
+      </record>
+
+     <record id='propeller_custom_form' model='ir.ui.view'>
+          <field name="name">propeller_type.form</field>
+          <field name="model">propeller.type</field>
+          <field name="arch" type="xml">
+          <form string="Form propeller Spare">
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+
+                       <div class="row">
+                          <div class="col-xs-12">
+                            <button name="toggle_active" type="action" class="oe_stat_button" icon="fa-archive">
+                                    <field name="aircraft_status" widget="boolean_button" options="{'terminology':{'string_true': 'Serviceable','hover_true': 'Serviceable','string_false': 'UnServiceable','hover_false': 'UnServiceable'}}"/>
+                                </button>
+                            <button name="do_document_check"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-book"
+                                help="show Document of this Propeller"
+                                string="Document">
+                                <!-- <field name="some_count" widget="statinfo" string="Document"/> -->
+                            </button>
+                          </div>
+                      </div>
+                        <!-- <button name="return_action_to_open"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-tasks"
+                            help="show the contract for this vehicle">
+                            <field name="some_count" widget="statinfo" string="Log"/>
+                        </button> -->
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <button name="do_inspection"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-user"
+                                help="do an aircraft inspection"
+                                string="Inspection"> 
+                                <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+                            </button>
+                            <button name="do_overhaul"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-plane"
+                                help="show the contract for this vehicle"
+                                string="Overhaul">
+                                <!-- <field name="some_count" widget="statinfo" string="Overhaul"/> -->
+                            </button>
+                            <button name="restore"
+                                type="object"
+                                class="oe_inline oe_stat_button"
+                                icon="fa-magic"
+                                help="Undo Delete"
+                                attrs="{'invisible':[('is_deleted', '=', False)]}"
+                                string="Restore"> 
+                            </button>
+                          </div>  
+                        </div>
+                        <!-- <button name="return_action_to_open"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-fire"
+                            help="show the contract for this vehicle">
+                            <field name="some_count" widget="statinfo" string="HSI"/>
+                        </button> -->
+                      </div>
+            <group>
+              <group>
+                   <field name="is_deleted" attrs="{'invisible':True}" />
+                   <field name='name'/>
+                   <field name="serial_number" string="S/N"/>
+                   <field name="propeller_model"/>
+                   <!-- <field name="serial_number"/> -->
+                   <field name="propeller_lastoh" invisible="1"/>
+                   <!-- <field name='acquisition_id'/> -->
+                   <!-- <field name='description'/> -->
+                   <!-- <field name='date_pemasangan'/> -->
+                   <!-- <field name='date_penurunan'/> -->
+              </group>
+              <group>
+                <field name="total_hours" invisible="1"/>
+                <field name="total_cycles" invisible="1"/>
+                <field name="propeller_tsn"/>
+                <field name="propeller_csn" invisible="1"/>
+                <field name="propeller_tso" invisible="1"/>
+                <field name="propeller_cso" invisible="1"/>
+                <field name="bel_view" attrs="{'invisible':True}"/>
+                <!-- <field name="special_ratio_counting"/> -->
+              </group>
+            </group>
+            <notebook>
+             <page string="Components">
+                <field name="component_ids" mode="tree" widget="datatable">
+                    <tree colors="red:no_component==True;">
+                        <field name="no_component" invisible="1"/>
+                        <field name="part_name"/>
+                        <field name="part_number"/>
+                        <field name="serial_number"/>
+                        <field name="date_installed"/>
+                        <field name="ata_code"/>
+                        <field name="item"/>
+                    </tree>
+                </field>
+              </page>
+              <page string="Inspection">
+                <field name="inspection_ids" mode="tree">
+                    <tree>
+                        <field name="inspection_type"/>
+                        <field name="desc"/>
+                        <field name="ata_code"/>
+                    </tree>
+                </field>
+              </page>
+              <page string="History">
+                <field name="history_line" readonly="1">
+                  <tree>
+                    <field name="fleet_id"/>
+                    <!-- <field name="ac_hours"/>
+                    <field name="ac_cycles"/>
+                    <field name="hours"/>
+                    <field name="cycles"/> -->
+                    <field name="type"/>
+                    <field name="reason"/>
+                  </tree>
+                </field>
+              </page>
+              <page string="Propeller Detail" attrs="{'invisible':[('bel_view', '!=', False)]}">
+                  <notebook widget="leftigi">
+                    <page string='Documents Certificate'>
+                      <field name='document_ids'>
+                        <tree editable='button'>
+                          <field name='document_id' string='Document Name' required="1"/>
+                          <field name='file_data' widget='binary' file_name='file_name' required="1"/>
+                          <field name='date_expired' required="1"/>
+                        </tree>
+                      </field>
+                    </page>
+                  </notebook>
+                </page>
+            </notebook>
+          </sheet>
+          </form>
+          </field>
+      </record>
+
+      <record model="ir.actions.act_window" id="propeller_actions_custom">
+        <field name="name">Propeller</field>
+        <field name="res_model">propeller.type</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'manual_edit':True}</field>
+      </record>
+
+      <record id="propeller_custom_trees" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="propeller_customs_tree"/>
+        <field name="act_window_id" ref="propeller_actions_custom"/>
+        <field name="context">{'manual_edit':True}</field>
+    </record>
+
+    <record id="propeller_custom_forms" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="propeller_custom_form"/>
+        <field name="act_window_id" ref="propeller_actions_custom"/>
+        <field name="context">{'manual_edit':True}</field>
+    </record>
+
+    <!-- propeller_custom_form -->
+    <record model="ir.ui.view" id="propeller_custom_form_unreadonly">
+      <field name="name">propeller.custom.form.unreadonly.form</field>
+      <field name="model">propeller.type</field>
+      <field name="inherit_id" ref="propeller_custom_form"/>
+      <field name="groups_id" eval="[(6, 0, [ref('ams_security.group_write_hours_cycles') ])]"/>
+      <field name="arch" type="xml">
+        <field name="total_hours" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="total_cycles" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="propeller_tsn" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="propeller_csn" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="propeller_tso" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="propeller_cso" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+      </field>
+    </record>
+
+    <!-- propeller_custom_form -->
+    <record model="ir.ui.view" id="propeller_custom_form_readonly">
+      <field name="name">propeller.custom.form.readonly.form</field>
+      <field name="model">propeller.type</field>
+      <field name="inherit_id" ref="propeller_custom_form"/>
+      <field name="groups_id" eval="[(6, 0, [ref('base.group_user') ])]"/>
+      <field name="arch" type="xml">
+        <field name="total_hours" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="total_cycles" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="propeller_tsn" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="propeller_csn" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="propeller_tso" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="propeller_cso" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

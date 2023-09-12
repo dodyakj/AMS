@@ -1,0 +1,11 @@
+.gi_custom_label{
+	font-weight: bold!important;
+	margin-top: 3px!important;
+    margin-bottom: -8px!important;
+}
+.gi_custom_input{
+	margin-left: 10px!important;
+    width: 82%!important;
+    margin-top: 3px!important;
+    margin-bottom: -8px!important;
+}

@@ -1,0 +1,34 @@
+<!-- <odoo> -->
+    <!-- <data> -->
+        <!-- <template id="assets_backend" name="my custom theme" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/pelita_template/static/css/style.css"/>
+                <link rel="stylesheet" href="/pelita_template/static/css/font.css"/>
+            </xpath>
+        </template> -->
+       	<!-- <template id="login" inherit_id="web.login" name="Login Inherit">
+	   		<xpath expr="//label[@for='db']" position="replace" />
+			<xpath expr="//label[@for='login']" position="replace" />
+			<xpath expr="//label[@for='password']" position="replace" />
+			
+			<xpath expr="//input[@name='login']" position="attributes">
+				<attribute name="placeholder">Email or Username</attribute>
+				<attribute name="autocomplete">off</attribute>
+				<attribute name="autocorrect">off</attribute>
+			</xpath>
+			
+			<xpath expr="//input[@name='password']" position="attributes">
+				<attribute name="placeholder">Password...</attribute>
+			</xpath>
+			
+			<xpath expr="//span[@class='input-group-btn']/a[@href='/web/database/selector']" position="replace">
+				<a href="/web/database/selector" class="btn btn-default btn-select"><i class="fa fa-database"></i></a>
+			</xpath>
+			<xpath expr="//div[@class='form-group field-db']" position="before">
+				<div class="form-group text-center">
+					<p><strong>Aircraft Maintenance Service</strong></p>
+				</div>
+			</xpath>
+		</template> -->
+    <!-- </data> -->
+<!-- </odoo> -->

@@ -1,0 +1,65 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="serviceable_log_tree">
+      <field name="name">serviceable.log.tree</field>
+      <field name="model">serviceable.log</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="date_start"/>
+            <field name="date_end"/>  
+            <field name="employee"/>  
+            <field name="fleet"/>  
+            <field name="servicable"/>  
+            <field name="duration_hour"/>  
+            <field name="duration_cycle"/>  
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="serviceable_search_view">
+        <field name="name">serviceable.log.search</field>
+        <field name="model">serviceable.log</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="fleet"/>             
+            </search>
+        </field>
+      </record>
+
+    <record model="ir.ui.view" id="ams_serviceable_form">
+          <field name="name">serviceable.log.form</field>
+          <field name="model">serviceable.log</field>
+          <field name="arch" type="xml">
+              <form string="Serviceable History">
+                  <sheet string="Serviceable History">
+                    <group>
+                      <field name="date_start"/>
+                      <field name="date_end"/>  
+                      <field name="employee"/>  
+                      <field name="fleet"/>  
+                      <field name="servicable"/>  
+                      <field name="duration_hour"/>  
+                      <field name="duration_cycle"/>  
+                    </group>
+                  </sheet>
+              </form>
+          </field>
+      </record>
+
+      <record id="action_serviceable_setting" model="ir.actions.act_window">
+        <field name="name">Serviceable History</field>
+        <field name="res_model">serviceable.log</field>
+        <field name="view_mode">tree,form</field>
+      </record>
+
+
+    <menuitem name="Serviceable History" id="maintenance_history_serviceable" parent="maintenance.menu_m_request" action="action_serviceable_setting" sequence="11" groups="base.group_no_one"/>
+
+
+
+
+
+  </data>
+</odoo>

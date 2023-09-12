@@ -1,0 +1,56 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="ams_ata_tree">
+      <field name="name">ams.ata.tree</field>
+      <field name="model">ams.ata</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="chapter"/>  
+            <field name="sub_chapter"/>  
+            <field name="description"/>  
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ams_ata_search_view">
+        <field name="name">ams.ata.search</field>
+        <field name="model">ams.ata</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="name"/>
+              <field name="chapter"/>  
+              <field name="sub_chapter"/>  
+              <field name="description"/>             
+            </search>
+        </field>
+      </record>
+
+    <record model="ir.ui.view" id="ams_ata_form">
+          <field name="name">ams.ata.form</field>
+          <field name="model">ams.ata</field>
+          <field name="arch" type="xml">
+              <form string="ATA Definition">
+                  <sheet string="ATA Definition">
+                    <group col="12">
+                        <field name="name" colspan="12" widget="mask" data-inputmask-mask="99-99-99"/>
+                        <field name="chapter" colspan="6"/>  
+                        <field name="sub_chapter" colspan="6"/>  
+                        <field name="description" colspan="12"/>  
+                    </group>
+                  </sheet>
+              </form>
+          </field>
+      </record>
+
+      <record id="action_ata_setting" model="ir.actions.act_window">
+        <field name="name">ATA Definition</field>
+        <field name="res_model">ams.ata</field>
+        <field name="view_mode">tree,form</field>
+      </record>
+
+
+  </data>
+</odoo>

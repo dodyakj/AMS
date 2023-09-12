@@ -1,0 +1,37 @@
+<odoo>
+	<data>
+		<record model='ir.ui.view' id='ams_bin_tree'>
+			<field name='name'>ams.bin.tree</field>
+			<field name='model'>ams.bin</field>
+			<field name='arch' type='xml'>
+				<tree string='Inventory Location'>
+					<field name="name"/>
+					<field name="base_id"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ams_bin_form">
+			<field name="name">ams.bin.form</field>
+			<field name="model">ams.bin</field>
+			<field name="arch" type="xml">
+				<form string="Inventory Location">
+					<sheet>
+						<group>
+							<field name="name"/>
+							<field name="base_id"/>
+							<field name="desc" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="ams_bin_action" model="ir.actions.act_window">
+			<field name="name">Inventory Location</field>
+			<field name="res_model">ams.bin</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+	</data>
+</odoo>

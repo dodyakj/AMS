@@ -1,0 +1,499 @@
+<odoo>
+<template id="pac_pdf">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                    <style>
+                        .table {
+                            padding-bottom:0px;
+                        }
+                    </style>
+                    <div class="row">
+                        <div class="col-xs-4">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-8">
+                            <h2 class="text-left">Power Assurance Check</h2>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="2">A/C REG : <t t-esc="data.fleet.name"/></td>
+                                    <td>MONTH  : <t t-esc="data.month"/></td>
+                                    <td>YEAR  : <t t-esc="data.year"/></td>
+                                </tr>
+                                <tr>
+                                    <td>SETTING</td>
+                                    <td>REGIME : GROUND/FLIGHT</td>
+                                    <td>BLEED VALVE : CLOSED</td>
+                                    <td>STATUS : PASS</td>
+                                </tr>
+                            </table>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <t t-if="data.fleet.engine_type_id">
+                                        <td colspan="2">ENG#1 S/N : <t t-esc="data.fleet.engine_type_id.esn"/> </td>
+                                    </t>
+                                    <t t-if="data.fleet.engine2_type_id">
+                                        <td colspan="2">ENG#2 S/N : <t t-esc="data.fleet.engine2_type_id.esn"/> </td>
+                                    </t>
+                                    <t t-if="data.fleet.engine3_type_id">
+                                        <td colspan="2">ENG#3 S/N : <t t-esc="data.fleet.engine3_type_id.esn"/> </td>
+                                    </t>
+                                    <t t-if="data.fleet.engine4_type_id">
+                                        <td colspan="2">ENG#4 S/N : <t t-esc="data.fleet.engine4_type_id.esn"/> </td>
+                                    </t>
+                                </tr>
+                            </table>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>DATE</td>
+                                    <td>FLT HRS</td>
+                                    
+                                    <t t-if="data.fleet.engine_type_id">
+                                        <td>PWR MGRN ENG#1</td>
+                                        <td>T5 MGRN ENG#1</td>
+                                        <td>N1</td>
+                                        <td>RAW N1</td>
+                                        <td>HP</td>
+                                        <td>OAT</td>
+                                        <td>TORQ</td>
+                                    </t>
+                                    <t t-if="data.fleet.engine2_type_id">
+                                        <td>PWR MGRN ENG#2</td>
+                                        <td>T5 MGRN ENG#2</td>
+                                        <td>N1</td>
+                                        <td>RAW N1</td>
+                                        <td>HP</td>
+                                        <td>OAT</td>
+                                        <td>TORQ</td>
+                                    </t>
+                                    <t t-if="data.fleet.engine3_type_id">
+                                        <td>PWR MGRN ENG#3</td>
+                                        <td>T5 MGRN ENG#3</td>
+                                        <td>N1</td>
+                                        <td>RAW N1</td>
+                                        <td>HP</td>
+                                        <td>OAT</td>
+                                        <td>TORQ</td>
+                                    </t>
+                                    <t t-if="data.fleet.engine4_type_id">
+                                        <td>PWR MGRN ENG#4</td>
+                                        <td>T5 MGRN ENG#4</td>
+                                        <td>N1</td>
+                                        <td>RAW N1</td>
+                                        <td>HP</td>
+                                        <td>OAT</td>
+                                        <td>TORQ</td>
+                                    </t>
+
+                                    <td>CREW</td>
+                                </tr>
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    <tr>
+                                        <td><t t-esc="fml.date"/></td>
+                                        <td><t t-esc="fml.aircraft_hours"/></td>
+
+                                        <t t-if="data.fleet.engine_type_id">
+                                            <td><t t-esc="fml.engine1_power"/></td>
+                                            <td><t t-esc="fml.engine1_itt"/></td>
+                                            <td><t t-esc="fml.engine1_rpm"/></td>
+                                            <td><t t-esc="fml.engine1_rpm"/></td>
+                                            <td><t t-esc="data.fleet.engine_type_id.engine_tslsv_hsi"/></td>
+                                            <td><t t-esc="fml.engine1_oiltemp"/></td>
+                                            <td><t t-esc="fml.engine1_torque"/></td>
+                                        </t>
+                                        <t t-if="data.fleet.engine2_type_id">
+                                            <td><t t-esc="fml.engine2_power"/></td>
+                                            <td><t t-esc="fml.engine2_itt"/></td>
+                                            <td><t t-esc="fml.engine2_rpm"/></td>
+                                            <td><t t-esc="fml.engine2_rpm"/></td>
+                                            <td><t t-esc="data.fleet.engine2_type_id.engine_tslsv_hsi"/></td>
+                                            <td><t t-esc="fml.engine2_oiltemp"/></td>
+                                            <td><t t-esc="fml.engine2_torque"/></td>
+                                        </t>
+                                        <t t-if="data.fleet.engine3_type_id">
+                                            <td><t t-esc="fml.engine3_power"/></td>
+                                            <td><t t-esc="fml.engine3_itt"/></td>
+                                            <td><t t-esc="fml.engine3_rpm"/></td>
+                                            <td><t t-esc="fml.engine3_rpm"/></td>
+                                            <td><t t-esc="data.fleet.engine3_type_id.engine_tslsv_hsi"/></td>
+                                            <td><t t-esc="fml.engine3_oiltemp"/></td>
+                                            <td><t t-esc="fml.engine3_torque"/></td>
+                                        </t>
+                                        <t t-if="data.fleet.engine4_type_id">
+                                            <td><t t-esc="fml.engine4_power"/></td>
+                                            <td><t t-esc="fml.engine4_itt"/></td>
+                                            <td><t t-esc="fml.engine4_rpm"/></td>
+                                            <td><t t-esc="fml.engine4_rpm"/></td>
+                                            <td><t t-esc="data.fleet.engine4_type_id.engine_tslsv_hsi"/></td>
+                                            <td><t t-esc="fml.engine4_oiltemp"/></td>
+                                            <td><t t-esc="fml.engine4_torque"/></td>
+                                        </t>
+                                        <td><t t-esc="data.write_uid.name"/></td>
+
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+                    <p style="page-break-after:always;">   </p>
+                    <div class="row">
+                        <div class="col-xs-6" style="min-height: 300px">
+                            <canvas id="canvas"></canvas>
+                        </div>
+                        <div class="col-xs-6" style="min-height: 300px">
+                            <canvas id="canvas2"></canvas>
+                        </div>
+                    </div>
+                    <!-- <button id="randomizeData">Randomize Data</button> -->
+                    <script type="text/javascript" src="/ams_report/static/src/js/Chart.min.js"></script>
+                    <script type="text/javascript" src="/ams_report/static/src/js/utils.js"></script>
+                    <script>
+                        var lineChartData = {
+                            labels: [
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    '<t t-esc="fml.date"/>',
+                                </t>
+                                ],
+                            datasets: [
+                            <t t-if="data.fleet.engine_type_id">
+                            {
+                                label: 'PWR ENG#1',
+                                borderColor: window.chartColors.red,
+                                backgroundColor: window.chartColors.red,
+                                fill: false,
+                                data: [
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    '<t t-esc="fml.engine1_power"/>',
+                                </t>
+                                ],
+                                yAxisID: 'y-axis-1',
+                            }, 
+                            </t>
+                            <t t-if="data.fleet.engine2_type_id">
+                            {
+                                label: 'PWR ENG#2',
+                                borderColor: window.chartColors.blue,
+                                backgroundColor: window.chartColors.blue,
+                                fill: false,
+                                data: [
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    '<t t-esc="fml.engine2_power"/>',
+                                </t>
+                                ],
+                                yAxisID: 'y-axis-2'
+                            },
+                            </t>
+                            <t t-if="data.fleet.engine3_type_id">
+                             {
+                                label: 'PWR ENG#3',
+                                borderColor: window.chartColors.green,
+                                backgroundColor: window.chartColors.green,
+                                fill: false,
+                                data: [
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    '<t t-esc="fml.engine3_power"/>',
+                                </t>
+                                ],
+                                yAxisID: 'y-axis-3'
+                            }, 
+                            </t>
+                            <t t-if="data.fleet.engine4_type_id">
+                            {
+                                label: 'PWR ENG#4',
+                                borderColor: window.chartColors.orange,
+                                backgroundColor: window.chartColors.orange,
+                                fill: false,
+                                data: [
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    '<t t-esc="fml.engine4_power"/>',
+                                </t>
+                                ],
+                                yAxisID: 'y-axis-4'
+                            }</t>
+                            ]
+                        };
+                        var lineChartData2 = {
+                            labels: [
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    '<t t-esc="fml.date"/>',
+                                </t>
+                                ],
+                            datasets: [
+                           <t t-if="data.fleet.engine_type_id">
+                            {
+                                label: 'T5 ENG#1',
+                                borderColor: window.chartColors.red,
+                                backgroundColor: window.chartColors.red,
+                                fill: false,
+                                data: [
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    '<t t-esc="fml.engine1_itt"/>',
+                                </t>
+                                ],
+                                yAxisID: 'y-axis-1',
+                            },
+                            </t>
+                           <t t-if="data.fleet.engine2_type_id">
+                            {
+                                label: 'T5 ENG#2',
+                                borderColor: window.chartColors.blue,
+                                backgroundColor: window.chartColors.blue,
+                                fill: false,
+                                data: [
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    '<t t-esc="fml.engine2_itt"/>',
+                                </t>
+                                ],
+                                yAxisID: 'y-axis-2'
+                            },
+                            </t>
+                           <t t-if="data.fleet.engine3_type_id">
+                             {
+                                label: 'T5 ENG#3',
+                                borderColor: window.chartColors.green,
+                                backgroundColor: window.chartColors.green,
+                                fill: false,
+                                data: [
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    '<t t-esc="fml.engine3_itt"/>',
+                                </t>
+                                ],
+                                yAxisID: 'y-axis-3'
+                            }, 
+                            </t>
+                            <t t-if="data.fleet.engine4_type_id">
+                            {
+                                label: 'T5 ENG#4',
+                                borderColor: window.chartColors.orange,
+                                backgroundColor: window.chartColors.orange,
+                                fill: false,
+                                data: [
+                                <t t-foreach="data.fml_id" t-as="fml">
+                                    '<t t-esc="fml.engine4_itt"/>',
+                                </t>
+                                ],
+                                yAxisID: 'y-axis-4'
+                            }
+                            </t>
+                            ]
+                        };
+
+                        window.onload = function() {
+                            var ctx = document.getElementById('canvas').getContext('2d');
+                            window.myLine = Chart.Line(ctx, {
+                                data: lineChartData,
+                                options: {
+                                    responsive: true,
+                                    hoverMode: 'index',
+                                    stacked: false,
+                                    title: {
+                                        display: true,
+                                        text: 'PWR <t t-esc="data.fleet.name"/>'
+                                    },
+                                    scales: {
+                                        yAxes: [
+                                        <t t-if="data.fleet.engine_type_id">
+                                        {
+                                            type: 'linear',
+                                            display: true,
+                                            position: 'left',
+                                            id: 'y-axis-1',
+                                        },
+                                        </t>
+                                        <t t-if="data.fleet.engine2_type_id">
+                                         {
+                                            type: 'linear',
+                                            display: false,
+                                            position: 'left',
+                                            id: 'y-axis-2',
+                                            gridLines: {
+                                                drawOnChartArea: false,
+                                            },
+                                        },
+                                        </t>
+                                        <t t-if="data.fleet.engine3_type_id">
+                                         {
+                                            type: 'linear',
+                                            display: false,
+                                            position: 'left',
+                                            id: 'y-axis-3',
+                                            gridLines: {
+                                                drawOnChartArea: false,
+                                            },
+                                        }, 
+                                        </t>
+                                        <t t-if="data.fleet.engine4_type_id">
+                                        {
+                                            type: 'linear',
+                                            display: false,
+                                            position: 'left',
+                                            id: 'y-axis-4',
+                                            gridLines: {
+                                                drawOnChartArea: false,
+                                            },
+                                        }
+                                        </t>
+                                        ],
+                                    }
+                                }
+                            });
+                            var ctx = document.getElementById('canvas2').getContext('2d');
+                            window.myLine = Chart.Line(ctx, {
+                                data: lineChartData2,
+                                options: {
+                                    responsive: true,
+                                    hoverMode: 'index',
+                                    stacked: false,
+                                    title: {
+                                        display: true,
+                                        text: 'T5 <t t-esc="data.fleet.name"/>'
+                                    },
+                                    scales: {
+                                        yAxes: [
+                                        <t t-if="data.fleet.engine_type_id">
+                                        {
+                                            type: 'linear',
+                                            display: true,
+                                            position: 'left',
+                                            id: 'y-axis-1',
+                                        }, 
+                                        </t>
+                                        <t t-if="data.fleet.engine2_type_id">
+                                        {
+                                            type: 'linear',
+                                            display: false,
+                                            position: 'left',
+                                            id: 'y-axis-2',
+                                            gridLines: {
+                                                drawOnChartArea: false,
+                                            },
+                                        }, 
+                                        </t>
+                                        <t t-if="data.fleet.engine3_type_id">
+                                        {
+                                            type: 'linear',
+                                            display: false,
+                                            position: 'left',
+                                            id: 'y-axis-3',
+                                            gridLines: {
+                                                drawOnChartArea: false,
+                                            },
+                                        }, 
+                                        </t>
+                                        <t t-if="data.fleet.engine4_type_id">
+                                        {
+                                            type: 'linear',
+                                            display: false,
+                                            position: 'left',
+                                            id: 'y-axis-4',
+                                            gridLines: {
+                                                drawOnChartArea: false,
+                                            },
+                                        }
+                                        </t>
+                                        ],
+                                    }
+                                }
+                            });
+                        };
+
+                        document.getElementById('randomizeData').addEventListener('click', function() {
+                            lineChartData.datasets.forEach(function(dataset) {
+                                dataset.data = dataset.data.map(function() {
+                                    return randomScalingFactor();
+                                });
+                            });
+
+                            window.myLine.update();
+                        });
+                    </script>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+    <data>
+
+        <record id="paper_pac" model="report.paperformat">
+            <field name="name">PAC</field>
+            <field name="orientation">Landscape</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+        
+        <report
+                id="print_pac_pdf"
+                string="Power Assurance Check"
+                model="ams.pac"
+                report_type="qweb-html"
+                file="ams_report.pac_pdf"
+                name="ams_report.pac_pdf"
+                paperformat="ams_report.paper_pac"
+            />
+
+
+    <record model="ir.ui.view" id="pac_form">
+        <field name="name">ams.pac.form</field>
+        <field name="model">ams.pac</field>
+        <field name="arch" type="xml">
+            <form string="Power Assurance Check">
+                <sheet string="Power Assurance Check">
+                   <group>
+                       <field name="fleet" attrs="{'required':True}"/>
+                       <field name="date" options="{'showType': 'months'}"/>
+                       <field name="fml_id" attrs="{'invisible':True}">
+                        <tree>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="aircraft_id"/>
+                            <field name="engine1_id_text"/>
+                            <field name="engine2_id_text"/>
+                            <field name="engine3_id_text"/>
+                            <field name="engine4_id_text"/>
+                        </tree>
+                       </field>
+                   </group>
+                  <footer>
+                    <button name="print_pac_pdf" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+                    <!-- <button name="export_xls"  context="{'xls_export':1}" icon="fa-download" type="object" string="Print XLS" class="oe_highlight" /> -->
+                    <button special="cancel" string="Cancel"/>
+                  </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="pac_action">
+        <field name="name">Power Assurance Check</field>
+        <field name="res_model">ams.pac</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+  </data>
+</odoo>

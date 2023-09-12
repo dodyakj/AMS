@@ -1,0 +1,29 @@
+<odoo>
+	<data>
+	    <record model="ir.ui.view" id="aircraft_logbook_form">
+	    	<field name="name">aircraft.logbook.form</field>
+	    	<field name="model">aircraft.logbook</field>
+	    	<field name="arch" type="xml">
+	    		<form string="Hot Section Inspection">
+	    			<sheet>
+    					<field name="fleet_id" readonly="True"/>
+						<field name="logbook_line" readonly="True">
+							<tree string="Logbook" editable="bottom">
+								<field name="description"/>
+								<field name="hours"/>
+								<field name="cycles"/>
+								<field name="date"/>
+								<field name="wo_id"/>
+								<field name="mwo_id"/>
+							</tree>
+						</field>
+		    			<footer>
+		    				<button name="cancel" string="Close" special="cancel" class="oe_link"/>
+		    			</footer>
+	    			</sheet>
+	    		</form>
+	    	</field>
+	    </record>
+
+	</data>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ams_bulletin_user,ams.bulletin,model_ams_bulletin,ams_bulletin.group_ams_user,1,1,0,0
+access_ams_bulletin_manager,ams.bulletin,model_ams_bulletin,ams_bulletin.group_ams_manager,1,1,1,1

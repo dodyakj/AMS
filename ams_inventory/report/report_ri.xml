@@ -1,0 +1,192 @@
+<odoo>
+  <data>
+
+        <record id="paperformat_ri" model="report.paperformat">
+            <field name="name">Receiving Incentory</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+        
+            <report
+                    id="print_ri_pdf"
+                    string="Receiving Inventory"
+                    model="receiving.inventory"
+                    report_type="qweb-pdf"
+                    file="ams_inventory.report_ri"
+                    name="ams_inventory.report_ri"
+                    paperformat="ams_inventory.paperformat_ri"
+                />
+  </data>
+
+    <template id="report_ri">
+            <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="data">
+                <t t-call="ams_document.internal_layout">
+                    <div class="page">
+                      <style>
+                        ol {
+                        padding-left : 25px;
+                        }
+                      </style>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 25px;"/>
+                            </div>
+                            <div class="col-xs-4 text-center" style="margin-top:20px;">
+                                <h3>RECEIVING INVENTORY</h3>
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                Form. No. PAS/QC/014.R1
+                            </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-2">
+                            Part Name
+                          </div>
+                          <div class="col-xs-1">
+                            :
+                          </div>
+                          <div class="col-xs-5">
+                            <div class="pull-left" t-field="data.part_name.name"/>
+                            <!-- ..................................... -->
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-2">
+                            Part No.
+                          </div>
+                          <div class="col-xs-1">
+                            :
+                          </div>
+                          <div class="col-xs-5">
+                            <div class="pull-left" t-field="data.part_no"/>
+                            <!-- ..................................... -->
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-2">
+                            Serial No.
+                          </div>
+                          <div class="col-xs-1">
+                            :
+                          </div>
+                          <div class="col-xs-5">
+                            <div class="pull-left" t-field="data.serial_no"/>
+                            <!-- ..................................... -->
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-2">
+                            Quantity
+                          </div>
+                          <div class="col-xs-1">
+                            :
+                          </div>
+                          <div class="col-xs-5">
+                            <div class="pull-left" t-field="data.quantity"/>
+                            <!-- ..................................... -->
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-2">
+                            Supplier/Vendor
+                          </div>
+                          <div class="col-xs-1">
+                            :
+                          </div>
+                          <div class="col-xs-5">
+                            <div class="pull-left" t-field="data.vendor"/>
+                            <!-- ..................................... -->
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-2">
+                            Received Date
+                          </div>
+                          <div class="col-xs-1">
+                            :
+                          </div>
+                          <div class="col-xs-5">
+                            <div class="pull-left" t-field="data.rcv_date"/>
+                            <!-- ..................................... -->
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-2">
+                            Receiving Date
+                          </div>
+                          <div class="col-xs-1">
+                            :
+                          </div>
+                          <div class="col-xs-5">
+                            <div class="pull-left" t-field="data.ins_date"/>
+                            <!-- ..................................... -->
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-2">
+                            Receiving By
+                          </div>
+                          <div class="col-xs-1">
+                            :
+                          </div>
+                          <div class="col-xs-5">
+                            <div class="pull-left" t-field="data.ins_by"/>
+                            <!-- ..................................... -->
+                          </div>
+                        </div>
+                        <span class="pull-right" t-field="data.name"/>
+                        <table class="table table-bordered">
+                          <tr>
+                            <td><center><b>No.</b></center></td>
+                            <td><center><b>Description</b></center></td>
+                            <td><center><b>Y</b></center></td>
+                            <td><center><b>N</b></center></td> 
+                            <td><center><b>Remark</b></center></td>
+                          </tr>
+
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.description" t-as="des">
+                            <tr>
+                              <td><center><span t-esc="nomer"/></center></td>
+                              <t t-set="nomer" t-value="nomer+1"/>
+                              <td><p t-field="des.name"/></td>
+                              <td><t t-if="des.yes_no == 'yes'">✔</t></td>
+                              <td><t t-if="des.yes_no == 'no'">✔</t></td>
+                              <td></td>
+                            </tr>
+                          </t>
+                        </table>
+                        Result : <p t-field="data.result"/>
+                        <br/>
+                        <br/>
+                        Note : <p t-field="data.note"/>
+                        <br/>
+
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

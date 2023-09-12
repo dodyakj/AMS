@@ -1,0 +1,220 @@
+<odoo>
+<data>
+  
+<template id="part_removal_pdf">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-4">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-8">
+                            <h2 class="text-left">Part Removal Report</h2>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table">
+                        <tr>
+                          <td>
+                            <p><center><b>Part Number</b></center></p>
+                            <p><center><b>Removed</b></center></p>
+                            <p><center><b>From</b></center></p>
+                          </td>      
+                          <td>
+                            <p><center><b></b></center></p>
+                            <p><center><b>Item/</b></center></p>
+                            <p><center><b>Position</b></center></p>
+                          </td>     
+                          <td>
+                            <p><center><b>Serial Number</b></center></p>
+                            <p><center><b>Date</b></center></p>
+                            <p><center><b>Removed</b></center></p>
+                          </td>                  
+                          <td>
+                            <p><center><b></b></center></p>
+                            <p><center><b>A/C,Eng,</b></center></p>
+                            <p><center><b>Hours</b></center></p>
+                          </td>                  
+                          <td>
+                            <p><center><b>Description</b></center></p>
+                            <p><center><b>Aux.</b></center></p>
+                            <p><center><b>Cycles</b></center></p>
+                          </td>                  
+                          <td>
+                            <p><center><b></b></center></p>
+                            <p><center><b>WO</b></center></p>
+                            <p><center><b></b></center></p>
+                          </td>                  
+                          <td>
+                            <p><center><b></b></center></p>
+                            <p><center><b>TS</b></center></p>
+                            <p><center><b>Install</b></center></p>
+                          </td>                  
+                          <td>
+                            <p><center><b></b></center></p>
+                            <p><center><b>CS</b></center></p>
+                            <p><center><b>Install</b></center></p>
+                          </td>                  
+                          <td>
+                            <p><center><b></b></center></p>
+                            <p><center><b>CSN</b></center></p>
+                            <p><center><b></b></center></p>
+                          </td>                  
+                          <td>
+                            <p><center><b></b></center></p>
+                            <p><center><b>TSO</b></center></p>
+                            <p><center><b></b></center></p>
+                          </td>                  
+                          <td>
+                            <p><center><b></b></center></p>
+                            <p><center><b>TSI</b></center></p>
+                            <p><center><b></b></center></p>
+                          </td>                          
+                        </tr>
+                        <t t-foreach="data.part_id" t-as="part">
+                            <tr>
+                                <td>
+                                  <p><div t-field="part.engine_id" /></p>
+                                  <p><div t-field="part.fleet_id.name" /></p>
+                                  <p>Removal Code :</p>
+                                </td>              
+                                <td colspan="2">
+                                  <p><div t-field="part.serial_id" /></p>
+                                  <p><div t-field="part.date" /></p>
+                                  <p>Reason Removal : <div t-field="part.reason" /></p>
+                                </td>                  
+                                <td>
+                                  <p></p>
+                                  <p><center><div t-field="part.hours"/></center></p>
+                                  <p></p>
+                                </td>                   
+                                <td>
+                                  <p><center><div t-field="part.engine_id" /></center></p>
+                                  <p><center><div t-field="part.cycles"/></center></p>
+                                  <p></p>
+                                </td>                   
+                                <td>
+                                  <p></p>
+                                  <p></p>
+                                  <p></p>
+                                </td>                  
+                                <td>
+                                  <p></p>
+                                  <p><center><div t-field="part.engine_id.engine_tsn" /></center></p>
+                                  <p></p>
+                                </td>                   
+                                <td>
+                                  <p></p>
+                                  <p><center><div t-field="part.engine_id.engine_tslsv" /></center></p>
+                                  <p></p>
+                                </td>                 
+                                <td>
+                                  <p></p>
+                                  <p><center><div t-field="part.engine_id.engine_csn" /></center></p>
+                                  <p></p>
+                                </td>                 
+                                <td>
+                                  <p></p>
+                                  <p><center><div t-field="part.engine_id.engine_tslsv" /></center></p>
+                                  <p></p>
+                                </td>                  
+                                <td>
+                                  <p></p>
+                                  <p><center><div t-field="part.engine_id.engine_tslsv_hsi" /></center></p>
+                                  <p></p>
+                                </td>       
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+        <record id="paperpart_removal" model="report.paperformat">
+            <field name="name">Part Removal Report</field>
+            <field name="orientation">Landscape</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+       <report
+                id="print_part_removal_reports"
+                string="Part Removal Report"
+                model="part.removal.report"
+                report_type="qweb-html"
+                file="ams_report.part_removal_pdf"
+                name="ams_report.part_removal_pdf"
+                paperformat="ams_report.paperpart_removal"
+            />
+
+
+      <record id="part_removal_reports_form" model="ir.ui.view">
+        <field name="name">part.removal.report.form</field>
+        <field name="model">part.removal.report</field>
+        <field name="view_mode">form</field>
+        <field name="arch" type="xml">
+            <form string="Part Removal Report">
+              <group>
+                <field name="fleet"/>
+                <field name="part"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+              </group>
+              <group string="Data part" attrs="{'invisible':True}">
+                <field name="part_id">
+                  <tree>
+                      <field name="fleet_id"/>
+                      <field name="engine_id"/>
+                  </tree>
+                </field>
+              </group>
+              
+            <footer>
+              <!-- <button name="export_xls"  context="{'xls':1}" icon="fa-download" type="object" string="Print XLS" class="oe_highlight"/> -->
+              <button name="print_part_removal_reports" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+              <button special="cancel" string="Cancel"/>
+            </footer>
+            </form>
+        </field>
+      </record>
+
+
+    <report
+            id="part_removal_report_xls"
+            model="part.removal.report"
+            string=" "
+            report_type="xlsx"
+            name="ams_report.part_removal.xlsx"
+            file="ams_report.part_removal.xlsx"
+            attachment_use="False"
+        />
+
+    <record model="ir.actions.act_window" id="part_removals_report_action">
+      <field name="name">Part Removal Report</field>
+      <field name="res_model">part.removal.report</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+      <field name="target">new</field>
+    </record>   
+  </data>
+</odoo>

@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="aircraft_acquisition_view_inherit_form">
+      <field name="name">aircraft_acquisition_view_inherit.form</field>
+      <field name="model">aircraft.acquisition</field>
+      <field name="inherit_id" ref="pelita_master_data.aircraft_acquisition_view_form" />
+      <field name="arch" type="xml">
+        
+            <field name='esn2' position="after">
+              <field name="esn3"/>
+              <field name="esn4"/>
+            </field>
+
+            <xpath expr="//page[4]" position="after">
+              <page string='Engine #3'>
+                <group>
+                  <group>
+                  <field name='engine3_type_id'/>
+                
+                  <field name='engine3_tsn' string='TSN'/>
+                  <field name='engine3_csn' string='CSN'/>
+                  <field name='engine3_tslsv' string='TSLSV OH'/>
+                  <field name='engine3_tslsv_hsi' string='TSLSV HSI'/>
+                  <field name='engine3_cslsv' string='CSLSV OH'/>
+                  <field name='engine3_cslsv_hsi' string='CSLSV HSI'/>
+                  <field name='engine3_lastoh' string='Last OH'/>
+                  <field name='engine3_hsi' string='Last HSI'/>
+                  </group>
+                </group>
+              </page>
+              <page string='Engine #4'>
+                <group>
+                  <group>
+                  <field name='engine4_type_id'/>
+                
+                  <field name='engine4_tsn' string='TSN'/>
+                  <field name='engine4_csn' string='CSN'/>
+                  <field name='engine4_tslsv' string='TSLSV OH'/>
+                  <field name='engine4_tslsv_hsi' string='TSLSV HSI'/>
+                  <field name='engine4_cslsv' string='CSLSV OH'/>
+                  <field name='engine4_cslsv_hsi' string='CSLSV HSI'/>
+                  <field name='engine4_lastoh' string='Last OH'/>
+                  <field name='engine4_hsi' string='Last HSI'/>
+                  </group>
+                </group>
+              </page>
+            </xpath>
+        
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="aircraft_type_inherit_form">
+      <field name="name">aircraft.type.inherit.form</field>
+      <field name="model">aircraft.type</field>
+      <field name="inherit_id" ref="pelita_master_data.aircraft_type_view_form" />
+      <field name="arch" type="xml">
+        
+            <field name='name' position="after">
+              <field name="manufacture"/>
+            </field>
+      </field>
+    </record>
+
+  </data>
+</odoo>

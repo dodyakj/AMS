@@ -1,0 +1,534 @@
+<odoo>
+<data>
+<template id="report_maintenance_plan">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                <div style="display:none;">
+                  <t t-set="nomer" t-value="1"/>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <center><h1>Maintenance Planning</h1></center><br/>
+                      <center><h1>JANUARY - DESEMBER </h1></center><br/>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <table class="table table-bordered"> 
+                        <tr>
+                          <td rowspan="2">A/C REG.</td>
+                          <td rowspan="2">DESCIPTION</td>
+                          <td rowspan="2">DUE AT</td>
+                          <td rowspan="2">RER.</td>
+                          <td rowspan="2">EST. DATE</td>
+                          <td rowspan="2">REM. BY DAY</td>
+                          <td colspan="12"><center><t t-esc='data.create_date'/></center></td>
+                        </tr>
+                        <tr>
+                          <td>JAN</td>
+                          <td>FEB</td>
+                          <td>MAR</td>
+                          <td>APR</td>
+                          <td>MEI</td>
+                          <td>JUN</td>
+                          <td>JUL</td>
+                          <td>AUG</td>
+                          <td>SEP</td>
+                          <td>OKT</td>
+                          <td>NOV</td>
+                          <td>DES</td>
+                        </tr>
+                        <t t-foreach='data.mp_id' t-as='mp'>
+                          <tr>
+                            <td t-att-rowspan="nomer">
+                              <h2><t t-esc='mp.fleet_id.name'/></h2>
+                              <br/>Date  <div class="pull-right"><t t-esc="mp.fleet_id.date_manufacture"/></div>
+                              <br/>A/C TT  <div class="pull-right"><t t-esc="mp.fleet_id.total_landings"/> HRS</div>
+                              <br/>
+                              <t t-if="mp.fleet_id.engine_type_id">
+                                ENG#1 TT 
+                                <div class="pull-right"><t t-esc="mp.fleet_id.engine_type_id.engine_tsn"/> HRS</div>
+                              </t>
+                              <br/>
+                              <t t-if="mp.fleet_id.engine_type_id">
+                                ENG#2 TT 
+                                <div class="pull-right"><t t-esc="mp.fleet_id.engine2_type_id.engine_tsn"/> HRS</div>
+                              </t>
+                              <br/>
+                              <t t-if="mp.fleet_id.engine_type_id">
+                                ENG#3 TT 
+                                <div class="pull-right"><t t-esc="mp.fleet_id.engine3_type_id.engine_tsn"/> HRS</div>
+                              </t>
+                              <br/>
+                              <t t-if="mp.fleet_id.engine_type_id">
+                                ENG#4 TT 
+                                <div class="pull-right"><t t-esc="mp.fleet_id.engine4_type_id.engine_tsn"/> HRS</div>
+                              </t>
+
+                            </td>
+
+                            <!-- ENGINE 1 -->
+                            <tr>
+                              
+                              <td>
+                                <t t-if="mp.fleet_id.engine_type_id">
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <t t-esc="mp.fleet_id.engine_type_id.name"/>
+
+                                </t>
+                              </td><!--  -->
+                            </tr>
+                            <t t-if="mp.fleet_id.engine_type_id">
+                              <t t-if="mp.fleet_id.engine_type_id.component_ids">
+                                <t t-foreach="mp.fleet_id.engine_type_id.component_ids" t-as='comp1'>
+                                  <t t-foreach="comp1.serfice_life" t-as='ser1'>
+                                    <t t-if="ser1.is_major">                                
+                                      <t t-set="nomer" t-value="nomer+1"/>
+                                      <tr>
+                                        <td>
+                                          <t t-esc="comp1.product_id.name"/>
+                                        </td>
+                                        <t t-if="comp1.sub_part_ids">
+                                          <t t-foreach="comp1.sub_part_ids" t-as="subcomp1">
+                                            <t t-foreach="subcomp1.serfice_life" t-as='subser1'>
+                                              <t t-if="subser1.is_major"> 
+                                                <t t-set="nomer" t-value="nomer+1"/>
+                                                <td>
+                                                  <t t-esc="subcomp1.product_id.name"/>
+                                                </td>
+                                              </t>
+                                            </t>
+                                          </t>
+                                        </t>
+                                      </tr>
+                                    </t>
+                                  </t>
+                                </t>
+                              </t>
+                            </t>
+                              <!-- ENGINE 2 -->
+                            <tr>
+                              
+                              <td>
+                                <t t-if="mp.fleet_id.engine2_type_id">
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <t t-esc="mp.fleet_id.engine2_type_id.name"/>
+
+                                </t>
+                              </td><!--  -->
+                            </tr>
+                            <t t-if="mp.fleet_id.engine2_type_id">
+                              <t t-if="mp.fleet_id.engine2_type_id.component_ids">
+                                <t t-foreach="mp.fleet_id.engine2_type_id.component_ids" t-as='comp1'>
+                                  <t t-foreach="comp1.serfice_life" t-as='ser1'>
+                                    <t t-if="ser1.is_major">                                
+                                      <t t-set="nomer" t-value="nomer+1"/>
+                                      <tr>
+                                        <td>
+                                          <t t-esc="comp1.product_id.name"/>
+                                        </td>
+                                        <t t-if="comp1.sub_part_ids">
+                                          <t t-foreach="comp1.sub_part_ids" t-as="subcomp1">
+                                            <t t-foreach="subcomp1.serfice_life" t-as='subser1'>
+                                              <t t-if="subser1.is_major">
+                                              <t t-set="nomer" t-value="nomer+1"/>
+                                              <td>
+                                                <t t-esc="subcomp1.product_id.name"/>
+                                              </td>
+                                              </t>
+                                            </t>
+                                          </t>
+                                        </t>
+                                      </tr>
+                                    </t>
+                                  </t>
+                                </t>
+                              </t>
+                            </t>
+                              <!-- ENGINE 3 -->
+                            <tr>
+                              <td>
+                                <t t-if="mp.fleet_id.engine3_type_id">
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <t t-esc="mp.fleet_id.engine3_type_id.name"/>
+
+                                </t>
+                              </td><!--  -->
+                            </tr>
+                            <t t-if="mp.fleet_id.engine3_type_id">
+                              <t t-if="mp.fleet_id.engine3_type_id.component_ids">
+                                <t t-foreach="mp.fleet_id.engine3_type_id.component_ids" t-as='comp1'>
+                                  <t t-foreach="comp1.serfice_life" t-as='ser1'>
+                                    <t t-if="ser1.is_major">                                
+                                      <t t-set="nomer" t-value="nomer+1"/>
+                                      <tr>
+                                        <td>
+                                          <t t-esc="comp1.product_id.name"/>
+                                        </td>
+                                        <t t-if="comp1.sub_part_ids">
+                                          <t t-foreach="comp1.sub_part_ids" t-as="subcomp1">
+                                            <t t-foreach="subcomp1.serfice_life" t-as='subser1'>
+                                            <t t-if="subser1.is_major">                                
+                                            <t t-set="nomer" t-value="nomer+1"/>
+                                            <td>
+                                              <t t-esc="subcomp1.product_id.name"/>
+                                            </td>
+                                          </t>
+                                          </t>
+                                          </t>
+                                        </t>
+                                      </tr>
+                                    </t>
+                                  </t>
+                                </t>
+                              </t>
+                            </t>
+                              <!-- ENGINE 4 -->
+                            <tr>
+                              <td>
+                                <t t-if="mp.fleet_id.engine4_type_id">
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <t t-esc="mp.fleet_id.engine4_type_id.name"/>
+
+                                </t>
+                              </td><!--  -->
+                            </tr>
+                            <t t-if="mp.fleet_id.engine4_type_id">
+                              <t t-if="mp.fleet_id.engine4_type_id.component_ids">
+                                <t t-foreach="mp.fleet_id.engine4_type_id.component_ids" t-as='comp1'>
+                                  <t t-foreach="comp1.serfice_life" t-as='ser1'>
+                                    <t t-if="ser1.is_major">                                
+                                      <t t-set="nomer" t-value="nomer+1"/>
+                                      <tr>
+                                        <td>
+                                          <t t-esc="comp1.product_id.name"/>
+                                        </td>
+                                        <t t-if="comp1.sub_part_ids">
+                                          <t t-foreach="comp1.sub_part_ids" t-as="subcomp1">
+                                            <t t-foreach="subcomp1.serfice_life" t-as='subser1'>
+                                            <t t-if="subser1.is_major">                                  
+                                            <t t-set="nomer" t-value="nomer+1"/>
+                                            <td>
+                                              <t t-esc="subcomp1.product_id.name"/>
+                                            </td>
+                                            </t>
+                                            </t>
+                                          </t>
+                                        </t>
+                                      </tr>
+                                    </t>
+                                  </t>
+                                </t>
+                              </t>
+                            </t>
+
+                          </tr>
+                        </t>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <center><h1>Maintenance Planning</h1></center><br/>
+                      <center><h1>JANUARY - DESEMBER </h1></center><br/>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <table class="table table-bordered"> 
+                        <tr>
+                          <td rowspan="2">A/C REG.</td>
+                          <td rowspan="2">DESCIPTION</td>
+                          <td rowspan="2">DUE AT</td>
+                          <td rowspan="2">RER.</td>
+                          <td rowspan="2">EST. DATE</td>
+                          <td rowspan="2">REM. BY DAY</td>
+                          <td colspan="12"><center><t t-esc='data.create_date'/></center></td>
+                        </tr>
+                        <tr>
+                          <td>JAN</td>
+                          <td>FEB</td>
+                          <td>MAR</td>
+                          <td>APR</td>
+                          <td>MEI</td>
+                          <td>JUN</td>
+                          <td>JUL</td>
+                          <td>AUG</td>
+                          <td>SEP</td>
+                          <td>OKT</td>
+                          <td>NOV</td>
+                          <td>DES</td>
+                        </tr>
+                        <t t-foreach='data.mp_id' t-as='mp'>
+                          <tr>
+                            <td t-att-rowspan="nomer">
+                              <h2><t t-esc='mp.fleet_id.name'/></h2>
+                              <br/>Date  <div class="pull-right"><t t-esc="mp.fleet_id.date_manufacture"/></div>
+                              <br/>A/C TT  <div class="pull-right"><t t-esc="mp.fleet_id.total_landings"/> HRS</div>
+                              <br/>
+                              <t t-if="mp.fleet_id.engine_type_id">
+                                ENG#1 TT 
+                                <div class="pull-right"><t t-esc="mp.fleet_id.engine_type_id.engine_tsn"/> HRS</div>
+                              </t>
+                              <br/>
+                              <t t-if="mp.fleet_id.engine_type_id">
+                                ENG#2 TT 
+                                <div class="pull-right"><t t-esc="mp.fleet_id.engine2_type_id.engine_tsn"/> HRS</div>
+                              </t>
+                              <br/>
+                              <t t-if="mp.fleet_id.engine_type_id">
+                                ENG#3 TT 
+                                <div class="pull-right"><t t-esc="mp.fleet_id.engine3_type_id.engine_tsn"/> HRS</div>
+                              </t>
+                              <br/>
+                              <t t-if="mp.fleet_id.engine_type_id">
+                                ENG#4 TT 
+                                <div class="pull-right"><t t-esc="mp.fleet_id.engine4_type_id.engine_tsn"/> HRS</div>
+                              </t>
+
+                            </td>
+
+                            <!-- ENGINE 1 -->
+                            <tr>
+                              
+                              <td>
+                                <t t-if="mp.fleet_id.engine_type_id">
+                                  <t t-esc="mp.fleet_id.engine_type_id.name"/>
+                                  <t t-if="mp.fleet_id.engine_type_id.component_ids">
+                                    <t t-foreach="mp.fleet_id.engine_type_id.component_ids" t-as='comp1'>
+                                      <t t-foreach="comp1.serfice_life" t-as='ser1'>
+                                        <t t-if="ser1.is_major">
+                                          <tr>
+                                            <td>
+                                              <t t-esc="comp1.product_id.name"/>
+                                            </td>
+                                          </tr>
+                                            <t t-if="comp1.sub_part_ids">
+                                              <t t-foreach="comp1.sub_part_ids" t-as="subcomp1">
+                                                <t t-foreach="subcomp1.serfice_life" t-as='subser1'>
+                                                  <t t-if="subser1.is_major">
+                                                    <tr>
+                                                      <td>
+                                                        <t t-esc="subcomp1.product_id.name"/>
+                                                      </td>
+                                                    </tr>
+                                                  </t>
+                                                </t>
+                                              </t>
+                                            </t>
+                                        </t>
+                                      </t>
+                                    </t>
+                                  </t>
+
+                                </t>
+                              </td><!--  -->
+                            </tr>
+                              <!-- ENGINE 2 -->
+                            <tr>
+                              
+                              <td>
+                                <t t-if="mp.fleet_id.engine2_type_id">
+                                  <t t-esc="mp.fleet_id.engine2_type_id.name"/>
+                                  <t t-if="mp.fleet_id.engine2_type_id.component_ids">
+                                    <t t-foreach="mp.fleet_id.engine2_type_id.component_ids" t-as='comp1'>
+                                      <t t-foreach="comp1.serfice_life" t-as='ser1'>
+                                        <t t-if="ser1.is_major">                                    
+                                          <tr>
+                                            <td>
+                                              <t t-esc="comp1.product_id.name"/>
+                                            </td>
+                                          </tr>
+                                            <t t-if="comp1.sub_part_ids">
+                                              <t t-foreach="comp1.sub_part_ids" t-as="subcomp1">
+                                                <t t-foreach="subcomp1.serfice_life" t-as='subser1'>
+                                                <t t-if="subser1.is_major">                                    
+                                                  <tr>
+                                                    <td>
+                                                      <t t-esc="subcomp1.product_id.name"/>
+                                                    </td>
+                                                  </tr>
+                                                </t>
+                                                </t>
+                                              </t>
+                                            </t>
+                                        </t>
+                                      </t>
+                                    </t>
+                                  </t>
+
+                                </t>
+                              </td><!--  -->
+                            </tr>
+                              <!-- ENGINE 3 -->
+                            <tr>
+                              <td>
+                                <t t-if="mp.fleet_id.engine3_type_id">
+                                  <t t-esc="mp.fleet_id.engine3_type_id.name"/>
+                                  <t t-if="mp.fleet_id.engine3_type_id.component_ids">
+                                    <t t-foreach="mp.fleet_id.engine3_type_id.component_ids" t-as='comp1'>
+                                      <t t-foreach="comp1.serfice_life" t-as='ser1'>
+                                        <t t-if="ser1.is_major">                                    
+                                          <tr>
+                                            <td>
+                                              <t t-esc="comp1.product_id.name"/>
+                                            </td>
+                                          </tr>
+                                            <t t-if="comp1.sub_part_ids">
+                                              <t t-foreach="comp1.sub_part_ids" t-as="subcomp1">
+                                                <t t-foreach="subcomp1.serfice_life" t-as='subser1'>
+                                                <t t-if="subser1.is_major">                                    
+                                                <tr>
+                                                  <td>
+                                                    <t t-esc="subcomp1.product_id.name"/>
+                                                  </td>
+                                                </tr>
+                                                </t>
+                                                </t>
+                                              </t>
+                                            </t>
+                                        </t>
+                                      </t>
+                                    </t>
+                                  </t>
+
+                                </t>
+                              </td><!--  -->
+                            </tr>
+                              <!-- ENGINE 4 -->
+                            <tr>
+                              <td>
+                                <t t-if="mp.fleet_id.engine4_type_id">
+                                  <t t-esc="mp.fleet_id.engine4_type_id.name"/>
+                                  <t t-if="mp.fleet_id.engine4_type_id.component_ids">
+                                      <t t-foreach="mp.fleet_id.engine4_type_id.component_ids" t-as='comp1'>
+                                        <t t-foreach="comp1.serfice_life" t-as='ser1'>
+                                          <t t-if="ser1.is_major">                                    
+                                          <tr>
+                                            <td>
+                                              <t t-esc="comp1.product_id.name"/>
+                                            </td>
+                                          </tr>
+                                            <t t-if="comp1.sub_part_ids">
+                                              <t t-foreach="comp1.sub_part_ids" t-as="subcomp1">
+                                                <t t-foreach="subcomp1.serfice_life" t-as='subser1'>
+                                                <t t-if="subser1.is_major">
+                                                <tr>
+                                                  <td>
+                                                    <t t-esc="subcomp1.product_id.name"/>
+                                                  </td>
+                                                </tr>
+                                                </t>
+                                                </t>
+                                              </t>
+                                            </t>
+                                        </t>
+                                      </t>
+                                    </t>
+                                  </t>
+
+                                </t>
+                              </td><!--  -->
+                            </tr>
+
+                          </tr>
+                        </t>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</data>
+  <data>
+        <record id="paperadc" model="report.paperformat">
+            <field name="name">Maintenance Planning Report</field>
+            <field name="orientation">Landscape</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+       <report
+                id="print_maintenance_planing_reports"
+                string="Maintenance Planing Report"
+                model="maintenance.plan.report"
+                report_type="qweb-html"
+                file="ams_report.report_maintenance_plan"
+                name="ams_report.report_maintenance_plan"
+                paperformat="ams_report.paperadc"
+            />
+ 
+  <record id="maintenance_planing_report_form" model="ir.ui.view">
+        <field name="name">maintenance.plan.report.form</field>
+        <field name="model">maintenance.plan.report</field>
+        <field name="view_mode">form</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Planning Report">
+          <group>
+          <group>
+            <field name="all"/>
+            <field name="fleet_id" attrs="{'invisible':[('all','=', True)]}"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="mp_id" editable="bottom" invisible="1">
+                  <tree>
+                    <field name='type'/>
+                    <field name='fleet_id'/>
+                    <field name='warning_hours'/>
+                    <field name='warning_cycles'/>
+                    <field name='warning_rins'/>
+                    <field name='warning_calendars'/>
+                  </tree>
+            </field>
+          </group>
+          </group>
+
+          <footer>
+            <button name="print_maintenance_planing_reports" invisible="1" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+            <button name="export_xls" context="{'xls_export':1}" type="object" icon="fa-download" string="Print XLS" class="oe_highlight" />
+            <button special="cancel" string="Cancel"/>
+          </footer>
+            </form>
+        </field>
+      </record>
+
+    <report
+            id="maintenance_planning_report"
+            model="maintenance.plan.report"
+            string=" "
+            report_type="xlsx"
+            name="ams_report.maintenance_planning_report.xlsx"
+            file="ams_report.maintenance_planning_report.xlsx"
+            attachment_use="False"
+        />
+
+<record id="maintenance_planing_report_action" model="ir.actions.act_window">
+  <field name="name">Maintenance Planning Report</field>
+  <field name="res_model">maintenance.plan.report</field>
+  <field name="view_type">form</field>
+  <field name="view_mode">form</field>
+    <field name="limit">1</field>
+  <field name="target">new</field>
+</record>
+</data>
+</odoo>

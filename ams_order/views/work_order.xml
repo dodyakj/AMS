@@ -1,0 +1,185 @@
+<odoo>
+  <data>
+    
+    <record id='work_order_ams_tree' model='ir.ui.view'>
+              <field name="name">ams.work.order.tree</field>
+              <field name="model">ams.work.order</field>
+              <field name="arch" type="xml">
+                  <tree string="Work Order" default_order="create_date desc">
+                    <field name='name'/>
+                    <field name='wo_type'/>
+                    <field name='schedule'/>
+                    <field name='create_date'/>
+                    <field name='write_date'/>
+                  </tree>
+              </field>
+      </record>
+
+      <record model="ir.ui.view" id="work_order_ams_search_view">
+        <field name="name">ams.work.order.search</field>
+        <field name="model">ams.work.order</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name='name'/>
+              <field name='wo_type'/>
+              <field name='schedule'/>             
+            </search>
+        </field>
+      </record>
+
+     <record id='work_order_ams_form' model='ir.ui.view'>
+          <field name="name">ams.work.order.custom</field>
+          <field name="model">ams.work.order</field>
+          <field name="arch" type="xml">
+                <form string="Work Order">
+                  <header>
+                    <field name="id" attrs="{'invisible':True}"/>
+                    <button name="confrim" attrs="{'invisible':[('states','!=','draft')]}" icon="fa-check" type="object" string="Confirm" groups="ams_order.group_wo_confrim" />
+                    <button name="next_stage" icon="fa-check" type="object" string="Progress" attrs="{'invisible':['|',('states','=','draft'),'|',('id','=',False),('status','!=','request')]}" />
+                    <button name="next_stage" icon="fa-check" type="object" string="Done" attrs="{'invisible':['|',('states','=','draft'),'|',('id','=',False),('status','!=','progress')]}" />
+                    <field name="states" widget="statusbar" statusbar_visible="draft,confrimed"/>
+                  </header>
+                  <group>
+                    <group>
+                      <field name="date_issued"/>
+                      <field name="ref"/>
+                      <field name="wo_type" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                    <group string="Maintenance planning at">
+                      <field name="start_date"/>
+                      <field name="end_date"/>
+                      <field name="is_unserviceable"/>
+                    </group>
+                    <group>
+                      <field name="wo_no" attrs="{'readonly':[('wo_type','=','material')]}"/>
+                      <field name="status"/>
+                      <field name="recorded_date"/>
+                    </group>
+                  </group>
+                  <group col="4">
+                    <!-- <field name="performed_by"/>
+                    <field name="otr_per" /> -->
+                    <field name="inspector" string="Recorded by" attrs="{'invisible':[('wo_type','=','material')]}"/>
+                    <field name="otr_ins" attrs="{'invisible':[('wo_type','=','material')]}"/>
+                    <field name="recorded" attrs="{'invisible':[('wo_type','=','inspection')],'readonly':True}"/>
+                    <field name="otr_record" attrs="{'invisible':[('wo_type','=','inspection')]}"/>
+                    <!-- <field name="supervisor" invisible="1"/>
+                    <field name="otr_sup" invisible="1"/> -->
+                    <field name="issued_by" domain="[('department_id.name','like','MAINT')]"/>
+                    <field name="otr_iss"/>
+                  </group>
+                  <group>
+                    <field name="schedule"/>
+                    <field name="upload_name" invisible="1"/>
+                    <field widget="binary" name="upload" filename="upload_name"/>
+                    <field name="insp_no" attrs="{'invisible':[('wo_type','=','material')]}"/>
+                  </group>
+                  <notebook>
+                    <page string="Aircraft">
+                      <group>
+                      <group>
+                        <field name="type"/>
+                        <field name="ac"/>
+                        <field name="serial_no"/>
+                        <field name="hr_cy"/>
+                        <field name="ins_type"/>
+                      </group>
+                      </group>
+                    </page>
+                    <page string="Component">
+                      <group>
+                      <group>
+                        <field name="part_name"/>
+                        <field name="part_number"/>
+                        <field name="serial_number"/>
+                        <field name="tsn_tso"/>
+                        <field name="work_req"/>
+                      </group>
+                      </group>
+                    </page>
+                    <page string="Address">
+                      <group>
+                        <field name="to"/>
+                        <field name="cc"/>
+                      </group>
+                    </page>
+                    <page string="Description">
+                        <field name="des_id">
+                          <tree>
+                            <field name="date"/>
+                            <field name="man_power"/>
+                            <field name="man_hours"/>
+                            <field name="start"/>
+                            <field name="finish"/>
+                          </tree>
+                        </field>
+                    </page>
+                    <page string="Note">
+                        <field name="note"/>
+                    </page>
+                    <page string="Material Required">
+                      <field name="mr_id">
+                        <tree editable="bottom">
+                          <field name="name"/>
+                          <field name="part_name"/>
+                          <field name="qty"/>
+                          <field name="qty_req"/>
+                          <field name="spesial_tool" string="Special Tool Required"/>
+                          <field name="spesial_tool_qty" string="Special Tool Qty"/>
+                        </tree>
+                      </field>
+                    </page>
+                    <page string="Checklist">
+                      <group>
+                        <field name="checklist_id"/>
+                        <field name="todo_ids" attrs="{'invisible':[('todo_ids','=',[])]}"/>
+                        <field name="desc" attrs="{'invisible':[('desc','=',False)]}"/>
+                        <!-- <field name="file" attrs="{'invisible':[('checklist_id','=',False)]}"/> -->
+                        <field name="file_name" invisible="1"/>
+                        <field widget="binary" name="file" filename="file_name" attrs="{'invisible':[('checklist_id','=',False)]}"/>
+                      </group>
+                    </page>
+                  </notebook>
+                </form>                
+          </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="work_order_ams_action">
+      <field name="res_model">ams.work.order</field>
+      <field name="name">Work Order</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Work Order
+            </p>
+        </field>
+    </record>   
+
+
+     <record id='work_order_description_ams_form' model='ir.ui.view'>
+          <field name="name">work.order.description.custom</field>
+          <field name="model">work.order.description</field>
+          <field name="arch" type="xml">
+                <form string="Description">
+                    <field name="wo_type" widget="radio" options="{'horizontal': true}" attrs="{'invisible':True}"/>
+                    <group col="4" string="Description"> 
+                            <field name="date" colspan="4" attrs="{'required':True}"/>
+                            <field name="inspection" colspan="4" attrs="{'invisible':[('wo_type','=','inspection')]}"/>
+                            <field name="refer_to" colspan="2" attrs="{'invisible':[('wo_type','=','inspection')]}"/>
+                            <field name="due_at" colspan="2" attrs="{'invisible':[('wo_type','=','inspection')]}"/>
+                            <field name="take_action" colspan="4" attrs="{'invisible':[('wo_type','=','inspection')]}"/>
+                            <field name="text" colspan="4" attrs="{'invisible':[('wo_type','=','material')]}"/>
+                    </group>
+                    <group string="Hours" col="4">
+                            <field name="start"/>
+                            <field name="finish"/>
+                            <field name="man_power"/>
+                            <field name="man_hours"/>
+                    </group>
+                </form>                
+          </field>
+      </record>
+
+</data>
+</odoo>

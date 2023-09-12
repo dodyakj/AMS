@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="custom_btn_discard_fml" xml:space="preserve">
+    <t t-extend="FormView.buttons">
+        <t t-jquery="button.o_form_button_cancel" t-operation="replace">
+            <a t-if="widget.model == 'ams_fml.log'" href="" class="oe_menu_leaf btn btn-default btn-sm fml-discard" data-action-model="ir.actions.act_window">
+                <span class="oe_menu_text">
+                    Discard
+                </span>
+        	</a>
+            <button t-if="widget.model != 'ams_fml.log'" class="o_form_button_cancel" type="button">Discard</button>
+		</t>
+    </t>
+</template>

@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+         <record id="product.product_uom_tin" model="product.uom">
+            <field name="name">Tin</field>
+            <field name="category_id" ref="product.product_uom_categ_unit"/>
+            <field name="factor_inv" eval="3.78541"/>
+            <field name="uom_type">bigger</field>
+        </record>
+    </data>
+</odoo>

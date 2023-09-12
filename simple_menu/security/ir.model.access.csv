@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_simple_menu_simple_menu,simple_menu.simple_menu,model_simple_menu_simple_menu,,1,0,0,0

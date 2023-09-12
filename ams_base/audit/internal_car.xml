@@ -1,0 +1,114 @@
+<odoo>
+  <data>
+    
+    <record id='internal_audit_car_tree' model='ir.ui.view'>
+              <field name="name">internal.audit.car.tree</field>
+              <field name="model">internal.audit.car</field>
+              <field name="arch" type="xml">
+                  <tree string="Corrective Action Request">
+                    <field name='date'/>
+                    <field name='place'/> 
+                    <field name='ac_reg'/>
+                    <!-- <field name='type_audit'/> -->
+                    <field name='auditee'/>
+                  </tree>
+              </field>
+      </record>
+
+     <record id='internal_audit_car_form' model='ir.ui.view'>
+          <field name="name">internal.audit.car.custom</field>
+          <field name="model">internal.audit.car</field>
+          <field name="arch" type="xml">
+            <form>
+              <group col="4">
+                    <field name='date'/>
+                    <field name='place'/> 
+                    <field name='ac_reg'/>
+                    <!-- <field name='type_audit'/> -->
+                    <field name='auditee'/>     
+              </group>
+              <notebook>
+                <page string='Corrective Action Request'>
+                  <field name="car_id" string='Corrective Action Request'>
+                    <tree>
+                      <field name='finding'/>
+                      <field name='categ'/>
+                      <field name='system'/>
+                      <field name='pre_action'/>
+                      <field name='cor_action'/>
+                      <field name='status'/>
+                      <field name='tar_date'/>
+                      <field name='res_person'/>
+                      <field name='verifi_by'/> 
+                    </tree>
+                  </field>
+                </page>
+              </notebook>
+            </form>
+          </field>
+      </record>
+
+     <record id='audit_car_form' model='ir.ui.view'>
+          <field name="name">audit.car.custom</field>
+          <field name="model">audit.car</field>
+          <field name="arch" type="xml">
+            <form>
+              <group col="4">
+                  <field name='categ'/>
+                  <field name='system'/>
+                  <field name='pre_action'/>
+                  <field name='cor_action'/>
+                  <field name='status'/>
+                  <field name='tar_date'/>
+                  <field name='res_person'/>
+                  <field name='verifi_by'/> 
+                  <field name='finding' colspan="4"/>
+              </group>
+            </form>
+          </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="internal_audit_car_action">
+      <field name="name">Corrective Action Request</field>
+      <field name="res_model">internal.audit.car</field>
+      <field name="context">{'audit_type':'internal'}</field>
+      <field name="domain">[('type_audit', '=', 'internal')]</field>
+      <field name="view_type">form</field>
+      <!-- <field name="search_view_id" ref="view_"/> -->
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Corrective Action Request
+            </p>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="external_audit_car_action">
+      <field name="name">External Audit</field>
+      <field name="res_model">internal.audit.car</field>
+      <field name="context">{'audit_type':'external'}</field>
+      <field name="domain">[('type_audit', '=', 'external')]</field>
+      <field name="view_type">form</field>
+      <!-- <field name="search_view_id" ref="view_"/> -->
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New External Audit 
+            </p>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="third_audit_car_action">
+      <field name="name">Third Party Audit</field>
+      <field name="res_model">internal.audit.car</field>
+      <field name="context">{'audit_type':'third'}</field>
+      <field name="domain">[('type_audit', '=', 'third')]</field>
+      <field name="view_type">form</field>
+      <!-- <field name="search_view_id" ref="view_"/> -->
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Third Party Audit
+            </p>
+        </field>
+    </record>
+  </data>
+</odoo>

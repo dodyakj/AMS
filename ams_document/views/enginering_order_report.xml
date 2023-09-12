@@ -1,0 +1,122 @@
+<odoo>
+
+    <template id="report_eo_report">
+            <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="data">
+                 <t t-call="ams_document.internal_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                  <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                            </div>
+                            <div class="col-xs-8">
+                                <h2 class="text-left">Enginering Order Report</h2>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><center><b>Date</b></center></td>
+                                <td><center><b>E.O. Number</b></center></td>
+                                <td><center><b>E.O. Title</b></center></td>
+                                <td><center><b>A/C Reg.</b></center></td>
+                                <td><center><b>Prepared By</b></center></td>
+                                <td><center><b>Checked By</b></center></td>
+                                <td><center><b>Approved By</b></center></td>
+                                <td><center><b>Remark &amp; Reference</b></center></td>
+                                <td><center><b>Compliance</b></center></td>
+                            </tr>
+                            <t t-foreach="data.eo_id" t-as="eo">
+                                <tr>
+                                    <td><center> <div t-field="eo.create_date" /> </center></td>
+                                    <td><center> <div t-field="eo.eo_number" /> </center></td>
+                                    <td><center> <div t-field="eo.eo_tittle" /> </center></td>
+                                    <td><center> <div t-field="eo.aircraft_id" /> </center></td>
+                                    <td><center> <div t-field="eo.prepared_by" /> </center></td>
+                                    <td><center> <div t-field="eo.checked_by" /> </center></td>
+                                    <td><center> <div t-field="eo.approved_by" /> </center></td>
+                                    <td><center> <div t-field="eo.remark_ref" /> </center></td>
+                                    <td><center> <div t-field="eo.compliance" /> </center></td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+  <data>
+
+        <record id="paperformat_eo" model="report.paperformat">
+            <field name="name">Enginering Order</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="print_eo_pdf_report"
+                string="Enginering Order Report"
+                model="document.eo.report"
+                report_type="qweb-html"
+                file="ams_document.report_eo_report"
+                name="ams_document.report_eo_report"
+                paperformat="ams_document.paperformat_eo"
+            />
+
+    <record model="ir.ui.view" id="document_eo_type_form_report">
+        <field name="name">document.eo.report.form</field>
+        <field name="model">document.eo.report</field>
+        <field name="arch" type="xml">
+            <form string="Enginering Order">
+                <sheet string="Enginering Order">
+                    <group>
+                        <group>
+                            <field name="ac_type"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="compliance"/>
+                            <field name="sort_by" widget="radio" options="{'horizontal':true}"/>
+                            <field name="order_by" widget="radio" options="{'horizontal':true}"/>
+                        </group>
+                    </group>
+                </sheet>
+                    <footer>
+                        <!-- <button name="export_xls"  context="{'xls_export':1}" icon="fa-download" type="object" string="Print XLS" class="oe_highlight" attrs="{'invisible':[('type_print','!=','xls')]}"/> -->
+                        <button name="print_eo_pdf_report" type="object" icon="fa-download" string="Print PDF" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_report_eo" model="ir.actions.act_window">
+      <field name="name">Enginering Order Report</field>
+      <field name="res_model">document.eo.report</field>
+      <field name="view_mode">form</field>
+      <field name="lieot">1</field>
+      <field name="target">new</field>
+    </record>
+  </data>
+</odoo>

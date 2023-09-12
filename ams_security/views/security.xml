@@ -1,0 +1,647 @@
+<odoo>
+	<data noupdate="1">
+
+		<record id="module_category_aircraft_mainteenance" model="ir.module.category">
+			<field name="name">Aircraft Maintenance / AMS</field>
+			<field name="description">Aircraft Maintenance</field>
+			<field name="sequence">1000</field>
+		</record>
+
+		<record id="module_category_modification" model="ir.module.category">
+			<field name="name">Modification</field>
+			<field name="description">Modification</field>
+			<field name="sequence">2000</field>
+		</record>
+
+		<record id="module_category_inventory" model="ir.module.category">
+			<field name="name">Inventory</field>
+			<field name="description">Inventory</field>
+			<field name="sequence">3000</field>
+		</record>
+
+		<record id="module_category_instruction" model="ir.module.category">
+			<field name="name">Instruction / Order</field>
+			<field name="description">Instruction / Order</field>
+			<field name="sequence">4000</field>
+		</record>
+
+		<record id="module_category_plaining" model="ir.module.category">
+			<field name="name">Planning</field>
+			<field name="description">Planning</field>
+			<field name="sequence">5000</field>
+		</record>
+
+		<record id="module_category_flight_maintenance" model="ir.module.category">
+			<field name="name">Flight Maintenance</field>
+			<field name="description">Flight Maintenance</field>
+			<field name="sequence">6000</field>
+		</record>
+
+		<record id="module_category_training" model="ir.module.category">
+			<field name="name">Training</field>
+			<field name="description">Training</field>
+			<field name="sequence">7000</field>
+		</record>
+
+		<record id="module_category_settings" model="ir.module.category">
+			<field name="name">Settings</field>
+			<field name="description">Settings</field>
+			<field name="sequence">8000</field>
+		</record>
+
+		<record id="module_category_reports" model="ir.module.category">
+			<field name="name">Report</field>
+			<field name="description">Report</field>
+			<field name="sequence">9000</field>
+		</record>
+
+		<record id="module_category_publication" model="ir.module.category">
+			<field name="name">Publication</field>
+			<field name="description">Publication</field>
+			<field name="sequence">10000</field>
+		</record>
+
+		<record id="module_category_configuration" model="ir.module.category">
+			<field name="name">Configuration</field>
+			<field name="description">Configuration</field>
+			<field name="sequence">11000</field>
+		</record>
+
+		<record id="module_category_bulletin" model="ir.module.category">
+			<field name="name">Bulletin</field>
+			<field name="description">Bulletin</field>
+			<field name="sequence">12000</field>
+		</record>
+
+		<record id="module_category_mdr" model="ir.module.category">
+			<field name="name">Maintenance Due Report</field>
+			<field name="description">Maintenance Due Report</field>
+			<field name="sequence">13000</field>
+		</record>
+
+		<record id="module_category_mtr" model="ir.module.category">
+			<field name="name">Maintenance Tracking Report</field>
+			<field name="description">Maintenance Tracking Report</field>
+			<field name="sequence">14000</field>
+		</record>
+
+		<record id="group_airframe_managers" model="res.groups">
+			<field name="name">Managers</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_airframe_users" model="res.groups">
+			<field name="name">Users</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_fml_edit" model="res.groups">
+			<field name="name">FML Edit</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<!-- <record id="group_airframe_users_read" model="res.groups">
+			<field name="name">Users Read</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_airframe_users_create" model="res.groups">
+			<field name="name">Users Create</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_airframe_users_write" model="res.groups">
+			<field name="name">Users Write</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_airframe_users_delete" model="res.groups">
+			<field name="name">Users Delete</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record> -->
+<!-- 
+		<record id="group_maintenance_request" model="res.groups">
+			<field name="name">Maintenance Request</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_maintenance_calendar" model="res.groups">
+			<field name="name">Maintenance Calendar</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_airframe_create" model="res.groups">
+			<field name="name">Airframe Create</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_airframe_edit" model="res.groups">
+			<field name="name">Airframe Edit</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_airframe_delete" model="res.groups">
+			<field name="name">Airframe Delete</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_airframe_read" model="res.groups">
+			<field name="name">Airframe Read</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_engine" model="res.groups">
+			<field name="name">Engine</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_propeller" model="res.groups">
+			<field name="name">Propeller</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_auxiliary" model="res.groups">
+			<field name="name">Auxiliary</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_inspection" model="res.groups">
+			<field name="name">Inspection</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_daily" model="res.groups">
+			<field name="name">Daily Utilization</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_reability" model="res.groups">
+			<field name="name">Reability</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_fml" model="res.groups">
+			<field name="name">Flight Maintenance Log</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_complied_insp" model="res.groups">
+			<field name="name">Complied Inspection</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_basic_equip" model="res.groups">
+			<field name="name">Basic Equipment List</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record>
+		<record id="group_support_facility" model="res.groups">
+			<field name="name">Supporting Facility</field>
+			<field name="category_id" ref="module_category_aircraft_mainteenance"/>
+		</record> -->
+
+
+		<record id="group_aircrraft_modification_managers" model="res.groups">
+			<field name="name">Manager</field>
+			<field name="category_id" ref="module_category_modification"/>
+		</record>
+		<record id="group_aircrraft_modification_users" model="res.groups">
+			<field name="name">Users</field>
+			<field name="category_id" ref="module_category_modification"/>
+		</record>
+<!-- 		<record id="group_service_bulletin" model="res.groups">
+			<field name="name">Service Bulletin</field>
+			<field name="category_id" ref="module_category_modification"/>
+		</record>
+		<record id="group_airworthiness_directive" model="res.groups">
+			<field name="name">Airrworthiness Directive</field>
+			<field name="category_id" ref="module_category_modification"/>
+		</record>
+		<record id="group_supplemental_type_certificate" model="res.groups">
+			<field name="name">Supplemental Type Certificate</field>
+			<field name="category_id" ref="module_category_modification"/>
+		</record>
+		<record id="group_aircraft_alteration" model="res.groups">
+			<field name="name">Aircraft Alteration</field>
+			<field name="category_id" ref="module_category_modification"/>
+		</record>
+		<record id="group_fleetwide_bulletin" model="res.groups">
+			<field name="name">Fleetwide Bulletin Report </field>
+			<field name="category_id" ref="module_category_modification"/>
+		</record>
+		<record id="group_complied_bulleetin" model="res.groups">
+			<field name="name">Complied Bulletin </field>
+			<field name="category_id" ref="module_category_modification"/>
+		</record>
+		<record id="group_bulletin_authority" model="res.groups">
+			<field name="name">Bulletin Authority Setup </field>
+			<field name="category_id" ref="module_category_modification"/>
+		</record>
+ -->
+
+
+		<record id="group_inventory_managers" model="res.groups">
+			<field name="name">Manager</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_inventory_users" model="res.groups">
+			<field name="name">Users</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_ppe_create" model="res.groups">
+			<field name="name">PPE Create</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_ppe_delete" model="res.groups">
+			<field name="name">PPE Delete</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_ppe_report" model="res.groups">
+			<field name="name">Report PPE</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record><!-- 
+		<record id="group_master_part_list" model="res.groups">
+			<field name="name">Master Part List</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_inventory" model="res.groups">
+			<field name="name">Inventory</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_comp_serial_num" model="res.groups">
+			<field name="name">Component Serial Number</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_comp_hist" model="res.groups">
+			<field name="name">Component History</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_vendors" model="res.groups">
+			<field name="name">Vendors</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_data_import" model="res.groups">
+			<field name="name">Data Import</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_ppe" model="res.groups">
+			<field name="name">PPE</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_tools" model="res.groups">
+			<field name="name">Tools</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_receiving_inventory" model="res.groups">
+			<field name="name">Receiving Inventory</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record>
+		<record id="group_receiving_inventory_qualification" model="res.groups">
+			<field name="name">Receiving Inventory Qualification</field>
+			<field name="category_id" ref="module_category_inventory"/>
+		</record> -->
+
+
+		<record id="group_instruction_managers" model="res.groups">
+			<field name="name">Managers</field>
+			<field name="category_id" ref="module_category_instruction"/>
+		</record>
+		<record id="group_instruction_users" model="res.groups">
+			<field name="name">Users</field>
+			<field name="category_id" ref="module_category_instruction"/>
+		</record>
+<!-- 		<record id="group_workorder" model="res.groups">
+			<field name="name">Work Order</field>
+			<field name="category_id" ref="module_category_instruction"/>
+		</record>
+		<record id="group_mwo" model="res.groups">
+			<field name="name">Maintenance Work Order</field>
+			<field name="category_id" ref="module_category_instruction"/>
+		</record>
+		<record id="group_work_task_layout" model="res.groups">
+			<field name="name">Work Task Layout</field>
+			<field name="category_id" ref="module_category_instruction"/>
+		</record>
+		<record id="group_inventory_request" model="res.groups">
+			<field name="name">Inventory Request</field>
+			<field name="category_id" ref="module_category_instruction"/>
+		</record>
+		<record id="group_mi_ti_oti_eo" model="res.groups">
+			<field name="name">MI / TI / OTI / EO</field>
+			<field name="category_id" ref="module_category_instruction"/>
+		</record>
+		<record id="group_mell_inventory_request" model="res.groups">
+			<field name="name">MEL Inventory Request</field>
+			<field name="category_id" ref="module_category_instruction"/>
+		</record>
+ -->
+
+		<record id="group_plaining_managers" model="res.groups">
+			<field name="name">Managers</field>
+			<field name="category_id" ref="module_category_plaining"/>
+		</record>
+		<record id="group_plaining_users" model="res.groups">
+			<field name="name">Users</field>
+			<field name="category_id" ref="module_category_plaining"/>
+		</record><!-- 
+		<record id="group_maintenance_planning" model="res.groups">
+			<field name="name">Maintenance Planning</field>
+			<field name="category_id" ref="module_category_plaining"/>
+		</record>
+		<record id="group_timeline" model="res.groups">
+			<field name="name">Timeline</field>
+			<field name="category_id" ref="module_category_plaining"/>
+		</record>
+		<record id="group_budget_planning" model="res.groups">
+			<field name="name">Budget Planning</field>
+			<field name="category_id" ref="module_category_plaining"/>
+		</record> -->
+
+
+		<record id="group_flight_maintenance_managers" model="res.groups">
+			<field name="name">Managers</field>
+			<field name="category_id" ref="module_category_flight_maintenance"/>
+		</record>
+		<record id="group_flight_maintenance_users" model="res.groups">
+			<field name="name">Users</field>
+			<field name="category_id" ref="module_category_flight_maintenance"/>
+		</record>
+		<!-- 
+		<record id="group_discrepencies_log" model="res.groups">
+			<field name="name">Discrepencies Log</field>
+			<field name="category_id" ref="module_category_flight_maintenance"/>
+		</record>
+		<record id="group_corrective_action" model="res.groups">
+			<field name="name">Corrective Action</field>
+			<field name="category_id" ref="module_category_flight_maintenance"/>
+		</record>
+		<record id="group_mell_ext" model="res.groups">
+			<field name="name">MEL Extention</field>
+			<field name="category_id" ref="module_category_flight_maintenance"/>
+		</record>
+		<record id="group_ster" model="res.groups">
+			<field name="name">Short Term Escalation Request</field>
+			<field name="category_id" ref="module_category_flight_maintenance"/>
+		</record>
+ -->
+
+
+		<record id="group_training_managers" model="res.groups">
+			<field name="name">Managers</field>
+			<field name="category_id" ref="module_category_training"/>
+		</record>
+		<record id="group_training_users" model="res.groups">
+			<field name="name">Users</field>
+			<field name="category_id" ref="module_category_training"/>
+		</record><!-- 
+		<record id="group_training" model="res.groups">
+			<field name="name">Training</field>
+			<field name="category_id" ref="module_category_training"/>
+		</record>
+		<record id="group_training_prog" model="res.groups">
+			<field name="name">Training Program</field>
+			<field name="category_id" ref="module_category_training"/>
+		</record>
+		<record id="group_employee_setting" model="res.groups">
+			<field name="name">Employee Setting</field>
+			<field name="category_id" ref="module_category_training"/>
+		</record>
+		<record id="group_report_training" model="res.groups">
+			<field name="name">Report Training</field>
+			<field name="category_id" ref="module_category_training"/>
+		</record> -->
+
+
+		<record id="group_settings_managers" model="res.groups">
+			<field name="name">Managers</field>
+			<field name="category_id" ref="module_category_settings"/>
+		</record>
+		<record id="group_settings_users" model="res.groups">
+			<field name="name">Users</field>
+			<field name="category_id" ref="module_category_settings"/>
+		</record>
+<!-- 
+		<record id="group_ata_definition" model="res.groups">
+			<field name="name">ATA Definition</field>
+			<field name="category_id" ref="module_category_settings"/>
+		</record>
+		<record id="group_base_operation" model="res.groups">
+			<field name="name">Base Operation</field>
+			<field name="category_id" ref="module_category_settings"/>
+		</record>
+		<record id="group_area" model="res.groups">
+			<field name="name">Area</field>
+			<field name="category_id" ref="module_category_settings"/>
+		</record>
+		<record id="group_authority_setup" model="res.groups">
+			<field name="name">Bulletin Authority Setup</field>
+			<field name="category_id" ref="module_category_settings"/>
+		</record>
+		<record id="group_set_time" model="res.groups">
+			<field name="name">Set Time Warning</field>
+			<field name="category_id" ref="module_category_settings"/>
+		</record>
+		<record id="group_inventory_location" model="res.groups">
+			<field name="name">Inventory Location</field>
+			<field name="category_id" ref="module_category_settings"/>
+		</record>
+ -->
+
+		<record id="group_reports_managers" model="res.groups">
+			<field name="name">Manager</field>
+			<field name="category_id" ref="module_category_reports"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_erp_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+		</record>
+		<record id="group_reports_users" model="res.groups">
+			<field name="name">Users</field>
+			<field name="category_id" ref="module_category_reports"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_erp_manager'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+		</record>
+		<record id="group_report_all" model="res.groups">
+			<field name="name">Report View</field>
+			<field name="category_id" ref="module_category_reports"/>
+		</record>
+
+
+		<record id="group_publication_managers" model="res.groups">
+			<field name="name">Manager</field>
+			<field name="category_id" ref="module_category_publication"/>
+		</record>
+		<record id="group_publication_users" model="res.groups">
+			<field name="name">User</field>
+			<field name="category_id" ref="module_category_publication"/>
+		</record>
+<!-- 		<record id="group_aircraft_maintenance_program" model="res.groups">
+			<field name="name">Aircraft Maintenance Program</field>
+			<field name="category_id" ref="module_category_publication"/>
+		</record>
+		<record id="group_technical_publication" model="res.groups">
+			<field name="name">Technical Publication</field>
+			<field name="category_id" ref="module_category_publication"/>
+		</record>
+ -->
+
+
+		<record id="group_configuration_managers" model="res.groups">
+			<field name="name">Manager</field>
+			<field name="category_id" ref="module_category_configuration"/>
+		</record>
+		<record id="group_configuration_users" model="res.groups">
+			<field name="name">User</field>
+			<field name="category_id" ref="module_category_configuration"/>
+		</record>
+<!-- 		<record id="group_maintenance_team" model="res.groups">
+			<field name="name">Maintenance Team</field>
+			<field name="category_id" ref="module_category_configuration"/>
+		</record>
+		<record id="group_aircraft_categ" model="res.groups">
+			<field name="name">Aircraft Category</field>
+			<field name="category_id" ref="module_category_configuration"/>
+		</record>
+		<record id="group_maintenance_stages" model="res.groups">
+			<field name="name">Maintenance Stages</field>
+			<field name="category_id" ref="module_category_configuration"/>
+		</record>
+ -->
+
+		<record id="group_write_airframe" model="res.groups">
+            <field name="name">Update Airframe</field>
+        </record>
+
+		<record id="group_write_hours_cycles" model="res.groups">
+            <field name="name">Update Hours / Cycles</field>
+        </record>
+
+        <record id="group_add_bulletin" model="res.groups">
+            <field name="name">Tambah Bulletin</field>
+        </record>
+
+        <record id="group_verify_bulletin" model="res.groups">
+            <field name="name">Verifikasi Bulletin</field>
+        </record>
+
+        <record id="group_publish_bulletin" model="res.groups">
+            <field name="name">Publish Bulletin</field>
+        </record>
+
+        <record id="group_add_mdr_mtr" model="res.groups">
+            <field name="name">Tambah MDR / MTR</field>
+        </record>
+
+        <record id="group_publish_mdr_mtr" model="res.groups">
+            <field name="name">Publish MDR / MTR</field>
+        </record>
+
+        <record id="group_add_fml" model="res.groups">
+            <field name="name">Tambah FML</field>
+        </record>
+
+        <record id="group_verify_fml" model="res.groups">
+        	<field name="name">Verify FML</field>
+        </record>
+
+		<!-- Button Bulletin -->
+		
+		<record id="group_button_bulletin_check" model="res.groups">
+			<field name="name">Button Check</field>
+			<field name="category_id" ref="module_category_bulletin"/>
+		</record>
+		
+		<record id="group_button_bulletin_validate" model="res.groups">
+			<field name="name">Button Validate</field>
+			<field name="category_id" ref="module_category_bulletin"/>
+		</record>
+
+		<!-- Button MDR -->
+
+		<record id="group_button_mdr_create" model="res.groups">
+			<field name="name">Create</field>
+			<field name="category_id" ref="module_category_mdr"/>
+		</record>
+
+		<record id="group_button_mdr_check" model="res.groups">
+			<field name="name">Button Check</field>
+			<field name="category_id" ref="module_category_mdr"/>
+		</record>
+
+		<record id="group_button_mdr_approve" model="res.groups">
+			<field name="name">Button Approve</field>
+			<field name="category_id" ref="module_category_mdr"/>
+		</record>
+
+		<record id="group_button_mdr_qc" model="res.groups">
+			<field name="name">Button QC</field>
+			<field name="category_id" ref="module_category_mdr"/>
+		</record>
+
+		<record id="group_dashboard_jamal" model="res.groups">
+			<field name="name">Dashboard PELITA</field>
+			<field name="category_id" ref="module_category_mdr"/>
+		</record>
+
+		<!-- Button MTR -->
+
+		<record id="group_button_mtr_check" model="res.groups">
+			<field name="name">Button Check</field>
+			<field name="category_id" ref="module_category_mtr"/>
+		</record>
+
+		<record id="group_button_mtr_approve" model="res.groups">
+			<field name="name">Button Approve</field>
+			<field name="category_id" ref="module_category_mtr"/>
+		</record>
+
+		<record id="group_button_mtr_qc" model="res.groups">
+			<field name="name">Button QC</field>
+			<field name="category_id" ref="module_category_mtr"/>
+		</record>
+
+		<!-- Other -->
+		<record id="group_edit_fml_log_log_name_date_approved" model="res.groups">
+			<field name="name">Edit FML Log Name and Date Authority</field>
+		</record>
+
+	</data>
+	<data>
+
+
+	 	<record id="partner_list_access" model="ir.rule">
+	        <field name="name">Access to the manager to list related partners</field>
+	        <field name="model_id" ref="base.model_res_partner"/>
+	        <field name="domain_force">['|',('company_id','=',False),('company_id','=',user.company_id.id)]</field>            
+	        <field name="groups" eval="[(4, ref('group_training_managers'),
+	        								ref('group_training_users'),
+	        								ref('group_airframe_managers'),
+	        								ref('group_inventory_managers'),
+	        								ref('base.group_system'),
+	        								ref('group_reports_managers'),
+	        								ref('group_reports_users'))]"/>
+	    </record>
+    	
+	    <!-- PUNYA HAK CONFIRM -->
+	    <record id="product_list_acess" model="ir.rule">
+	        <field name="name">Access To Product FROM Airframe</field>
+	        <field ref="product.model_product_product" name="model_id"/>
+	        <field name="domain_force">[('is_part','=',True)]</field>
+	        <field name="groups" eval="[(4, ref('ams_security.group_airframe_users'))]"/>
+	    </record>
+		
+		<!-- SOFT DELETE AIRFRAME -->
+		<record id="soft_delelete_airframe_rule" model="ir.rule">
+			<field name="name">Delete Rule Airframe</field>
+			<field name="model_id" ref="ams_base.model_aircraft_acquisition" />
+			<field name="domain_force">[('is_deleted','=',False)]</field>
+			<field name="global" eval="True" />
+		</record>
+
+		<!-- SOFT DELETE ENGINE -->
+		<record id="soft_delete_engine_rule" model="ir.rule">
+			<field name="name">Delete Rule Engine</field>
+			<field name="model_id" ref="ams_base.model_engine_type" />
+			<field name="domain_force">[('is_deleted','=',False)]</field>
+			<field name="global" eval="True" />
+		</record>
+
+		<!-- SOFT DELETE aUXLILIARY -->
+		<record id="soft_delete_auxiliary_rule" model="ir.rule">
+			<field name="name">Delete Rule Auxiliary</field>
+			<field name="model_id" ref="ams_base.model_auxiliary_type" />
+			<field name="domain_force">[('is_deleted','=',False)]</field>
+			<field name="global" eval="True" />
+		</record>
+
+		<!-- SOFT DELETE PROPELLER -->
+		<record id="soft_delete_propeller" model="ir.rule">
+			<field name="name">Delete Rule Propeller</field>
+			<field name="model_id" ref="ams_base.model_propeller_type" />
+			<field name="domain_force">[('is_deleted','=',False)]</field>
+			<field name="global" eval="True" />
+		</record>
+
+	</data>
+</odoo>

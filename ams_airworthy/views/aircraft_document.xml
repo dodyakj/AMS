@@ -1,0 +1,130 @@
+<odoo>
+	<data>
+	    <record model="ir.ui.view" id="aircraft_document_form">
+	    	<field name="name">aircraft.document.form</field>
+	    	<field name="model">aircraft.document</field>
+	    	<field name="arch" type="xml">
+	    		<form string="Hot Section Inspection">
+	    			<sheet>
+    					<field name="fleet_id" readonly="True" attrs="{'invisible':[('fleet_id','=',False)]}"/>
+    					<field name="engine_id" readonly="True" attrs="{'invisible':[('engine_id','=',False)]}"/>
+    					<field name="propeller_id" readonly="True" attrs="{'invisible':[('propeller_id','=',False)]}"/>
+    					<field name="auxiliary_id" readonly="True" attrs="{'invisible':[('auxiliary_id','=',False)]}"/>
+    					<notebook>
+    						<page string="AD / SB / STC Affected">
+	    						<br/>
+	    						<div class="oe_button_box" name="button_box">
+		                            <button name="add_bulletin"
+		                                type="object"
+		                                class="oe_stat_button"
+		                                icon="fa-book"
+		                                help="Add Bulletin"
+		                                string="Add Bulletin"
+		                                t-attf-data-context="{'fleet_id':fleet_id,'engine_id':engine_id,'propeller_id':propeller_id,'auxiliary_id':auxiliary_id}"
+		                                > 
+		                                <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+		                            </button>
+	                        	</div>
+	    						<br/>
+								<field name="document_line" readonly="True">
+									<tree string="AD / SB / STC Affected" editable="bottom">
+										<field name="bulletin_id" string="AD / SB / STC Affected"/>
+										<field name="compliance_text"/>
+									</tree>
+								</field>
+    						</page>
+    						<page string="Aircraft Document Certificate" attrs="{'invisible':[('fleet_id','=',False)]}">
+								<field name="document_ids" readonly="True">
+									<tree string="Aircraft Document Certificate" editable="bottom">
+										<field name="document_id"/>
+										<field name="file_data"/>
+										<field name="date_expired"/>
+									</tree>
+								</field>
+    						</page>
+    						<page string="Auxiliary Document Certificate" attrs="{'invisible':[('auxiliary_id','=',False)]}">
+								<field name="document_aux_ids" readonly="True">
+									<tree string="Auxiliary Document Certificate" editable="bottom">
+										<field name="document_id"/>
+										<field name="file_data"/>
+										<field name="date_expired"/>
+									</tree>
+								</field>
+    						</page>
+    						<page string="Engine Document Certificate" attrs="{'invisible':[('engine_id','=',False)]}">
+								<field name="document_engine_ids" readonly="True">
+									<tree string="Engine Document Certificate" editable="bottom">
+										<field name="document_id"/>
+										<field name="file_data"/>
+										<field name="date_expired"/>
+									</tree>
+								</field>
+    						</page>
+    						<page string="Propeller Document Certificate" attrs="{'invisible':[('propeller_id','=',False)]}">
+								<field name="document_propeller_ids" readonly="True">
+									<tree string="Propeller Document Certificate" editable="bottom">
+										<field name="document_id"/>
+										<field name="file_data"/>
+										<field name="date_expired"/>
+									</tree>
+								</field>
+    						</page>
+    					</notebook>
+		    			<footer>
+		    				<button name="cancel" string="Close" special="cancel" class="oe_link"/>
+		    			</footer>
+	    			</sheet>
+	    		</form>
+	    	</field>
+	    </record>
+
+	    <record model="ir.ui.view" id="bulletin_addition_form">
+	    	<field name="name">bulletin.addition.form</field>
+	    	<field name="model">bulletin.addition</field>
+	    	<field name="arch" type="xml">
+	    		<form string="Add Bulletin">
+	    			<sheet>
+	    				<group col="3">
+	    					<field colspan="3" name="fleet_id" attrs="{'invisible':[('fleet_id','=',False)]}"/>
+	    					<field colspan="3" name="engine_id" attrs="{'invisible':[('engine_id','=',False)]}"/>
+							<field colspan="3" name="propeller_id" attrs="{'invisible':[('propeller_id','=',False)]}"/>
+							<field colspan="3" name="auxiliary_id" attrs="{'invisible':[('auxiliary_id','=',False)]}"/>
+							<field colspan="3" name="bulletin_id"/>
+							<field colspan="3" name="bulletin_check_text" string=""/>
+
+							<field colspan="3" name="comply_status"/>
+							<field colspan="3" name="comply_with" attrs="{'invisible':[('comply_status','not in',['cw'])]}"/>
+							<field colspan="3" name="not_comply_reason" attrs="{'invisible':[('comply_status','not in',['ncw'])]}"/>
+							<field colspan="3" name="last_comply" attrs="{'invisible':[('comply_status','not in',['cw','pcw'])]}"/>
+							<label string="Last Comply At" attrs="{'invisible':[('comply_status','not in',['cw','pcw'])]}"/>
+							<field name="last_comply_hours" nolabel="1" attrs="{'invisible':[('comply_status','not in',['cw','pcw'])]}"/>
+							<field name="last_comply_hours_label" nolabel="1" attrs="{'invisible':[('comply_status','not in',['cw','pcw'])]}"/>
+							<label string=" " attrs="{'invisible':[('secondary','not in',['and','or'])]}"/>
+							<field name="last_comply_cycles" nolabel="1" attrs="{'invisible':[('comply_status','not in',['cw','pcw'])]}"/>
+							<field name="last_comply_cycles_label" nolabel="1" attrs="{'invisible':[('comply_status','not in',['cw','pcw'])]}"/>
+							
+							<field colspan="3" name="repetitive"/>
+							<label string="Repetitive Every" attrs="{'invisible':[('repetitive','!=',True)]}"/>
+							<field name="value" nolabel="1" attrs="{'invisible':[('repetitive','!=',True)]}"/>
+							<field class="gi_custom_input" name="unit" nolabel="1" attrs="{'invisible':[('repetitive','!=',True)]}"/>
+
+							<field name="secondary" string=" " attrs="{'invisible':[('repetitive','!=',True)]}"/>
+							<label string=" " attrs="{'invisible':[('secondary','not in',['and','or'])]}"/>
+							<label string=" " attrs="{'invisible':[('secondary','not in',['and','or'])]}"/>
+							<field name="secondary_value" nolabel="1" attrs="{'invisible':[('secondary','not in',['and','or'])]}"/>
+							<field class="gi_custom_input" name="secondary_unit" nolabel="1" attrs="{'invisible':[('secondary','not in',['and','or'])]}"/>
+							
+							<field colspan="3" name="remark"/>
+	    				</group>
+	    			</sheet>
+		    		<footer>
+		              <button string="Add" name="action_add" type="object" class="oe_link btn-primary"/>
+		              <button string="Cancel" class="oe_link" special="cancel"/>
+		          	</footer>
+	    		</form>
+	    	</field>
+	    </record>
+
+
+	</data>
+</odoo>

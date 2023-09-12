@@ -1,0 +1,14 @@
+AVLB ada di gudang serviceable
+INST terinstall di pesawat
+ZDAMAGE Unserviceable
+ZRECON rekondisi / serviceable
+ESTO digudang
+ASEQ barang tersedia belum ada perputaran
+DLFL deletionflag (dihapus)
+INAC Inactive
+
+
+Mrf -> diganti Manufacture Date
+TSN dulu baru TSO
+otomatis MTR 3 bulan
+Training Schedul diganti last done ditambah next due otomatis ditambah kapan pertama kali training

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="report_maintenance_tracking">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="report.external_layout">
+                <div class="page">
+                     
+                    <!-- JUDUL REPORT-->
+                     
+                    <h1 class="text-center">Maintenance Tracking Report</h1>
+                <div class="row">
+                    <div class="com-md-2"></div>
+                    <div class="col-md-4">
+                        Aircraft Tail Number : <span t-field="data.fleet_id.name"/> <t t-if="data.type == 'all'"> ALL </t> 
+                    </div>
+                    <div class="col-md-4">
+                        Description : <span t-field="data.fleet_id.aircraft_type_id.name"/>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="col-md-12">
+                            Mrf.: <span t-field="data.fleet_id.location"/>
+                        </div>
+                        <div class="col-md-12">
+                            Hours: <span t-field="data.fleet_id.total_hours"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="col-md-12">
+                            Model No.: <span t-field="data.fleet_id.aircraft_name"/>
+                        </div>
+                        <div class="col-md-12">
+                            Cycles: <span t-field="data.fleet_id.total_landings"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="col-md-12">
+                            Serial No.: <span t-field="data.fleet_id.vin_sn"/>
+                        </div>
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="col-md-12">
+                            Last Flight : <span t-field="data.fleet_id.acquisition_date"/>
+                        </div>
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md">
+                        
+                </div>
+                    <center>
+                        <h2>
+                        Hour Limit Group
+                        </h2>
+                    </center>
+                    <table class="table table-bordered" style="table-layout:auto">
+                        <thead>
+                            <tr>
+                                <td>ATA/item code</td>
+                                <td>Item/POS.</td>
+                                <td>Colponent Name</td>
+                                <td>Part #/Insp.Descript.</td>
+                                <td>Serial #</td>
+                                <td>Servicee Life</td>
+                                <td>Installed/Colplied/Completed At</td>
+                                <td>Due At</td>
+                                <td>Since New</td>
+                                <td>Since Overhaul</td>
+                                <td>At Installation</td>
+                                <td>Remaining</td>
+                                <td>Project Date</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="data.hour_limit_id" t-as="p">
+                                <tr>
+                                    <td><span t-field="p.ata"/></td>
+                                    <td><span t-field="p.item"/></td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span t-field="p.name"/>
+                                            </div>
+                                        </div>
+                                        <t t-if="p.sub_name != 'ams.component.part()'">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <span t-field="p.sub_name"/>
+                                                    </div>
+                                                </div>
+                                        </t>
+                                    </td>
+                                    <td><span t-field="p.part"/></td>
+                                    <td><span t-field="p.serial"/></td>
+                                    <td><span t-field="p.service"/></td>
+                                    <td><span t-field="p.install"/></td>
+                                    <td><span t-field="p.done"/></td>
+                                    <td><span t-field="p.done"/></td>
+                                    <td><span t-field="p.time"/></td>
+                                    <td><span t-field="p.time"/></td>
+                                    <td><span t-field="p.time"/></td>
+                                    <td><span t-field="p.project"/></td>
+                                </tr>  
+                            </t>
+                        </tbody>
+                    </table>
+                <div class="col-md">
+                        
+                </div>
+                    <center>
+                        <h2>
+                        Calendar Limit Group
+                        </h2>
+                    </center>
+                    <table class="table table-bordered" style="table-layout:auto">
+                        <thead>
+                            <tr>
+                                <td>ATA/item code</td>
+                                <td>Item/POS.</td>
+                                <td>Component Name</td>
+                                <td>Part #/Insp.Descript.</td>
+                                <td>Serial #</td>
+                                <td>Servicee Life</td>
+                                <td>Installed/Complied/Completed At</td>
+                                <td>Due At</td>
+                                <td>Since New</td>
+                                <td>Since Overhaul</td>
+                                <td>At Installation</td>
+                                <td>Remaining</td>
+                                <td>Project Date</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="data.calendar_limit_id" t-as="o">
+                                <tr>
+                                    <td><span t-field="o.ata"/></td>
+                                    <td><span t-field="o.item"/></td>
+                                    <td><span t-field="o.name"/></td>
+                                    <td><span t-field="o.part"/></td>
+                                    <td><span t-field="o.serial"/></td>
+                                    <td><span t-field="o.service"/></td>
+                                    <td><span t-field="o.install"/></td>
+                                    <td><span t-field="o.done"/></td>
+                                    <td><span t-field="o.done"/></td>
+                                    <td><span t-field="o.time"/></td>
+                                    <td><span t-field="o.time"/></td>
+                                    <td><span t-field="o.time"/></td>
+                                    <td><span t-field="o.project"/></td>
+                                </tr>  
+                            </t>
+                        </tbody>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+ 
+</odoo>

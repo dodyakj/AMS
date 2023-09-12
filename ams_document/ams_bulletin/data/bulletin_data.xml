@@ -1,0 +1,8 @@
+<odoo>
+	<data noupdate="0">
+	    <record model="ams.bulletin.type" id="document_type_id">
+	      <field name="name">SB / Service Bulletin</field>
+	    </record>
+	  
+	  </data>
+</odoo>

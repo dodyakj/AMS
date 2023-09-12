@@ -1,0 +1,351 @@
+<odoo>
+	<data>
+
+		<record model="ir.ui.view" id="ams_fml_log_form_inherit">
+		    <field name="name">ams_fml.log.form.inherit</field>
+		    <field name="model">ams_fml.log</field>
+		    <field name="inherit_id" ref="ams_fml_log_forms" /> 
+	        <field name="arch" type="xml">
+                <xpath expr="//form/notebook/page[2]" position="replace">
+                	 <page string="FML Detail">
+						<notebook widget="leftigi">
+			                <page string="Flight Log">
+			                    <group>
+			                      <field name="flight_schedule_id"/>
+			                      <field name="flight_order_number"/>
+			                      <field name="location_id"/>
+			                      <field name="customer_id"/>
+			                      <field name="schedule_commercial_id"/>
+			                      <field name="flight_category"/>
+			                      <field name="flight_type"/>
+			                      <field name="internal_flight_type_id"/>
+			                      <field name="schedule_date"/>
+			                    </group>
+			                </page>
+			                <page string="Engine Monitoring">
+			                  <notebook widget="leftigi">
+			                    <page string="Engine 1" attrs="{'invisible':[('engine1_id','=',False)]}">
+			                    	<group col="4" string="Fixed Wing" attrs="{'invisible':[('ac_type', '!=', 'fixedwing')]}">
+			                    		<group>	
+					                        <field name="engine1_fw_torque" />
+					                        <field name="engine1_rpm" />
+					                        <field name="engine1_rpm_nh" />
+					                        <field name="engine1_np" />
+					                        <field name="engine1_itt" />
+					                        <field name="engine1_fuelflow" />
+			                    		</group>
+			                    		<group>
+					                        <field name="engine1_fueltemp" />
+					                        <field name="engine1_oiltemp" />
+					                        <field name="engine1_oilpess" />
+					                        <field name="engine1_oillvl" />
+					                        <field name="engine1_vibra" />
+					                        <field name="engine1_c1" />
+			                    		</group>
+			                      	</group>
+			                      	<group string="Rotary Wing" attrs="{'invisible':[('ac_type', '!=', 'rotary')]}">
+				                      	<group string="Starting">
+				                      		<field name="engine1_start_itt" />
+				                      		<field name="engine1_start_rpm" />
+				                      	</group>
+				                      	<group string="Take Of">
+				                      		<field name="engine1_takeof_itt" />
+				                      		<field name="engine1_takeof_rpm" />
+				                      	</group>
+				                    </group>
+				                    <group col="2" string="Crushing" attrs="{'invisible':[('ac_type', '!=', 'fixedwing')]}">
+				                    	<field name="engine1_itt_fw" />
+				                    	<field name="engine1_torque_percent" />
+				                    	<field name="engine1_ntl" />
+				                    	<field name="engine1_oil_press_fw" />
+				                    	<field name="engine1_oil_temp_fw" />
+				                    	<field name="engine1_nr" />
+				                    	<field name="engine1_oat" />
+				                    	<field name="engine1_airspeed" />
+				                    	<field name="engine1_altitude" />
+				                    </group>
+				                    <group col="2" string="Crushing" attrs="{'invisible':[('ac_type', '!=', 'rotary')]}">
+				                    	<field name="engine1_itt_rw" />
+				                    	<field name="engine1_torque_percent" />
+				                    	<field name="engine1_ntl" />
+				                    	<field name="engine1_oil_press_rw" />
+				                    	<field name="engine1_oil_temp_rw" />
+				                    	<field name="engine1_nr" />
+				                    	<field name="engine1_oat" />
+				                    	<field name="engine1_airspeed" />
+				                    	<field name="engine1_altitude" />
+				                    </group>
+			                    </page>
+			                    <page string="Engine 2" attrs="{'invisible':[('engine2_id','=',False)]}">
+				                    <group col="4" string="Fixed Wing" attrs="{'invisible':[('ac_type', '!=', 'fixedwing')]}">
+			                    		<group>	
+					                        <field name="engine2_fw_torque" />
+					                        <field name="engine2_rpm" />
+					                        <field name="engine2_rpm_nh" />
+					                        <field name="engine2_np" />
+					                        <field name="engine2_itt" />
+					                        <field name="engine2_fuelflow" />
+			                    		</group>
+			                    		<group>
+					                        <field name="engine2_fueltemp" />
+					                        <field name="engine2_oiltemp" />
+					                        <field name="engine2_oilpess" />
+					                        <field name="engine2_oillvl" />
+					                        <field name="engine2_vibra" />
+					                        <field name="engine2_c1" />
+			                    		</group>
+			                      	</group>
+			                      	<group string="Rotary Wing" attrs="{'invisible':[('ac_type', '!=', 'rotary')]}">
+				                      	<group string="Starting">
+				                      		<field name="engine2_start_itt" />
+				                      		<field name="engine2_start_rpm" />
+				                      	</group>
+				                      	<group string="Take Of">
+				                      		<field name="engine2_takeof_itt" />
+				                      		<field name="engine2_takeof_rpm" />
+				                      	</group>
+				                    </group>
+				                    <group col="2" string="Crushing" attrs="{'invisible':[('ac_type', '!=', 'fixedwing')]}">
+				                    	<field name="engine2_itt_fw" />
+				                    	<field name="engine2_torque_percent" />
+				                    	<field name="engine2_ntl" />
+				                    	<field name="engine2_oil_press_fw" />
+				                    	<field name="engine2_oil_temp_fw" />
+				                    	<field name="engine2_nr" />
+				                    	<field name="engine2_oat" />
+				                    	<field name="engine2_airspeed" />
+				                    	<field name="engine2_altitude" />
+				                    </group>
+				                    <group col="2" string="Crushing" attrs="{'invisible':[('ac_type', '!=', 'rotary')]}">
+				                    	<field name="engine2_itt_rw" />
+				                    	<field name="engine2_torque_percent" />
+				                    	<field name="engine2_ntl" />
+				                    	<field name="engine2_oil_press_rw" />
+				                    	<field name="engine2_oil_temp_rw" />
+				                    	<field name="engine2_nr" />
+				                    	<field name="engine2_oat" />
+				                    	<field name="engine2_airspeed" />
+				                    	<field name="engine2_altitude" />
+				                    </group>
+			                    </page>
+			                    <page string="Engine 3" attrs="{'invisible':[('engine3_id','=',False)]}">
+				                	<group col="4" string="Fixed Wing" attrs="{'invisible':[('ac_type', '!=', 'fixedwing')]}">
+			                    		<group>	
+					                        <field name="engine3_fw_torque" />
+					                        <field name="engine3_rpm" />
+					                        <field name="engine3_rpm_nh" />
+					                        <field name="engine3_np" />
+					                        <field name="engine3_itt" />
+					                        <field name="engine3_fuelflow" />
+			                    		</group>
+			                    		<group>
+					                        <field name="engine3_fueltemp" />
+					                        <field name="engine3_oiltemp" />
+					                        <field name="engine3_oilpess" />
+					                        <field name="engine3_oillvl" />
+					                        <field name="engine3_vibra" />
+					                        <field name="engine3_c1" />
+			                    		</group>
+			                      	</group>
+			                      	<group string="Rotary Wing" attrs="{'invisible':[('ac_type', '!=', 'rotary')]}">
+				                      	<group string="Starting">
+				                      		<field name="engine3_start_itt" />
+				                      		<field name="engine3_start_rpm" />
+				                      	</group>
+				                      	<group string="Take Of">
+				                      		<field name="engine3_takeof_itt" />
+				                      		<field name="engine3_takeof_rpm" />
+				                      	</group>
+				                    </group>
+				                    <group col="2" string="Crushing" attrs="{'invisible':[('ac_type', '!=', 'fixedwing')]}">
+				                    	<field name="engine3_itt_fw" />
+				                    	<field name="engine3_torque_percent" />
+				                    	<field name="engine3_ntl" />
+				                    	<field name="engine3_oil_press_fw" />
+				                    	<field name="engine3_oil_temp_fw" />
+				                    	<field name="engine3_nr" />
+				                    	<field name="engine3_oat" />
+				                    	<field name="engine3_airspeed" />
+				                    	<field name="engine3_altitude" />
+				                    </group>
+				                    <group col="2" string="Crushing" attrs="{'invisible':[('ac_type', '!=', 'rotary')]}">
+				                    	<field name="engine3_itt_rw" />
+				                    	<field name="engine3_torque_percent" />
+				                    	<field name="engine3_ntl" />
+				                    	<field name="engine3_oil_press_rw" />
+				                    	<field name="engine3_oil_temp_rw" />
+				                    	<field name="engine3_nr" />
+				                    	<field name="engine3_oat" />
+				                    	<field name="engine3_airspeed" />
+				                    	<field name="engine3_altitude" />
+				                    </group>
+			                    </page>
+			                    <page string="Engine 4" attrs="{'invisible':[('engine4_id','=',False)]}">
+				                    <group col="4" string="Fixed Wing" attrs="{'invisible':[('ac_type', '!=', 'fixedwing')]}">
+			                    		<group>	
+					                        <field name="engine4_fw_torque" />
+					                        <field name="engine4_rpm" />
+					                        <field name="engine4_rpm_nh" />
+					                        <field name="engine4_np" />
+					                        <field name="engine4_itt" />
+					                        <field name="engine4_fuelflow" />
+			                    		</group>
+			                    		<group>
+					                        <field name="engine4_fueltemp" />
+					                        <field name="engine4_oiltemp" />
+					                        <field name="engine4_oilpess" />
+					                        <field name="engine4_oillvl" />
+					                        <field name="engine4_vibra" />
+					                        <field name="engine4_c1" />
+			                    		</group>
+			                      	</group>
+			                      	<group string="Rotary Wing" attrs="{'invisible':[('ac_type', '!=', 'rotary')]}">
+				                      	<group string="Starting">
+				                      		<field name="engine4_start_itt" />
+				                      		<field name="engine4_start_rpm" />
+				                      	</group>
+				                      	<group string="Take Of">
+				                      		<field name="engine4_takeof_itt" />
+				                      		<field name="engine4_takeof_rpm" />
+				                      	</group>
+				                    </group>
+				                    <group col="2" string="Crushing" attrs="{'invisible':[('ac_type', '!=', 'fixedwing')]}">
+				                    	<field name="engine4_itt_fw" />
+				                    	<field name="engine4_torque_percent" />
+				                    	<field name="engine4_ntl" />
+				                    	<field name="engine4_oil_press_fw" />
+				                    	<field name="engine4_oil_temp_fw" />
+				                    	<field name="engine4_nr" />
+				                    	<field name="engine4_oat" />
+				                    	<field name="engine4_airspeed" />
+				                    	<field name="engine4_altitude" />
+				                    </group>
+				                    <group col="2" string="Crushing" attrs="{'invisible':[('ac_type', '!=', 'rotary')]}">
+				                    	<field name="engine4_itt_rw" />
+				                    	<field name="engine4_torque_percent" />
+				                    	<field name="engine4_ntl" />
+				                    	<field name="engine4_oil_press_rw" />
+				                    	<field name="engine4_oil_temp_rw" />
+				                    	<field name="engine4_nr" />
+				                    	<field name="engine4_oat" />
+				                    	<field name="engine4_airspeed" />
+				                    	<field name="engine4_altitude" />
+				                    </group>
+			                    </page>
+			                  </notebook>
+			                </page>
+			                <page string="Assurance Check">
+			                  <notebook widget="leftigi">
+			                    <page string="Engine 1" attrs="{'invisible':[('engine1_id','=',False)]}">
+			                      <group col="4">
+			                        <field name="engine1_torque"/>
+			                        <field name="engine1_pan"/>
+			                        <field name="engine1_oat"/>
+			                        <field name="engine1_act"/>
+			                        <field name="engine1_calb"/>
+			                        <field name="engine1_margin"/>
+			                        <field name="engine1_hp" />
+			                        <field name="engine1_pwr_mrg" />
+			                      </group>
+			                    </page>
+			                    <page string="Engine 2" attrs="{'invisible':[('engine2_id','=',False)]}">
+			                      <group col="4">
+			                        <field name="engine2_torque"/>
+			                        <field name="engine2_pan"/>
+			                        <field name="engine2_oat"/>
+			                        <field name="engine2_act"/>
+			                        <field name="engine2_calb"/>
+			                        <field name="engine2_margin"/>
+			                        <field name="engine2_hp" />
+			                        <field name="engine2_pwr_mrg" />
+			                      </group>
+			                    </page>
+			                    <page string="Engine 3" attrs="{'invisible':[('engine3_id','=',False)]}">
+			                      <group col="4">
+			                        <field name="engine3_torque"/>
+			                        <field name="engine3_pan"/>
+			                        <field name="engine3_oat"/>
+			                        <field name="engine3_act"/>
+			                        <field name="engine3_calb"/>
+			                        <field name="engine3_margin"/>
+			                        <field name="engine3_hp" />
+			                        <field name="engine3_pwr_mrg" />
+			                      </group>
+			                    </page>
+			                    <page string="Engine 4" attrs="{'invisible':[('engine4_id','=',False)]}">
+			                      <group col="4">
+			                        <field name="engine4_torque"/>
+			                        <field name="engine4_pan"/>
+			                        <field name="engine4_oat"/>
+			                        <field name="engine4_act"/>
+			                        <field name="engine4_calb"/>
+			                        <field name="engine4_margin"/>
+			                        <field name="engine4_hp" />
+			                        <field name="engine4_pwr_mrg" />
+			                      </group>
+			                    </page>
+			                  </notebook>
+			                </page>
+			              </notebook>
+			          </page>
+                </xpath>   
+	        </field>
+		</record>
+		
+		<record model="ir.ui.view" id="wizard_fml_filter">
+			<field name="name">ams_fml_filter_wizard</field>
+			<field name="model">wizard.fml</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="aircraft_id" />
+						</group>
+						<group attrs="{'invisible':[('aircraft_id','=',False)]}">
+							<group>
+								<field name="sum_hours" />
+							</group>
+							<group>
+								<field name="sum_cycles" string="Cycles" />
+							</group>
+						</group>
+						<group attrs="{'invisible':[('aircraft_id','=',False)]}">
+							<group>
+								<field name="engine_1st" attrs="{'invisible':[('engine_1st','=',False)]}"/>
+								<field name="eng_tsn_1st" attrs="{'invisible':[('engine_1st','=',False)]}" />
+								<field name="eng_csn_1st" attrs="{'invisible':[('engine_1st','=',False)]}"/>
+							</group>
+							<group>
+								<field name="engine_2nd" attrs="{'invisible':[('engine_2nd','=',False)]}" />
+								<field name="eng_tsn_2nd" attrs="{'invisible':[('engine_2nd','=',False)]}" />
+								<field name="eng_csn_2nd" attrs="{'invisible':[('engine_2nd','=',False)]}" />
+							</group>
+						</group>
+						<group attrs="{'invisible':[('aircraft_id','=',False)]}">
+							<group>
+								<field name="engine_3rd" string="Engine#3" attrs="{'invisible':[('engine_3rd','=',False)]}"/>
+								<field name="eng_tsn_3rd" attrs="{'invisible':[('engine_3rd','=',False)]}" />
+								<field name="eng_csn_3rd" attrs="{'invisible':[('engine_3rd','=',False)]}"/>
+							</group>
+							<group>
+								<field name="engine_4th" string="Engine#4" attrs="{'invisible':[('engine_4th','=',False)]}"/>
+								<field name="eng_tsn_4th" attrs="{'invisible':[('engine_4th','=',False)]}" />
+								<field name="eng_csn_4th" attrs="{'invisible':[('engine_4th','=',False)]}" />
+							</group>
+						</group>
+						<group attrs="{'invisible':[('aircraft_id','=',False)]}">
+							<field name="auxiliary_id" attrs="{'invisible':[('auxiliary_id','=',False)]}" />
+							<field name="auxiliary_tsn" attrs="{'invisible':[('auxiliary_id','=',False)]}" />
+							<field name="auxiliary_csn" attrs="{'invisible':[('auxiliary_id','=',False)]}" />
+						</group>
+					</sheet>
+					<footer>
+						<button name="view_fml" string="View FML" class="oe_highlight" type="object" />
+						<button name="create_fml" string="Create FML" class="oe_highlight" type="object" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+	</data>
+</odoo>

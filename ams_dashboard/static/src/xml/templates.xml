@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="AircraftsWidget">
+        <div class="item_group" style="display: flex;">
+            <t t-foreach="widget.aircrafts" t-as="aircraft">
+                <div class="oe_aircrafts_item">
+                    <div class="header_img_container">
+
+                        <img t-att-src="'/aircraft_image/' + aircraft.id + '/image.jpeg'" width="100%" class="aircraft_img" t-if="aircraft.image" />
+                        <img src="/web/static/src/img/placeholder.png" class="aircraft_img" t-elif="!aircraft.image" />
+                    </div>
+                    <div class="oe_aircrafts_body">
+                        <span t-if="aircraft.category=='rotary'">
+                            <img src="/ams_dashboard/static/src/images/rotary.png" width="16px"/>
+                        </span>
+                        <span t-else="">
+                            <img src="/ams_dashboard/static/src/images/fixedwing.png" width="16px"/>
+                        </span>
+                        <label>Name</label>
+                        <t t-esc="aircraft.display_name" />
+                        <br/>
+                    </div>
+                    <hr class="card_divider"/>
+                    <div class="maintenance_requests">
+                        <div class="aircraft_status_s" t-if="aircraft.state=='serviceable'">
+                            <span>
+                                <img class="status_ball" src="/ams_dashboard/static/src/images/green_dot.png" />
+                            </span>
+                            <span class="serviceable_text">
+                                <b>Serviceable</b>
+                            </span>
+                        </div>
+                        <div class="aircraft_status_us" t-elif="aircraft.state=='unserviceable'">
+                            <span>
+                                <img class="status_ball" src="/ams_dashboard/static/src/images/red_dot.png" />
+                            </span>
+                            <span class="unserviceable_text">
+                                <b>Unserviceable</b>
+                            </span>
+                        </div>
+                        <div class="maintenance_list">
+                            <span t-if="aircraft.maintenances.length > 0">Maintenance now</span>
+                            <ul class="list-group" t-if="aircraft.maintenances.length > 0">
+                                <t t-foreach="aircraft.maintenances" t-as="maintenance">
+                                    <li class="list-group-item">
+                                        <t t-esc="maintenance.name" />
+                                        <br/>
+                                        <t t-esc="'Schedule date: '+maintenance.schedule_date+' ('" />
+                                        <t t-esc="maintenance.duration+' days )'" />
+                                    </li>
+                                </t>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="aircraft_modal">
+                        <button t-att-id="'modal_btn' + aircraft.id" t-att-class="'custom_btn btn_'+aircraft.id">
+                            <b>DETAIL</b>
+                        </button>
+
+                        <div t-att-id="'modal_aircraft' + aircraft.id" t-att-class="'modal_aircraft modal_'+aircraft.id">
+
+                            <div class="modal_content_aircraft">
+                                <span t-att-id="'close_aircraft' + aircraft.id" class="close">x</span>
+                                <div class="modal_wrapper">
+                                    <div class="custom_row">
+                                        <div class="custom_column">
+                                            <img t-att-src="'/aircraft_image/' + aircraft.id + '/image.jpeg'" width="100%" class="aircraft_img" t-if="aircraft.image" />
+                                            <img t-att-id="'img_aircraft' + aircraft.id" src="/web/static/src/img/placeholder.png" class="aircraft_img" style="border-bottom-right-radius: 8px; border-bottom-left-radius: 8px;" t-elif="!aircraft.image" />
+                                        </div>
+
+                                        <div class="custom_column">
+                                            <h1>
+                                                <t t-esc="aircraft.display_name"/>
+                                            </h1>
+                                            <div class="col">
+                                                <div class="col-xs-6">
+                                                    <p>
+                                                        <t t-esc="'Category: '+aircraft.category" />
+                                                    </p>
+                                                    <p>
+                                                        <t t-esc="'Ownership: '+aircraft.ownership" />
+                                                    </p>
+                                                    <p>
+                                                        <t t-esc="'Total Hours: '+aircraft.total_hours" />
+                                                    </p>
+                                                    <p>
+                                                        <t t-esc="'Total Landings: '+aircraft.total_landings" />
+                                                    </p>
+                                                    <p t-if="aircraft.rin_active">
+                                                        <t t-esc="'Total Rins: '+aircraft.total_rins" />
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <p>
+                                                        <t t-if="aircraft.inspection.last!=false">
+                                                            <t t-esc="'Last Inspection: '+aircraft.inspection.last" />
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-esc="'Last Inspection: -'" />
+                                                        </t>
+                                                    </p>
+                                                    <p>
+                                                        <t t-if="aircraft.inspection.last_at!=false">
+                                                            <t t-esc="'Last Inspection at A/C Hours: '+aircraft.inspection.last_at" />
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-esc="'Last Inspection at A/C Hours: -'" />
+                                                        </t>
+                                                    </p>
+                                                    <p>
+                                                        <t t-if="aircraft.inspection.last_date!=false">
+                                                            <t t-esc="'Last Inspection Date: '+aircraft.inspection.last_date" />
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-esc="'Last Inspection Date: -'" />
+                                                        </t>
+                                                    </p>
+                                                    <p>
+                                                        <t t-if="aircraft.inspection.next!=false">
+                                                            <t t-esc="'Next Inspection: '+aircraft.inspection.next" />
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-esc="'Next Inspection: -'" />
+                                                        </t>
+                                                    </p>
+                                                    <p>
+                                                        <t t-if="aircraft.inspection.next_at!=false">
+                                                            <t t-esc="'Next Inspection at: '+aircraft.inspection.next_at" />
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-esc="'Next Inspection at: -'" />
+                                                        </t>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="custom_row">
+                                        <div class="custom_column">
+                                            <div class="modal_maintenance_list">
+                                                <div class="aircraft_status_s" t-if="aircraft.state=='serviceable'">
+                                                    <span>
+                                                        <img class="status_ball" src="/ams_dashboard/static/src/images/green_dot.png" />
+                                                    </span>
+                                                    <span class="serviceable_text">
+                                                        <b>Serviceable</b>
+                                                    </span>
+                                                </div>
+                                                <div class="aircraft_status_us" t-elif="aircraft.state=='unserviceable'">
+                                                    <span>
+                                                        <img class="status_ball" src="/ams_dashboard/static/src/images/red_dot.png" />
+                                                    </span>
+                                                    <span class="unserviceable_text">
+                                                        <b>Unserviceable</b>
+                                                    </span>
+                                                </div>
+                                                <div class="maintenance_list">
+                                                    <span t-if="aircraft.maintenances.length > 0">Maintenance now</span>
+                                                    <ul class="list-group" t-if="aircraft.maintenances.length > 0">
+                                                        <t t-foreach="aircraft.maintenances" t-as="maintenance">
+                                                            <li class="list-group-item">
+                                                                <t t-esc="maintenance.name" />
+                                                                <br/>
+                                                                <t t-esc="'Schedule date: '+maintenance.schedule_date+' ('" />
+                                                                <t t-esc="maintenance.duration+' days )'" />
+                                                            </li>
+                                                        </t>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="custom_column">
+                                            <!-- <div class="modal_component_list">
+                                                <p t-if="aircraft.components.length > 0">
+                                                    <t t-esc="'Total component : ' + aircraft.components.length" />
+                                                </p>
+                                                <ul class="list-group" t-if="aircraft.components.length > 0">
+                                                    <t t-foreach="aircraft.components" t-as="component">
+                                                        <li t-att-class="'list-group-item component_'+component.id">
+                                                            <t t-esc="component.display_name" />
+                                                        </li>
+                                                        <ul>
+                                                            <t t-foreach="component.service_life" t-as="lifetime">
+                                                                <li>
+                                                                    <t t-if="lifetime.unit=='hours' or lifetime.unit=='cycles'">
+                                                                        <span style="color: red;" t-if="lifetime.value &lt; 350">
+                                                                            <t t-esc="'Remaining: '+lifetime.display_name"/>
+                                                                        </span>
+                                                                        <span t-else="">
+                                                                            <t t-esc="'Remaining: '+lifetime.display_name"/>
+                                                                        </span>
+                                                                    </t>
+                                                                    <t t-elif="lifetime.unit=='days' or lifetime.unit=='month' or lifetime.unit=='year'">
+                                                                        <span style="color: red;" t-if="lifetime.range &lt; 32">
+                                                                            <t t-esc="'Remaining: '+lifetime.display_name"/>
+                                                                        </span>
+                                                                        <span t-else="">
+                                                                            <t t-esc="'Remaining: '+lifetime.display_name"/>
+                                                                        </span>
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        <span>
+                                                                            <t t-esc="'Remaining: '+lifetime.display_name"/>
+                                                                        </span>
+                                                                    </t>
+                                                                </li>
+                                                            </t>
+                                                        </ul>
+                                                    </t>
+                                                </ul>
+                                                <p t-if="aircraft.components.length = 0">No Component</p>
+                                            </div> -->
+                                            <div class="modal_component_list">
+                                                <p t-if="aircraft.certificates.length > 0">
+                                                    <t t-esc="'Total certificates : ' + aircraft.certificates.length" />
+                                                </p>
+                                                <div class="table-responsive">
+                                                    <table class="o_list_view table table-condensed table-striped" style="cursor: default;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="o_column_sortable">Document Name</th>
+                                                                <th class="o_column_sortable">File data</th>
+                                                                <th class="o_column_sortable">Date Expired</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td>
+                                                                </td>
+                                                                <td>
+                                                                </td>
+                                                                <td>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                        <tbody>
+                                                            <t t-foreach="aircraft.certificates" t-as="certificate">
+                                                                <tr>
+                                                                    <td>
+                                                                        <span t-esc="certificate.document_name" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <span t-esc="certificate.file_date" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <span t-esc="certificate.date_expired" />
+                                                                    </td>
+                                                                </tr>
+                                                            </t>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p t-if="aircraft.certificates.length = 0">No Certificate</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+    <t t-name="MDRWdiget">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table t-att-id="'datatable'" class="table table-striped table-bordered table-hover dataTable dtr-inline" style="">
+                    <thead>
+                        <tr>
+                            <th>Part Number</th>
+                            <th>Component</th>
+                            <!-- <th>Treatment</th> -->
+                            <th>Fleet</th>
+                            <th>Due At</th>
+                            <th>Remaining</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </t>
+    <t t-name="MDRItem">
+        <tr t-foreach="widget.mdrs" t-as="mdr">
+            <td>
+                <t t-esc="mdr.part" />
+            </td>
+            <td>
+                <t t-esc="mdr.name" />
+            </td>
+            <!-- <td>
+                ✓
+            </td> -->
+            <td>
+                <t t-esc="mdr.fleet_name" />
+              <!--   <button type="button" class="btn btn-success btn-sm" data-toggle="collapse" t-att-data-target="'#'+mdr.part">Fleet</button>
+                <br/>
+                <div t-att-id="mdr.part" class="collapse">
+                    <ul class="list-group">
+                        <li t-foreach="mdr.fleet" t-as="fleet" class="list-group-item">
+                            <t t-esc="fleet" />
+                        </li>
+                    </ul>
+                </div> -->
+            </td>
+            <td>
+                <t t-esc="mdr.due_at" />
+            </td>
+            <td>
+                <t t-esc="mdr.remaining" />
+            </td>
+            <td>
+                <center>
+                    <button href="#" class="view_wo btn btn-success" t-att-data-wo="mdr.fleet_id" t-att-data-service="mdr.service_id">
+                        WO
+                    </button>
+                    <button href="#" class="view_mwo btn btn-success" t-att-data-mwo="mdr.fleet_id">
+                        MWO
+                    </button>
+                </center>
+            </td>
+        </tr>
+    </t>
+</templates>

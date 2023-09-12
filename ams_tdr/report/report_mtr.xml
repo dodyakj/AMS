@@ -1,0 +1,272 @@
+<odoo>
+  <data>
+            <record id="paperformat_maintenance_tracking_report_landscape" model="report.paperformat">
+                <field name="name">Maintenance Tracking Report</field>
+                <field name="orientation">Landscape</field>
+<!--                 <field name="header_spacing">43</field>
+                <field name="margin_top">43</field>
+                <field name="margin_bottom">43</field> -->
+                <field name="default" eval="True" />
+                <!-- <field name="page_height">0</field> -->
+                <!-- <field name="page_width">0</field> -->
+                <field name="margin_top">30</field>
+                <field name="margin_bottom">20</field>
+                <field name="margin_left">7</field>
+                <field name="margin_right">7</field>
+                <field name="header_line" eval="False"/>
+                <field name="header_spacing">20</field>
+                <field name="dpi">90</field>                
+            </record>
+            <record id="paperformat_maintenance_tracking_report_landscape_inspection" model="report.paperformat">
+                <field name="name">Maintenance Tracking Report</field>
+                <field name="orientation">Landscape</field>
+<!--                 <field name="header_spacing">43</field>
+                <field name="margin_top">43</field>
+                <field name="margin_bottom">43</field> -->
+                <field name="default" eval="True" />
+                <!-- <field name="page_height">0</field> -->
+                <!-- <field name="page_width">0</field> -->
+                <field name="margin_top">30</field>
+                <field name="margin_bottom">20</field>
+                <field name="margin_left">7</field>
+                <field name="margin_right">7</field>
+                <field name="header_line" eval="False"/>
+                <field name="header_spacing">10</field>
+                <field name="dpi">90</field>                
+            </record>
+            
+            <report
+                    id="print_main_tracking_pdf_component"
+                    string="Maintenance Tracking Report"
+                    model="ams.mtr"
+                    report_type="qweb-pdf"
+                    file="ams_tdr.report_maintenance_tracking_component"
+                    name="ams_tdr.report_maintenance_tracking_component"
+                    paperformat="ams_tdr.paperformat_maintenance_tracking_report_landscape"
+                />
+            <report
+                    id="print_main_tracking_pdf_inspection_fleet"
+                    string="Inspection Airframe Report"
+                    model="ams.mtr"
+                    report_type="qweb-pdf"
+                    file="ams_tdr.report_maintenance_tracking_inspection_fleet"
+                    name="ams_tdr.report_maintenance_tracking_inspection_fleet"
+                    paperformat="ams_tdr.paperformat_maintenance_tracking_report_landscape_inspection"
+                />
+
+            <report
+                    id="print_main_tracking_pdf_inspection_engine1"
+                    string="Inspection Engine Report"
+                    model="ams.mtr"
+                    report_type="qweb-pdf"
+                    file="ams_tdr.report_maintenance_tracking_inspection_engine1"
+                    name="ams_tdr.report_maintenance_tracking_inspection_engine1"
+                    paperformat="ams_tdr.paperformat_maintenance_tracking_report_landscape_inspection"
+                />
+            <report
+                    id="print_main_tracking_pdf_inspection_engine2"
+                    string="Inspection Engine Report"
+                    model="ams.mtr"
+                    report_type="qweb-pdf"
+                    file="ams_tdr.report_maintenance_tracking_inspection_engine2"
+                    name="ams_tdr.report_maintenance_tracking_inspection_engine2"
+                    paperformat="ams_tdr.paperformat_maintenance_tracking_report_landscape_inspection"
+                />
+            <report
+                    id="print_main_tracking_pdf_inspection_engine3"
+                    string="Inspection Engine Report"
+                    model="ams.mtr"
+                    report_type="qweb-pdf"
+                    file="ams_tdr.report_maintenance_tracking_inspection_engine3"
+                    name="ams_tdr.report_maintenance_tracking_inspection_engine3"
+                    paperformat="ams_tdr.paperformat_maintenance_tracking_report_landscape_inspection"
+                />
+            <report
+                    id="print_main_tracking_pdf_inspection_engine4"
+                    string="Inspection Engine Report"
+                    model="ams.mtr"
+                    report_type="qweb-pdf"
+                    file="ams_tdr.report_maintenance_tracking_inspection_engine4"
+                    name="ams_tdr.report_maintenance_tracking_inspection_engine4"
+                    paperformat="ams_tdr.paperformat_maintenance_tracking_report_landscape_inspection"
+                />
+            <report
+                    id="print_main_tracking_pdf_inspection_aux"
+                    string="Inspection Auxiliary Report"
+                    model="ams.mtr"
+                    report_type="qweb-pdf"
+                    file="ams_tdr.report_maintenance_tracking_inspection_auxiliary"
+                    name="ams_tdr.report_maintenance_tracking_inspection_auxiliary"
+                    paperformat="ams_tdr.paperformat_maintenance_tracking_report_landscape_inspection"
+                />
+
+
+    <record id="maintenance_tracking_tree" model="ir.ui.view">
+      <field name="name">ams.mtr.tree</field>
+      <field name="model">ams.mtr</field>
+      <field name="arch" type="xml">
+          <tree string="Maintenance Tracking Report" colors="red:data_status==False;">
+              <field name="mtr_seq" />
+              <field name="name"/>
+              <field name="fleet_id"/>
+              <field name="data_status" invisible="1"/>
+              <!-- <button name="print_main_tracking_pdf_component" type="object" icon="fa-download" string="Print" class="oe_highlight" /> -->
+              <!-- <button name="export_xls"  context="{'xls_export':1}" icon="fa-download" type="object" string="Print XLS" class="oe_highlight" attrs="{'invisible':[('id','=', False)]}" /> -->
+          </tree>
+      </field>      
+    </record>
+
+    <record model="ir.ui.view" id="maintenance_tracking_form">
+      <field name="name">ams.mtr.form</field>
+      <field name="model">ams.mtr</field>
+      <field name="arch" type="xml">
+        <form string="description">
+                <header>
+                    <button name="export_xls"  context="{'xls_export':1}" icon="fa-download" type="object" string="Print XLS" attrs="{'invisible':['|',('data_status','=', False),('id','=', False)]}" />
+                    <button name="%(print_main_tracking_pdf_component)d" string="MTR" icon="fa-download" class="oe_highlight" type="action" attrs="{'invisible':['|',('data_status','=', False),('id','=', False)]}"/>
+                    <button name="%(print_main_tracking_pdf_inspection_fleet)d" string="Insp. Fleet" icon="fa-download" class="oe_highlight" type="action" attrs="{'invisible':['|','|',('data_status','=', False),('id','=', False),('inspection_ids','=', [])]}"/>
+                    <button name="%(print_main_tracking_pdf_inspection_engine1)d" string="Insp. Eng 1" icon="fa-download" class="oe_highlight" type="action" attrs="{'invisible':['|','|',('data_status','=', False),('id','=', False),('inspectioneng1_ids','=', [])]}"/>
+                    <button name="%(print_main_tracking_pdf_inspection_engine2)d" string="Insp. Eng 2" icon="fa-download" class="oe_highlight" type="action" attrs="{'invisible':['|','|',('data_status','=', False),('id','=', False),('inspectioneng2_ids','=', [])]}"/>
+                    <button name="%(print_main_tracking_pdf_inspection_engine3)d" string="Insp. Eng 3" icon="fa-download" class="oe_highlight" type="action" attrs="{'invisible':['|','|',('data_status','=', False),('id','=', False),('inspectioneng3_ids','=', [])]}"/>
+                    <button name="%(print_main_tracking_pdf_inspection_engine4)d" string="Insp. Eng 4" icon="fa-download" class="oe_highlight" type="action" attrs="{'invisible':['|','|',('data_status','=', False),('id','=', False),('inspectioneng4_ids','=', [])]}"/>
+                    <button name="%(print_main_tracking_pdf_inspection_aux)d" string="Insp. Aux" icon="fa-download" class="oe_highlight" type="action" attrs="{'invisible':['|','|',('data_status','=', False),('id','=', False),('inspectionaux_ids','=', [])]}"/>
+                    <button string="Create" name="create_by_" type="object" attrs="{'invisible':[('states','!=','create_by')]}"/>
+                    <button string="Check" name="checked_by_" type="object" attrs="{'invisible':[('states','!=','checked_by')]}"  groups="ams_security.group_button_mtr_check"/>
+                    <button string="Approve" name="approved_by_" type="object" attrs="{'invisible':[('states','!=','approved_by')]}" groups="ams_security.group_button_mtr_approve"/>
+                    <button string="Quality Control" name="qc_by_" type="object" attrs="{'invisible':[('states','!=','qc_by')]}"  groups="ams_security.group_button_mtr_qc"/>
+                    <field name="states" widget="statusbar" statusbar_visible="create_by,checked_by,approved_by,qc_by"/>
+                </header>
+          <sheet>
+            <field name="states" attrs="{'invisible':True}" />
+            <field name="id" attrs="{'invisible':True}" />
+            <field name="data_status" attrs="{'invisible':True}" />
+            <field name="inspection_ids" attrs="{'invisible':True}" />
+            <field name="inspectioneng1_ids" attrs="{'invisible':True}" />
+            <field name="inspectioneng2_ids" attrs="{'invisible':True}" />
+            <field name="inspectioneng3_ids" attrs="{'invisible':True}" />
+            <field name="inspectioneng4_ids" attrs="{'invisible':True}" />
+            <field name="inspectionaux_ids" attrs="{'invisible':True}" />
+            <group>
+              <field name="show_pp"/>
+            </group>
+            <group>
+              <group>
+                <field name="mtr_seq" readonly="1" style="text-weight:bold"/>
+                <field name="name"/>
+                <field name="fleet_id"/>
+              </group>
+            </group>
+            <group attrs="{'invisible':['|',('id','=', False),('data_status','=',True)]}">
+              <span id="gi_state_info" style="color:red">Processing data... please wait. press F5 (Refresh) to update status</span>
+              <script>
+                function mtr_check(id){
+                  console.log('saved');
+                  if(id == ''){
+                    setTimeout(function(){mtr_check($('[name="id"]').val())}, 3000);
+                  }else if(id === undefined || id === null){
+                    return false
+                  }else{
+                    if($('#gi_state_info').parent().parent().parent().parent().hasClass('o_form_invisible') == false){
+                      $.ajax({
+                        url: '/mtr_state/'+$('[name="id"]').val(),
+                        type: 'GET',
+                        dataType: 'JSON',
+                      })
+                      .done(function(data) {
+                        if(data.state == true){
+                          location.reload();
+                        }else{
+                          setTimeout(function(){mtr_check($('[name="id"]').val())}, 3000);
+                        }
+                      })
+                      .fail(function() {
+                        console.log("error");
+                        setTimeout(function(){mtr_check($('[name="id"]').val())}, 3000);
+                      })
+                    }else{
+                      if(id == ''){
+                        setTimeout(function(){mtr_check($('[name="id"]').val())}, 3000);
+                      }
+                    }
+                  
+                  }
+                }
+
+                <!-- $('[name="id"]').bind("change", function() { -->
+                  mtr_check($('[name="id"]').val())
+                <!-- }); -->
+              </script>
+            </group>
+            <group>
+              <field name="create_by" string="Create by"/>
+              <field name="checked_by" string="Checked by"/>
+              <field name="approved_by" string="Approve by"/>
+              <field name="qc_by" string="Quality Control by"/>
+            </group>
+            <!-- <field name="component_ids">
+            <tree string='Component' editable="bottom" create="false">
+              <field name="parents_id"/>
+              <field name="component_id" attrs="{'readonly':True}"/>
+              <field name="ata_id"/>
+              <field name="item_pos"/>
+              <field name="component_name"/>
+              <field name="part"/>
+              <field name="serial"/>
+              <field name="installed_at"/>
+              <field name="tsn"/>
+              <field name="tso"/>
+              <field name="installed_at"/>
+              <field name="service_life"/>
+              <field name="due_at"/>
+              <field name="remaining"/>
+              <field name="expired"/>
+            </tree>
+          </field> -->
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ams_mtr_search_view">
+        <field name="name">ams.mtr.search</field>
+        <field name="model">ams.mtr</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="fleet_id"/>
+              <field name="name"/>
+            </search>
+        </field>
+      </record>
+
+
+    <record model="ir.actions.act_window" id="mtr_action">
+      <field name="name">MTR</field>
+      <field name="res_model">ams.mtr</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New MTR
+            </p>
+        </field>
+    </record>
+
+    <record id="mtr_seq" model="ir.sequence">
+      <field name="name">MTR Sequence</field>
+      <field name="code">mtr_seq</field>
+      <field name="prefix">MTR </field>
+      <field name="padding">3</field>
+    </record>
+
+        <report
+            id="maintenance_tracking_report"
+            model="ams.mtr"
+            string=" "
+            report_type="xlsx"
+            name="ams_tdr.maintenance_tracking_report.xlsx"
+            file="ams_tdr.maintenance_tracking_report.xlsx"
+            attachment_use="False"
+        />
+
+  </data>
+</odoo>

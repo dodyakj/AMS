@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+      <record model='ir.ui.view' id='ams_log_tree'>
+        <field name='name'>ams.log.tree</field>
+        <field name='model'>ams.log</field>
+        <field name='arch' type='xml'>
+          <tree string='Logbook'>
+            <field name="aircraft_id"/>
+            <field name="name"/>
+            <field name="date"/>
+            <field name="ata"/>
+            <field name="description"/>
+          </tree>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="ams_log_search_view">
+        <field name="name">ams.log.search</field>
+        <field name="model">ams.log</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="aircraft_id"/>
+              <field name="name"/>
+              <field name="date"/>
+              <field name="ata"/>
+              <field name="description"/>         
+            </search>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="ams_log_form">
+        <field name="name">ams.log.form</field>
+        <field name="model">ams.log</field>
+        <field name="arch" type="xml">
+          <form string="Logbook">
+            <sheet>
+                <div class="oe_title">
+                      <label for="name" string="Logbook Name" />
+                          <h1>
+                              <field name="name" select="1"/>
+                          </h1>
+                </div>
+              <group>
+                <field name="aircraft_id"/>
+                <field name="hours"/>
+                <field name="cycles"/>
+                <field name="rin"/>
+                <field name="date"/>
+                <!-- <field name="ata"/> -->
+                <field name="description"/>
+                <field name="wo_id"/>
+                <field name="mwo_id"/>
+              </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+
+      <record id="ams_log_action" model="ir.actions.act_window">
+        <field name="name">Logbook</field>
+        <field name="res_model">ams.log</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+      </record>
+  </data>
+</odoo>

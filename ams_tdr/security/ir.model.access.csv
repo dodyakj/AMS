@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ams_tdr_ams_tdr,ams_tdr.ams_tdr,model_ams_tdr_ams_tdr,,1,0,0,0

@@ -1,0 +1,391 @@
+<odoo>
+	<data>
+		<!-- <record model="ir.ui.view" id="ams_mel_form">
+			<field name="name">ams.mel.form</field>
+			<field name="model">ams.mel</field>
+			<field name="arch" type="xml">
+				<form string="description">
+					<sheet>
+						<group>
+							<field name="name"/>
+							<field name="description"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="airworthy_mel_form">
+			<field name="name">airworthy.mel.form</field>
+			<field name="model">airworthy.mel</field>
+			<field name="arch" type="xml">
+				<form string="description">
+					<sheet>
+						<group>
+							<field name="name"/>
+							<field name="location"/>
+							<field name="date"/>
+							<field name="fleet_id"/>
+							<field name="discrepencies_id"/>
+							<field name="part_id"/>
+							<field name="mel_no"/>
+							<field name="proj_date"/>
+							<field name="due_date"/>
+							<field name="ext_date"/>
+							<field name="faa"/>
+							<field name="faa_file"/>
+							<field name="date"/>
+							<field name="date_finish"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model='ir.ui.view' id='airworthy_mel_tree'>
+			<field name='name'>airworthy.mel.tree</field>
+			<field name='model'>airworthy.mel</field>
+			<field name='arch' type='xml'>
+				<tree string='description'>
+					<field name="name"/>
+					<field name="fleet_id"/>
+					<field name="discrepencies_id"/>
+					<field name="part_id"/>
+					<field name="mel_no"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="mel_ext_action" model="ir.actions.act_window">
+			<field name="name">MEL Extension</field>
+			<field name="res_model">airworthy.mel</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record> -->
+		<template id="report_mel">
+	            <!-- Multicompany -->
+	        <t t-if="not o and doc">
+	            <t t-set="o" t-value="doc"/>
+	        </t>
+	        <t t-if="o and 'company_id' in o">
+	            <t t-set="company" t-value="o.company_id"></t>
+	        </t>
+	        <t t-if="not o or not 'company_id' in o">
+	            <t t-set="company" t-value="res_company"></t>
+	        </t>
+	        <t t-call="report.html_container">
+	            <t t-foreach="docs" t-as="data">
+	                <t t-call="ams_airworthy.internal_layout">
+	                    <div class="page">
+	                        <style type="text/css">
+	                            .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+	                                  position: relative;
+	                                  min-height: 25px;
+	                                }
+	                        </style>
+	                        <div class="row" style="border:1px solid black;">
+	                        	<div class="col-xs-2" style="height:100px;max-height:100px;">
+	                        		<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                            	</div>
+                                <div class="col-xs-6" style="text-align:center;vertical-align:middle;border-left:1px solid black;border-right:1px solid black;height:100px;max-height:100px;">
+                                    <h4>
+                                        PT. PELITA AIR SERVICE<br/>
+                                        <strong>MEL EXTENTION</strong>
+                                        <!-- QUALITY ASSURANCE &amp; QUALITY CONTROL <br/> <br/> -->
+                                    </h4>
+                                    <span>Ref. Authorization, Condition &amp; Limitations (D95 Minimum Equipment List (MEL) Authorization)</span>
+                                </div>
+                                <div class="col-xs-4" style="height:100px;max-height:100px;">
+                                	<table style="width:100%" height="100" border="0">
+                                		<tr>
+                                			<td width="85">No.</td>
+                                			<td> : </td>
+                                			<td><span t-field="data.no"/></td>
+                                		</tr>
+                                		<tr>
+                                			<td width="85">Date</td>
+                                			<td> : </td>
+                                			<td><span t-field="data.date"/></td>
+                                		</tr>
+                                    </table>
+                                </div>
+	                        </div>
+
+                            <div class="row">
+                                <table class="table table-bordered" style="margin:10px 0;">
+                                    <tr>
+                                        <td width="45">1</td>
+                                        <td>Aircraft Type</td>
+                                        <td style="border-left:1px solid #FFF;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.ac_type"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="45">2</td>
+                                        <td>Aircraft Regristration</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.ac_req"/></td>
+                                    </tr>                                        
+                                    <tr>
+                                        <td width="45">3</td>
+                                        <td>ATA MEL Number</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.ata_mel"/></td>
+                                    </tr>
+                                     
+                                    <tr>
+                                        <td width="45">4</td>
+                                        <td>MEL Category</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.mel_categ"/></td>
+                                    </tr>
+                                     
+                                    <tr>
+                                        <td width="45">5</td>
+                                        <td>Reason for Extension</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.reason"/></td>
+                                    </tr>
+                                     
+                                    <tr>
+                                        <td width="45">6</td>
+                                        <td>Date/location item became unserviceable</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.date_became"/> <div t-field="data.location_became"/></td>
+                                    </tr>
+                                     
+                                    <tr>
+                                        <td width="45">7</td>
+                                        <td>Original date/location of item scheduled for <br/> carried out</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.date_schedule"/> <div t-field="data.location_schedule"/></td>
+                                    </tr>
+                                     
+                                    <tr>
+                                        <td width="45">8</td>
+                                        <td>Name of item required</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.part_id"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="45">9</td>
+                                        <td>Part Number</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.part_number"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="45">10</td>
+                                        <td>Date Part Ordered</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.date_order"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="45">11</td>
+                                        <td>Confirmed delivery Date</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.date_deliv"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="45">12</td>
+                                        <td>New date carried out scheduled</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.date_new"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>13</td>
+                                        <td width="45">DGAC Representatives notified</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.date_dgac"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>14</td>
+                                        <td width="45">Time limit valid to</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.date_limit"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="45">15</td>
+                                        <td>New date carried out scheduled</td>
+                                        <td style="border-left:1px solid gray;border-right:1px solid #FFF">:</td>
+                                        <td><div t-field="data.date_new"/></td>
+                                    </tr>
+                                    
+                                </table>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="text-center">
+                                            Maintenance Dept. Request <br/>
+                                            Chief Enginering <br/>
+                                            <div t-field="data.date_req"/> 
+                                            <br/><br/><br/>
+                                            <div t-field="data.request_by"/> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">
+                                            Approved, <br/>
+                                            QA &amp; QM Manager <br/>
+                                            Chief Inspector AOC 121-008 <br/><br/><br/>
+                                            
+                                            <div t-field="data.app_by"/> 
+                                        </td>
+                                    </tr>
+                                    <t t-if="data.dgca">
+                                    	<tr>
+                                    		<td class="text-center">
+                                    			DGCA Representative Notified Airworthiness Inspector Recommendation
+                                    			<table border="0" style="margin-top:100px" width="75%" align="center">
+                                    				<tr>
+                                    					<td class="text-center">(</td>
+                                    					<td class="text-center"></td>
+                                    					<td class="text-center">)</td>
+                                    				</tr>
+                                    			</table>
+                                    		</td>
+                                    	</tr>
+                                    </t>
+                                </table>
+                            </div>
+	                    </div>
+	                </t>
+	            </t>
+	        </t>
+	    </template>
+
+	        <record id="paperformat_mel" model="report.paperformat">
+	            <field name="name">MEL Extention</field>
+	            <field name="orientation">Portrait</field>
+	            <field name="default" eval="True" />
+	            <field name="page_height">0</field>
+	            <field name="page_width">0</field>
+	            <field name="margin_top">8</field>
+	            <field name="margin_bottom">0</field>
+	            <field name="margin_left">3</field>
+	            <field name="margin_right">0</field>
+	            <field name="header_line" eval="False"/>
+	            <field name="header_spacing">5</field>
+	            <field name="dpi">90</field>
+	        </record>
+
+	        <report
+	                id="print_mel_pdf"
+	                string="MEL Extention"
+	                model="airworthy.mel"
+	                report_type="qweb-html"
+	                file="ams_airworthy.report_mel"
+	                name="ams_airworthy.report_mel"
+	                paperformat="ams_airworthy.paperformat_mel"
+	            />
+
+	    <record model="ir.ui.view" id="document_mel_type_tree">
+	      <field name="name">airworthy.mel.tree</field>
+	      <field name="model">airworthy.mel</field>
+	      <field name="arch" type="xml">
+	        <tree>
+							<field name="no"/>
+							<field name="date"/>
+							<field name="ac_type"/>
+							<field name="ac_req"/>
+							<field name="ata_mel"/>
+	        </tree>
+	      </field>
+	    </record>
+
+	    <record model="ir.ui.view" id="document_mel_type_search_view">
+        <field name="name">airworthy.mel.search</field>
+        <field name="model">airworthy.mel</field>
+        <field name="arch" type="xml">
+            <search>
+								<field name="date"/>
+								<field name="ac_type"/>
+								<field name="ac_req"/>
+								<field name="ata_mel"/>            
+            </search>
+        </field>
+      </record>
+
+
+	    <record model="ir.ui.view" id="document_mel_type_form">
+	        <field name="name">airworthy.mel.form</field>
+	        <field name="model">airworthy.mel</field>
+	        <field name="arch" type="xml">
+	            <form string="MEL Extention">
+	                <sheet string="MEL Extention">
+	                    <group>
+	                    	<group>
+                            	<field name="dgca" string="For DGCA"/>
+	                    	</group>
+	                        <group class="pull-right">
+	                            <field name="no"/>
+	                            <field name="date"/>
+	                        </group>
+	                    </group>
+	                    <group>
+	                        <group string="Aircraft">
+	                            <field name="ac_type"  attrs="{'readonly':True}"/>
+	                            <field name="ac_req"/>
+	                        </group>
+	                        <group  string="MEL">
+	                            <field name="ata_mel"/>
+	                            <field name="mel_categ"/>
+	                        </group>
+	                    </group>
+	                    <group>
+	                        <group  string="Reason">
+	                            <field name="reason"/>
+	                            <field name="date_became"/>
+	                            <field name="date_schedule"/>
+	                            <field name="location_became"/>
+								<field name="location_schedule"/>
+	                        </group>
+	                        <group  string="Part">
+	                            <field name="part_id" domain="[('fleet_id','=',ac_req)]"/>
+	                            <field name="part_number" attrs="{'readonly':True}"/>
+	                        </group>
+	                    </group>
+	                <!--     <notebook>
+	                        <page string="More"> -->
+	                            <group>
+	                                <group>
+	                                    <field name="date_order"/>
+	                                    <field name="date_deliv"/>
+	                                    <field name="date_new"/>
+	                                    <field name="date_dgac"/>
+	                                    <field name="date_limit"/>'
+	                                </group>
+	                                <group>
+	                                    <field name="request_by"/>
+	                                    <field name="qc_by"/>
+	                                    <field name="app_by"/>
+	                                    <field name="date_req"/>
+	                                    <field name="date_qc"/>
+	                                    <!-- <field name="compliance"/> -->
+	                                </group>
+	                            </group>
+	                     <!--    </page>
+	                    </notebook> -->
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+
+		<record model="ir.actions.act_window" id="mel_ext_action">
+	        <field name="name">MEL Extention</field>
+	        <field name="res_model">airworthy.mel</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="help" type="html">
+	            <p class="oe_view_nocontent_create">
+	                Click for Create New MEL Extention
+	            </p>
+	        </field>
+	    </record>
+	</data>
+</odoo>

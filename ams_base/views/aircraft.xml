@@ -1,0 +1,943 @@
+<odoo>
+  <data>
+    
+    <record id='airframe_custom_bel_tree' model='ir.ui.view'>
+        <field name="name">aircraft.acquisition.tree.custom</field>
+        <field name="model">aircraft.acquisition</field>
+        <field name="arch" type="xml">
+            <tree string="List Airframe" create="0" edit="0" duplicate="0" delete="0">
+              <field name='name'/>
+              <field name='aircraft_name'/>
+              <field name='aircraft_type_id'/> 
+              <field name='date_manufacture'/>
+              <field name='total_hours'/>
+              <field name='total_landings'/>
+              <!-- <field name='engine_type_id'/> -->
+              <!-- <field name='propeller_type_id'/> -->
+  <!--                     <field name='msn'/>
+              <field name='esn1'/>
+              <field name='rgb1'/>
+              <field name='esn2'/>
+              <field name='rgb2'/> -->
+              <field name='ownership'/>
+              <field name='delivery_date'/>
+              <field name='lessor'/>
+              <field name='start_lease'/>
+              <field name='normal_termination'/>
+            </tree>
+        </field>
+    </record>
+
+    <record id='airframe_custom_tree' model='ir.ui.view'>
+        <field name="name">aircraft.acquisition.tree.custom</field>
+        <field name="model">aircraft.acquisition</field>
+        <field name="arch" type="xml">
+            <tree string="List Airframe" default_order="name asc">
+              <field name='name'/>
+              <field name='aircraft_name'/>
+              <field name='aircraft_type_id'/> 
+              <field name='date_manufacture'/>
+              <field name='total_hours'/>
+              <field name='total_landings'/>
+              <!-- <field name='engine_type_id'/> -->
+              <!-- <field name='propeller_type_id'/> -->
+  <!--                     <field name='msn'/>
+              <field name='esn1'/>
+              <field name='rgb1'/>
+              <field name='esn2'/>
+              <field name='rgb2'/> -->
+              <field name='ownership'/>
+              <field name='delivery_date'/>
+              <field name='lessor'/>
+              <field name='start_lease'/>
+              <field name='normal_termination'/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="airframe_custom_search_view">
+        <field name="name">aircraft.acquisition.search</field>
+        <field name="model">aircraft.acquisition</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="name"/>
+              <field name="aircraft_name"/>
+              <field name="aircraft_type_id"/> 
+              <field name="date_manufacture"/>
+              <field name="total_hours"/>
+              <field name="total_landings"/>
+              <field name="ownership"/>
+              <field name="delivery_date"/>
+              <field name="lessor"/>
+              <field name="start_lease"/>
+              <field name="normal_termination"/>             
+            </search>
+        </field>
+      </record>
+
+     <record id='airframe_custom_form' model='ir.ui.view'>
+          <field name="name">aircraft.acquisition.custom</field>
+          <field name="model">aircraft.acquisition</field>
+          <field name="arch" type="xml">
+          <form string="Form Airframes">
+              <sheet>
+                <field name="id" attrs="{'invisible':True}" />
+                <field name="is_deleted" attrs="{'invisible':True}" />
+                <field name="aircraft_status" attrs="{'invisible':True}" />
+                <div class="oe_button_box" name="button_box">
+                      <!-- <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive" >
+                          <field name="aircraft_status" widget="boolean_button" options='{"terminology": {
+                              "string_true": "Serviceable",
+                              "hover_true": "Un-Serviceable",
+                              "string_false": "Un-Serviceable",
+                              "hover_false": "Serviceable"
+                          }}'/>
+                      </button>
+ -->
+                      <button name="do_serviceable"
+                          type="object"
+                          class="oe_inline oe_stat_button"
+                          icon="fa-archive"
+                          help="Changed To Unserviceable"
+                          attrs="{'invisible':[('aircraft_status', '=', False)]}"
+                          string="Serviceable"> 
+                      </button>
+
+                      <button name="do_unserviceable"
+                          type="object"
+                          class="oe_inline oe_stat_button"
+                          icon="fa-archive"
+                          help="Changed To Serviceable"
+                          attrs="{'invisible':[('aircraft_status', '=', True)]}"
+                          string="Unserviceable"> 
+                      </button>
+                      
+                      <button name="do_document_check"
+                          type="object"
+                          class="oe_stat_button"
+                          icon="fa-book"
+                          help="check document of this aircraft"
+                          string="Document"> 
+                          <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+                      </button>
+                      <button name="do_logbook_check"
+                          type="object"
+                          class="oe_stat_button"
+                          icon="fa-tasks"
+                          help="check logbook of this aircraft"
+                          string="Logbook">
+                          <!-- <field name="some_count" widget="statinfo" string="Logbook"/> -->
+                      </button>
+                      <button name="do_inspection"
+                          type="object"
+                          class="oe_stat_button"
+                          icon="fa-user"
+                          help="do an aircraft inspection"
+                          string="Inspection"> 
+                          <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+                      </button>
+
+                      <button name="restore"
+                          type="object"
+                          class="oe_inline oe_stat_button"
+                          icon="fa-magic"
+                          help="Undo Delete"
+                          attrs="{'invisible':[('is_deleted', '=', False)]}"
+                          string="Restore"> 
+                      </button>
+
+                      <button name="reset_component"
+                          type="object"
+                          class="oe_inline oe_stat_button"
+                          icon="fa-refresh"
+                          help="Reset State"
+                          attrs="{'invisible':[('is_deleted', '=', False)]}"
+                          groups="base.group_no_one"
+                          string="Reset Component"> 
+                      </button>
+
+                    </div>
+                <field name="image" widget="image" class="oe_avatar" style="padding-right:10px"/>
+                <div class="oe_title">
+                      <label for="name" string="Registration Number" />
+                          <h1>
+                              <field name="name" select="1"/>
+                          </h1>
+                </div>
+              <group>
+              <group>
+                <field name='aircraft_name' attrs="{'readonly':[('bel_view', '!=', False)]}"/>
+                <field name='category' attrs="{'readonly':[('bel_view', '!=', False)]}"/>
+                <field name='aircraft_type_id' attrs="{'readonly':[('bel_view', '!=', False)]}"/> 
+                <field name='date_manufacture' attrs="{'readonly':[('bel_view', '!=', False)]}"/>
+                <!-- <field name='airframe_lastoh' attrs="{'readonly':True}"/> -->
+                <field name="bel_view" attrs="{'invisible':True}"/>
+                <!-- <field name='propeller_type_id' attrs="{'invisible':[('category', '!=', 'fixedwing')],'readonly':[('bel_view', '!=', False)]}"/> -->
+              </group>
+              <group>
+                <field name='remark' style="color:#CB3C3C;" attrs="{'invisible':[('aircraft_status','=',True)]}" readonly="1"/>
+                <field name='ownership' attrs="{'readonly':[('bel_view', '!=', False)]}"/>
+                <field name='delivery_date' string="Arrival Date" attrs="{'invisible':[('ownership', '!=', 'owner')],'readonly':[('bel_view', '!=', False)]}"/>
+                <field name='lessor' attrs="{'invisible':[('ownership', '!=', 'leasing')],'readonly':[('bel_view', '!=', False)]}"/>
+                <field name='start_lease' attrs="{'invisible':[('ownership', '!=', 'leasing')],'readonly':[('bel_view', '!=', False)]}"/>
+                <field name='normal_termination' attrs="{'invisible':[('ownership', '!=', 'leasing')],'readonly':[('bel_view', '!=', False)]}"/>
+              </group>
+              <!-- <group> -->
+                <group string="General Properties" attrs="{'invisible':[('bel_view', '!=', False)]}">
+                    <!-- <field name="aircraft_name" string="Manufacturer"/> -->
+                    <field name="location" />
+                    <field name="vin_sn" string="MSN" />
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="acquisition_date" />
+                    <field name="car_value" />
+                    <field name="status" />
+                    <field name="rent_by"  string="Chartered By"/>
+                </group>
+                <group string="Log" col="2" attrs="{'invisible':[('bel_view', '!=', False)]}">
+                  <field name="last_flight"/>
+                  <field name="rin_active" />
+                  <field name="total_hours"/>
+                  <!-- <field name="total_hours" groups="ams_security.group_write_hours_cycles"/> -->
+                  <field name="total_landings"/>
+                  <field name="total_rins" attrs="{'invisible':[('rin_active', '!=', True)]}"/>
+                  <!-- <field name="total_rins" groups="ams_security.group_write_hours_cycles"/> -->
+                  <!-- <field name="hoobs"/> -->
+                </group>
+                <!-- <field name='rh_ldg'  attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+                <!-- <field name='lh_ldg' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+                <!-- <field name='n_ldg' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+              <!-- </group> -->
+             </group>
+            <group>
+              <group>
+                <field name="last_inspection"/>
+                <field name="last_inspection_hours"/>
+                <field name="last_inspection_date"/>
+              </group>
+
+              <group>
+                <field name="next_inspection"/>
+                <field name="next_inspection_at"/>
+              </group>
+              <!-- <field name='propeller1' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+              <!-- <field name='propeller2' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+            </group>
+            <button name="check_import_csv" string="Import" type="object"  groups="base.group_no_one"/>
+             <notebook>
+              <page string="Engine" attrs="{'invisible':[('bel_view', '!=', False)]}">
+              
+              <notebook widget="leftigi">
+                 <page string='Engine #1'>
+                  <group>
+                    <group>
+                    <field name="engine_type_id_before" attrs="{'invisible':[('engine_change', '=', False)]}" readonly="1"/>
+                    <field name='engine_type_id' string="Engine"/>
+                    <field name="engine_change" attrs="{'invisible':True}"/>
+                    <field name="engine_change_reason" attrs="{'invisible':[('engine_change', '=', False)]}"/>
+                  
+                    <field name='engine1_tsn' string='TSN' attrs="{'readonly': True}"/>
+                    <field name='engine1_csn' string='CSN' attrs="{'readonly': True}"/>
+                    <field name='engine1_lastoh' string='Last Overhaul' attrs="{'readonly': True}"/>
+                    <field name='engine1_hsi' string='Last HSI' attrs="{'readonly': True}"/>
+                    </group>
+                    <group>
+                      <field name="ac_hours_eng1"/>
+                      <field name="ac_cycles_eng1"/>
+                      <field name="en_hours_eng1"/>
+                      <field name="en_cycles_eng1"/>
+                    </group>
+                  </group>
+                </page>
+                <page string='Engine #2'>
+                  <group>
+                  <group>
+                    <field name="engine2_type_id_before" attrs="{'invisible':[('engine2_change', '=', False)]}" readonly="1"/>
+                    <field name='engine2_type_id' string="Engine"/>
+                    <field name="engine2_change" attrs="{'invisible':True}"/>
+                    <field name="engine2_change_reason" attrs="{'invisible':[('engine2_change', '=', False)]}"/>
+
+
+                    <field name='engine2_tsn' string='TSN' attrs="{'readonly': True}"/>
+                    <field name='engine2_csn' string='CSN' attrs="{'readonly': True}"/>
+                    <field name='engine2_lastoh' string='Last Overhaul' attrs="{'readonly': True}"/>
+                    <field name='engine2_hsi' string='Last HSI' attrs="{'readonly': True}"/>
+                    </group>
+                    <group>
+                      <field name="ac_hours_eng2"/>
+                      <field name="ac_cycles_eng2"/>
+                      <field name="en_hours_eng2"/>
+                      <field name="en_cycles_eng2"/>
+                    </group>
+                    </group>
+                </page>
+                 <page string='Engine #3'>
+                  <group>
+                    <group>
+                    <field name="engine3_type_id_before" attrs="{'invisible':[('engine3_change', '=', False)]}" readonly="1"/>
+                    <field name='engine3_type_id'  string="Engine"/>
+                    <field name="engine3_change" attrs="{'invisible':True}"/>
+                    <field name="engine3_change_reason" attrs="{'invisible':[('engine3_change', '=', False)]}"/>
+                  
+                    <field name='engine3_tsn' string='TSN' attrs="{'readonly': True}"/>
+                    <field name='engine3_csn' string='CSN' attrs="{'readonly': True}"/>
+                    <field name='engine3_lastoh' string='Last Overhaul' attrs="{'readonly': True}"/>
+                    <field name='engine3_hsi' string='Last HSI' attrs="{'readonly': True}"/>
+                    </group>
+                    <group>
+                      <field name="ac_hours_eng3"/>
+                      <field name="ac_cycles_eng3"/>
+                      <field name="en_hours_eng3"/>
+                      <field name="en_cycles_eng3"/>
+                    </group>
+                  </group>
+                </page>
+                <page string='Engine #4'>
+                  <group>
+                  <group>
+                    <field name="engine4_type_id_before" attrs="{'invisible':[('engine4_change', '=', False)]}" readonly="1"/>
+                    <field name='engine4_type_id'  string="Engine"/>
+                    <field name="engine4_change" attrs="{'invisible':True}"/>
+                    <field name="engine4_change_reason" attrs="{'invisible':[('engine4_change', '=', False)]}"/>
+
+                    <field name='engine4_tsn' string='TSN' attrs="{'readonly': True}"/>
+                    <field name='engine4_csn' string='CSN' attrs="{'readonly': True}"/>
+                    <field name='engine4_lastoh' string='Last Overhaul' attrs="{'readonly': True}"/>
+                    <field name='engine4_hsi' string='Last HSI' attrs="{'readonly': True}"/>
+                    </group>
+                    <group>
+                      <field name="ac_hours_eng4"/>
+                      <field name="ac_cycles_eng4"/>
+                      <field name="en_hours_eng4"/>
+                      <field name="en_cycles_eng4"/>
+                    </group>
+                    </group>
+                </page>
+              </notebook>
+              </page>
+              <page string="Auxiliary Power Unit" attrs="{'invisible':[('bel_view', '!=', False)]}">
+                      <group>
+                        <group>
+                          <field name="auxiliary_type_id_before" attrs="{'invisible':[('auxiliary_change', '=', False)]}" readonly="1"/>
+                          <field name='auxiliary_type_id' string='Auxiliary Name'/>
+                          <field name="auxiliary_change" attrs="{'invisible':True}"/>
+                          <field name="auxiliary_change_reason" attrs="{'invisible':[('auxiliary_change', '=', False)]}"/>
+
+                        
+                          <field name='auxiliary_tsn' string='TSN' attrs="{'readonly': True}"/>
+                          <field name='auxiliary_csn' string='CSN' attrs="{'readonly': True}"/>
+                          <field name='auxiliary_lastoh' string='Last Overhaul' attrs="{'readonly': True}"/>
+                        </group>
+                      <group>
+                        <field name="ac_hours_aux1"/>
+                        <field name="ac_cycles_aux1"/>
+                        <field name="aux_hours_aux1"/>
+                        <field name="aux_cycles_aux1"/>
+                      </group>
+                      </group>
+              </page>
+              <page string="Propeller" attrs="{'invisible':[('category', '=', 'rotary')]}">
+                <notebook widget="leftigi">
+                     <page string='Propeller #1'>
+                      <group>
+                        <group>
+                        <field name="propeller_type_id_before" attrs="{'invisible':[('propeller_change', '=', False)]}" readonly="1"/>
+                        <field name='propeller_type_id' string='Propeller Name'/>
+                        <field name="propeller_change" attrs="{'invisible':True}"/>
+                        <field name="propeller_change_reason" attrs="{'invisible':[('propeller_change', '=', False)]}"/>
+
+
+                        <field name='propeller_tsn' string='TSN' attrs="{'readonly': True}"/>
+                        <field name='propeller_csn' string='CSN' attrs="{'readonly': True}"/>
+                        <field name='propeller_lastoh' string='Last Overhaul' attrs="{'readonly': True}"/>
+                        </group>
+                          <group>
+                            <field name="ac_hours_prop1"/>
+                            <field name="ac_cycles_prop1"/>
+                            <field name="pr_hours_prop1"/>
+                            <field name="pr_cycles_prop1"/>
+                          </group>
+                      </group>
+                    </page>
+                    <page string='Propeller #2'>
+                      <group>
+                      <group>
+                        <field name="propeller2_type_id_before" attrs="{'invisible':[('propeller2_change', '=', False)]}" readonly="1"/>
+                        <field name='propeller2_type_id' string='Propeller Name'/>
+                        <field name="propeller2_change" attrs="{'invisible':True}"/>
+                        <field name="propeller2_change_reason" attrs="{'invisible':[('propeller2_change', '=', False)]}"/>
+
+                        <field name='propeller2_tsn' string='TSN' attrs="{'readonly': True}"/>
+                        <field name='propeller2_csn' string='CSN' attrs="{'readonly': True}"/>
+                        <field name='propeller2_lastoh' string='Last Overhaul' attrs="{'readonly': True}"/>
+                        </group>
+                          <group>
+                            <field name="ac_hours_prop2"/>
+                            <field name="ac_cycles_prop2"/>
+                            <field name="pr_hours_prop2"/>
+                            <field name="pr_cycles_prop2"/>
+                          </group>
+                        </group>
+                    </page>
+                     <page string='Propeller #3'>
+                      <group>
+                        <group>
+                        <field name="propeller3_type_id_before" attrs="{'invisible':[('propeller3_change', '=', False)]}" readonly="1"/>
+                        <field name='propeller3_type_id' string='Propeller Name'/>
+                        <field name="propeller3_change" attrs="{'invisible':True}"/>
+                        <field name="propeller3_change_reason" attrs="{'invisible':[('propeller3_change', '=', False)]}"/>
+
+                        <field name='propeller3_tsn' string='TSN' attrs="{'readonly': True}"/>
+                        <field name='propeller3_csn' string='CSN' attrs="{'readonly': True}" /> 
+                        <field name='propeller3_lastoh' string='Last Overhaul' attrs="{'readonly': True}"/>
+                        </group>
+                          <group>
+                            <field name="ac_hours_prop3"/>
+                            <field name="ac_cycles_prop3"/>
+                            <field name="pr_hours_prop3"/>
+                            <field name="pr_cycles_prop3"/>
+                          </group>
+                      </group>
+                    </page>
+                    <page string='Propeller #4'>
+                      <group>
+                      <group>
+                        <field name="propeller4_type_id_before" attrs="{'invisible':[('propeller4_change', '=', False)]}" readonly="1"/>
+                        <field name='propeller4_type_id' string='Propeller Name'/>
+                        <field name="propeller4_change" attrs="{'invisible':True}"/>
+                        <field name="propeller4_change_reason" attrs="{'invisible':[('propeller4_change', '=', False)]}"/>
+
+                        <field name='propeller4_tsn' string='TSN' attrs="{'readonly': True}"/>
+                        <field name='propeller4_csn' string='CSN' attrs="{'readonly': True}"/>
+                        <field name='propeller4_lastoh' string='Last Overhaul' attrs="{'readonly': True}"/>
+                        </group>
+                          <group>
+                            <field name="ac_hours_prop4"/>
+                            <field name="ac_cycles_prop4"/>
+                            <field name="pr_hours_prop4"/>
+                            <field name="pr_cycles_prop4"/>
+                          </group>
+                        </group>
+                      </page>
+                </notebook>
+              </page>
+                <page string="Components" attrs="{'invisible':[('bel_view', '!=', False)]}">
+                  <field name="component_ids" mode="tree" domain="[('is_bel','=',True)]" widget="datatable">
+                      <tree colors="red:no_component==True;" default_order='part_name, part_number, serial_number'>
+                          <field name="no_component" invisible="1"/>
+                          <field name="part_number"/>
+                          <field name="name"/>
+                          <!-- <field name="part_number"/> -->
+                          <field name="serial_number"/>
+                          <field name="date_installed"/>
+                          <field name="ata_code"/>
+                          <field name="item"/>
+                      </tree>
+                  </field>
+                </page>
+                <page string="Inspection" attrs="{'invisible':[('bel_view', '!=', False)]}">
+                  <field name="inspection_ids" mode="tree" attrs="{'readonly':False}">
+                      <tree>
+                          <field name="inspection_type"/>
+                          <field name="desc"/>
+                          <field name="ata_code"/>
+                      </tree>
+                  </field>
+                </page>
+
+                <!-- <page string="Daily Utilization" attrs="{'invisible':[('bel_view', '!=', False)]}">
+                  <field name="utils_ids" mode="tree">
+                      <tree>
+                          <field name="fleet_id"/>
+                          <field name="start_date"/>
+                          <field name="end_date"/>
+                      </tree>
+                  </field>
+                </page> -->
+                <page string="Aircraft Detail" attrs="{'invisible':[('bel_view', '!=', False)]}">
+                  <notebook widget="leftigi">
+                    <page string='Documents Certificate'>
+                      <field name='document_ids'>
+                        <tree editable='button'>
+                          <field name='document_id' string='Document Name'/>
+                          <field name='file_data' widget='binary' file_name='file_name'/>
+                          <field name='date_expired'/>
+                        </tree>
+                      </field>
+                    </page>
+                    <page string="Airfield Performance">
+                      <group col="4">
+                        <field name="seat_cap"/>
+                        <field name="type_engine"/>
+                        <field name="takeoff_power"/>
+                        <field name="max_continuous"/>
+                        <field name="max_climb"/>
+                        <field name="max_cruise"/>
+                        <field name="type_propeller"/>
+                        <field name="blades_diameter"/>
+                      </group>
+                    </page>
+                    <page string="Weight">
+                      <group col="4">
+                        <field name="max_takeoff"/>
+                        <field name="max_landing"/>
+                        <field name="max_zero"/>
+                        <field name="operational_empt"/>
+                      </group>
+                    </page>
+                    <page string="Avionic System">
+                      <field name="avionic_id" string="Avionic System">
+                        <tree editable='button'>
+                            <field name="designation"/>
+                            <field name="manufacture"/>
+                            <field name="part_number"/>
+                            <field name="qty"/>
+                        </tree>
+                      </field>
+                    </page>
+                  </notebook>
+                </page>
+            </notebook>
+            </sheet>
+          </form>
+          </field>
+      </record>
+
+      <record id='airframe_custom_bel_form' model='ir.ui.view'>
+          <field name="name">aircraft.acquisition.custom</field>
+          <field name="model">aircraft.acquisition</field>
+          <field name="arch" type="xml">
+          <form string="Form Airframes" create="0" edit="0" duplicate="0" delete="0">
+              <sheet>
+                <div class="oe_button_box" name="button_box">
+                        <!-- <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="aircraft_status" widget="boolean_button" options='{"Serviceable": "Un-Serviceable"}'/>
+                        </button> -->
+                        <button name="toggle_active" type="action" class="oe_stat_button" icon="fa-archive">
+                                <field name="aircraft_status" widget="boolean_button" options="{'terminology':{'string_true': 'Serviceable','hover_true': 'Serviceable','string_false': 'UnServiceable','hover_false': 'UnServiceable'}}"/>
+                            </button>
+                        <!-- <button name="return_action_to_open"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-fire"
+                            help="show the contract for this vehicle">
+                            <field name="some_count" widget="statinfo" string="HSI"/>
+                        </button> -->
+                    </div>
+                <div class="oe_title">
+                      <label for="name" string="Registration Number" />
+                          <h1>
+                              <field name="name" select="1" attrs="{'readonly':True}"/>
+                          </h1>
+                </div>
+              <group>
+              <group>
+                <field name='aircraft_name' attrs="{'readonly':True}"/>
+                <field name='category' attrs="{'readonly':True}"/>
+                <field name='aircraft_type_id' attrs="{'readonly':True}"/> 
+                <field name='date_manufacture' attrs="{'readonly':True}"/>
+                <field name='airframe_lastoh' attrs="{'readonly':True}"/>
+                <field name="bel_view" attrs="{'invisible':True}"/>
+                <!-- <field name='propeller_type_id' attrs="{'invisible':[('category', '!=', 'fixedwing')],'readonly':True}"/> -->
+              </group>
+              <group>
+                <field name='remark' style="color:#CB3C3C;" attrs="{'invisible':[('aircraft_status','=',True)]}"/>
+                <field name='ownership' attrs="{'readonly':True}"/>
+                <field name='delivery_date' attrs="{'invisible':[('ownership', '!=', 'owner')],'readonly':True}"/>
+                <field name='lessor' attrs="{'invisible':[('ownership', '!=', 'leasing')],'readonly':True}"/>
+                <field name='start_lease' attrs="{'invisible':[('ownership', '!=', 'leasing')],'readonly':True}"/>
+                <field name='normal_termination' attrs="{'invisible':[('ownership', '!=', 'leasing')],'readonly':True}"/>
+              </group>
+             </group>
+             <notebook>
+                <page string="Basic Equipment">
+                  <field name="component_ids" mode="tree" context="{'belcomponent': True}" domain="[('is_bel','=',True)]">
+                      <tree domain="[('is_bel','=',True)]">
+                          <field name="is_bel" invisible="True"/>
+                          <field name="part_number"/>
+                          <field name="name"/>
+                          <field name="serial_number"/>
+                          <field name="date_installed"/>
+                          <field name="ata_code"/>
+                          <field name="item"/>
+                      </tree>
+                  </field>
+                </page>
+            </notebook>
+            </sheet>
+          </form>
+          </field>
+      </record>
+<!-- FLEET ACTION -->
+    <record model="ir.actions.act_window" id="fleet_action">
+      <field name="name">Airframe</field>
+      <field name="res_model">aircraft.acquisition</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'manual_edit':True}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Airframe
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fleet_bel_action">
+      <field name="name">Airframe</field>
+      <field name="res_model">aircraft.acquisition</field>
+      <field name="view_type">form</field>
+      <field name="context">{'belcomponent': True,'manual_edit':True}</field>
+      <field name="domain">[('aircraft_name.name', 'like', 'Bell')]</field>
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Airframe
+            </p>
+        </field>
+    </record>
+
+    <record id="airframe_action_custom_tree" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="airframe_custom_tree"/>
+        <field name="act_window_id" ref="fleet_action"/>
+        <field name="context">{'manual_edit':True}</field>
+    </record>
+
+    <record id="airframe_action_custom" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="airframe_custom_form"/>
+        <field name="act_window_id" ref="fleet_action"/>
+        <field name="context">{'manual_edit':True}</field>
+    </record>
+
+    <record id="airframe_action_bel_custom_tree" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="airframe_custom_bel_tree"/>
+        <field name="act_window_id" ref="fleet_bel_action"/>
+        <field name="context">{'belcomponent': True,'manual_edit':True}</field>
+    </record>
+
+    <record id="airframe_action_bel_custom" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="airframe_custom_bel_form"/>
+        <field name="act_window_id" ref="fleet_bel_action"/>
+        <field name="context">{'belcomponent': True,'manual_edit':True}</field>
+    </record>
+<!-- FLEET ACTION -->
+
+    <record id="airframe_current_custom_tree" model="ir.actions.act_window.view">
+        <field eval="3" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="pelita_master_data.aircraft_acquisition_view_tree"/>
+        <field name="act_window_id" ref="pelita_master_data.aircraft_acquisition_action"/>
+    </record>
+
+    <record id="airframe_action_current" model="ir.actions.act_window.view">
+        <field eval="4" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="pelita_master_data.aircraft_acquisition_view_form"/>
+        <field name="act_window_id" ref="pelita_master_data.aircraft_acquisition_action"/>
+    </record>
+
+    <!-- airframe_custom_form -->
+    <record model="ir.ui.view" id="airframe_custom_form_unreadonly">
+      <field name="name">airframe.custom.form.unreadonly.form</field>
+      <field name="model">aircraft.acquisition</field>
+      <field name="inherit_id" ref="airframe_custom_form"/>
+      <field name="groups_id" eval="[(6, 0, [ref('ams_security.group_write_hours_cycles') ])]"/>
+      <field name="arch" type="xml">
+        <field name="total_hours" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="total_landings" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="total_rins" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_hours_eng1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_cycles_eng1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="en_hours_eng1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="en_cycles_eng1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_hours_eng2" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_cycles_eng2" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="en_hours_eng2" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="en_cycles_eng2" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_hours_eng3" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_cycles_eng3" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="en_hours_eng3" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="en_cycles_eng3" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_hours_eng4" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_cycles_eng4" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="en_hours_eng4" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="en_cycles_eng4" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_hours_aux1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_cycles_aux1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="aux_hours_aux1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="aux_cycles_aux1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_hours_prop1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_cycles_prop1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="pr_hours_prop1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="pr_cycles_prop1" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_hours_prop2" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_cycles_prop2" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="pr_hours_prop2" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="pr_cycles_prop2" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_hours_prop3" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_cycles_prop3" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="pr_hours_prop3" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="pr_cycles_prop3" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_hours_prop4" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="ac_cycles_prop4" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="pr_hours_prop4" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+        <field name="pr_cycles_prop4" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+      </field>
+    </record>
+
+    <!-- airframe_custom_form -->
+    <record model="ir.ui.view" id="airframe_custom_form_readonly">
+      <field name="name">airframe.custom.form.readonly.form</field>
+      <field name="model">aircraft.acquisition</field>
+      <field name="inherit_id" ref="airframe_custom_form"/>
+      <field name="groups_id" eval="[(6, 0, [ref('base.group_user') ])]"/>
+      <field name="arch" type="xml">
+        <field name="total_hours" position="attributes">
+           <attribute name="readonly">1</attribute>
+        </field>
+        <field name="total_landings" position="attributes">
+           <attribute name="readonly">1</attribute>
+        </field>
+        <field name="total_rins" position="attributes">
+           <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_hours_eng1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_cycles_eng1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="en_hours_eng1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="en_cycles_eng1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_hours_eng2" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_cycles_eng2" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="en_hours_eng2" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="en_cycles_eng2" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_hours_eng3" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_cycles_eng3" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="en_hours_eng3" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="en_cycles_eng3" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_hours_eng4" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_cycles_eng4" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="en_hours_eng4" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="en_cycles_eng4" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_hours_aux1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_cycles_aux1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="aux_hours_aux1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="aux_cycles_aux1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_hours_prop1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_cycles_prop1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="pr_hours_prop1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="pr_cycles_prop1" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_hours_prop2" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_cycles_prop2" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="pr_hours_prop2" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="pr_cycles_prop2" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_hours_prop3" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_cycles_prop3" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="pr_hours_prop3" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="pr_cycles_prop3" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_hours_prop4" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="ac_cycles_prop4" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="pr_hours_prop4" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+        <field name="pr_cycles_prop4" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+      </field>
+    </record>
+
+    <!-- Wizard Check Import CSV -->
+    <record model="ir.ui.view" id="wizard_import_csv">
+      <field name="name">wizard.check.import.csv</field>
+      <field name="model">wizard.check.import.csv</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="file" filename="filename" />
+              <field name="filename" invisible="1" />
+              <field name="fleet_id" attrs="{'readonly':True}"/>
+            </group>
+          </sheet>
+          <footer>
+            <button name="get_action_wizard" type="object" string="OK" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <!-- Status Service -->
+    <record model="ir.ui.view" id="status_service_form">
+      <field name="name">status.service</field>
+      <field name="model">status.service</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="fleet_id" invisible="1"/>
+              <field name="status_s" string="Status" attrs="{'invisible':[('type', '!=', 'US')],'required':[('type', '!=', 'S')]}"/>
+              <field name="status_us" string="Status" attrs="{'invisible':[('type', '!=', 'S')],'required':[('type', '!=', 'US')]}"/>
+              <field name="type" invisible="1"/>
+              <field name="remark"  attrs="{'invisible':[('type', '!=', 'S')],'required':[('type', '!=', 'US')]}"/>
+            </group>
+          </sheet>
+          <footer>
+                <button string="Save" name="action_save" class="oe_link btn-primary"/>\
+                <button string="Cancel" class="oe_link" special="cancel"/>          
+          </footer>
+        </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>

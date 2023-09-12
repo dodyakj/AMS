@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="internal_layout_sb">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <div class="header">
+        <div class="row">
+            <div class="col-xs-3">
+                <!-- <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/> -->
+            </div>
+            <div class="col-xs-2 col-xs-offset-2 text-center">
+               <h4> <div t-esc="company.name"/></h4>
+            </div>
+            <div class="col-xs-2 col-xs-offset-3 text-right">
+                <ul class="list-inline">
+                    <li><span class="page"/></li>
+                    <li>/</li>
+                    <li><span class="topage"/></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="text-center">Bulletin In Fleet</h4>
+                    <table class="table" style="margin-bottom:none">
+                        <tr>
+                            <td><strong>Bulletin Type</strong></td>
+                            <td><span>SB</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date</strong></td>
+                            <td><span t-field="data.date"/></td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+       <!--  <div class="row">
+            <div class="col-xs-12">
+                <table class="table" style="border: 1px solid #FFF;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="15%">Bulletin #</th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Date</th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>Relates</p> <p>To</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Tail #</p> <p>Serial #</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>When Became</p> <p>Necessary</p> <p>1. Date</p> <p>2. Time</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Last</p> <p>Complied</p> <p>1. Date</p> <p>2. Time</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Limits</th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Next</p> <p>Compliance</p> <p>Due</p></th>
+                        </tr>
+                   </thead>
+               </table>
+            </div>
+        </div> -->
+    </div>
+    <t t-raw="0"/>
+</template>
+
+
+<template id="internal_layout_ad">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <div class="header">
+        <div class="row">
+            <div class="col-xs-3">
+                <!-- <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/> -->
+            </div>
+            <div class="col-xs-2 col-xs-offset-2 text-center">
+               <h4> <div t-esc="company.name"/></h4>
+            </div>
+            <div class="col-xs-2 col-xs-offset-3 text-right">
+                <ul class="list-inline">
+                    <li><span class="page"/></li>
+                    <li>/</li>
+                    <li><span class="topage"/></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="text-center">Bulletin In Fleet</h4>
+                    <table class="table" style="margin-bottom:none">
+                        <tr>
+                            <td><strong>Bulletin Type</strong></td>
+                            <td><span>AD</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date</strong></td>
+                            <td><span t-field="data.date"/></td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+<!--         <div class="row">
+            <div class="col-xs-12">
+                <table class="table" style="border: 1px solid #FFF;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="15%">Bulletin #</th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Date</th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>Relates</p> <p>To</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Tail #</p> <p>Serial #</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>When Became</p> <p>Necessary</p> <p>1. Date</p> <p>2. Time</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Last</p> <p>Complied</p> <p>1. Date</p> <p>2. Time</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Limits</th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Next</p> <p>Compliance</p> <p>Due</p></th>
+                        </tr>
+                   </thead>
+               </table>
+            </div>
+        </div> -->
+    </div>
+    <t t-raw="0"/>
+</template>
+
+<template id="internal_layout_stc">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <div class="header">
+        <div class="row">
+            <div class="col-xs-3">
+                <!-- <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/> -->
+            </div>
+            <div class="col-xs-2 col-xs-offset-2 text-center">
+               <h4> <div t-esc="company.name"/></h4>
+            </div>
+            <div class="col-xs-2 col-xs-offset-3 text-right">
+                <ul class="list-inline">
+                    <li><span class="page"/></li>
+                    <li>/</li>
+                    <li><span class="topage"/></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="text-center">Bulletin In Fleet</h4>
+                    <table class="table" style="margin-bottom:none">
+                        <tr>
+                            <td><strong>Bulletin Type</strong></td>
+                            <td><span>STC</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date</strong></td>
+                            <td><span t-field="data.date"/></td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+<!--         <div class="row">
+            <div class="col-xs-12">
+                <table class="table" style="border: 1px solid #FFF;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="15%">Bulletin #</th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Date</th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>Relates</p> <p>To</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Tail #</p> <p>Serial #</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>When Became</p> <p>Necessary</p> <p>1. Date</p> <p>2. Time</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Last</p> <p>Complied</p> <p>1. Date</p> <p>2. Time</p></th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Limits</th>
+                            <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Next</p> <p>Compliance</p> <p>Due</p></th>
+                        </tr>
+                   </thead>
+               </table>
+            </div>
+        </div> -->
+    </div>
+    <t t-raw="0"/>
+</template>
+
+</data>
+<data>
+<template id="report_fbr">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            
+            <t t-if="data.type == 'all'">
+                <t t-if="data.bulletin_sb">
+                    <t t-call="ams_bulletin.internal_layout_sb">
+                        <div class="page">
+                            <table class="table">
+                                                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%">Bulletin #</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Date</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>Relates</p> <p>To</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Tail #</p> <p>Serial #</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>When Became</p> <p>Necessary</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Last</p> <p>Complied</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Limits</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Next</p> <p>Compliance</p> <p>Due</p></th>
+                                </tr>
+                           </thead>
+                               <tbody>
+                                    <t t-foreach="data.bulletin_sb" t-as="p">
+                                        <tr>
+                                            <td style="width:150px" class="text-center">
+                                                <p t-field="p.name"/> 
+                                                <p>Subject    <div t-field="p.subject"/></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.date"/></td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.bulletin_of"/></td>
+                                            <td style="width:150px" class="text-center">
+                                                <t t-foreach="p.fleet_id" t-as="a">
+                                                    <p t-field="a.name"/>
+                                                </t>
+                                                
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p></p>
+                                                <p></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p>N/A</p></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                 
+                        </div>
+                    </t>
+                </t>
+
+                <t t-if="data.bulletin_ad">
+                    <t t-call="ams_bulletin.internal_layout_ad">
+                        <div class="page">
+                            <table class="table">
+                                                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%">Bulletin #</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Date</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>Relates</p> <p>To</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Tail #</p> <p>Serial #</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>When Became</p> <p>Necessary</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Last</p> <p>Complied</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Limits</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Next</p> <p>Compliance</p> <p>Due</p></th>
+                                </tr>
+                           </thead>
+                               <tbody>
+                                    <t t-foreach="data.bulletin_ad" t-as="p">
+                                        <tr>
+                                            <td style="width:150px" class="text-center">
+                                                <p t-field="p.name"/> 
+                                                <p>Subject    <div t-field="p.subject"/></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.date"/></td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.bulletin_of"/></td>
+                                            <td style="width:150px" class="text-center">
+                                                <t t-foreach="p.fleet_id" t-as="a">
+                                                    <p t-field="a.name"/>
+                                                </t>
+                                                
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p></p>
+                                                <p></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p>N/A</p></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                 
+                        </div>
+                    </t>
+                </t>
+
+                <t t-if="data.bulletin_stc">
+                    <t t-call="ams_bulletin.internal_layout_stc">
+                        <div class="page">
+                            <table class="table">
+                                                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%">Bulletin #</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Date</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>Relates</p> <p>To</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Tail #</p> <p>Serial #</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>When Became</p> <p>Necessary</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Last</p> <p>Complied</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Limits</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Next</p> <p>Compliance</p> <p>Due</p></th>
+                                </tr>
+                           </thead>
+                               <tbody>
+                                    <t t-foreach="data.bulletin_stc" t-as="p">
+                                        <tr>
+                                            <td style="width:150px" class="text-center">
+                                                <p t-field="p.name"/> 
+                                                <p>Subject    <div t-field="p.subject"/></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.date"/></td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.bulletin_of"/></td>
+                                            <td style="width:150px" class="text-center">
+                                                <t t-foreach="p.fleet_id" t-as="a">
+                                                    <p t-field="a.name"/>
+                                                </t>
+                                                
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p></p>
+                                                <p></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p>N/A</p></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                 
+                        </div>
+                    </t>
+                </t>
+            </t>
+
+
+            <t t-if="data.type == 'sb'">
+                <t t-if="data.bulletin_sb">
+                    <t t-call="ams_bulletin.internal_layout_sb">
+                        <div class="page">
+                            <table class="table">
+                                                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%">Bulletin #</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Date</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>Relates</p> <p>To</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Tail #</p> <p>Serial #</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>When Became</p> <p>Necessary</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Last</p> <p>Complied</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Limits</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Next</p> <p>Compliance</p> <p>Due</p></th>
+                                </tr>
+                           </thead>
+                               <tbody>
+                                    <t t-foreach="data.bulletin_sb" t-as="p">
+                                        <tr>
+                                            <td style="width:150px" class="text-center">
+                                                <p t-field="p.name"/> 
+                                                <p>Subject    <div t-field="p.subject"/></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.date"/></td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.bulletin_of"/></td>
+                                            <td style="width:150px" class="text-center">
+                                                <t t-foreach="p.fleet_id" t-as="a">
+                                                    <p t-field="a.name"/>
+                                                </t>
+                                                
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p></p>
+                                                <p></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p>N/A</p></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                 
+                        </div>
+                    </t>
+                </t>
+            </t>
+
+            <t t-if="data.type == 'ad'">
+                <t t-if="data.bulletin_ad">
+                    <t t-call="ams_bulletin.internal_layout_ad">
+                        <div class="page">
+                            <table class="table">
+                                                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%">Bulletin #</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Date</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>Relates</p> <p>To</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Tail #</p> <p>Serial #</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>When Became</p> <p>Necessary</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Last</p> <p>Complied</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Limits</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Next</p> <p>Compliance</p> <p>Due</p></th>
+                                </tr>
+                           </thead>
+                               <tbody>
+                                    <t t-foreach="data.bulletin_ad" t-as="p">
+                                        <tr>
+                                            <td style="width:150px" class="text-center">
+                                                <p t-field="p.name"/> 
+                                                <p>Subject    <div t-field="p.subject"/></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.date"/></td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.bulletin_of"/></td>
+                                            <td style="width:150px" class="text-center">
+                                                <t t-foreach="p.fleet_id" t-as="a">
+                                                    <p t-field="a.name"/>
+                                                </t>
+                                                
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p></p>
+                                                <p></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p>N/A</p></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                 
+                        </div>
+                    </t>
+                </t>
+            </t>
+
+            <t t-if="data.type == 'stc'">
+                <t t-if="data.bulletin_stc">
+                    <t t-call="ams_bulletin.internal_layout_stc">
+                        <div class="page">
+                            <table class="table">
+                                                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%">Bulletin #</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Date</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>Relates</p> <p>To</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Tail #</p> <p>Serial #</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="15%"><p>When Became</p> <p>Necessary</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Last</p> <p>Complied</p> <p>1. Date</p> <p>2. Time</p></th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="12.5%">Limits</th>
+                                    <th style="border: 1px solid #FFF;" class="text-center" width="10%"><p>Next</p> <p>Compliance</p> <p>Due</p></th>
+                                </tr>
+                           </thead>
+                               <tbody>
+                                    <t t-foreach="data.bulletin_stc" t-as="p">
+                                        <tr>
+                                            <td style="width:150px" class="text-center">
+                                                <p t-field="p.name"/> 
+                                                <p>Subject    <div t-field="p.subject"/></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.date"/></td>
+                                            <td style="width:150px" class="text-center"><p t-field="p.bulletin_of"/></td>
+                                            <td style="width:150px" class="text-center">
+                                                <t t-foreach="p.fleet_id" t-as="a">
+                                                    <p t-field="a.name"/>
+                                                </t>
+                                                
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p>0.00    Hr</p>
+                                                <p>0.00    Cy</p>
+                                                <p>0.00    Rn</p>
+                                            </td>
+                                            <td style="width:150px" class="text-center">
+                                                <p></p>
+                                                <p></p>
+                                                <p></p>
+                                            </td>
+                                            <td style="width:150px" class="text-center"><p>N/A</p></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                 
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </t>
+</template>
+ </data>
+</odoo>

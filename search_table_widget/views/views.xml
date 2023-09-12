@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+
+    <template id="assets_backend" name="image_label_assets" inherit_id="web.assets_backend">
+      <xpath expr="." position="inside">
+        <link rel="stylesheet" href="/search_table_widget/static/lib/datatables-plugins/dataTables.bootstrap.css"/>
+        <link rel="stylesheet" href="/search_table_widget/static/lib/datatables-responsive/dataTables.responsive.css"/>
+        <script type="text/javascript" src="/search_table_widget/static/lib/datatables/js/jquery.dataTables.min.js"/>
+        <script type="text/javascript" src="/search_table_widget/static/lib/datatables-plugins/dataTables.bootstrap.min.js"/>
+        <script type="text/javascript" src="/search_table_widget/static/lib/datatables-responsive/dataTables.responsive.js"/>
+        <script type="text/javascript" src="/search_table_widget/static/src/js/datatable_widget.js"/>
+      </xpath>
+    </template>
+
+  </data>
+</odoo>

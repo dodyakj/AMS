@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <!-- Adds all assets in Odoo -->
+        <template id="assets_backend_css" name="ams_menu assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+        <!--These links will be called when loading your Odoo -->
+        		<link rel="stylesheet" href="/ams_menu/static/src/css/style.css" type="text/css"/>
+            </xpath>
+        </template>
+        <!-- Adds all assets in Odoo -->
+        <template id="assets_backend_js" name="ams_menu assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+        <!--These links will be called when loading your Odoo -->
+                <script type="text/javascript" src="/ams_menu/static/src/js/javascriptfile.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

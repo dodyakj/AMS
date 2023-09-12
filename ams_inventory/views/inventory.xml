@@ -1,0 +1,291 @@
+<odoo>
+  <data>
+
+    <record model='ir.ui.view' id='ams_stock_tree'>
+      <field name='name'>ams.stock.tree</field>
+      <field name='model'>ams.stock</field>
+      <field name='arch' type='xml'>
+        <tree string='Inventory' create="true" delete="false" duplicate="0">
+          <field name="product_id"/>
+          <field name="bin_id"/>
+          <field name="base_id"/>
+          <field name="stock_on_hand"/>
+          <field name="stock_scrap"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model='ir.ui.view' id='ams_stock_form'>
+      <field name='name'>ams.stock.form</field>
+      <field name='model'>ams.stock</field>
+      <field name='arch' type='xml'>
+        <tree string='Inventory' create="true" delete="false" duplicate="0" edit="0">
+          <field name="product_id"/>
+          <field name="bin_id"/>
+          <field name="base_id"/>
+          <field name="stock_on_hand"/>
+          <field name="stock_scrap"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ams_stock_search_view">
+        <field name="name">ams.stock.search</field>
+        <field name="model">ams.stock</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="product_id"/>
+              <field name="bin_id"/>
+              <field name="base_id"/>
+              <field name="stock_on_hand"/>
+              <field name="stock_scrap"/>             
+            </search>
+        </field>
+    </record>
+
+    <!-- inherit tree from product.template -->
+    <record model="ir.ui.view" id="ams_stock_list_view">
+      <field name="name">ams.inventory.view</field>
+      <field name="model">product.template</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="sequence" widget="handle"/>
+            <field name="default_code"/>
+            <field name="name"/>
+            <field name="list_price"/>
+            <field name="standard_price"/>
+            <field name="qty_available"/>
+            <field name="uom_id" options="{'no_open': True, 'no_create': True}" groups="product.group_uom"/>
+            <field name="active" invisible="1"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="ams_stock_list_view_action" model="ir.actions.act_window.view">
+
+      <field eval="5" name="sequence"/>
+
+      <field name="view_mode">tree</field>
+
+      <field name="view_id" ref="ams_stock_list_view"/>
+
+      <field name="act_window_id" ref="ams_stock_action"/>
+
+    </record>
+
+    <record id="stock_product_template_list_view" model="ir.actions.act_window.view">
+
+      <field eval="1" name="sequence"/>
+
+      <field name="view_mode">tree</field>
+
+      <field name="view_id" ref="stock.view_stock_product_template_tree"/>
+
+      <field name="act_window_id" ref="stock.product_template_action_product"/>
+
+    </record>
+
+    <!-- <record id="ams_stock_action" model="ir.actions.act_window">
+      <field name="name">Inventory</field>
+      <field name="res_model">ams.stock</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record> -->
+
+    <!-- Replace ams.stock with product template -->
+    <record id="ams_stock_action" model="ir.actions.act_window">
+      <field name="name">Inventory</field>
+      <field name="res_model">product.template</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="inventory_ams_action">
+      <field name="name">Inventory</field>
+      <field name="res_model">product.product</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Inventory
+            </p>
+        </field>
+    </record> 
+
+    
+    <record id='receiving_inventory_ams_tree' model='ir.ui.view'>
+              <field name="name">receiving.inventory.tree.custom</field>
+              <field name="model">receiving.inventory</field>
+              <field name="arch" type="xml">
+                  <tree string="Receiving Inventory">
+                    <field name='name'/>
+                  </tree>
+              </field>
+      </record>
+
+     <record id='receiving_inventory_ams_form' model='ir.ui.view'>
+          <field name="name">receiving.inventory.custom</field>
+          <field name="model">receiving.inventory</field>
+          <field name="arch" type="xml">
+                <form string="Receiving Inventory">
+                  <group>
+                    <field name="name"/>
+                    <field name="tipe" widget="radio"/>
+                    <field name="part_name"/>
+                    <field name="part_no"/>
+                    <field name="serial_no"/>
+                    <field name="quantity"/>
+                    <field name="vendor"/>
+                    <field name="rcv_date"/>
+                    <field name="ins_date"/>
+                    <field name="ins_by"/>
+                  </group>
+                  <notebook>
+                    <page string="Description">
+                      <field name="description">
+                        <tree editable="bottom" create="false">
+                          <field name="name" attrs="{'readonly':True}"/>
+                          <field name="acceptance"/>
+                        </tree>
+                      </field>
+                    </page>
+                    <page string="Note">
+                      <field name="note"/>
+                    </page>
+                    <page string="Result">
+                      <field name="result"/>
+                    </page>
+                  </notebook>
+                </form>                
+          </field>
+      </record>
+
+     <record id='receiving_inventory_ams_form_description' model='ir.ui.view'>
+          <field name="name">receiving.inventory.description.custom</field>
+          <field name="model">receiving.inventory.description</field>
+          <field name="arch" type="xml">
+                <form string="Receiving Inventory Description">
+                  <group>
+                    <field name="name"/>
+                    <field name="yes_no" string="Status" widget="radio" options="{'horizontal': true}"/>
+                  </group>
+                </form>                
+          </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="receiving_inventory_ams_action">
+      <field name="name">Receiving Inventory</field>
+      <field name="res_model">receiving.inventory</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Receiving Inventory
+            </p>
+        </field>
+    </record>
+
+
+    <record id='stock_production_lot_search' model='ir.ui.view'>
+      <field name="name">stock.production.lot.search</field>
+      <field name="model">stock.production.lot</field>
+      <field name="inherit_id" ref="stock.search_product_lot_filter" /> 
+      <field name="arch" type="xml">
+                <data>
+                    <xpath  expr="//search" position="replace">
+                      <search string="Product Lots Filter">
+                          <field name="tracing_loc"/>
+                          <field name="name" string="Product Lots" filter_domain="['|',('name','ilike',self),('ref','ilike',self)]"/>
+                          <field name="product_id"/>
+                          <group expand="0" string="Group By">
+                              <filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+                          </group>
+                      </search>
+                    </xpath>   
+                </data>
+      </field>
+    </record>
+
+    <record id='stock_production_lot_form' model='ir.ui.view'>
+      <field name="name">stock.production.lot.custom</field>
+      <field name="model">stock.production.lot</field>
+      <field name="arch" type="xml">
+            <form string="Lots/Serial Numbers" duplicate="0">
+              <sheet>
+              <div class="oe_button_box" name="button_box">
+                      <button name="648" icon="fa-arrows" class="oe_stat_button" string="Locate" type="action" attrs="{'invisible': [('quant_ids','=',[])]}"/>
+                      <button name="action_traceability" icon="fa-arrow-up" class="oe_stat_button" string="Traceability" type="object" attrs="{'invisible': [('quant_ids','=',[])]}"/>
+              </div>
+              <div class="oe_title">
+                  <label for="name" class="oe_edit_only"/>
+                  <h1>
+                      <field name="name" placeholder="e.g. LOT/0001/20121"/>
+                  </h1>
+              </div>
+              <group name="main_group">
+                  <group>
+                      <field name="unserviceable"/>
+                      <field name="product_id" attrs="{'readonly':[('quant_ids','!=',[])]}"/>
+                          <label for="product_qty"/>
+                          <div class="o_row">
+                              <field name="product_qty"/>
+                              <field name="product_uom_id" readonly="1" groups="product.group_uom"/>
+                          </div>
+                      <field name="ref"/>
+                  </group>
+                  <group>
+                      <field name="csn_compute" attrs="{'invisible':['|',('csn_compute','=',False),('csn_compute','=',0)]}"/>
+                      <field name="cso_compute" attrs="{'invisible':['|',('cso_compute','=',False),('cso_compute','=',0)]}"/>
+                      <field name="tsn_compute" attrs="{'invisible':['|',('tsn_compute','=',False),('tsn_compute','=',0)]}"/>
+                      <field name="tso_compute" attrs="{'invisible':['|',('tso_compute','=',False),('tso_compute','=',0)]}"/>
+                      <!-- <field name="tsn"/>
+                      <field name="csn"/>
+                      <field name="tso"/>
+                      <field name="cso"/>
+                      <field name="rso"/> -->
+                  </group>
+                  <group>
+                    <field name="tracing_loc"/>
+                  </group>
+              </group>
+              <group>
+                <field name="servicelife_ids">
+                  <tree>
+                    <field name="action_type" />
+                    <field name="value" />
+                    <field name="unit" />
+                    <field name="extension" />
+                    <field name="next_text" />
+                    <field name="remaining" />
+                    <field name="since_new_text" />
+                    <field name="comments" />
+                    <button name="do_ste" type="object" string="STE" class="oe_highlight" attrs="{'invisible':[('extension','!=',0)]}"/>
+                  </tree>
+                </field>
+              </group>
+              <notebook attrs="{'invisible':True}">
+                  <page string="Products">
+                      <field name="quant_ids">
+                          <tree string="Stock Moves">
+                              <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                              <field name="qty"/>
+                          </tree>
+                       </field>
+                  </page>
+              </notebook>
+              </sheet>
+          </form>              
+      </field>
+    </record>
+
+
+
+    <record id="inventory_sn_action" model="ir.actions.act_window">
+         <field name="name">Serial Number</field>
+         <field name="res_model">stock.production.lot</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">tree,form</field>
+       </record>   
+
+</data>
+</odoo>

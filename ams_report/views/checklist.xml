@@ -1,0 +1,132 @@
+<odoo>
+  <data>
+
+    <template id="report_checklist">
+            <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="data">
+                 <t t-call="ams_document.internal_layout">
+                    <div class="page">
+                        <t t-if="data.ids != False">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                      <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                                </div>
+                                <div class="col-xs-8">
+                                    <h2 class="text-left">Checklist Report</h2>
+                                </div>
+                            </div>
+                            <br/>
+
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <!-- <td><center><b>Checklist Number</b></center></td> -->
+                                    <td><center><b>A/C Model</b></center></td>
+                                    <td><center><b>Description</b></center></td>
+                                    <td><center><b>Revision Number</b></center></td>
+                                </tr>
+                                <t t-foreach="data.checklist.sorted(key=lambda b: b.create_date, reverse=True)" t-as="check">
+                                    <tr>
+                                        <td><center> <div t-field="check.checklist_model_id" /> </center></td>
+                                        <td><center> <div t-field="check.desc" /> </center></td>
+                                        <td><center> <div t-field="check.number" /> </center></td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </t>
+                        <t t-if="data.ids == False">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                      <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                                </div>
+                                <div class="col-xs-8">
+                                    <h2 class="text-left">Data Not Found</h2>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+        <record id="paperformat_checklist" model="report.paperformat">
+            <field name="name">Checklist</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="print_checklist_report"
+                string="Checklist Report"
+                model="ams.checklist.report"
+                report_type="qweb-html"
+                file="ams_report.report_checklist"
+                name="ams_report.report_checklist"
+                paperformat="ams_report.paperformat_checklist"
+            />
+
+    <record model="ir.ui.view" id="checklist_form">
+        <field name="name">ams.checklist.report.form</field>
+        <field name="model">ams.checklist.report</field>
+        <field name="arch" type="xml">
+            <form string="Checklist Report">
+                <sheet string="Checklist Report">
+                    <group>
+                        <!-- <field name="checklist"/> -->
+
+                    </group>
+                    <center><h1>Print Checklist Report ?</h1></center>
+                </sheet>
+                    <footer>
+                        <button name="print_checklist_report" type="object" icon="fa-download" string="Print" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_report_checklist" model="ir.actions.act_window">
+      <field name="name">Checklist Report</field>
+      <field name="res_model">ams.checklist.report</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+      <field name="target">new</field>
+    </record>
+
+            <record id="action_make_checklist" model="ir.actions.server">
+                <field name="name">Checklist</field>
+                <field name="model_id" ref="model_ams_checklist_report"/>
+                <field name="state">code</field>
+                <field name="code">
+                    action = env['report'].get_action(env['ams.checklist.report'].search([]),'ams_report.report_checklist')
+                </field>
+            </record>
+            
+            <record id="test_checklist" model="ir.values">
+                <field eval="'client_action_multi'" name="key2"/>
+                <field eval="'ams.checklist.report'" name="model"/>
+                <field name="name">Test Checklist</field>
+                <field eval="'ir.actions.server,%d'%action_make_checklist" name="value"/>
+            </record>
+  </data>
+</odoo>

@@ -1,0 +1,215 @@
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields, api, _
+
+class paiis_corrective_aircraft(models.Model):
+    _inherit = 'aircraft.acquisition'
+
+    aircraft_status = fields.Boolean(string='Aircraft Status',default=True)
+    # location = fields.Char(required=False, string="Location")
+    location = fields.Many2one('base.operation','Location')
+    bel_view = fields.Boolean(string='Is Bel',default=lambda self:self.env.context.get('belcomponent',False))
+    rin_active = fields.Boolean(string='Activate Rins')
+    license_plate = fields.Char(required=True, string="Aircraft Registration")
+    vin_sn = fields.Char(string='Serial Number', copy=False)
+    acquisition_date = fields.Date('Acquisition Date')
+    car_value = fields.Float(string="Aircraft Value")
+
+    total_hours = fields.Float(string='Total Hours')
+    total_landings = fields.Float(string='Total Landings')
+    total_rins = fields.Integer(string='Total Rins')
+    hoobs = fields.Integer(string='Hoobs')
+
+    auxiliary_type_id = fields.Many2one('auxiliary.type', string='Auxiliary Name')
+    auxiliary2_type_id = fields.Many2one('auxiliary.type', string='Auxiliary Name')
+
+    auxiliary_tsn = fields.Float(string='Auxiliary#1 TSN')
+    auxiliary_csn = fields.Float(string='Auxiliary#1 CSN')
+    auxiliary_tslsv = fields.Float(string='Auxiliary#1 TSLSV OH')
+    auxiliary_tslsv_hsi = fields.Float(string='Auxiliary#1 TSLSV HSI')
+    auxiliary_cslsv = fields.Float(string='Auxiliary#1 CSLSV OH')
+    auxiliary_cslsv_hsi = fields.Float(string='Auxiliary#1 CSLSV HSI')
+    
+    auxiliary_lastoh = fields.Date(string='Auxiliary#1 Last OH')
+    auxiliary_hsi = fields.Date(string='Auxiliary#1 HSI')
+
+    auxiliary2_tsn = fields.Float(string='Auxiliary#2 TSN')
+    auxiliary2_csn = fields.Float(string='Auxiliary#2 CSN')
+    auxiliary2_tslsv = fields.Float(string='Auxiliary#2 TSLSV OH')
+    auxiliary2_tslsv_hsi = fields.Float(string='Auxiliary#2 TSLSV HSI')
+    auxiliary2_cslsv = fields.Float(string='Auxiliary#2 CSLSV OH')
+    auxiliary2_cslsv_hsi = fields.Float(string='Auxiliary#2 CSLSV HSI')
+    
+    auxiliary2_lastoh = fields.Date(string='Auxiliary#2 Last OH')
+    auxiliary2_hsi = fields.Date(string='Auxiliary#2 HSI')
+
+    auxiliary3_type_id = fields.Many2one('auxiliary.type', string='Auxiliary Name')
+    auxiliary4_type_id = fields.Many2one('auxiliary.type', string='Auxiliary Name')
+
+    auxiliary3_tsn = fields.Float(string='Auxiliary#3 TSN')
+    auxiliary3_csn = fields.Float(string='Auxiliary#3 CSN')
+    auxiliary3_tslsv = fields.Float(string='Auxiliary#3 TSLSV OH')
+    auxiliary3_tslsv_hsi = fields.Float(string='Auxiliary#3 TSLSV HSI')
+    auxiliary3_cslsv = fields.Float(string='Auxiliary#3 CSLSV OH')
+    auxiliary3_cslsv_hsi = fields.Float(string='Auxiliary#3 CSLSV HSI')
+    
+    auxiliary3_lastoh = fields.Date(string='Auxiliary#3 Last OH')
+    auxiliary3_hsi = fields.Date(string='Auxiliary#3 HSI')
+
+    auxiliary4_tsn = fields.Float(string='Auxiliary#4 TSN')
+    auxiliary4_csn = fields.Float(string='Auxiliary#4 CSN')
+    auxiliary4_tslsv = fields.Float(string='Auxiliary#4 TSLSV OH')
+    auxiliary4_tslsv_hsi = fields.Float(string='Auxiliary#4 TSLSV HSI')
+    auxiliary4_cslsv = fields.Float(string='Auxiliary#4 CSLSV OH')
+    auxiliary4_cslsv_hsi = fields.Float(string='Auxiliary#4 CSLSV HSI')
+    
+    auxiliary4_lastoh = fields.Date(string='Auxiliary#4 Last OH')
+    auxiliary4_hsi = fields.Date(string='Auxiliary#4 HSI')
+
+    propeller_type_id = fields.Many2one('propeller.type', string='propeller Name')
+    propeller2_type_id = fields.Many2one('propeller.type', string='propeller Name')
+
+    propeller_tsn = fields.Float(string='propeller#1 TSN')
+    propeller_csn = fields.Float(string='propeller#1 CSN')
+    propeller_tslsv = fields.Float(string='propeller#1 TSLSV OH')
+    propeller_tslsv_hsi = fields.Float(string='propeller#1 TSLSV HSI')
+    propeller_cslsv = fields.Float(string='propeller#1 CSLSV OH')
+    propeller_cslsv_hsi = fields.Float(string='propeller#1 CSLSV HSI')
+    
+    propeller_lastoh = fields.Date(string='propeller#1 Last OH')
+    propeller_hsi = fields.Date(string='propeller#1 HSI')
+
+    propeller2_tsn = fields.Float(string='propeller#2 TSN')
+    propeller2_csn = fields.Float(string='propeller#2 CSN')
+    propeller2_tslsv = fields.Float(string='propeller#2 TSLSV OH')
+    propeller2_tslsv_hsi = fields.Float(string='propeller#2 TSLSV HSI')
+    propeller2_cslsv = fields.Float(string='propeller#2 CSLSV OH')
+    propeller2_cslsv_hsi = fields.Float(string='propeller#2 CSLSV HSI')
+    
+    propeller2_lastoh = fields.Date(string='propeller#2 Last OH')
+    propeller2_hsi = fields.Date(string='propeller#2 HSI')
+
+    propeller3_type_id = fields.Many2one('propeller.type', string='propeller Name')
+    propeller4_type_id = fields.Many2one('propeller.type', string='propeller Name')
+
+    propeller3_tsn = fields.Float(string='propeller#3 TSN')
+    propeller3_csn = fields.Float(string='propeller#3 CSN')
+    propeller3_tslsv = fields.Float(string='propeller#3 TSLSV OH')
+    propeller3_tslsv_hsi = fields.Float(string='propeller#3 TSLSV HSI')
+    propeller3_cslsv = fields.Float(string='propeller#3 CSLSV OH')
+    propeller3_cslsv_hsi = fields.Float(string='propeller#3 CSLSV HSI')
+    
+    propeller3_lastoh = fields.Date(string='propeller#3 Last OH')
+    propeller3_hsi = fields.Date(string='propeller#3 HSI')
+
+    propeller4_tsn = fields.Float(string='propeller#4 TSN')
+    propeller4_csn = fields.Float(string='propeller#4 CSN')
+    propeller4_tslsv = fields.Float(string='propeller#4 TSLSV OH')
+    propeller4_tslsv_hsi = fields.Float(string='propeller#4 TSLSV HSI')
+    propeller4_cslsv = fields.Float(string='propeller#4 CSLSV OH')
+    propeller4_cslsv_hsi = fields.Float(string='propeller#4 CSLSV HSI')
+    
+    propeller4_lastoh = fields.Date(string='propeller#4 Last OH')
+    propeller4_hsi = fields.Date(string='propeller#4 HSI')
+
+    component_ids = fields.One2many('ams.component.part','fleet_id',string='Component')
+    inspection_ids = fields.One2many('ams.inspection','fleet_id',string='Inspection')
+    utils_ids = fields.One2many('ams.daily_utilization','aircraft_id',string='Daily Utilization')
+    some_count = fields.Integer(string='Total',default=3)
+
+    engine_change = fields.Boolean(string='Engine 1 Changed',default=False,readonly=True)
+    engine2_change = fields.Boolean(string='Engine 2 Changed',default=False,readonly=True)
+    engine3_change = fields.Boolean(string='Engine 3 Changed',default=False,readonly=True)
+    engine4_change = fields.Boolean(string='Engine 4 Changed',default=False,readonly=True)
+
+    engine_change_reason = fields.Text(string='Reason')
+    engine2_change_reason = fields.Text(string='Reason')
+    engine3_change_reason = fields.Text(string='Reason')
+    engine4_change_reason = fields.Text(string='Reason')
+
+    ac_hours_eng1 = fields.Float(string='Aircraft Hours When Attached')
+    ac_hours_eng1 = fields.Float(string='Aircraft Cycles When Attached')
+    en_hours_eng1 = fields.Float(string='Engine Hours When Attached')
+    en_hours_eng1 = fields.Float(string='Engine Cycles When Attached')
+
+
+    # @api.model
+    # def write(self, vals):
+        # if(vals['engine_type_id'] != self.engine_type_id.id):
+        #     hist = self.env['ams.component_history'].create({
+        #             'engine_id':self.engine_type_id.id,
+        #             'fleet_id':self.id,
+        #             'type':'attach',
+        #         })
+        # write = self.write(vals)
+        
+        # return write
+
+    @api.onchange('engine_type_id')
+    def _onchange_engine_type_id(self):
+        # if(self.id):
+        current_id = self.env['aircraft.acquisition'].search([('id','=',self._context.get('active_id'))]).engine_type_id
+        if(self.engine_type_id.id != current_id.id):
+            self.engine_change = True
+        else:
+            self.engine_change = False
+        # return {
+        #     'name': _('Cash Control'),
+        #     'view_type': 'form',
+        #     'view_mode': 'form',
+        #     'res_model': 'engine.confirm',
+        #     'view_id': self.env.ref('ams_base.engineconfirm_wizard_form_view').id,
+        #     'type': 'ir.actions.act_window',
+        #     'target': 'new'
+        # }
+
+    @api.multi
+    def return_action_to_open(self):
+        return False
+
+    @api.multi
+    def write(self, vals):
+        if(vals['engine_type_id'] != self.engine_type_id.id):
+            if(vals['engine_type_id'] == False):
+                hist = self.env['ams.component_history'].create({
+                        'engine_id':self.engine_type_id.id,
+                        'engine_replacement_id':False, 
+                        'fleet_id':self.id,
+                        'type':'detach',
+                        'reason':vals['engine_change_reason'],
+                    })
+            elif(self.engine_type_id == False):
+                hist = self.env['ams.component_history'].create({
+                        'engine_id':False,
+                        'engine_replacement_id':self.engine_type_id.id, 
+                        'fleet_id':self.id,
+                        'type':'attach',
+                        'reason':vals['engine_change_reason'],
+                    })
+            else:
+                hist = self.env['ams.component_history'].create({
+                        'engine_id':self.engine_type_id.id,
+                        'engine_replacement_id':vals['engine_type_id'], 
+                        'fleet_id':self.id,
+                        'type':'replace',
+                        'reason':vals['engine_change_reason'],
+                    })
+                hist = self.env['ams.component_history'].create({
+                        'engine_id':vals['engine_type_id'],
+                        'engine_replacement_id':self.engine_type_id.id, 
+                        'fleet_id':self.id,
+                        'type':'attach',
+                        'reason':vals['engine_change_reason'],
+                    })
+        vals['engine_change'] = False
+        vals['engine2_change'] = False
+        vals['engine3_change'] = False
+        vals['engine4_change'] = False
+        vals['engine_change_reason'] = False
+        vals['engine2_change_reason'] = False
+        vals['engine3_change_reason'] = False
+        vals['engine4_change_reason'] = False
+        write = super(paiis_corrective_aircraft, self).write(vals)
+        # if vals.get('twitter_api_key') or vals.get('twitter_api_secret') or vals.get('twitter_screen_name'):
+            # self._check_twitter_authorization()
+        return write

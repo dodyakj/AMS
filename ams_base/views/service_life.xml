@@ -1,0 +1,156 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="ams_component_servicelife_tree">
+      <field name="name">ams.component.servicelife.tree</field>
+      <field name="model">ams.component.servicelife</field>
+      <field name="arch" type="xml">
+        <tree string='Service Life'>
+          <field name="action_type"/>
+          <!-- <field name="last_done"/> -->
+          <!-- <field name="current_text" attrs="{'readonly':True}"/> -->
+          <!-- <field name="current_display"/> -->
+          <field name="text_value" attrs="{'required':True}"/>
+          <field name="text_unit"/>
+          <field name="extension" invisible="True"/>
+          <field name="text_extension" attrs="{'readonly':True}"/>
+          <field name="text_next_due" attrs="{'readonly':True}"/>
+          <!-- <field name="remaining_display"/> -->
+          <field name="text_remaining" attrs="{'readonly':True}"/>
+          <field name="since_new_text" attrs="{'readonly':True}"/>
+          <field name="since_overhaul_text" attrs="{'readonly':True}"/>
+          <field name="at_install"/>
+          <field name="comments_text"/>
+          <button name="do_ste" type="object" string="STE" class="oe_highlight" attrs="{'invisible':[('extension','!=',0)]}"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ams_component_servicelife_form">
+      <field name="name">ams.component.servicelife.form</field>
+      <field name="model">ams.component.servicelife</field>
+      <field name="arch" type="xml">
+          <form string="Service Live">
+            <sheet>
+               <group>
+                <div class="oe_button_box" name="button_box">
+                  <button name="do_mwo"
+                      type="object"
+                      class="oe_stat_button"
+                      icon="fa-exclamation-triangle"
+                      help="Create MWO"
+                      string="MWO" attrs="{'invisible':[('id','=',False)]}">
+                      <!-- <field name="some_count" widget="statinfo" string="Replace"/> -->
+                  </button>
+                  <button name="do_wo"
+                      type="object"
+                      class="oe_stat_button"
+                      icon="fa-exclamation-triangle"
+                      help="Create WO"
+                      string="WO" attrs="{'invisible':[('id','=',False)]}">
+                      <!-- <field name="some_count" widget="statinfo" string="Replace"/> -->
+                  </button>
+                </div>
+              </group>
+              <group col="4">
+                <field name="id" attrs="{'invisible':True}"/>
+                <field colspan="2" name="part_id" attrs="{'invisible':True}"/>
+                <field colspan="2" name="inspection_id" attrs="{'invisible':True}"/>
+                <field name="action_type" attrs="{'readonly':[('id','!=',False)]}"/>
+                <field name="is_major"/>
+                <field name="value" attrs="{'invisible': ['|',('action_type','=','oncondition'),('action_type','=','conditionmonitoring')]}"/>
+                <field name="unit" attrs="{'invisible': ['|',('action_type','=','oncondition'),('action_type','=','conditionmonitoring')],'readonly':[('id','!=',False)]}"/>
+              </group>
+                    <!-- DEBUG -->
+  <!--                   <group>
+                      <group>
+                        <field name="at_install"/>
+                        <field name="current"/>
+                      </group>
+                      <group>
+                        <field name="since_new_text" readonly="0"/>
+                        <field name="since_overhaul_text" readonly="0"/>
+                        <field name="text_remaining" readonly="0"/>
+                        <field name="text_next_due" readonly="0"/>
+                      </group>
+                    </group> -->
+                    
+              <group attrs="{'invisible': ['|',('action_type','=','oncondition'),('action_type','=','conditionmonitoring')]}" col="4">
+                    <field name="installed_at"/>
+                    <field name="at_install" attrs="{'invisible': ['|','|',('unit','=','year'),('unit','=','month'),('unit','=','days')],'readonly':[('id','!=',False)]}"/>
+                    <field name="current" attrs="{'invisible': ['|','|',('unit','=','year'),('unit','=','month'),('unit','=','days')],'readonly':[('id','!=',False)]}"/>
+                    <field name="remaining" attrs="{'invisible': ['|','|',('unit','=','year'),('unit','=','month'),('unit','=','days')],'readonly':True}"/>
+                    <field name="current_date" attrs="{'invisible': ['|','|',('unit','=','hours'),('unit','=','cycles'),('unit','=','rin')],'readonly':[('id','!=',False)]}"/>
+                    <field name="next_date" attrs="{'invisible': ['|','|',('unit','=','hours'),('unit','=','cycles'),('unit','=','rin')],'readonly':True}"/>
+              </group>
+              <group>
+                <field name="comments"/>
+                <field name="current_text" attrs="{'invisible':True}"/>
+                <field name="next_text" attrs="{'invisible':True}"/>
+                <field name="extension" attrs="{'invisible':True}"/>
+              </group>
+              <group>
+              <field name="reset_other"/>
+                <field name="other_service_live" attrs="{'invisible':['&amp;',('other_service_live','==',[]),('reset_other','=',False)]}" context="{'part_id':part_id,'service_life_id':id,'inspection_id':inspection_id}">
+                    <tree string='Service Life' editable="bottom">
+                      <field name="service_life_reset_id" options="{'no_create': True, 'no_create_edit':True}" domain="['|','&amp;',('id','!=',context.get('service_life_id',False)),'&amp;',('inspection_id','=',context.get('inspection_id',False)),('inspection_id','!=',False),'&amp;',('id','!=',context.get('service_life_id',False)),'&amp;',('part_id','=',context.get('part_id',False)),('part_id','!=',False)]"/>
+                    </tree>
+                </field>
+              </group>
+            </sheet>
+          </form>        
+      </field>
+    </record>
+
+<!-- 
+    <record model="ir.ui.view" id="service_life_custom_form_unreadonly">
+      <field name="name">ams.component.form.unreadonly.form</field>
+      <field name="model">ams.component.servicelife</field>
+      <field name="inherit_id" ref="ams_component_servicelife_form"/>
+      <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one') ])]"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='at_install']" position="before">
+              <field name="at_install" readonly="0" groups="base.group_no_one"/>
+          </xpath>
+          <xpath expr="//field[@name='current']" position="before">
+              <field name="current" readonly="0" groups="base.group_no_one"/>
+          </xpath>
+      </field>
+    </record> -->
+<!-- 
+    <record model="ir.ui.view" id="service_life_custom_form_readonly">
+      <field name="name">ams.component.form.readonly.form</field>
+      <field name="model">ams.component.servicelife</field>
+      <field name="inherit_id" ref="ams_component_servicelife_form"/>
+      <field name="groups_id" eval="[(6, 0, [ref('base.user_root') ])]"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='at_install']" position="attributes">
+            <attribute name="readonly">1</attribute>
+          </xpath>
+          <xpath expr="//field[@name='current_date']" position="attributes">
+            <attribute name="readonly">1</attribute>
+          </xpath>
+          <xpath expr="//field[@name='next_date']" position="attributes">
+            <attribute name="readonly">1</attribute>
+          </xpath>
+          <xpath expr="//field[@name='current']" position="attributes">
+            <attribute name="readonly">1</attribute>
+          </xpath>
+      </field>
+    </record> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </data>
+</odoo>

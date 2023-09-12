@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="report_verify_pdf">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="ams_fml.html_container_fml">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="ams_fml.external_layout_fml">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-9 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>
+                    </div>
+                <!-- <div class="page"> -->
+                     
+                    <!-- JUDUL REPORT-->
+                     
+                    <h2 class="text-center">Verify Flight Time <t t-if="o.type == 'engine'"> <span>- Engine</span> </t></h2>
+         
+                    <!-- INFORMASI HEADER -->
+                     
+                    <table cellpadding="5" border="0">
+                        <tr style="height:25px">
+                            <td class="text-left" style="width:85px"><strong>A/C Reg.</strong></td>
+                            <td class="text-left"  colspan="3">
+                                <span t-if="o.type == 'fleet'" t-field="o.fleet_id"/>
+                                <span t-if="o.type == 'engine'" t-field="o.engine_id"/>
+                                <t t-if="o.all_fleet == True"> <span>All Aircraft</span> </t>
+                                <t t-if="o.all_engine == True"> <span>All Engine</span> </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left" style="width:85px"> <strong>Start Date</strong></td>
+                            <td class="text-left" style="width:100px"> <span t-field="o.start_date"/></td>
+                            <td class="text-left" style="width:85px"> <strong>End Date</strong></td>
+                            <td class="text-left" style="width:100px"> <span t-field="o.end_date"/></td>
+                        </tr>
+                    </table>
+         
+                    <table class="table table-bordered table-hover" style="table-layout:auto" cellpadding="0" cellspacing="0" >
+                        <thead>
+                            <tr>
+                                <td class="text-center" rowspan="2" style="vertical-align : middle;text-align:center;">Flight Date</td>
+                                <t t-if="o.type == 'engine' or o.type == 'auxiliary'">
+                                    <td colspan="2"></td>
+                                </t>
+                                <t t-if="o.type == 'fleet'">
+                                    <td class="text-center" rowspan="2" style="vertical-align : middle;text-align:center;">Flight Log Number</td>
+                                </t>
+                                <td class="text-center" rowspan="2" style="vertical-align : middle;text-align:center;">A/C Reg.</td>
+                                <td class="text-center" colspan="3">Hours</td>
+                                <td class="text-center" colspan="3">Cycles</td>
+                                <td class="text-center" colspan="3">RIN's</td>
+                            </tr>
+                            <tr>
+                                <t t-if="o.type == 'engine' or o.type == 'auxiliary'"><td class="text-center">Serial Number</td></t>
+                                <td class="text-center">Before</td>
+                                <td class="text-center">Added</td>
+                                <td class="text-center">After</td>
+                                <td class="text-center">Before</td>
+                                <td class="text-center">Added</td>
+                                <td class="text-center">After</td>
+                                <td class="text-center">Before</td>
+                                <td class="text-center">Added</td>
+                                <td class="text-center">After</td>
+                            </tr>
+                       </thead>
+                       <tbody>
+                            <t t-foreach="o.render_data" t-as="p"  t-if="o.type == 'fleet'">
+                                <tr>
+                                    <td style="border-bottom:none" class="text-center"><span t-field="p.date"/></td>
+                                    <td style="border-bottom:none" class="text-center"><span t-field="p.fml_id"/></td>
+                                    <td style="border-bottom:none" class="text-center"><span t-field="p.fleet_id"/></td>
+                                    
+                                    <td style="border-bottom:none" class="text-center"><span t-field="p.hours_before"/></td>
+                                    <td style="border-bottom:none" class="text-center"><span t-field="p.hours_added"/></td>
+                                    <td style="border-bottom:none" class="text-center"><span t-field="p.hours_after"/></td>
+
+                                    <td style="border-bottom:none" class="text-center"><span t-field="p.cycles_before"/></td>
+                                    <td style="border-bottom:none" class="text-center"><span t-field="p.cycles_added"/></td>
+                                    <td style="border-bottom:none" class="text-center"><span t-field="p.cycles_after"/></td>
+
+                                    <t t-if="p.fleet_id.rin_active == True">
+                                        <td style="border-bottom:none" class="text-center"><span t-field="p.fml_id.aircraft_rin"/></td>
+                                        <td style="border-bottom:none" class="text-center"><span t-field="p.fml_id.current_aircraft_rin"/></td>
+                                        <td style="border-bottom:none" class="text-center"><span t-esc="p.fml_id.aircraft_rin + p.fml_id.current_aircraft_rin"/></td>
+                                    </t>
+                                    <t t-else="">
+                                        <td style="border-bottom:none" class="text-center">-</td>
+                                        <td style="border-bottom:none" class="text-center">-</td>
+                                        <td style="border-bottom:none" class="text-center">-</td>
+                                    </t>
+                                    
+                                </tr>
+                                <t t-if="o.include_attach == True">
+                                    <t t-if="p.fml_id.engine1_id">
+                                        <tr>
+                                            <td style="border-bottom:none;border-top:none" class="text-center" colspan="2"/>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine1_id"/> <span t-field="p.fml_id.engine1_id.esn"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine1_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine1_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine1_hours + p.fml_id.engine1_hours"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine1_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine1_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine1_cycles + p.fml_id.engine1_cycles"/></td>
+
+                                            <t t-if="p.fleet_id.rin_active == True">
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine1_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_aircraft_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine1_rin + p.fml_id.current_aircraft_rin"/></td>
+                                            </t>
+                                            <t t-else="">
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                            </t>
+                                        </tr>
+                                    </t>
+
+                                    <t t-if="p.fml_id.engine2_id">
+                                        <tr>
+                                            <td style="border-bottom:none;border-top:none" class="text-center" colspan="2"/>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine2_id"/> <span t-field="p.fml_id.engine2_id.esn"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine2_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine2_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine2_hours + p.fml_id.engine2_hours"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine2_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine2_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine2_cycles + p.fml_id.engine2_cycles"/></td>
+
+                                            <t t-if="p.fleet_id.rin_active == True">
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine2_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_aircraft_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine2_rin + p.fml_id.current_aircraft_rin"/></td>
+                                            </t>
+                                            <t t-else="">
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                            </t>
+                                        </tr>
+                                    </t>
+
+                                    <t t-if="p.fml_id.engine3_id">
+                                        <tr>
+                                            <td style="border-bottom:none;border-top:none" class="text-center" colspan="2"/>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine3_id"/> <span t-field="p.fml_id.engine3_id.esn"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine3_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine3_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine3_hours + p.fml_id.engine3_hours"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine3_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine3_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine3_cycles + p.fml_id.engine3_cycles"/></td>
+
+                                            <t t-if="p.fleet_id.rin_active == True">
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine3_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_aircraft_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine3_rin + p.fml_id.current_aircraft_rin"/></td>
+                                            </t>
+                                            <t t-else="">
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                            </t>
+                                        </tr>
+                                    </t>
+
+                                    <t t-if="p.fml_id.engine4_id">
+                                        <tr>
+                                            <td style="border-bottom:none;border-top:none" class="text-center" colspan="2"/>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine4_id"/> <span t-field="p.fml_id.engine4_id.esn"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine4_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine4_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine4_hours + p.fml_id.engine4_hours"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine4_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.engine4_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine4_cycles + p.fml_id.engine4_cycles"/></td>
+
+                                            <t t-if="p.fleet_id.rin_active == True">
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_engine4_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_aircraft_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_engine4_rin + p.fml_id.current_aircraft_rin"/></td>
+                                            </t>
+                                            <t t-else="">
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                            </t>
+                                        </tr>
+                                    </t>
+
+                                    <t t-if="p.fml_id.propeller1_id">
+                                        <tr>
+                                            <td style="border-bottom:none;border-top:none" class="text-center" colspan="2"/>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller1_id"/> <span t-field="p.fml_id.propeller1_id.esn"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller1_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller1_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller1_hours + p.fml_id.propeller1_hours"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller1_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller1_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller1_cycles + p.fml_id.propeller1_cycles"/></td>
+
+                                            <t t-if="p.fleet_id.rin_active == True">
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller1_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_aircraft_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller1_rin + p.fml_id.current_aircraft_rin"/></td>
+                                            </t>
+                                            <t t-else="">
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                            </t>
+                                        </tr>
+                                    </t>
+
+                                    <t t-if="p.fml_id.propeller2_id">
+                                        <tr>
+                                            <td style="border-bottom:none;border-top:none" class="text-center" colspan="2"/>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller2_id"/> <span t-field="p.fml_id.propeller2_id.esn"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller2_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller2_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller2_hours + p.fml_id.propeller2_hours"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller2_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller2_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller2_cycles + p.fml_id.propeller2_cycles"/></td>
+
+                                            <t t-if="p.fleet_id.rin_active == True">
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller2_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_aircraft_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller2_rin + p.fml_id.current_aircraft_rin"/></td>
+                                            </t>
+                                            <t t-else="">
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                            </t>
+                                        </tr>
+                                    </t>
+
+                                    <t t-if="p.fml_id.propeller3_id">
+                                        <tr>
+                                            <td style="border-bottom:none;border-top:none" class="text-center" colspan="2"/>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller3_id"/> <span t-field="p.fml_id.propeller3_id.esn"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller3_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller3_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller3_hours + p.fml_id.propeller3_hours"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller3_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller3_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller3_cycles + p.fml_id.propeller3_cycles"/></td>
+
+                                            <t t-if="p.fleet_id.rin_active == True">
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller3_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_aircraft_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller3_rin + p.fml_id.current_aircraft_rin"/></td>
+                                            </t>
+                                            <t t-else="">
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                            </t>
+                                        </tr>
+                                    </t>
+
+                                    <t t-if="p.fml_id.propeller4_id">
+                                        <tr>
+                                            <td style="border-bottom:none;border-top:none" class="text-center" colspan="2"/>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller4_id"/> <span t-field="p.fml_id.propeller4_id.esn"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller4_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller4_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller4_hours + p.fml_id.propeller4_hours"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller4_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.propeller4_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller4_cycles + p.fml_id.propeller4_cycles"/></td>
+
+                                            <t t-if="p.fleet_id.rin_active == True">
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_propeller4_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_aircraft_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_propeller4_rin + p.fml_id.current_aircraft_rin"/></td>
+                                            </t>
+                                            <t t-else="">
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                            </t>
+                                        </tr>
+                                    </t>
+
+                                    <t t-if="p.fml_id.auxiliary1_id">
+                                        <tr>
+                                            <td style="border-bottom:none;border-top:none" class="text-center" colspan="2"/>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.auxiliary1_id"/> <span t-field="p.fml_id.auxiliary1_id.esn"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_auxiliary1_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.auxiliary1_hours"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_auxiliary1_hours + p.fml_id.auxiliary1_hours"/></td>
+                                            
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_auxiliary1_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.auxiliary1_cycles"/></td>
+                                            <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_auxiliary1_cycles + p.fml_id.auxiliary1_cycles"/></td>
+
+                                            <t t-if="p.fleet_id.rin_active == True">
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_auxiliary1_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-field="p.fml_id.current_aircraft_rin"/></td>
+                                                <td style="border-bottom:none;border-top:none" class="text-center"><span t-esc="p.fml_id.current_auxiliary1_rin + p.fml_id.current_aircraft_rin"/></td>
+                                            </t>
+                                            <t t-else="">
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                                <td style="border-bottom:none" class="text-center">-</td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </t>
+                            <!-- <t t-foreach="o.render_data" t-as="s"  t-if="o.type == 'engine' or o.type == 'auxiliary'">
+                                <tr>
+                                    <td class="text-center"><span t-field="s.date"/></td>
+                                    <td class="text-center"><span t-field="s.fleet_id"/></td>
+                                    <td class="text-center"><span t-field="s.fml_id"/></td>
+                                    <td class="text-center"><span t-field="s.fml_id"/></td>
+                                    <td class="text-center"><span t-field="s.hours_before"/></td>
+                                    <td class="text-center"><span t-field="s.hours_added"/></td>
+                                    <td class="text-center"><span t-field="s.hours_after"/></td>
+                                    <td class="text-center"><span t-field="s.cycles_before"/></td>
+                                    <td class="text-center"><span t-field="s.cycles_added"/></td>
+                                    <td class="text-center"><span t-field="s.cycles_after"/></td>
+                                    <td class="text-center"><span t-field="s.rin_before"/></td>
+                                    <td class="text-center"><span t-field="s.rin_added"/></td>
+                                    <td class="text-center"><span t-field="s.rin_after"/></td>
+                                </tr>
+                            </t> -->
+                        </tbody>
+                    </table>
+         
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+ </data>
+</odoo>

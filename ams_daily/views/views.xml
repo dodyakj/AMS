@@ -1,0 +1,222 @@
+<odoo>
+  <data>
+      <record model='ir.ui.view' id='ams_daily_tree'>
+        <field name='name'>ams.daily.tree</field>
+        <field name='model'>ams.daily</field>
+        <field name='arch' type='xml'>
+          <tree string='Daily Utilization' create="0" edit="0" duplicate="0" delete="0">
+            <field name="fleet_id"/>
+            <!-- <field name="start_date"/>
+            <field name="end_date"/> -->
+            <field name="aircraft_hours"/>
+            <field name="aircraft_cycles"/>
+            <field name="project_name"/>
+          </tree>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="ams_daily_search_view">
+        <field name="name">ams.daily.search</field>
+        <field name="model">ams.daily</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="fleet_id"/>
+              <!-- <field name="start_date"/>
+              <field name="end_date"/> -->
+              <field name="aircraft_hours"/>
+              <field name="aircraft_cycles"/>
+              <field name="project_name"/>           
+            </search>
+        </field>
+      </record>
+      
+      <record model="ir.ui.view" id="ams_daily_form">
+        <field name="name">ams.daily.form</field>
+        <field name="model">ams.daily</field>
+        <field name="arch" type="xml">
+          <form string="Daily Utilization" create="0" edit="0" duplicate="0" delete="0">
+            <field name="is_active" attrs="{'invisible':True}"/>
+            <sheet>
+              <group>
+                <field name="fleet_id"/>
+                <!-- <field name="start_date"/>
+                <field name="end_date"/> -->
+                <field name="project_name"/>
+                <field name="rin_active" attrs="{'invisible':True}"/>
+              </group>
+              <group row="2">
+                    <field name="aircraft_hours"/>
+                    <field name="aircraft_cycles"/>
+                    <field name="aircraft_rin" attrs="{'invisible':[('rin_active','=',False)]}"/>
+                  </group>
+                  <group>
+                    <field name="aircraft_comp_ids" attrs="{'invisible':[('aircraft_comp_ids','=',[])]}">
+                      <tree string='Aircraft Component' editable="bottom" create="false" delete="false">
+                        <field name="component_id"/>
+                        <field name="hours"/>
+                        <field name="cycles"/>
+                      </tree>
+                    </field>
+                  </group>
+                  <group row="2">
+                      <group row="4" attrs="{'invisible':[('engine1_id','=',False)]}">
+                            <field name="engine1_id" rowspan="3" attrs="{'invisible':True}"/>
+                            <field name="engine1_id_text" rowspan="3" attrs="{'invisible':[('engine1_id','=',False)]}"/>
+                            <field name="engine1_hours" attrs="{'invisible':[('engine1_id','=',False)]}"/>
+                            <field name="engine1_cycles" attrs="{'invisible':[('engine1_id','=',False)]}"/>
+                            <field name="engine1_comp_ids" attrs="{'invisible':['|',('engine1_id','=',False),('engine1_comp_ids','=',[])]}">
+                              <tree string='Engine #1 Component' editable="bottom" create="false" delete="false">
+                                <field name="component_id"/>
+                                <field name="hours"/>
+                                <field name="cycles"/>
+                              </tree>
+                            </field>
+                      </group>
+                      <group row="4" attrs="{'invisible':[('engine2_id','=',False)]}">
+                            <field name="engine2_id" rowspan="3" attrs="{'invisible':True}"/>
+                            <field name="engine2_id_text" rowspan="3" attrs="{'invisible':[('engine2_id','=',False)]}"/>
+                            <field name="engine2_hours" attrs="{'invisible':[('engine2_id','=',False)]}"/>
+                            <field name="engine2_cycles" attrs="{'invisible':[('engine2_id','=',False)]}"/>
+                            <field name="engine2_comp_ids" attrs="{'invisible':['|',('engine2_id','=',False),('engine2_comp_ids','=',[])]}">
+                              <tree string='Engine #2 Component' editable="bottom" create="false" delete="false">
+                                <field name="component_id"/>
+                                <field name="hours"/>
+                                <field name="cycles"/>
+                              </tree>
+                            </field>
+                      </group>
+                      <group row="4" attrs="{'invisible':[('engine3_id','=',False)]}">
+                            <field name="engine3_id" rowspan="3" attrs="{'invisible':True}"/>
+                            <field name="engine3_id_text" rowspan="3" attrs="{'invisible':[('engine3_id','=',False)]}"/>
+                            <field name="engine3_hours" attrs="{'invisible':[('engine3_id','=',False)]}"/>
+                            <field name="engine3_cycles" attrs="{'invisible':[('engine3_id','=',False)]}"/>
+                            <field name="engine3_comp_ids" attrs="{'invisible':['|',('engine3_id','=',False),('engine3_comp_ids','=',[])]}">
+                              <tree string='Engine #3 Component' editable="bottom" create="false" delete="false">
+                                <field name="component_id"/>
+                                <field name="hours"/>
+                                <field name="cycles"/>
+                              </tree>
+                            </field>
+                      </group>
+                      <group row="4" attrs="{'invisible':[('engine4_id','=',False)]}">
+                            <field name="engine4_id" rowspan="3" attrs="{'invisible':True}"/>
+                            <field name="engine4_id_text" rowspan="3" attrs="{'invisible':[('engine4_id','=',False)]}"/>
+                            <field name="engine4_hours" attrs="{'invisible':[('engine4_id','=',False)]}"/>
+                            <field name="engine4_cycles" attrs="{'invisible':[('engine4_id','=',False)]}"/>
+                            <field name="engine4_comp_ids" attrs="{'invisible':['|',('engine4_id','=',False),('engine4_comp_ids','=',[])]}">
+                              <tree string='Engine #4 Component' editable="bottom" create="false" delete="false">
+                                <field name="component_id"/>
+                                <field name="hours"/>
+                                <field name="cycles"/>
+                              </tree>
+                            </field>
+                      </group>
+                  </group>
+                  <group row="2">
+                      <group row="4" attrs="{'invisible':[('propeller1_id','=',False)]}">
+                            <field name="propeller1_id" rowspan="3" attrs="{'invisible':True}"/>
+                            <field name="propeller1_id_text" rowspan="3" attrs="{'invisible':[('propeller1_id','=',False)]}"/>
+                            <field name="propeller1_hours" attrs="{'invisible':[('propeller1_id','=',False)]}"/>
+                            <field name="propeller1_cycles" attrs="{'invisible':[('propeller1_id','=',False)]}"/>
+                            <field name="propeller1_comp_ids" attrs="{'invisible':['|',('propeller1_id','=',False),('propeller1_comp_ids','=',[])]}">
+                              <tree string='Propeller #1 Component' editable="bottom" create="false" delete="false">
+                                <field name="component_id"/>
+                                <field name="hours"/>
+                                <field name="cycles"/>
+                              </tree>
+                            </field>
+                      </group>
+                      <group row="4" attrs="{'invisible':[('propeller2_id','=',False)]}">
+                            <field name="propeller2_id" rowspan="3" attrs="{'invisible':True}"/>
+                            <field name="propeller2_id_text" rowspan="3" attrs="{'invisible':[('propeller2_id','=',False)]}"/>
+                            <field name="propeller2_hours" attrs="{'invisible':[('propeller2_id','=',False)]}"/>
+                            <field name="propeller2_cycles" attrs="{'invisible':[('propeller2_id','=',False)]}"/>
+                            <field name="propeller2_comp_ids" attrs="{'invisible':['|',('propeller2_id','=',False),('propeller2_comp_ids','=',[])]}">
+                              <tree string='Propeller #2 Component' editable="bottom" create="false" delete="false">
+                                <field name="component_id"/>
+                                <field name="hours"/>
+                                <field name="cycles"/>
+                              </tree>
+                            </field>
+                      </group>
+                      <group row="4" attrs="{'invisible':[('propeller3_id','=',False)]}">
+                            <field name="propeller3_id" rowspan="3" attrs="{'invisible':True}"/>
+                            <field name="propeller3_id_text" rowspan="3" attrs="{'invisible':[('propeller3_id','=',False)]}"/>
+                            <field name="propeller3_hours" attrs="{'invisible':[('propeller3_id','=',False)]}"/>
+                            <field name="propeller3_cycles" attrs="{'invisible':[('propeller3_id','=',False)]}"/>
+                            <field name="propeller3_comp_ids" attrs="{'invisible':['|',('propeller3_id','=',False),('propeller3_comp_ids','=',[])]}">
+                              <tree string='Propeller #3 Component' editable="bottom" create="false" delete="false">
+                                <field name="component_id"/>
+                                <field name="hours"/>
+                                <field name="cycles"/>
+                              </tree>
+                            </field>
+                      </group>
+                      <group row="4" attrs="{'invisible':[('propeller4_id','=',False)]}">
+                            <field name="propeller4_id" rowspan="3" attrs="{'invisible':True}"/>
+                            <field name="propeller4_id_text" rowspan="3" attrs="{'invisible':[('propeller4_id','=',False)]}"/>
+                            <field name="propeller4_hours" attrs="{'invisible':[('propeller4_id','=',False)]}"/>
+                            <field name="propeller4_cycles" attrs="{'invisible':[('propeller4_id','=',False)]}"/>
+                            <field name="propeller4_comp_ids" attrs="{'invisible':['|',('propeller4_id','=',False),('propeller4_comp_ids','=',[])]}">
+                              <tree string='Propeller #4 Component' editable="bottom" create="false" delete="false">
+                                <field name="component_id"/>
+                                <field name="hours"/>
+                                <field name="cycles"/>
+                              </tree>
+                            </field>
+                      </group>
+                  </group>
+                  <group row="2" attrs="{'invisible':[('auxiliary1_id','=',False)]}">
+                            <field name="auxiliary1_id" rowspan="3" attrs="{'invisible':True}"/>
+                            <field name="auxiliary1_id_text" rowspan="3" attrs="{'invisible':[('auxiliary1_id','=',False)]}"/>
+                            <field name="auxiliary1_hours" attrs="{'invisible':[('auxiliary1_id','=',False)]}"/>
+                            <field name="auxiliary1_cycles" attrs="{'invisible':[('auxiliary1_id','=',False)]}"/>
+                            <field name="auxiliary1_comp_ids" attrs="{'invisible':['|',('auxiliary1_id','=',False),('auxiliary1_comp_ids','=',[])]}">
+                              <tree string='Auxiliary #1 Component' editable="bottom" create="false" delete="false">
+                                <field name="component_id"/>
+                                <field name="hours"/>
+                                <field name="cycles"/>
+                              </tree>
+                            </field>                      
+                  </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+
+      <record id="action_daily_utilz" model="ir.actions.act_window">
+        <field name="name">Daily Utilization</field>
+        <field name="res_model">ams.daily</field>
+        <field name="view_type">form</field>
+        <field name="domain">[('is_active', '=', True)]</field> 
+        <field name="view_mode">tree,form</field>
+      </record>
+
+
+      <record model="ir.ui.view" id="airframe_custom_form_inherit">
+        <field name="name">airframe_custom_form_inherit.form</field>
+        <field name="model">aircraft.acquisition</field>
+        <field name="inherit_id" ref="ams_base.airframe_custom_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook[1]/page[4]" position="after">
+                <page string="Daily Utilization" attrs="{'invisible':[('bel_view', '!=', False)]}">
+                  <field name="utils_ids" mode="tree">
+                      <tree colors="gray:is_active==False;blue:is_active==True;" default_order='is_active'>
+                          <field name="fleet_id"/>
+                          <field name="start_date"/>
+                          <field name="end_date"/>
+                          <field name="aircraft_hours_real"/>
+                          <field name="aircraft_cycles_real"/>
+                          <field name="aircraft_hours"/>
+                          <field name="aircraft_cycles"/>
+                          <field name="is_active" attrs="{'invisible':True}"/>
+                      </tree>
+                  </field>
+                </page>
+            </xpath>
+        </field>
+      </record>
+
+
+  </data>
+</odoo>

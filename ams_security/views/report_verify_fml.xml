@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     
+     
+<template id="report_verify_fml">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="report.external_layout">
+                <div class="page">
+                     
+                    <!-- JUDUL REPORT-->
+                     
+                    <h2 class="text-center">Verify Flight Time</h2>
+         
+                    <!-- INFORMASI HEADER -->
+                     
+                    <table class="table">
+                        <tr>
+                            <td><strong>A/C Reg.</strong></td>
+                            <td><span t-if="o.type != all" t-field="o.fleet_id"/><span t-if="o.type != all" t-field="o.engine_id"/><span t-if="o.type != all" t-field="o.auxiliary_id"/><t t-if="o.all_fleet == True"> <span>All Aircraft</span> </t></td>
+                            <!-- <td><span t-field="o.instructor_id.name"/></td> -->
+                        </tr>
+                        <tr>
+                            <td><strong>Start Date</strong></td>
+                            <td><span t-field="o.start_date"/></td>
+                            <td><strong>End Date</strong></td>
+                            <td><span t-field="o.end_date"/></td>
+                        </tr>
+                    </table>
+                     
+         
+                     
+                    <table class="table table-bordered" style="table-layout:auto">
+                        <thead>
+                            <tr>
+                                <th class="text-center">FML Number</th>
+                                <th class="text-center">Hours</th>
+                                <th class="text-center">Cycles</th>
+                               <!--  <th></th>
+                                <th class="text-center">Hour</th>
+                                <tr>
+                                    <td>Before</td>
+                                    <td>Added</td>
+                                    <td>After</td>
+                                </tr>
+                                <th></th> 
+                                <th class="text-center">Cycles</th>
+                                <tr>
+                                    <td>Before</td>
+                                    <td>Added</td>
+                                    <td>After</td>
+                                </tr> -->
+                            </tr>
+                       </thead>
+                       <tbody>
+<!--                             <t t-foreach="o.fml_id" t-as="l">
+                                <tr>
+                                    <td>
+                                        <span t-field="l.aircraft_hours"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.aircraft_cycles"/>
+                                    </td>
+                                </tr>
+                            </t>
+                             -->
+                            <t t-foreach="o.fml_id" t-as="p">
+                                <tr>
+                                    <td><span t-field="p.name"/></td>
+                                    <td><span t-field="p.aircraft_hours"/></td>
+                                    <td><span t-field="p.aircraft_cycles"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+         
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+ 
+</odoo>

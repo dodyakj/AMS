@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ams_codectr_ams_codectr,ams_codectr.ams_codectr,model_ams_codectr_ams_codectr,,1,0,0,0

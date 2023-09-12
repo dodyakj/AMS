@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="report_tool_movement">
+    <t t-call="ams_fml.html_container_fml">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_fml.external_layout_fml">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-12 zero_min_height">
+                            <div style="border-bottom: 1px solid white;"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 zero_min_height">
+                            <div style="border-bottom: 1px solid white;"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 zero_min_height">
+                            <div style="border-bottom: 1px solid white;"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 zero_min_height">
+                            <div style="border-bottom: 1px solid white;"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 zero_min_height">
+                            <div style="border-bottom: 1px solid white;"></div>
+                        </div>
+                    </div>
+                    <!-- JUDUL REPORT-->
+                    <h2 class="text-center">Tools Movement Report</h2>
+                    <br/>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td><center><b>Date</b></center></td>
+                            <td><center><b>Tool</b></center></td>
+                            <td><center><b>Employee</b></center></td>
+                            <td><center><b>Reference</b></center></td>
+                            <td><center><b>Status</b></center></td>
+                            <td><center><b>Remark</b></center></td>
+                        </tr>
+                        <t t-foreach="data.tool_id" t-as="tool">
+                            <tr>
+                                <td><center><div t-field="tool.date"/></center></td>
+                                <td><div t-field="tool.tool_name"/></td>
+                                <td><div t-field="tool.employee"/></td>
+                                <t t-if="tool.refer == 'AD'">
+                                    <td><center><div t-field="tool.refer_ad"/></center></td>
+                                </t>
+                                <t t-if="tool.refer == 'SB'">
+                                    <td><center><div t-field="tool.refer_sb"/></center></td>
+                                </t>
+                                <t t-if="tool.refer == 'STC'">
+                                    <td><center><div t-field="tool.refer_stc"/></center></td>
+                                </t>
+                                <t t-if="tool.refer == 'SERVICE'">
+                                    <td><center><div t-field="tool.refer_ser"/></center></td>
+                                </t>
+                                <t t-if="tool.refer == 'EO'">
+                                    <td><center><div t-field="tool.refer_eo"/></center></td>
+                                </t>
+                                <t t-if="tool.refer == 'MI'">
+                                    <td><center><div t-field="tool.refer_mi"/></center></td>
+                                </t>
+                                <t t-if="tool.refer == 'TI'">
+                                    <td><center><div t-field="tool.refer_ti"/></center></td>
+                                </t>
+                                <t t-if="tool.refer == 'OTI'">
+                                    <td><center><div t-field="tool.refer_oti"/></center></td>
+                                </t>
+                                <td><center><div t-field="tool.status"/></center></td>
+                                <td><div t-field="tool.remark"/></td>
+                            </tr>
+                        </t>
+
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+ 
+</odoo>

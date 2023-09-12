@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+            <record id="paperformat_maintenance_tracking_report_landscape" model="report.paperformat">
+                <field name="name">Maintenance Tracking Report</field>
+                <field name="orientation">Landscape</field>
+            </record>
+            <report
+                    id="print_main_tracking_pdf"
+                    string="Maintenance Tracking Report"
+                    model="maintenance.tracking.report"
+                    report_type="qweb-html"
+                    file="ams_document.report_maintenance_tracking"
+                    name="ams_document.report_maintenance_tracking"
+                    paperformat="ams_document.paperformat_maintenance_tracking_report_landscape"
+                />
+
+    <record model="ir.ui.view" id="main_tracking_report_form">
+      <field name="name">maintenance.tracking.report.form</field>
+      <field name="model">maintenance.tracking.report</field>
+      <field name="arch" type="xml">
+        <form string="description">
+          <sheet>
+            <group>
+              <field name="type"/>
+              <field name="fleet_id" attrs="{'invisible':['|',('type','!=','fleet')]}"/>
+              <field name="include_attach" attrs="{'invisible':['|',('type','!=','fleet')]}"/>
+              <field name="show_nearly" attrs="{'invisible':['|',('type','!=','fleet')]}"/>
+              <field name="engine_id" attrs="{'invisible':['|',('type','!=','engine')]}"/>
+              <field name="auxiliary_id" attrs="{'invisible':['|',('type','!=','auxiliary')]}"/>
+              <field name="propeller_id" attrs="{'invisible':['|',('type','!=','propeller')]}"/>
+            </group>
+            <group>
+              <field name="orderby" widget="radio"/>
+            </group>
+            <group string="Filter">
+              <field name="filter_ata" widget="mask" data-inputmask-mask="99-99-99"/>
+              <field name="fill_component"/>
+              <field name="fill_inspection"/>
+              <field name="fill_bulletin"/>
+            </group>
+            <group>
+              <!-- <field name="hour_limit"/> -->
+              <!-- <field name="calendar_limit"/> -->
+            </group>
+          </sheet>
+          <footer>
+            <button name="print_main_tracking_pdf" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+              or
+            <button special="cancel" string="Cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_main_tracking_report" model="ir.actions.act_window">
+      <field name="name">Maintenance Tracking Report</field>
+      <field name="res_model">maintenance.tracking.report</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+      <field name="target">new</field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,72 @@
+<odoo>
+  <data>
+  	<record model='ir.ui.view' id='request_inventory_tree'>
+  		<field name='name'>request.inventory.tree</field>
+  		<field name='model'>request.inventory</field>
+  		<field name='arch' type='xml'>
+  			<tree string='Inventory Request'>
+  				<field name="name"/>
+          <field name="request_employee_id"/>
+  				<field name="ref_type"/>
+  				<field name="base_id"/>
+  				<field name="states"/>
+  			</tree>
+  		</field>
+  	</record>
+
+    <record model="ir.ui.view" id="request_inventory_search_view">
+        <field name="name">request.inventory.search</field>
+        <field name="model">request.inventory</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="name"/>
+              <field name="request_employee_id"/>
+              <field name="ref_type"/>
+              <field name="base_id"/>
+              <field name="states"/>             
+            </search>
+        </field>
+      </record>
+
+  	<record model="ir.ui.view" id="request_inventory_form">
+  		<field name="name">request.inventory.form</field>
+  		<field name="model">request.inventory</field>
+  		<field name="arch" type="xml">
+  			<form string="Inventory Request">
+            <header>
+              <button string="Request" name="button_req" type="object" attrs="{'invisible':[('states','!=','inprogress')]}"/>
+              <button string="Check" name="button_check" type="object" attrs="{'invisible':[('states','!=','check')]}"/>
+              <button string="Approved" name="button_appr" type="object" attrs="{'invisible':[('states','!=','validate')]}"/>
+              <button string="Compliance" name="button_comp" type="object" attrs="{'invisible':[('states','!=','done')]}"/>
+              <field name="states" attrs="{'invisible':True}" />
+              <field name="states" widget="statusbar" statusbar_visible="create,check,validate,inprogress,done"/>
+            </header>
+          <sheet>
+  					<group>
+  					<field name="name" attrs="{'required':True}"/>
+						<field name="base_id"/>
+						<field name="ref_type"/>
+						<field name="part_line">
+							<tree string='Inventory Requested' editable="bottom">
+								<field name="part_name"/>
+								<field name="quantity"/>
+							</tree>
+						</field>
+						<field name="checked_employee_id"/>
+            <field name="request_employee_id"/>
+						<field name="approved_employee_id"/>
+						<field name="compliance_employee_id"/>
+  					</group>
+  				</sheet>
+  			</form>
+  		</field>
+  	</record>
+
+  	<record id="inventory_request_action" model="ir.actions.act_window">
+  		<field name="name">Inventory Request</field>
+  		<field name="res_model">request.inventory</field>
+  		<field name="view_type">form</field>
+  		<field name="view_mode">tree,form</field>
+  	</record>
+  </data>
+</odoo>

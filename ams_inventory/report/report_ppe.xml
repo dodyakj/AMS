@@ -1,0 +1,70 @@
+<odoo>
+  <data>
+
+        <record id="paperformat_ppe" model="report.paperformat">
+            <field name="name">Laporan PPR</field>
+            <field name="orientation">Landscape</field>
+        </record>
+        
+            <report
+                    id="print_ppe_pdf"
+                    string="Laporan PPE"
+                    model="ppe.master"
+                    report_type="qweb-html"
+                    file="ams_inventory.report_ppe"
+                    name="ams_inventory.report_ppe"
+                    paperformat="ams_inventory.paperformat_ppe"
+                />
+                    <!-- groups="ams_security.group_ppe_report" -->
+  </data>
+
+    <template id="report_ppe">
+            <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="data">
+                <t t-call="ams_document.internal_layout">
+                    <div class="page">
+                      <style>
+                        ol {
+                        padding-left : 25px;
+                        }
+                      </style>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 25px;"/>
+                            </div>
+                            <div class="col-xs-4 text-center" style="margin-top:20px;">
+                                <h3>Report PPE</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <center>
+                              <t t-esc="data.location_id.name"/>
+                            </center>
+                            <br/>
+                            <table class="table table-hover">
+                              <t t-foreach="data.ppe_id" t-as="ppe">
+                                <tr>
+                                  <td><t t-esc="ppe.name.name"/></td>
+                                  <td><t t-esc="ppe.amount"/></td>
+                                </tr>
+                              </t>
+                            </table>
+                          </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

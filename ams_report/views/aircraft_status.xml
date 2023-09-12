@@ -1,0 +1,560 @@
+<odoo>
+
+<template id="aircraft_status_pdf">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                	<style>
+	                	.red {
+						          background-color: rgba(232, 102, 42,.25);
+    						    }
+    						    .green {
+    						      background-color: rgba(48, 150, 33,.25);
+    						    }
+                	</style>
+                    <div class="row">
+                        <div class="col-xs-4">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-8">
+                            <h2 class="text-left">Aircraft Status</h2>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table table-bordered table-responsive">
+                        <tr>
+                          <td rowspan="2"><center><b>NO</b></center></td>
+                          <td colspan="2"><center><b>AIRCRAFT</b></center></td>
+                          <td colspan="2"><center><b>STATUS</b></center></td>
+                          <td rowspan="2"><center><b>RELIABILITY</b></center></td>
+                          <td t-att-colspan="data.max_date"><center><b>DAY's</b></center></td>
+                          <td rowspan="2"><center><b>LOC.</b></center></td>
+                          <td rowspan="2"><center><b>REMARK</b></center></td>
+                          <td rowspan="2"><center><b>Prod in Hours</b></center></td>
+                          <td rowspan="2"><center><b>Prod in Cycles</b></center></td>
+                        </tr>
+                        <tr>
+                          <td><center><b>Registration</b></center></td>
+                          <td><center><b>Type</b></center></td>
+                          <td class="green"><center><b>S</b></center></td>
+                          <td class="red"><center><b>U/S</b></center></td>
+                          <td><center><b>1</b></center></td>
+                          <td><center><b>2</b></center></td>
+                          <td><center><b>3</b></center></td>
+                          <td><center><b>4</b></center></td>
+                          <td><center><b>5</b></center></td>
+                          <td><center><b>6</b></center></td>
+                          <td><center><b>7</b></center></td>
+                          <td><center><b>8</b></center></td>
+                          <td><center><b>9</b></center></td>
+                          <td><center><b>10</b></center></td>
+                          <td><center><b>11</b></center></td>
+                          <td><center><b>12</b></center></td>
+                          <td><center><b>13</b></center></td>
+                          <td><center><b>14</b></center></td>
+                          <td><center><b>15</b></center></td>
+                          <td><center><b>16</b></center></td>
+                          <td><center><b>17</b></center></td>
+                          <td><center><b>18</b></center></td>
+                          <td><center><b>19</b></center></td>
+                          <td><center><b>20</b></center></td>
+                          <td><center><b>21</b></center></td>
+                          <td><center><b>22</b></center></td>
+                          <td><center><b>23</b></center></td>
+                          <td><center><b>24</b></center></td>
+                          <td><center><b>25</b></center></td>
+                          <td><center><b>26</b></center></td>
+                          <td><center><b>27</b></center></td>
+                          <td><center><b>28</b></center></td>
+                          <t t-if="data.max_date &gt;= 29">
+                          	<td><center><b>29</b></center></td>
+                          </t>
+                          <t t-if="data.max_date &gt;= 30">
+                          	<td><center><b>30</b></center></td>
+                          </t>
+                          <t t-if="data.max_date &gt;= 31">
+                          	<td><center><b>31</b></center></td>
+                          </t>
+                        </tr>
+						<t t-set="nomer" t-value="1"/>
+                        <t t-foreach="data.data_ids" t-as="days">
+                            <tr>
+								<td><center><center><span t-esc="nomer"/></center></center></td>
+								<t t-set="nomer" t-value="nomer+1"/>
+                                <td ><center><div t-field="days.fleet_id.name" /></center></td>
+                                <td ><center><div t-field="days.fleet_id.aircraft_type_id.name" /></center></td>
+                                <td class="green"><center><div t-field="days.total_s" /></center></td>
+                                <td class="red"><center><div t-field="days.total_us" /></center></td>
+                                <td><center><div t-field="days.realibility" /></center></td>
+                                <td><center>
+                                  <t t-if="days.days_1 == 'US'">
+                                    <div t-field="days.days_1" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_1"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_2 == 'US'">
+                                    <div t-field="days.days_2" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_2"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_3 == 'US'">
+                                    <div t-field="days.days_3" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_3"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_4 == 'US'">
+                                    <div t-field="days.days_4" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_4"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_5 == 'US'">
+                                    <div t-field="days.days_5" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_5"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_6 == 'US'">
+                                    <div t-field="days.days_6" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_6"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_7 == 'US'">
+                                    <div t-field="days.days_7" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_7"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_8 == 'US'">
+                                    <div t-field="days.days_8" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_8"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_9 == 'US'">
+                                    <div t-field="days.days_9" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_9"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_10 == 'US'">
+                                    <div t-field="days.days_10" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_10"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_11 == 'US'">
+                                    <div t-field="days.days_11" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_11"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_12 == 'US'">
+                                    <div t-field="days.days_12" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_12"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_13 == 'US'">
+                                    <div t-field="days.days_13" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_13"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_14 == 'US'">
+                                    <div t-field="days.days_14" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_14"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_15 == 'US'">
+                                    <div t-field="days.days_15" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_15"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_16 == 'US'">
+                                    <div t-field="days.days_16" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_16"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_17 == 'US'">
+                                    <div t-field="days.days_17" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_17"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_18 == 'US'">
+                                    <div t-field="days.days_18" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_18"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_19 == 'US'">
+                                    <div t-field="days.days_19" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_19"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_20 == 'US'">
+                                    <div t-field="days.days_20" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_20"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_21 == 'US'">
+                                    <div t-field="days.days_21" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_21"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_22 == 'US'">
+                                    <div t-field="days.days_22" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_22"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_23 == 'US'">
+                                    <div t-field="days.days_23" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_23"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_24 == 'US'">
+                                    <div t-field="days.days_24" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_24"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_25 == 'US'">
+                                    <div t-field="days.days_25" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_25"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_26 == 'US'">
+                                    <div t-field="days.days_26" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_26"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_27 == 'US'">
+                                    <div t-field="days.days_27" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_27"/>
+                                  </t>
+                                </center></td>
+                                <td><center>
+                                  <t t-if="days.days_28 == 'US'">
+                                    <div t-field="days.days_28" style="color:red"/>
+                                  </t>
+                                  <t t-else="">
+                                    <div t-field="days.days_28"/>
+                                  </t>
+                                </center></td>
+                          		<t t-if="data.max_date &gt;= 29">
+                                	<td><center>
+                                    <t t-if="days.days_29 == 'US'">
+                                      <div t-field="days.days_29" style="color:red"/>
+                                    </t>
+                                    <t t-else="">
+                                      <div t-field="days.days_29"/>
+                                    </t>
+                                  </center></td>
+                                </t>
+                          		<t t-if="data.max_date &gt;= 30">
+                                	<td><center>
+                                    <t t-if="days.days_30 == 'US'">
+                                      <div t-field="days.days_30" style="color:red"/>
+                                    </t>
+                                    <t t-else="">
+                                      <div t-field="days.days_30"/>
+                                    </t>
+                                  </center></td>
+                                </t>
+                          		<t t-if="data.max_date &gt;= 31">
+                                	<td><center>
+                                    <t t-if="days.days_31 == 'US'">
+                                      <div t-field="days.days_31" style="color:red"/>
+                                    </t>
+                                    <t t-else="">
+                                      <div t-field="days.days_31"/>
+                                    </t>
+                                  </center></td>
+                                </t>
+                                <td><center><div t-field="days.fleet_id.location.code"/></center></td>
+                                <td><center><div t-field="days.remark"/></center></td>
+                                <td><center><div t-field="days.prod_hours"/></center></td>
+                                <td><center><div t-field="days.prod_cycles"/></center></td>
+                            </tr>
+                        </t>
+                    </table>
+
+                    <div class="row">
+                    	<div class="col-xs-2">
+                    		NOTE :
+                    	</div>
+                    	<div class="col-xs-1">
+                    		S
+                    	</div>
+                    	<div class="col-xs-8">
+                    		= SERVICEABLE
+                    	</div>
+                    </div>
+                    <div class="row">
+                    	<div class="col-xs-2">
+                    		
+                    	</div>
+                    	<div class="col-xs-1">
+                    		US
+                    	</div>
+                    	<div class="col-xs-8">
+                    		= UNSERVICEABLE
+                    	</div>
+                    </div>
+
+                    <table style="table-layout:auto;border: none;margin-bottom:0px;margin-top:20px">
+                      <t t-foreach="data.maintenance_ids" t-as="main">
+  	                    <tr style="border:none">
+                            <td style="padding-bottom:0;border:none;padding-right:30px">
+  	                    		   <div t-field="main.fleet_id.name"/>
+                            </td>
+                            <td style="padding-bottom:0;border:none;padding-right:10px">
+                              From
+                            </td>
+                            <td style="padding-bottom:0;border:none;padding-right:30px">
+  	                    		   <div t-field="main.start_date"/>
+                            </td>
+                            <td style="padding-bottom:0;border:none;padding-right:5px">
+                              →
+                            </td>
+                            <td style="padding-bottom:0;border:none;;padding-right:3px">
+                              <t t-if="main.status == 'US'">
+                                <div style="color:red" t-field="main.maintenance_id.name"/>
+                              </t>
+                              <t t-else="">
+                                <div t-field="main.maintenance_id.name"/>
+                              </t>
+                            </td>
+                                 
+                        </tr>
+                  	</t>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+	<data>
+    <record id="paperaircraftstatus" model="report.paperformat">
+            <field name="name">Aircraft Status</field>
+            <field name="orientation">Landscape</field>
+            <field name="header_spacing">10</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">2</field>
+            <field name="margin_right">2</field>
+<!--             <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field> -->
+        </record>
+       <report
+                id="print_calibration_reports"
+                string="Aircraft Status"
+                model="aircraft.status.report"
+                report_type="qweb-html"
+                file="ams_report.aircraft_status_pdf"
+                name="ams_report.aircraft_status_pdf"
+                paperformat="ams_report.paperaircraftstatus"
+            />
+
+    <report
+            id="aircraft_status_report_xls"
+            model="aircraft.status.report"
+            string="Aircraft Status"
+            report_type="xlsx"
+            name="ams_report.aircraft_status_report.xlsx"
+            file="ams_report.aircraft_status_report.xlsx"
+            attachment_use="False"
+        />
+		<record model="ir.ui.view" id="aircraft_data_report_form">
+			<field name="name">aircraft.status.data.form</field>
+			<field name="model">aircraft.status.data</field>
+			<field name="arch" type="xml">
+				<form string="Aircraft Status">
+					<sheet>
+						<group>
+							<field name="fleet_id" attrs="{'readonly':True}"/>
+							<!-- <field name="total_s"/> -->
+							<!-- <field name="total_us"/> -->
+							<field name="realibility" attrs="{'readonly':True}"/>
+							<field name="prod_hours" attrs="{'readonly':True}"/>
+							<field name="prod_cycles" attrs="{'readonly':True}"/>
+							<field name="remark" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="aircraft_status_report_form">
+			<field name="name">aircraft.status.form</field>
+			<field name="model">aircraft.status.report</field>
+			<field name="arch" type="xml">
+				<form string="Aircraft Status">
+					<sheet>
+						<group>
+							<field name="date" options="{'showType': 'months'}"/>
+							<field name="max_date" attrs="{'invisible': True}"/>
+							<field name="data_ids" invisible="1">
+								<tree string='Data'>
+									<field name="fleet_id"/>
+									<field name="max_date" attrs="{'invisible': True}"/>
+									<!-- <field name="type_id"/> -->
+									<!-- <field name="location_id"/> -->
+									<field name="total_s"/>
+									<field name="total_us"/>
+									<field name="realibility"/>
+									<field name="remark" />
+									<field name="days_1"/>
+									<field name="days_2"/>
+									<field name="days_3"/>
+									<field name="days_4"/>
+									<field name="days_5"/>
+									<field name="days_6"/>
+									<field name="days_7"/>
+									<field name="days_8"/>
+									<field name="days_9"/>
+									<field name="days_10"/>
+									<field name="days_11"/>
+									<field name="days_12"/>
+									<field name="days_13"/>
+									<field name="days_14"/>
+									<field name="days_15"/>
+									<field name="days_16"/>
+									<field name="days_17"/>
+									<field name="days_18"/>
+									<field name="days_19"/>
+									<field name="days_20"/>
+									<field name="days_21"/>
+									<field name="days_22"/>
+									<field name="days_23"/>
+									<field name="days_24"/>
+									<field name="days_25"/>
+									<field name="days_26"/>
+									<field name="days_27"/>
+									<field name="days_28"/>
+									<field name="days_29" attrs="{'invisible': [('max_date','&lt;',29)]}"/>
+									<field name="days_30" attrs="{'invisible': [('max_date','&lt;',30)]}"/>
+									<field name="days_31" attrs="{'invisible': [('max_date','&lt;',31)]}"/>
+									<field name="prod_hours"/>
+									<field name="prod_cycles"/>
+								</tree>
+							</field>
+							<field name="maintenance_ids" invisible="1">
+								<tree string='Maintenance'>
+									<field name="fleet_id"/>
+									<field name="start_date"/>
+									<field name="end_date"/>
+									<field name="maintenance_id"/>
+									<field name="status"/>
+								</tree>
+							</field>
+						</group>
+						<footer>
+							<!-- <button name="export_xls"  context="{'status':1}" icon="fa-download" type="object" string="Print XLS" class="oe_highlight"/> -->
+							<button name="print_aircraft_status_reports" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+							<button special="cancel" string="Cancel"/>
+						</footer>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="aircraft_status_action" model="ir.actions.act_window">
+			<field name="name">Aircraft Status</field>
+			<field name="res_model">aircraft.status.report</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+	      	<field name="limit">1</field>
+      		<field name="target">new</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,13 @@
+<odoo>
+  <data>
+
+    <record id="loc_ams_aircraft" model="stock.location">
+        <field name="name">In Aircraft</field>
+        <field name="usage">inventory</field>
+    </record>
+
+
+    <!-- <field name="location_id" search="[('name','=','WH')]"/> -->
+
+  </data>
+</odoo>

@@ -1,0 +1,341 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* ias_help
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-26 12:27+0000\n"
+"PO-Revision-Date: 2018-04-26 12:27+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:189
+#, python-format
+msgid "Applications"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:225
+#, python-format
+msgid "Attendances"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:238
+#, python-format
+msgid "Badge Id"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:245
+#, python-format
+msgid "Birthday"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:134
+#: code:addons/ias_help/static/src/xml/ias_help.xml:80
+#, python-format
+msgid "Contracts"
+msgstr ""
+
+#. module: ias_help
+#: model:ir.model.fields,field_description:ias_help.field_ias_help_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: ias_help
+#: model:ir.model.fields,field_description:ias_help.field_ias_help_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:17
+#: model:ir.actions.act_window,name:ias_help.action_ias_help
+#, python-format
+msgid "Dashboard"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:240
+#, python-format
+msgid "Department"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:152
+#, python-format
+msgid "Department Leaves"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:206
+#, python-format
+msgid "Department Leaves Allocation"
+msgstr ""
+
+#. module: ias_help
+#: model:ir.model.fields,field_description:ias_help.field_ias_help_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:208
+#: code:addons/ias_help/static/src/xml/ias_help.xml:225
+#, python-format
+msgid "Download"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:224
+#, python-format
+msgid "Download Pdf"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:207
+#, python-format
+msgid "Download Pdf!"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:237
+#, python-format
+msgid "Employee"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:233
+#, python-format
+msgid "Employee Details"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:244
+#: code:addons/ias_help/static/src/xml/ias_help.xml:181
+#, python-format
+msgid "Expense Reports to Approve"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:244
+#, python-format
+msgid "Gender"
+msgstr ""
+
+#. module: ias_help
+#: model:ir.model,name:ias_help.model_ias_help
+#: model:ir.ui.menu,name:ias_help.menu_ias_help
+msgid "HR Dashboard"
+msgstr ""
+
+#. module: ias_help
+#: model:ir.model.fields,field_description:ias_help.field_ias_help_id
+msgid "ID"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:239
+#, python-format
+msgid "Job"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:132
+#, python-format
+msgid "Job Applicaations"
+msgstr ""
+
+#. module: ias_help
+#: model:ir.model.fields,field_description:ias_help.field_ias_help___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: ias_help
+#: model:ir.model.fields,field_description:ias_help.field_ias_help_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ias_help
+#: model:ir.model.fields,field_description:ias_help.field_ias_help_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:29
+#, python-format
+msgid "Last login:"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:151
+#, python-format
+msgid "Leave Allocations To Aprrove"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:76
+#, python-format
+msgid "Leaves"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:44
+#, python-format
+msgid "Leaves Left"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:102
+#, python-format
+msgid "Leaves to Approve"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:246
+#, python-format
+msgid "Marital Status"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:248
+#, python-format
+msgid "Medic Exam"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:106
+#: code:addons/ias_help/static/src/xml/ias_help.xml:121
+#: code:addons/ias_help/static/src/xml/ias_help.xml:136
+#: code:addons/ias_help/static/src/xml/ias_help.xml:155
+#: code:addons/ias_help/static/src/xml/ias_help.xml:170
+#: code:addons/ias_help/static/src/xml/ias_help.xml:185
+#, python-format
+msgid "More Info"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:263
+#, python-format
+msgid "My Profile"
+msgstr ""
+
+#. module: ias_help
+#: model:ir.model.fields,field_description:ias_help.field_ias_help_name
+msgid "Name"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:247
+#, python-format
+msgid "Passport ID"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:202
+#, python-format
+msgid "Payroll"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:98
+#: code:addons/ias_help/static/src/xml/ias_help.xml:56
+#, python-format
+msgid "Payslips"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:249
+#, python-format
+msgid "Public Info"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:116
+#: code:addons/ias_help/static/src/xml/ias_help.xml:68
+#, python-format
+msgid "Timesheets"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/js/ias_help.js:171
+#: code:addons/ias_help/static/src/xml/ias_help.xml:117
+#, python-format
+msgid "Timesheets to Approve"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:166
+#, python-format
+msgid "Todays Attendance"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:219
+#, python-format
+msgid "Total Worked Hours"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:242
+#, python-format
+msgid "Work Email"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:243
+#, python-format
+msgid "Work Location"
+msgstr ""
+
+#. module: ias_help
+#. openerp-web
+#: code:addons/ias_help/static/src/xml/ias_help.xml:241
+#, python-format
+msgid "Work Phone"
+msgstr ""
+

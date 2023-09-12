@@ -1,0 +1,137 @@
+<odoo>
+  <data>
+
+    <act_window name="Calibrate Hangar" id="return_action_calibarted_hangar"
+        res_model="hangar.calibrated"
+        view_mode="form" target="new" context="{'search_default_config_id': [active_id],'default_config_id': active_id}"
+        />
+
+    <record id='custom_hangar_type_view_form' model='ir.ui.view'>
+        <field name="name">hangar.type.form</field>
+        <field name="model">hangar.type</field>
+        <field name="arch" type="xml">
+           <form string="Hangar">
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+
+              <button name="toggle_active" type="action" class="oe_stat_button" icon="fa-archive">
+                      <field name="aircraft_status" widget="boolean_button" options="{'terminology':{'string_true': 'Serviceable','hover_true': 'Serviceable','string_false': 'UnServiceable','hover_false': 'UnServiceable'}}"/>
+                  </button>
+              <button name="return_action_to_open"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-book"
+                  help="show the contract for this vehicle">
+                  <field name="some_count" widget="statinfo" string="Document"/>
+              </button>
+              <button name="return_action_to_open"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-tasks"
+                  help="show the contract for this vehicle">
+                  <field name="some_count" widget="statinfo" string="Log"/>
+              </button>
+              <button name="return_action_to_open"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-user"
+                  help="show the contract for this vehicle">
+                  <field name="some_count" widget="statinfo" string="Inspection"/>
+              </button>
+              <button name="%(return_action_calibarted_hangar)d"
+                  type="action"
+                  class="oe_stat_button"
+                  icon="fa-plane"
+                  help="show the contract for this vehicle">
+                  <field name="count_calibrate" widget="statinfo" string="Calibrated"/>
+              </button>
+              <button name="return_action_to_open"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-fire"
+                  help="show the contract for this vehicle">
+                  <field name="some_count" widget="statinfo" string="Service"/>
+              </button>
+            </div>
+            <group>
+              <group>
+                 <field name='name' string="Facility Name"/>
+                 <!-- <field name='category'/> -->
+                 <field name='ownership'/>
+                  <field name='delivery_date' attrs="{'invisible':[('ownership', '!=', 'owner')]}"/>
+              <field name='lessor' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+              <field name='start_lease' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+              <field name='normal_termination' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+               <field name='date_manufacture'/>
+               <field name='vendors'/>
+                <field name='hangar_lastcb'/>
+                <field name='hangar_nextdue'/>
+                 <!-- <field name='propeller_type_id' string="propeller" attrs="{'invisible':[('category', '==', 'rotary')]}"/>       -->
+               </group>
+              <group>
+                <field name='esn'/>
+                <!-- <field name='type'/> -->
+                <!-- <field name='fleet_id' attrs="{'invisible':[('type', '!=', 'onboard')]}"/> -->
+                <field name='base_id'/>
+              </group>
+              </group>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+            </form>
+        </field>
+    </record>  
+
+    <record id='custom_hangar_type_view_tree' model='ir.ui.view'>
+            <field name="name">hangar.type.tree</field>
+            <field name="model">hangar.type</field>
+            <field name="arch" type="xml">
+                <tree string="Hangar Facility">
+                     <field name='name' string="Hangar Facility"/>
+                     <field name='ownership'/>
+                     <field name='date_manufacture'/>
+                     <field name='count_calibrate' string="Total Calibrated"/> 
+                     <field name='vendors'/>
+                </tree>
+            </field>
+    </record>
+
+    <record model="ir.ui.view" id="hangar_custom_type_search_view">
+        <field name="name">hangar.type.search</field>
+        <field name="model">hangar.type</field>
+        <field name="arch" type="xml">
+            <search>
+               <field name='name' string="Hangar Facility"/>
+               <field name='ownership'/>
+               <field name='date_manufacture'/>
+               <field name='count_calibrate' string="Total Calibrated"/> 
+               <field name='vendors'/>            
+            </search>
+        </field>
+    </record>  
+
+    <record model="ir.actions.act_window" id="custom_hangar_action">
+        <field name="name">Hangar Facility</field>
+        <field name="res_model">hangar.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id='custom_hangar_calibrated_view_form' model='ir.ui.view'>
+            <field name="name">hangar.calibrated.form</field>
+            <field name="model">hangar.calibrated</field>
+            <field name="arch" type="xml">
+                <form string="Calibrated">
+                  <group>
+                    <group>
+                      <field name="hangar_id" attrs="{'readonly':True}"/>
+                      <field name='calibrate_last'/>
+                      <field name='calibrate_next'/>
+                    </group>
+                  </group>
+                </form>
+            </field>
+    </record>  
+  </data>
+</odoo>

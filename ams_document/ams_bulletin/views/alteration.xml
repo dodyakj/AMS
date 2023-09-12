@@ -1,0 +1,90 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="bulletin_alteration_form">
+			<field name="name">bulletin.alteration.form</field>
+			<field name="model">bulletin.alteration</field>
+			<field name="arch" type="xml">
+				<form string="Aircraft Alteration">
+	  				<header>
+		                <button name="get_check" string="Check" type="object"  class="oe_highlight" attrs="{'invisible':[('state','!=', 'create')]}" groups="ams_security.group_aircrraft_modification_managers"/>
+		                <button name="get_validate" string="Validate" type="object"  class="oe_highlight" attrs="{'invisible':[('state','!=', 'check')]}" groups="ams_security.group_aircrraft_modification_managers" />
+		                <field name="state" widget="statusbar" statusbar_visible="create,check,validate"/>
+	              	</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<!-- <field name="file"/> -->
+								<field name="file_name" invisible="1"/>
+	              				<field widget="binary" name="file" filename="file_name"/>
+							</group>
+							<group>
+								<field name="fleet_id"/>
+								<field name="date"/>
+							</group>
+						</group>
+						<group>
+							<field name="status" />
+						</group>
+						<group>
+							<field name="subject" colspan="4"/>
+							<field name="desc" colspan="4"/>
+						</group>
+						<group col="4">
+							<field name="comply_date"/>
+							<field name="comply_hour"/>
+							<field name="comply_cyc"/>
+							<field name="comply_rin"/>
+						</group>
+						<group col="4">
+							<field name="replace_component_ids" editable="bottom">
+								<tree string='Component Replace'>
+									<field name='product_id'/>
+									<field name='part_number'/>
+								</tree>
+							</field>
+
+							<field name="installed_component_ids" editable="bottom">
+								<tree string='Component Installed'>
+									<field name='product_id'/>
+									<field name='part_number'/>
+								</tree>
+							</field>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model='ir.ui.view' id='bulletin_alteration_tree'>
+			<field name='name'>bulletin.alteration.tree</field>
+			<field name='model'>bulletin.alteration</field>
+			<field name='arch' type='xml'>
+				<tree string='Aircraft Alteration'>
+					<field name='name'/>
+					<field name="fleet_id"/>
+					<field name='subject'/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="bulletin_alteration_search_view">
+        <field name="name">bulletin.alteration.search</field>
+        <field name="model">bulletin.alteration</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="fleet_id"/>
+                <field name="subject"/>           
+            </search>
+        </field>
+    </record>
+
+		<record id="alteration_action" model="ir.actions.act_window">
+			<field name="name">Aircraft Alteration</field>
+			<field name="res_model">bulletin.alteration</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+	</data>
+</odoo>

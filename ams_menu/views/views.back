@@ -1,0 +1,1556 @@
+<odoo>
+  <data noupdate="1">
+  	<!-- <function model="ir.module.module" name="update_list"/> -->
+    <record id="make_invisible" model="res.groups">
+        <field name="name">Invisible</field>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+  </data>
+  <data>
+
+    <record model="ir.actions.act_window" id="pelita_caspilotreport_action">
+      <field name="name">Report</field>
+      <field name="res_model">pelita_report.report</field>
+      <field name="view_mode">form</field>
+      <field name="target">inline</field>
+      <field name="context">{'type':'caspilot_report'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maint_report_action">
+      <field name="name">Report</field>
+      <field name="res_model">pelita_report.report</field>
+      <field name="view_mode">form</field>
+      <field name="target">inline</field>
+      <field name="context">{'type':'maint_report'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fleetwide_report_action">
+      <field name="name">Report</field>
+      <field name="res_model">pelita_report.report</field>
+      <field name="view_mode">form</field>
+      <field name="target">inline</field>
+      <field name="context">{'type':'fleetwide_report'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fleetwide_forecasting_action">
+      <field name="name">Forecasting Report</field>
+      <field name="res_model">pelita_report.select_airframe</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="context">{'type':'forecasting_report'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="resvalue__action">
+      <field name="name">Reserve Value Report</field>
+      <field name="res_model">pelita_report.select_airframe</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="context">{'type':'resvalue_report'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maintd_action">
+      <field name="name">Maintenance Due Report</field>
+      <field name="res_model">pelita_report.dueform</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="context">{'type':'maintdue_report'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fwhourly_action">
+      <field name="name">Report</field>
+      <field name="res_model">pelita_report.report</field>
+      <field name="view_mode">form</field>
+      <field name="target">inline</field>
+      <field name="context">{'type':'fwhourly_report'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="inspuncomplied_action">
+      <field name="name">Report</field>
+      <field name="res_model">pelita_report.report</field>
+      <field name="view_mode">form</field>
+      <field name="target">inline</field>
+      <field name="context">{'type':'inspuncomplied_report'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fwbulletin_action">
+      <field name="name">Report</field>
+      <field name="res_model">pelita_report.report</field>
+      <field name="view_mode">form</field>
+      <field name="target">inline</field>
+      <field name="context">{'type':'fwbulletin_report'}</field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="currency_action">
+      <field name="name">Currency</field>
+      <field name="res_model">res.currency</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="flight_time_action">
+      <field name="name">Add Flight Time</field>
+      <field name="view_id" ref="pelita_fleet.fleet_flight_time_form_view"/>
+      <field name="res_model">fleet.flight_time</field>
+      <field name="view_mode">form</field>
+    </record>
+
+    
+
+    <record model="ir.actions.act_window" id="buletin_action">
+      <field name="name">Test Action</field>
+      <field name="res_model">hr.employee</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="verify_flight_action">
+      <field name="name">Verify Flight Time</field>
+      <field name="res_model">verify.flight</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="verify_manual_action">
+      <field name="name">Manual Changes</field>
+      <field name="res_model">verify.manualchange</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    
+    <record model="ir.actions.act_window" id="compiled_main_action">
+      <field name="name">Compiled Periodic Inspection</field>
+      <field name="res_model">pelita.compliedperin</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <act_window id="action_bel_check"
+      name="BEL Check List"
+      res_model="fleet.bel.checklist"
+      view_mode="form"
+      view_id="pelita_fleet.bel_checkform" 
+      target="new"/>
+
+    <act_window id="action_print_bel_check"
+      name="Print BEL List"
+      res_model="fleet.bel.checklist"
+      view_mode="form"
+      view_id="pelita_fleet.printbel_checkform" 
+      target="new"/>
+
+
+    <!-- Bulletin -->
+
+    <record id="view_buletin_general_filter" model="ir.ui.view">
+        <field name="name">bulletin.general.airframe.select</field>
+        <field name="model">bulletin.general</field>
+        <field name="arch" type="xml">
+            <search string="Search Engine">
+               <filter string="Engine" name="filter_engine" domain="[('engine_id','!=',False)]"/>
+               <filter string="Airframe" name="filter_airframe" domain="[('airframe_id','!=',False)]"/>
+               <filter string="Auxiliary" name="filter_auxiliary" domain="[('auxiliary_id','!=',False)]"/>
+               <filter string="Complied" name="filter_complied" domain="[('status','=','compiled')]"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="buletin_general_action">
+      <field name="name">Bulletin General</field>
+      <field name="res_model">bulletin.general</field>
+      <field name="view_id" ref="pelita_bulletin.bulletin_default_tree"/>
+      <field name="search_view_id" ref="view_buletin_general_filter"/>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="buletin_airframes_action">
+      <field name="name">Bulletin Airframes</field>
+      <field name="res_model">bulletin.general</field>
+      <field name="view_id" ref="pelita_bulletin.bulletin_airframe_tree"/>
+      <field name="search_view_id" ref="view_buletin_general_filter"/>
+      <field name="context">{'search_default_filter_airframe':1,'module':'Airframe'}</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="buletin_engines_action">
+      <field name="name">Bulletin Engines</field>
+      <field name="res_model">bulletin.general</field>
+      <field name="view_id" ref="pelita_bulletin.bulletin_engine_tree"/>
+      <field name="search_view_id" ref="view_buletin_general_filter"/>
+      <field name="context">{'search_default_filter_engine':1,'module':'Engine'}</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="buletin_auxiliarys_action">
+      <field name="name">Bulletin Auxiliarys</field>
+      <field name="res_model">bulletin.general</field>
+      <field name="view_id" ref="pelita_bulletin.bulletin_auxilliary_tree"/>
+      <field name="search_view_id" ref="view_buletin_general_filter"/>
+      <field name="context">{'search_default_filter_auxiliary':1,'module':'Auxiliary'}</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="buletin_complied_action">
+      <field name="name">Bulletin complied</field>
+      <field name="res_model">bulletin.general</field>
+      <field name="view_id" ref="pelita_bulletin.bulletin_default_tree"/>
+      <field name="search_view_id" ref="view_buletin_general_filter"/>
+      <field name="context">{'search_default_filter_complied':1}</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="complied_bulletin_action">
+      <field name="name">Complied Bulletins</field>
+      <field name="res_model">bulletin.complied</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+   
+    <record model="ir.actions.act_window" id="buletin_type_action">
+      <field name="name">Bulletin Type Setup</field>
+      <field name="res_model">bulletin.type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+  <!-- END Bulletin -->
+
+  <!-- MAINTENANCE -->
+<!--     <record id="view_auxiliary_filter" model="ir.ui.view">
+        <field name="name">maintenance.equipment.select</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="arch" type="xml">
+            <search string="Search Auxiliary">
+               <filter string="Auxiliary" name="type_" domain="[('category_id.name','=','Auxiliary')]"/>
+           </search>
+        </field>
+    </record> -->
+
+    <record model="ir.actions.act_window" id="auxiliary_action">
+      <field name="name">Auxiliary System</field>
+      <field name="res_model">auxiliary.spare</field>
+      <!-- <field name="search_view_id" ref="view_auxiliary_filter"/> -->
+      <!-- <field name="context">{'search_default_type_':1,'module':'Auxiliary'}</field> -->
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_engine_filter" model="ir.ui.view">
+        <field name="name">engine.spare.select</field>
+        <field name="model">engine.spare</field>
+        <field name="arch" type="xml">
+            <search string="Search Engine">
+               <!-- <filter string="Engine" name="type_" domain="[('category_id.name','=','Engine')]"/> -->
+           </search>
+        </field>
+    </record>
+
+   
+
+    <record id="view_bel_airframe_filter" model="ir.ui.view">
+        <field name="name">fleet.vehicle.model.select</field>
+        <field name="model">fleet.vehicle.model</field>
+        <field name="arch" type="xml">
+            <search string="Search Airframe">
+               <filter string="Airframe" name="type_" domain="[('model_for.name','=','Fleet')]"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="bel_airframe_action">
+      <field name="name">BEL for Airframe</field>
+      <field name="res_model">fleet.vehicle.model</field>
+      <field name="search_view_id" ref="view_bel_airframe_filter"/>
+      <field name="context">{'search_default_type_':1,'module':'Fleet'}</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_bel_engine_filter" model="ir.ui.view">
+        <field name="name">fleet.vehicle.model.select</field>
+        <field name="model">fleet.vehicle.model</field>
+        <field name="arch" type="xml">
+            <search string="Search Engine">
+               <filter string="Engine" name="type_" domain="[('model_for.name','=','Engine')]"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="bel_engine_action">
+      <field name="name">BEL for Engine</field>
+      <field name="res_model">fleet.vehicle.model</field>
+      <field name="search_view_id" ref="view_bel_engine_filter"/>
+      <field name="context">{'search_default_type_':1,'module':'Engine'}</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_bel_auxiliary_filter" model="ir.ui.view">
+        <field name="name">fleet.vehicle.model.select</field>
+        <field name="model">fleet.vehicle.model</field>
+        <field name="arch" type="xml">
+            <search string="Search Auxiliary">
+               <filter string="Auxiliary" name="type_" domain="[('model_for.name','=','Auxiliary')]"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="bel_auxiliary_action">
+      <field name="name">BEL for Auxiliary</field>
+      <field name="res_model">fleet.vehicle.model</field>
+      <field name="search_view_id" ref="view_bel_auxiliary_filter"/>
+      <field name="context">{'search_default_type_':1,'module':'Auxiliary'}</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- END MAINTENANCE -->
+
+    <!-- INVENTORY -->
+    <record model="ir.actions.act_window" id="part_action">
+      <field name="name">Part</field>
+      <field name="res_model">product.product</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="invtool_action">
+      <field name="name">Tools</field>
+      <field name="res_model">pelita.invtool</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="po_control_code_action">
+      <field name="name">PO Control Code</field>
+      <field name="res_model">purchase.order.controlcode</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="po_setup_action">
+      <field name="name">PO Setup</field>
+      <field name="res_model">pelita.posetup</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="tracking_inventory">
+      <field name="name">Tracking Inventory Part</field>
+      <field name="res_model">fleet.component.part</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="invnonaircraft_action">
+      <field name="name">Non Aircraft Inventory</field>
+      <field name="res_model">pelita.invnonaircraft</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="invphycal_action">
+      <field name="name">Physical Inventory</field>
+      <field name="res_model">pelita.invphycal</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="invcredit_action">
+      <field name="name">Credit Claim</field>
+      <field name="res_model">pelita.invcredit</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+          
+          <!-- INVENTORY REPORT -->
+
+          <act_window id="report_gen_inv_action"
+            name="General Inventory"
+            res_model="pelita.repinvgeninv"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_repinvgeninv_form" 
+            target="new"/>
+
+          <act_window id="report_con_action"
+            name="Consolidation"
+            res_model="pelita.repinvgeninv"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_repinvgeninv_form" 
+            target="new"/>
+       <!--      
+          <record model="ir.actions.act_window" id="report_gen_inv_action">
+            <field name="name">General Inventory</field>
+            <field name="res_model">pelita.repinvgeninv</field>
+            <field name="view_mode">tree,form</field>
+          </record> -->
+
+          <record model="ir.actions.act_window" id="invrepshelf_action">
+            <field name="name">Shelf Life</field>
+            <field name="res_model">pelita.repinvrepshelf</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+
+          <record model="ir.actions.act_window" id="invwarranty_action">
+            <field name="name">Warranty</field>
+            <field name="res_model">pelita.repinvwarranty</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+
+          <record model="ir.actions.act_window" id="invacccost_action">
+            <field name="name">Accounting Cost</field>
+            <field name="res_model">pelita.repinvacccost</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+
+          <record model="ir.actions.act_window" id="invclaim_action">
+            <field name="name">Credit Claim</field>
+            <field name="res_model">pelita.repinvclaim</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+
+          <record model="ir.actions.act_window" id="invnonaircraft_report_action">
+            <field name="name">Non Aircrraft Inventory</field>
+            <field name="res_model">pelita.repinvnonaircraft</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+
+          <record model="ir.actions.act_window" id="invvar_report_action">
+            <field name="name">Variance</field>
+            <field name="res_model">pelita.repinvvar</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+
+          <record model="ir.actions.act_window" id="report_phycal_cheklist_action">
+            <field name="name">Phycal Inventory Checklist</field>
+            <field name="res_model">pelita.repinvphycalcheck</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+
+          <record model="ir.actions.act_window" id="report_invhistoryrep_action">
+            <field name="name">Inventory History</field>
+            <field name="res_model">pelita.repinvhistoryrep</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+
+
+          <act_window id="report_invtrack_action"
+            name="Tracked Comps In Inv."
+            res_model="pelita.repinvvaluecost"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_repinvvaluecost_form" 
+            target="new"/>
+
+          <act_window id="report_invvaluelist_action"
+            name="Inventory Value List"
+            res_model="pelita.repinvvaluecost"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_repinvvaluecost_form" 
+            target="new"/>
+
+          <act_window id="report_invvaluecost_action"
+            name="Inventory Value Cost"
+            res_model="pelita.repinvvaluecost"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_repinvvaluecost_form" 
+            target="new"/>
+
+          <act_window id="report_invallval_action"
+            name="Inventory at List &amp; Cost"
+            res_model="pelita.repinvvaluecost"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_repinvvaluecost_form" 
+            target="new"/>
+
+
+          <record model="ir.actions.act_window" id="report_invrecpt_action">
+            <field name="name">Inventory Receipt</field>
+            <field name="res_model">pelita.repinvrecpt</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+
+          <record model="ir.actions.act_window" id="report_reportpartuse_action">
+            <field name="name">Parts Usage</field>
+            <field name="res_model">pelita.reportpartuse</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+          
+          <record model="ir.actions.act_window" id="report_reportpartby_action">
+            <field name="name">Parts By A/C Type</field>
+            <field name="res_model">pelita.reportpartby</field>
+            <field name="view_mode">tree,form</field>
+          </record>
+
+<!--           <record model="ir.actions.act_window" id="report_reportreorder_action">
+            <field name="name">Reorder</field>
+            <field name="res_model">pelita.reportreorder</field>
+            <field name="view_mode">tree,form</field>
+          </record> -->
+
+
+          <act_window id="report_reportreorder_action"
+            name="Reorder"
+            res_model="pelita.reportreorder"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_reportreorder_form" 
+            target="new"/>
+
+          <act_window id="report_serial_num_action"
+            name="Serial No"
+            res_model="pelita.report.serial"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_report_serialnomer_form" 
+            target="new"/>
+
+          <act_window id="report_part_no_action"
+            name="Part No"
+            res_model="pelita.report.serial"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_report_part_form" 
+            target="new"/>
+
+          <act_window id="report_bin_loc_action"
+            name="Bin / Location"
+            res_model="pelita.report.bin.location"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_bin_location_form" 
+            target="new"/>
+
+          <act_window id="report_daily_work_action"
+            name="Daily Work"
+            res_model="pelita.reporderpart"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_report_daily_work_views_form" 
+            target="new"/>
+
+          <act_window id="report_inv_by_mod_action"
+            name="Inventory By Model"
+            res_model="pelita.report.by.model"
+            view_mode="form"
+            view_id="pelita_inventory.pelita_report_by_model_form" 
+            target="new"/>
+
+          <act_window id="report_sytem_movw_action"
+            name="System-wide Movement"
+            res_model="pelita.report.part.move"
+            view_mode="form"
+            view_id="pelita_inventory.report_system_wide_movement_form" 
+            target="new"/>
+<!-- 
+          <record model="ir.actions.act_window" id="report_repinvrepair_action">
+            <field name="name">Repair Order Parts</field>
+            <field name="res_model">pelita.repinvrepair</field>
+            <field name="view_mode">tree,form</field>
+          </record> -->
+
+
+
+    <!-- ORDERS -->
+
+            <!-- PO -->
+
+            <act_window id="pelita_orders_reagain_po_action"
+              name="Receipt Against P.O"
+              res_model="pelita.orders.receipt.again"
+              view_mode="form"
+              view_id="pelita_orders.pelita_orders_receipt_again_form" 
+              target="new"/>
+
+            <act_window id="pelita_orders_po_summary_action"
+              name="Purchase Order Sumary"
+              res_model="pelita.orders.po.summary"
+              view_mode="form"
+              view_id="pelita_orders.pelita_orders_po_summary_form" 
+              target="new"/>
+
+
+    <record model="ir.actions.act_window" id="pelita_orders_mels_deferred_action">
+      <field name="name">MELS Deferred By Mechanics</field>
+      <field name="res_model">pelita.orders.mels.deferred</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="paid_incoice_action">
+      <field name="name">Paid Invoice</field>
+      <field name="res_model">pelita.orders.po.invoice</field>
+      <field name="view_mode">tree,form</field>
+    </record> 
+    
+    <record model="ir.actions.act_window" id="repair_order_action">
+      <field name="name">Repair Orders</field>
+      <field name="res_model">maintenance.request</field>
+      <field name="view_mode">tree,form</field>
+    </record>  
+
+    <record model="ir.actions.act_window" id="pelita_publiclib_action">
+      <field name="name">Publication Library</field>
+      <field name="res_model">pelita.publiclib</field>
+      <field name="view_mode">tree,form</field>
+    </record> 
+
+    <record model="ir.actions.act_window" id="pelita_invhistory_action">
+      <field name="name">Inventory History</field>
+      <field name="res_model">pelita.invhistory</field>
+      <field name="view_mode">tree,form</field>
+    </record> 
+
+    <record model="ir.actions.act_window" id="pelita_kitdef_action">
+      <field name="name">Kit Definition</field>
+      <field name="res_model">pelita.kitdef</field>
+      <field name="view_mode">tree,form</field>
+    </record>    
+
+    <record model="ir.actions.act_window" id="pelita_genkit_action">
+      <field name="name">Generate Kit</field>
+      <field name="res_model">pelita.genkit</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_orders_job_card_action">
+      <field name="name">Job Card Entry</field>
+      <field name="res_model">pelita.orders.job.card</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_orders_archive_job_card_action">
+      <field name="name">Archive Job Card</field>
+      <field name="res_model">pelita.orders.archive.job.card</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+            
+
+    <!-- AKHIR ORDERS -->
+
+  <!-- CAS -->
+
+    <record model="ir.actions.act_window" id="pelita_cas_action">
+      <field name="name">CAS</field>
+      <field name="res_model">pelita.cas</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_cascorrcetion_action">
+      <field name="name">Correction Active Request</field>
+      <field name="res_model">pelita.cascorrection</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_casmelextension_action">
+      <field name="name">MEL Extension</field>
+      <field name="res_model">pelita.casmelextension</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_casrepdes_action">
+      <field name="name">Repeat Discrepancy</field>
+      <field name="res_model">pelita.casrepdes</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_casmaintcontrollog_action">
+      <field name="name">Maint Control Log</field>
+      <field name="res_model">pelita.casmaintcontrollog</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_casmechinterruption_action">
+      <field name="name">Mech. Interruption Summary</field>
+      <field name="res_model">pelita.casmechinterruption</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_casreportmelextension_action">
+      <field name="name">MEL Extension</field>
+      <field name="res_model">pelita.casreportmelextension</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_casferryflight_action">
+      <field name="name">Ferry Flight</field>
+      <field name="res_model">pelita.casferryflight</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_cascorrectionactionlog_action">
+      <field name="name">Corrective Action Log</field>
+      <field name="res_model">pelita.cascorrectionactionlog</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_casmmrstatus_action">
+      <field name="name">MMR Status Report</field>
+      <field name="res_model">pelita.casmmrstatus</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_casmmrdetail_action">
+      <field name="name">MMR Detail Report</field>
+      <field name="res_model">pelita.casmmrdetail</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_casdiscrepancy_action">
+      <field name="name">Discrepancy Report</field>
+      <field name="res_model">pelita.casdiscrepancy</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <record model="ir.actions.act_window" id="pelita_caspilotreport_action">
+      <field name="name">Pilot Report</field>
+      <field name="res_model">pelita.caspilotreport</field>
+      <field name="view_mode">tree,form</field>
+    </record> -->
+
+    <record model="ir.actions.act_window" id="pelita_casatadefinition_action">
+      <field name="name">ATA Definition</field>
+      <field name="res_model">ams.ata</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="ams_station_definition_action">
+      <field name="name">Station Definition</field>
+      <field name="res_model">base.operation</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="pelita_caspilot_action">
+      <field name="name">Pilot Setup</field>
+      <field name="res_model">pelita.caspilot</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <record id="view_company_filter" model="ir.ui.view">
+        <field name="name">res.partner.select</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search string="Search Partner">
+               <filter string="Companies" name="type_company" domain="[('is_company','=',1)]"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="vendors_screen_action">
+      <field name="name">Vendor Entry Screen</field>
+      <field name="res_model">res.partner</field>
+      <field name="context">{'search_default_type_company':1}</field>
+      <field name="search_view_id" ref="view_company_filter"/>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="customers_action">
+      <field name="name">Customers</field>
+      <field name="res_model">res.partner</field>
+      <!-- <field name="context">{'search_default_type_company':1,'module':'Customers'}</field> -->
+      <field name="search_view_id" ref="view_company_filter"/>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="part_list">
+      <field name="name">Inventory</field>
+      <field name="res_model">stock.quant</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="tranfer_inv_list">
+      <field name="name">Tranferred Inventory</field>
+      <field name="res_model">stock.quant</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="tranfer_inv_list">
+      <field name="name">Tranferred Inventory</field>
+      <field name="res_model">stock.quant</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+    <act_window id="vendor_venreport_action"
+      name="Vendor Report"
+      res_model="pelita.repinvvaluecost"
+      view_mode="form"
+      view_id="pelita_inventory.pelita_repinvvaluecost_form" 
+      target="new"/>
+
+
+    <act_window id="vendor_appvenlist_action"
+      name="Approved Vendor List"
+      res_model="pelita.repinvvaluecost"
+      view_mode="form"
+      view_id="pelita_inventory.pelita_repinvvaluecost_form" 
+      target="new"/>
+
+    <act_window id="vendor_appvendue_action"
+      name="Approved Vendor Due"
+      res_model="vendor.valdue"
+      view_mode="form"
+      view_id="pelita_vendor.vendor_valdue_form" 
+      target="new"/>
+
+    <act_window id="vendor_purchasehistory_action"
+      name="Purchase History By Vendor"
+      res_model="vendor.purchasehist"
+      view_mode="form"
+      view_id="pelita_vendor.vendor_purchasehist_form" 
+      target="new"/>
+
+    <act_window id="vendor_invhistor_action"
+      name="Inventory History By Vendor"
+      res_model="vendor.invhist"
+      view_mode="form"
+      view_id="pelita_vendor.vendor_invhist_form" 
+      target="new"/>
+
+    <act_window id="inv_rep_tool_action"
+      name="Tools"
+      res_model="pelita.repinvtool"
+      view_mode="form"
+      view_id="pelita_inventory.pelita_reportinvtool_form" 
+      target="new"/>
+
+    <act_window id="purchase_bypart"
+      name="Purchase By Part"
+      res_model="pelita.repinvhistoryrep"
+      view_mode="form"
+      view_id="pelita_inventory.pelita_repinvhistoryrep_form" 
+      target="new"/>
+
+    <record model="ir.ui.view" id="stock.view_warehouse_tree">
+      <field name="name">stock.warehouse.tree</field>
+      <field name="model">stock.warehouse</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="name" string="Sites"/>
+            <field name="active" invisible="1"/>
+            <field name="lot_stock_id" groups="stock.group_stock_multi_locations"/>
+            <field name="partner_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="stock.action_warehouse_form">
+      <field name="name">Sites</field>
+    </record>
+    <!-- END INVENTORY -->
+
+
+<!-- FORECAST -->
+
+
+
+    <act_window id="forecast_airframe_inspection_action"
+      name="Inspection Cost"
+      res_model="forecast.airframe.inspection"
+      view_mode="form"
+      view_id="pelita_forecast.airframe_ins_form" 
+      target="current"/>
+    <act_window id="forecast_airframe_component_action"
+      name="Component Cost"
+      res_model="forecast.airframe.component"
+      view_mode="form"
+      view_id="pelita_forecast.airframe_com_form"  
+      target="current"/>
+    <act_window id="forecast_airframe_retire_action"
+      name="Retire Cost"
+      res_model="forecast.airframe.component"
+      view_mode="form" 
+      view_id="pelita_forecast.airframe_com_form" 
+      target="current"/>
+    <act_window id="forecast_airframe_all_action"
+      name="Enter All Cost"
+      res_model="forecast.airframe.retire"
+      view_mode="form" 
+      view_id="pelita_forecast.airframe_retire_form" 
+      target="current"/>
+
+
+    <act_window id="forecast_engine_inspection_action"
+      name="Inspection Cost"
+      res_model="forecast.engine.inspection"
+      view_mode="form"
+      view_id="pelita_forecast.engine_ins_form" 
+      target="current"/>
+    <act_window id="forecast_engine_component_action"
+      name="Component Cost"
+      res_model="forecast.engine.component"
+      view_mode="form"
+      view_id="pelita_forecast.engine_com_form"  
+      target="current"/>
+    <act_window id="forecast_engine_retire_action"
+      name="Retire Cost"
+      res_model="forecast.engine.component"
+      view_mode="form" 
+      view_id="pelita_forecast.engine_com_form" 
+      target="current"/>
+    <act_window id="forecast_engine_all_action"
+      name="Enter All Cost"
+      res_model="forecast.engine.retire"
+      view_mode="form" 
+      view_id="pelita_forecast.engine_retire_form" 
+      target="current"/>
+
+    <act_window id="forecast_auxiliary_inspection_action"
+      name="Inspection Cost"
+      res_model="forecast.engine.inspection"
+      view_mode="form"
+      view_id="pelita_forecast.engine_ins_form" 
+      target="current"/>
+    <act_window id="forecast_auxiliary_component_action"
+      name="Component Cost"
+      res_model="forecast.engine.component"
+      view_mode="form"
+      view_id="pelita_forecast.engine_com_form"  
+      target="current"/>
+    <act_window id="forecast_auxiliary_retire_action"
+      name="Retire Cost"
+      res_model="forecast.engine.component"
+      view_mode="form" 
+      view_id="pelita_forecast.engine_com_form" 
+      target="current"/>
+    <act_window id="forecast_auxiliary_all_action"
+      name="Enter All Cost"
+      res_model="forecast.engine.retire"
+      view_mode="form" 
+      view_id="pelita_forecast.engine_retire_form" 
+      target="current"/>
+
+    <act_window id="list_cost1_action"
+      name="List Cost"
+      res_model="pelita.forecast.list.cost"
+      view_mode="form"
+      view_id="pelita_forecast.list_cost1_form" 
+      target="new"/>
+
+
+    <act_window id="list_cost2_action"
+      name="List Cost"
+      res_model="pelita.forecast.list.cost"
+      view_mode="form"
+      view_id="pelita_forecast.list_cost2_form" 
+      target="new"/>
+
+
+    <act_window id="list_cost3_action"
+      name="List Cost"
+      res_model="pelita.forecast.list.cost"
+      view_mode="form"
+      view_id="pelita_forecast.list_cost3_form" 
+      target="new"/>
+
+
+    <act_window id="enterall2_action"
+      name="Enter All Cost"
+      res_model="pelita.forecast.list.cost"
+      view_mode="form"
+      view_id="pelita_forecast.enterall2_form" 
+      target="new"/>
+
+
+    <act_window id="enterall3_action"
+      name="Add All Cost"
+      res_model="pelita.forecast.list.cost"
+      view_mode="form"
+      view_id="pelita_forecast.enterall3_form" 
+      target="new"/>
+
+
+
+<!-- REPORT MENU -->
+
+      <record model="ir.ui.view" id="pelita_order_auto_form">
+          <field name="name">pelita.order.auto.form</field>
+          <field name="model">pelita.order.auto</field>
+          <field name="arch" type="xml">
+              <form string="Auto Work Order">
+                  <group>
+                    <field name="name"/>
+                  </group>
+              </form>
+          </field>
+      </record>
+
+    <act_window id="pelita_order_auto_action"
+      name="Auto Work Order"
+      res_model="pelita.order.auto"
+      view_mode="form"
+      view_id="pelita_order_auto_form" 
+      target="new"/>
+
+    <act_window id="workorder_setup_action"
+      name="Workorder Setup"
+      res_model="pelita.orders.wo.setup"
+      view_mode="form"
+      view_id="pelita_orders.pelita_orders_wo_setup_form" 
+      target="new"/>
+
+    <act_window id="list_of_part_order"
+      name="List of Parts on Orders"
+      res_model="pelita.repinvvaluecost"
+      view_mode="form"
+      view_id="pelita_inventory.pelita_repinvvaluecost_form" 
+      target="new"/>
+
+    <act_window id="part_in_open_po"
+      name="Part in Open PO"
+      res_model="pelita.orders.part.in.po"
+      view_mode="form"
+      view_id="pelita_orders.pelita_orders_part_in_po_form" 
+      target="new"/>
+
+    <!-- <act_window id="report_fleetwide_action"
+      name="Fleetwide Report"
+      res_model="pelita.repinvvaluecost"
+      view_mode="form"
+      view_id="pelita_inventory.pelita_repinvvaluecost_form" 
+      target="new"/> -->
+
+    <act_window id="report_inp_ret_action"
+      name="Insp. Returned Uncomplied"
+      res_model="pelita.repinvvaluecost"
+      view_mode="form"
+      view_id="pelita_inventory.pelita_repinvvaluecost_form" 
+      target="new"/>
+
+    <act_window id="report_order_action"
+      name="Repair Order Parts"
+      res_model="pelita.reporderpart"
+      view_mode="form"
+      view_id="pelita_inventory.pelita_reporderpart_form" 
+      target="new"/>
+
+    <act_window id="general_setup_action"
+      name="General Setup"
+      res_model="utilities.general.setup"
+      view_mode="form"
+      view_id="pelita_utilities.pelita_utilities_form" 
+      target="new"/>
+
+
+    <act_window id="shipping_comp_action"
+      name="Shipping Company"
+      res_model="utilities.shipping.comp"
+      view_mode="form"
+      view_id="pelita_utilities.pelita_shipping_comp_form" 
+      target="new"/>
+
+    <act_window id="shipping_meth_action"
+      name="Shipping Method"
+      res_model="utilities.shipping.meth"
+      view_mode="form"
+      view_id="pelita_utilities.pelita_shipping_meth_form" 
+      target="new"/>
+
+
+    <record model="ir.actions.act_window" id="pt6b_action">
+      <field name="name">PT6B-37A</field>
+      <field name="res_model">pelita.pt6b</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="reverse_value_action">
+      <field name="name">Reserve Value</field>
+      <field name="res_model">pelita.reverse.value</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.ui.view" id="about_id">
+          <field name="name">pelita.reporderpart.about</field>
+          <field name="model">pelita.reporderpart</field>
+          <field name="arch" type="xml">
+              <form string="About" version="7.0">
+                Computerized Aircraft Log Manager <br/>
+                Last Update <field name="begin_sent" readonly="1"/><br/>
+                Version 7.0<br/>
+                &#169; Copyright 2018 , CALM Systams, Inc
+              </form>
+          </field>
+      </record>
+
+    <record model="ir.ui.view" id="backup">
+          <field name="name">pelita.reporderpart.backup</field>
+          <field name="model">pelita.reporderpart</field>
+          <field name="arch" type="xml">
+              <form string="Backup" version="7.0">
+                    Do You Want Backup Data Fist ..?
+                <footer>
+                  <button string="Yes" special="cancel" />
+                  <button string="No" special="cancel" />
+                </footer>
+              </form>
+          </field>
+      </record>
+
+    <record model="ir.ui.view" id="update_ind">
+          <field name="name">pelita.repinvacccost.update</field>
+          <field name="model">pelita.repinvacccost</field>
+          <field name="arch" type="xml">
+              <form string="Update" version="7.0">
+                    You Must Close All Other <br/>
+                    Calm Programers Before Continuing
+                    <group>
+                      <field name="all_loc" string="Remove Delete Record"/>
+                    </group>
+                <footer>
+                  <button string="Continue" special="cancel" />
+                  <button string="Exit" special="cancel" />
+                </footer>
+              </form>
+          </field>
+      </record>
+
+
+    <act_window id="update_ind_action"
+      name="Update Indexes"
+      res_model="pelita.repinvacccost"
+      view_mode="form"
+      view_id="update_ind" 
+      target="new"/>
+
+    <record model="ir.ui.view" id="pelita_orders_wizzard_form">
+          <field name="name">pelita.orders.wizzard.report</field>
+          <field name="model">pelita.orders.wizzard</field>
+          <field name="arch" type="xml">
+              <form string="Update" version="7.0">
+                      <div class="row">
+                      <div class="col-md-6">
+                        <group>
+                        <field name="period" widget="radio"/>
+                        </group>
+                      </div>
+                      <div class="col-md-6">
+                        <group>
+                          
+                        <field name="date"/>
+                        <field name="month"/>
+                        <field name="year"/>
+                        </group>
+                      </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <group>
+                        <field name="source" widget="radio" options="{'horizontal': true}"/>
+                        <field name="report" string="Select Report For"/>
+                          </group>
+                        </div>
+                      </div>
+                <footer>
+                  <button string="Done" special="cancel" />
+                  <button string="Cancel" special="cancel" />
+                </footer>
+              </form>
+          </field>
+      </record>
+
+
+    <act_window id="pelita_orders_wizzard_action"
+      name="Report Request Screen"
+      res_model="pelita.orders.wizzard"
+      view_mode="form"
+      view_id="pelita_orders_wizzard_form" 
+      target="new"/>
+
+    <act_window id="backup_action"
+      name="Backup Data"
+      res_model="pelita.reporderpart"
+      view_mode="form"
+      view_id="backup" 
+      target="new"/>
+
+    <act_window id="about_action"
+      name="About"
+      res_model="pelita.reporderpart"
+      view_mode="form"
+      view_id="about_id" 
+      target="new"/>
+
+
+
+
+    <act_window id="warningtimes_action"
+      name="Set Warning Times"
+      res_model="pelita.warningtimes"
+      view_mode="form"
+      view_id="pelita_utilities.warningtimes_form" 
+      target="new"/>
+
+
+<!-- INI LIST DARI MENU BAWAHNYA -->
+<!-- MENU MAINTENANCE -->
+                <menuitem name="Airframes" id="maintenance_airframe" parent="maintenance.menu_m_request" action="ams_base.fleet_action" sequence="1"/>
+                <menuitem name="Engine" id="maintenance_engine" parent="maintenance.menu_m_request" action="ams_base.engine_action" sequence="2"/>
+                <menuitem name="Auxiliary" id="maintenance_auxiliary" parent="maintenance.menu_m_request" action="auxiliary_action" sequence="3"/>
+                <menuitem name="Add Flight Time" id="maintenance_add_flight_time" parent="maintenance.menu_m_request" action="flight_time_action" sequence="4"/>
+                <menuitem name="Verify Flight Time" id="maintenance_verify_flight_time" parent="maintenance.menu_m_request" sequence="5"/>
+                        <menuitem name="Verify Flight Time" id="maintenance_verify_flight_times" parent="maintenance_verify_flight_time" action="verify_flight_action" sequence="1"/>
+                        <menuitem name="Manual Changes" id="maintenance_manual_changes" parent="maintenance_verify_flight_time" action="verify_manual_action" sequence="2"/>
+                        <menuitem name="Adjust Flight Time" id="maintenance_adjust_flight_time" parent="maintenance_verify_flight_time" action="verify_flight_action" sequence="3"/>
+                <menuitem name="Compiled Periodic Inspection" id="maintenance_compiled" parent="maintenance.menu_m_request" action="compiled_main_action" sequence="6"/>
+                <menuitem name="BEL" id="maintenance_bel" parent="maintenance.menu_m_request" sequence="7"/>
+                        <menuitem name="Airframe" id="maintenance_bel_airframe" parent="maintenance_bel" action="bel_airframe_action" sequence="1"/>
+                        <menuitem name="Engine" id="maintenance_bel_engine" parent="maintenance_bel" action="bel_engine_action" sequence="2"/>
+                        <menuitem name="Auxiliary" id="maintenance_bel_auxiliary" parent="maintenance_bel" action="bel_auxiliary_action" sequence="3"/>
+                        <menuitem name="BEL Check List" id="maintenance_bel_check_list" parent="maintenance_bel" action="action_bel_check" sequence="4"/>
+                        <menuitem name="Print BEL List" id="maintenance_bel_list" parent="maintenance_bel" action="action_print_bel_check" sequence="5"/>
+
+    <menuitem name="Buletins" id="buletin_root" sequence="2"/>
+          <menuitem name="Buletins" id="buletin_menu" parent="buletin_root"/>
+                <menuitem name="Airframes" id="buletin_airframe" parent="buletin_menu" action="buletin_airframes_action" sequence="1"/>
+                <menuitem name="Engines" id="buletin_engine" parent="buletin_menu" action="buletin_engines_action" sequence="2"/>
+                <menuitem name="Auxiliary" id="buletin_auxilairy" parent="buletin_menu" action="buletin_auxiliarys_action" sequence="3"/>
+                <menuitem name="Tracking Buletin" id="buletin_tracking" parent="buletin_menu" action="buletin_general_action" sequence="4"/>
+                <menuitem name="Bulletin Type Setup" id="buletin_tracking_setup" parent="buletin_menu" action="buletin_type_action" sequence="5"/>
+                <menuitem name="Fleetwide Bulletin Report" id="buletin_fleetwide" parent="buletin_menu" action="pelita_bulletin.fw_bulletin_report_action" sequence="6"/>
+                <menuitem name="Compiled Buletins" id="buletin_complied_main" parent="buletin_menu" sequence="7"/>
+                      <menuitem name="Compiled Buletins" id="buletin_complied" parent="buletin_complied_main" action="complied_bulletin_action" sequence="1"/>
+                      <menuitem name="Report" id="buletin_compiled_report" parent="buletin_complied_main" action="pelita_bulletin.rp_bulletin_report_action" sequence="2"/>
+<!-- MENU INVENTORY -->
+      <menuitem name="Inventory" id="inv_menu" parent="stock.menu_stock_root" sequence="0"/>
+                  <menuitem name="Master Part List" id="master_partlist_id" parent="inv_menu" action="part_action" sequence="1"/>
+                  <menuitem name="Inventory" id="inventory_id" parent="inv_menu" action="part_list" sequence="2"/>
+                  <menuitem name="Dispensee Inv/ Repair Order" id="dispense_menu" parent="inv_menu" sequence="3"/>
+                      <menuitem name="Repair Order" id="repair_order_id" parent="dispense_menu" action="repair_order_action" sequence="1"/>
+                      <menuitem name="Repair Order Counter" id="repair_order_counter_id" parent="dispense_menu" action="ams_codectr.repair_order_code_action" sequence="2"/>
+                      <menuitem name="Transfered Inventory" id="transfer_inv_id" parent="dispense_menu" action="tranfer_inv_list" sequence="3"/>
+                  <menuitem name="Tracking Inventory" id="tracking_id" parent="inv_menu" action="tracking_inventory" sequence="4"/>
+                  <menuitem name="Non Aircraft Inventory" id="nonaircraft_id" parent="inv_menu" action="invnonaircraft_action" sequence="5"/>
+                  <menuitem name="Physical Inventory" id="physical_id" parent="inv_menu" action="invphycal_action" sequence="6"/>
+                  <menuitem name="Credit Claim" id="creditclaim_id" parent="inv_menu" action="invcredit_action" sequence="7"/>
+                  <menuitem name="Tool" id="tool_id" parent="inv_menu" action="invtool_action" sequence="8"/>
+                  <menuitem name="Vendors" id="vendor_menu" parent="inv_menu" sequence="9"/>
+                      <menuitem name="Vendor Entry Screen" id="vendor_entry_screen_id" parent="vendor_menu" action="vendors_screen_action" sequence="1"/>
+                      <menuitem name="Setup Vendor Code Cntr" id="setup_vendor_id" parent="vendor_menu" action="ams_codectr.vendor_code_action"  sequence="2"/>
+                      <menuitem name="Vendor Report" id="vendor_report_id" parent="vendor_menu" action="vendor_venreport_action" sequence="3"/>
+                      <menuitem name="Approved Vendor List" id="appv_vend_list_id" parent="vendor_menu" action="vendor_appvenlist_action" sequence="4"/>
+                      <menuitem name="Approved Vendor Due" id="appv_vend_due_id" parent="vendor_menu" action="vendor_appvendue_action" sequence="5"/>
+                      <menuitem name="Purchase History By Vendors" id="purchase_vendor_id" parent="vendor_menu" action="vendor_purchasehistory_action" sequence="6"/>
+                      <menuitem name="Inventory By Vendor" id="inv_vendor_id" parent="vendor_menu" action="vendor_invhistor_action" sequence="7"/>
+                  <menuitem name="Sites" id="sites_inv_id" parent="inv_menu" action="stock.action_warehouse_form" sequence="10"/>
+                  <menuitem name="Customers" id="customers_inv_id" parent="inv_menu" action="customers_action" sequence="11"/>
+                  <menuitem name="Publications Library" id="publib_inv_id" parent="inv_menu" action="pelita_publiclib_action" sequence="12"/>
+                  <menuitem name="Inventory History" id="inv_hist_id" parent="inv_menu" action="pelita_invhistory_action" sequence="13"/>
+                  <menuitem name="Kits" id="kits_menu" parent="inv_menu" sequence="14"/>
+                      <menuitem name="Kit Defision" id="kit_def_id" parent="kits_menu" action="pelita_kitdef_action" sequence="1"/>
+                      <menuitem name="Generate Kits" id="gen_kit_id" parent="kits_menu" action="pelita_genkit_action" sequence="2"/>
+                  <menuitem name="Reports" id="report_inv_menu" parent="inv_menu" sequence="15"/>
+                      <menuitem name="General Inventory" id="inv_general" parent="report_inv_menu" sequence="1" action="report_gen_inv_action"/>
+                      <menuitem name="Shelf Life" id="inv_self_life" parent="report_inv_menu" sequence="2" action="invrepshelf_action"/>
+                      <menuitem name="Warranty" id="inv_warranty" parent="report_inv_menu" sequence="3" action="invwarranty_action"/>
+                      <menuitem name="Accounting Cost" id="inv_acc_cost" parent="report_inv_menu" sequence="4" action="invacccost_action"/>
+                      <menuitem name="Credit Claim" id="inv_credit_claim" parent="report_inv_menu" sequence="5" action="invclaim_action"/>
+                      <menuitem name="Non-Aircraft Inventory" id="inv_non_air" parent="report_inv_menu" sequence="6" action="invnonaircraft_report_action"/>
+                      <menuitem name="Variance" id="inv_variance" parent="report_inv_menu" sequence="7" action="invvar_report_action"/>
+                      <menuitem name="Physical Inventory Checklist" id="inv_phycalcheck" parent="report_inv_menu" sequence="8" action="report_phycal_cheklist_action"/>
+                      <menuitem name="Inventory History" id="inv_hist" parent="report_inv_menu" sequence="9" action="report_invhistoryrep_action"/>
+                      <menuitem name="Tracked Comps. in Inv." id="inv_track" parent="report_inv_menu" sequence="10" action="report_invtrack_action"/>
+                      <menuitem name="Inventory Value List" id="inv_vl" parent="report_inv_menu" sequence="11" action="report_invvaluelist_action"/>
+                      <menuitem name="Inventory Value Cost" id="inv_vc" parent="report_inv_menu" sequence="12" action="report_invvaluecost_action"/>
+                      <menuitem name="Inventory at List &amp; Cost" id="inv_lc" parent="report_inv_menu" sequence="13" action="report_invallval_action"/>
+                      <menuitem name="Inventory Receipt" id="inv_recept" parent="report_inv_menu" sequence="14" action="report_invrecpt_action"/>
+                      <menuitem name="Repair Order Parts" id="inv_psy_chek" parent="report_inv_menu" sequence="15" action="report_order_action"/>
+                      <menuitem name="Vendors" id="inv_ven" parent="report_inv_menu" sequence="16" action="vendor_venreport_action"/>
+                      <menuitem name="Approved Vendor List" id="inv_avl" parent="report_inv_menu" sequence="17" action="vendor_appvenlist_action"/>
+                      <menuitem name="Appr. Vendor Audit Due" id="inv_avad" parent="report_inv_menu" sequence="18" action="vendor_appvendue_action"/>
+                      <menuitem name="Tools" id="inv_tool" parent="report_inv_menu" sequence="19" action="inv_rep_tool_action"/>
+                      <menuitem name="Non-Servicables" id="inv_non_serv" parent="report_inv_menu" sequence="20" action="pelita_invhistory_action"/>
+                      <menuitem name="Purchase History By Vendor" id="inv_phv" parent="report_inv_menu" sequence="21" action="vendor_appvendue_action"/>
+                      <menuitem name="Purchase History By Part" id="inv_php" parent="report_inv_menu" sequence="22" action="purchase_bypart"/>
+                      <menuitem name="Part Usage" id="inv_pu" parent="report_inv_menu" sequence="23" action="report_reportpartuse_action"/>
+                      <menuitem name="Part By A/C Type" id="inv_pbat" parent="report_inv_menu" sequence="24" action="report_reportpartby_action"/>
+                      <menuitem name="Reorder" id="inv_reorder" parent="report_inv_menu" sequence="25" action="report_reportreorder_action"/>
+                      <menuitem name="Additional Reports" id="inv_additional" parent="report_inv_menu" sequence="99" action="pelita_invhistory_action"/>
+                            <menuitem name="Vendor" id="inv_add_veen" parent="inv_additional" sequence="1" action="vendor_invhistor_action"/>
+                            <menuitem name="Consolidation" id="inv_add_conso" parent="inv_additional" sequence="2" action="report_con_action"/>
+                            <menuitem name="Control Code" id="inv_add_cont" parent="inv_additional" sequence="3" action="vendor_invhistor_action"/>
+                            <menuitem name="Serial No." id="inv_add_serno" parent="inv_additional" sequence="4" action="report_serial_num_action"/>
+                            <menuitem name="Part No." id="inv_add_part" parent="inv_additional" sequence="5" action="report_part_no_action"/>
+                            <menuitem name="Bin And Location" id="inv_add_bal" parent="inv_additional" sequence="6" action="report_bin_loc_action"/>
+                            <menuitem name="Inventory By Bin" id="inv_add_ibb" parent="inv_additional" sequence="7" action="vendor_venreport_action"/>
+                            <menuitem name="Qty Only" id="inv_add_qo" parent="inv_additional" sequence="8" action="vendor_venreport_action"/>
+                            <menuitem name="Daily Work" id="inv_add_dw" parent="inv_additional" sequence="9" action="report_daily_work_action"/>
+                            <menuitem name="NSN Report" id="inv_add_nr" parent="inv_additional" sequence="10" action="vendor_venreport_action"/>
+                            <menuitem name="CoRe Value" id="inv_add_cv" parent="inv_additional" sequence="11" action="vendor_venreport_action"/>
+                            <menuitem name="Inventory By Model" id="inv_add_ibm" parent="inv_additional" sequence="12" action="report_inv_by_mod_action"/>
+                            <menuitem name="System-wide Movement" id="inv_add_sys" parent="inv_additional" sequence="13" action="report_sytem_movw_action"/>
+<!-- END MENU INVENTORY -->
+    
+    <menuitem name="Orders" id="order_root" parent="purchase.menu_purchase_root" sequence="1"/>
+        <menuitem name="Purchase Orders" id="po_order_id" parent="order_root" sequence="1" action="purchase.purchase_form_action"/>
+        <menuitem name="Work Orders" id="wo_order_id" parent="order_root" sequence="2" action="project.open_view_project_all_config"/>
+        <menuitem name="Repair Orders" id="ro_order_id" parent="order_root" sequence="3" action="repair_order_action"/>
+        <menuitem name="P/O management" id="pomanag_id" parent="order_root" sequence="4"/>
+            <menuitem name="Purchase Order" id="womanag41_id" parent="pomanag_id" sequence="1" action="purchase.purchase_form_action"/>
+            <menuitem name="Receipt Against P. O." id="womanag42_id" parent="pomanag_id" sequence="2" action="pelita_orders_reagain_po_action"/>
+            <menuitem name="Purchase Order Summary" id="womanag43_id" parent="pomanag_id" sequence="3" action="pelita_orders_po_summary_action"/>
+            <menuitem name="Close\Cancel P. O." id="womanag44_id" parent="pomanag_id" sequence="4" action="purchase.purchase_form_action"/>
+            <menuitem name="View Archived P. O." id="womanag45_id" parent="pomanag_id" sequence="5" action="purchase.purchase_form_action"/>
+            <menuitem name="Open Archived PO's" id="womanag46_id" parent="pomanag_id" sequence="6" action="purchase.purchase_form_action"/>
+            <menuitem name="Print PO's" id="womanag47_id" parent="pomanag_id" sequence="7" action="purchase.purchase_form_action"/>
+            <menuitem name="PO Setup" id="womanag48_id" parent="pomanag_id" sequence="8" action="po_setup_action"/>
+            <menuitem name="PO Control Codes" id="womanag49_id" parent="pomanag_id" sequence="9" action="po_control_code_action"/>
+            <menuitem name="Shipping Company Setup" id="womanag410_id" parent="pomanag_id" sequence="10" action="shipping_comp_action"/>
+            <menuitem name="Shipping Method" id="womanag411_id" parent="pomanag_id" sequence="11" action="shipping_meth_action"/>
+            <menuitem name="PaiD Invoice" id="womanag412_id" parent="pomanag_id" sequence="12" action="paid_incoice_action"/>
+            <menuitem name="Post Receipts to A/P" id="womanag413_id" parent="pomanag_id" sequence="13" action="purchase.purchase_form_action"/>
+            <menuitem name="Parts in PO" id="womanag414_id" parent="pomanag_id" sequence="14" action="purchase.purchase_form_action"/>
+                      <menuitem name="List of Parts On Order" id="womanag4141_id" parent="womanag414_id" sequence="1" action="list_of_part_order"/>
+                      <menuitem name="Part in Open PO" id="womanag4142_id" parent="womanag414_id" sequence="2" action="part_in_open_po"/>
+                      <menuitem name="Outstanding Parts" id="womanag4143_id" parent="womanag414_id" sequence="3" action="purchase.purchase_form_action"/>
+        <menuitem name="W/O management" id="womanag_id" parent="order_root" sequence="5" />
+            <menuitem name="Active Work Orders" id="womanag1_id" parent="womanag_id" sequence="1" action="project.open_view_project_all_config"/>
+            <menuitem name="Initiate Work Orders" id="womanag2_id" parent="womanag_id" sequence="2" action="project.open_view_project_all_config"/>
+            <menuitem name="View Archived Work Orders" id="womanag3_id" parent="womanag_id" sequence="3" action="project.open_view_project_all_config"/>
+            <menuitem name="Open Archived Work Order" id="womanag4_id" parent="womanag_id" sequence="4" action="buletin_action"/>
+            <menuitem name="Print Work Order Reports" id="womanag5_id" parent="womanag_id" sequence="5"/>
+                      <menuitem name="Aircraft Tail Number" id="womanag51_id" parent="womanag5_id" sequence="1" action="pelita_orders_wizzard_action"/>
+                      <menuitem name="Engine Serial Number" id="womanag52_id" parent="womanag5_id" sequence="2" action="pelita_orders_wizzard_action"/>
+                      <menuitem name="Auxiliary Number" id="womanag53_id" parent="womanag5_id" sequence="3" action="pelita_orders_wizzard_action"/>
+                      <menuitem name="Part Number" id="womanag54_id" parent="womanag5_id" sequence="4" action="pelita_orders_wizzard_action"/>
+                      <menuitem name="Other" id="womanag55_id" parent="womanag5_id" sequence="5" action="pelita_orders_wizzard_action"/>
+                      <menuitem name="Scheduled Maintenance" id="womanag56_id" parent="womanag5_id" sequence="6" action="pelita_orders_wizzard_action"/>
+                      <menuitem name="Unscheduled Maintenance" id="womanag57_id" parent="womanag5_id" sequence="7" action="pelita_orders_wizzard_action"/>
+                      <menuitem name="Work Code" id="womanag58_id" parent="womanag5_id" sequence="8" action="pelita_orders_wizzard_action"/>
+                      <menuitem name="ATA Code" id="womanag59_id" parent="womanag5_id" sequence="9" action="pelita_orders_wizzard_action"/>
+                      <menuitem name="Specific Mechanic" id="womanag510_id" parent="womanag5_id" sequence="10" action="pelita_orders_wizzard_action"/>
+                      <menuitem name="Part Usage" id="womanag511_id" parent="womanag5_id" sequence="11" action="pelita_orders_wizzard_action"/>
+            <menuitem name="Workorder Setup" id="womanag6_id" parent="womanag_id" sequence="6" action="workorder_setup_action"/>
+            <menuitem name="Auto Work Order" id="womanag7_id" parent="womanag_id" sequence="7" action="pelita_order_auto_action"/>
+            <menuitem name="MELS Deferred By Mechanics" id="womanag8_id" parent="womanag_id" sequence="8" action="pelita_orders_mels_deferred_action"/>
+            <menuitem name="Job Cards" id="womanag9_id" parent="womanag_id" sequence="9"/>
+                      <menuitem name="Job Cards Entry" id="womanag91_id" parent="womanag9_id" sequence="1" action="pelita_orders_job_card_action"/>
+                      <menuitem name="Job Cards Report" id="womanag92_id" parent="womanag9_id" sequence="1" action="pelita_orders.pelita_orders_job_card_report_action"/>
+                      <menuitem name="Archive Job Cards" id="womanag93_id" parent="womanag9_id" sequence="1" action="pelita_orders_archive_job_card_action"/>
+        <menuitem name="R/O management" id="romanag_id" parent="order_root" sequence="6"/>
+            <menuitem name="Repair Order" id="romanag1_id" parent="romanag_id" sequence="1" action="repair_order_action"/>
+            <menuitem name="Repair Order Counter" id="romanag2_id" parent="romanag_id" sequence="2" action="ams_codectr.repair_order_code_action"/>
+            <menuitem name="R/O Parts Report" id="romanag3_id" parent="romanag_id" sequence="3" action="report_order_action"/>
+
+
+    <menuitem name="Reports" id="report_root" sequence="4"/>
+          <menuitem name="Report" id="report_menu" parent="report_root" action="buletin_action" sequence="1"/>
+            <menuitem name="Maintenance Tracking" id="main_report_id" parent="report_menu" action="maint_report_action" sequence="1"/>
+            <menuitem name="Fleetwide Report" id="report_fleet_id" parent="report_menu" action="fleetwide_report_action" sequence="2"/>
+            <menuitem name="Forecasting Report" id="report_forecast_id" parent="report_menu" action="fleetwide_forecasting_action" sequence="3"/>
+            <menuitem name="Part Removal Report" id="report_part_id" parent="report_menu" action="buletin_action" sequence="4"/>
+            <menuitem name="Premature Failures" id="report_premature_id" parent="report_menu" action="buletin_action" sequence="5"/>
+            <menuitem name="Maintenance Due" id="report_maintance_id" parent="report_menu" action="maintd_action" sequence="6"/>
+            <menuitem name="Fleetwide Hourly Inspections" id="report_hourly_id" parent="report_menu" action="fwhourly_action" sequence="7"/>
+            <menuitem name="Insp. Returned Uncomplied" id="report_insp_id" parent="report_menu" action="inspuncomplied_action" sequence="8"/>
+            <menuitem name="Fleetwide Bulletin" id="report_fleet_bull_id" parent="report_menu" action="fwbulletin_action" sequence="9"/>
+            <menuitem name="Master/Sub-Assembly" id="report_master_id" parent="report_menu" action="buletin_action" sequence="10"/>
+            <menuitem name="Reserve Value Report" id="report_reseve_id" parent="report_menu" action="resvalue__action" sequence="11"/>
+            <menuitem name="Maint. Due By A/C" id="report_main_id" parent="report_menu" action="maintd_action" sequence="12"/>
+            <menuitem name="Form 09" id="report_form_id" parent="report_menu" action="buletin_action" sequence="13"/>
+    <menuitem name="Forecast" id="forecast_root" sequence="4"/>
+          <menuitem name="Forecast" id="forecast_menu" parent="forecast_root" sequence="1"/>
+              <menuitem name="Forecast Airframe Costs" id="forecast_airframe_menu" parent="forecast_root" sequence="1"/>
+                  <menuitem name="Inspection Costs" id="inspection_aiframe_id" parent="forecast_airframe_menu" action="forecast_airframe_inspection_action" sequence="1"/>
+                  <menuitem name="Overhaul Costs" id="overhaul_aiframe_id" parent="forecast_airframe_menu" action="forecast_airframe_component_action" sequence="2"/>
+                  <menuitem name="Retirement" id="retire_aiframe_id" parent="forecast_airframe_menu" action="forecast_airframe_retire_action" sequence="3"/>
+                  <menuitem name="Enter All Costs" id="enter_aiframe_id" parent="forecast_airframe_menu" action="forecast_airframe_all_action" sequence="4"/>
+                  <menuitem name="Print Budget Forecast Report" id="print_aiframe_id" parent="forecast_airframe_menu" action="buletin_action" sequence="5"/>
+                  <menuitem name="Set Warning Times" id="set_aiframe_id" parent="forecast_airframe_menu" action="warningtimes_action" sequence="6"/>
+                  <menuitem name="List Costs" id="list_aiframe_id" parent="forecast_airframe_menu" action="list_cost1_action" sequence="7"/>
+              <menuitem name="Forecast Engine Costs" id="forecast_engine_menu" parent="forecast_root" sequence="2"/>
+                  <menuitem name="Inspection Costs" id="inspection_engine_id" parent="forecast_engine_menu" action="forecast_engine_inspection_action" sequence="1"/>
+                  <menuitem name="Overhaul Costs" id="overhaul_engine_id" parent="forecast_engine_menu" action="forecast_engine_component_action" sequence="2"/>
+                  <menuitem name="Replacement Cost" id="retire_engine_id" parent="forecast_engine_menu" action="forecast_engine_retire_action" sequence="3"/>
+                  <menuitem name="Enter All Costs" id="enter_engine_id" parent="forecast_engine_menu" action="forecast_engine_retire_action" sequence="4"/>
+                  <menuitem name="Set Warning Times" id="set_engine_id" parent="forecast_engine_menu" action="warningtimes_action" sequence="5"/>
+                  <menuitem name="List Costs" id="list_engine_id" parent="forecast_engine_menu" action="list_cost2_action" sequence="6"/>
+              <menuitem name="Forecast Auxiliary Costs" id="forecast_auxiliary_menu" parent="forecast_root" sequence="3"/>
+                  <menuitem name="Inspection Costs" id="inspection_auxiliary_id" parent="forecast_auxiliary_menu" action="forecast_auxiliary_inspection_action" sequence="1"/>
+                  <menuitem name="Retirement Cost" id="retire_auxiliary_id" parent="forecast_auxiliary_menu" action="forecast_auxiliary_retire_action" sequence="2"/>
+                  <menuitem name="Overhaul Costs" id="overhaul_auxiliary_id" parent="forecast_auxiliary_menu" action="forecast_auxiliary_component_action" sequence="3"/>
+                  <menuitem name="Add All Costs" id="enter_auxiliary_id" parent="forecast_auxiliary_menu" action="forecast_auxiliary_retire_action" sequence="4"/>
+                  <menuitem name="Set Warning Times" id="set_auxiliary_id" parent="forecast_auxiliary_menu" action="warningtimes_action" sequence="5"/>
+                  <menuitem name="List Costs" id="list_auxiliary_id" parent="forecast_auxiliary_menu" action="list_cost3_action" sequence="6"/>
+    <menuitem name="CAS" id="cas_root" sequence="4"/>
+          <menuitem name="CAS" id="cas_menu" parent="cas_root"/>
+              <menuitem name="CAS" id="cas_cas_id" parent="cas_menu" action="pelita_cas_action"/>
+              <menuitem name="Corrective Action Request" id="cas_car_id" parent="cas_menu" action="pelita_cascorrcetion_action"/>
+              <menuitem name="MEL Extension" id="cas_mel_extecsion_id" parent="cas_menu" action="pelita_casmelextension_action"/>
+              <menuitem name="Repeat Discrepancy" id="cas_repeat_dis_id" parent="cas_menu" action="pelita_casrepdes_action"/>
+              <menuitem name="Reports" id="cas_report_menu" parent="cas_menu"/>
+                  <menuitem name="Maint. Control Log" id="cas_r_mcl_id" parent="cas_report_menu" action="pelita_casmaintcontrollog_action"/>
+                  <menuitem name="Mech. Interruption Summary" id="cas_r_mis_id" parent="cas_report_menu" action="pelita_casmechinterruption_action"/>
+                  <menuitem name="MEL Extension" id="cas_r_mele_id" parent="cas_report_menu" action="pelita_casreportmelextension_action"/>
+                  <menuitem name="Ferry Flight" id="cas_r_ffl_id" parent="cas_report_menu" action="pelita_casferryflight_action"/>
+                  <menuitem name="Corrective Action Log" id="cas_r_cal_id" parent="cas_report_menu" action="pelita_cascorrectionactionlog_action"/>
+                  <menuitem name="Deferred Discrepancy Log" id="cas_r_ddl_id" parent="cas_report_menu" action="pelita_cas_action"/>
+                  <menuitem name="Prem. Engine Removal" id="cas_r_per_id" parent="cas_report_menu" action="pelita_cas_action"/>
+                  <menuitem name="MRR Status Report" id="cas_r_mrpsr_id" parent="cas_report_menu" action="pelita_casmmrstatus_action"/>
+                  <menuitem name="MRR Detail Report" id="cas_r_mrpdr_id" parent="cas_report_menu" action="pelita_casmmrdetail_action"/>
+                  <menuitem name="Discrepancy Report" id="cas_r_dr_id" parent="cas_report_menu" action="pelita_casdiscrepancy_action"/>
+                  <menuitem name="Pilot Report" id="cas_r_pr_id" parent="cas_report_menu" action="pelita_caspilotreport_action"/>
+              <menuitem name="ATA Definition" id="cas_ata_id" parent="cas_menu" action="pelita_casatadefinition_action"/>
+              <menuitem name="Station Definition" id="cas_station_id" parent="cas_menu" action="ams_station_definition_action"/>
+              <menuitem name="Evaluate Repeat Discrepancy" id="cas_erd_id" parent="cas_menu" action="pelita_cas_action"/>
+              <menuitem name="Pilot Setup" id="cas_pilot_id" parent="cas_menu" action="pelita_caspilot_action"/>
+    <menuitem name="Utilities" id="utility_root" sequence="4"/>
+          <menuitem name="Utility" id="utility_menu" parent="utility_root"/>
+              <menuitem name="Set-up's" id="set_up_menu" parent="utility_menu" sequence="1" />
+                  <menuitem name="General Setup" id="general_setup_id" parent="set_up_menu" sequence="1" action="general_setup_action"/>
+                  <menuitem name="Bulletin Type" id="bulletin_type_id" parent="set_up_menu" sequence="2" action="buletin_type_action"/>
+                  <menuitem name="Master Part List" id="mp_list_id" parent="set_up_menu" sequence="3" action="part_action"/>
+                  <menuitem name="Repair Order Counter" id="roc_ut_id" parent="set_up_menu" sequence="4" action="ams_codectr.repair_order_code_action"/>
+                  <menuitem name="Vendors" id="ven_ut_id" parent="set_up_menu" sequence="5" action="vendors_screen_action"/>
+                  <menuitem name="Vendor Code" id="vc_ut_id" parent="set_up_menu" sequence="6" action="ams_codectr.vendor_code_action"/>
+                  <menuitem name="Sites" id="sites_ut_id" parent="set_up_menu" sequence="7" action="stock.action_warehouse_form"/>
+                  <menuitem name="PO Setup" id="po_setup_ut_id" parent="set_up_menu" sequence="8" action="po_setup_action"/>
+                  <menuitem name="PO Control Codes" id="po_control_ut_id" parent="set_up_menu" sequence="9" action="po_control_code_action"/>
+                  <menuitem name="Shipping Company" id="sp_comp_ut_id" parent="set_up_menu" sequence="10" action="shipping_comp_action"/>
+                  <menuitem name="Shipping Method" id="sp_meth_ut_id" parent="set_up_menu" sequence="11" action="shipping_meth_action"/>
+                  <menuitem name="Work Order Setup" id="wos_ut_id" parent="set_up_menu" sequence="12" action="workorder_setup_action"/>
+                  <menuitem name="ATA Definition" id="at_def_ut_id" parent="set_up_menu" sequence="13" action="pelita_casatadefinition_action"/>
+                  <menuitem name="Station Definition" id="sd_ut_id" parent="set_up_menu" sequence="14" action="ams_station_definition_action"/>
+                  <menuitem name="Pilots" id="pilot_ut_id" parent="set_up_menu" sequence="15" action="pelita_caspilot_action"/>
+                  <menuitem name="Set Warning Times" id="set_warning_ut_id" parent="set_up_menu" sequence="16" action="warningtimes_action"/>
+                  <menuitem name="Reserve Value" id="rv_ut_id" parent="set_up_menu" sequence="17" action="reverse_value_action"/>
+                  <menuitem name="Currency Rates" id="cr_ut_id" parent="set_up_menu" sequence="18" action="currency_action"/>
+                  <menuitem name="Security Setup" id="ss_ut_id" parent="set_up_menu" sequence="19" action="base.action_res_users"/>
+              <menuitem name="Update Data Files" id="update_data_files_menu" parent="utility_menu" sequence="2"/>
+                  <menuitem name="Build Structure" id="bs_udf_id" parent="update_data_files_menu" sequence="1" action="backup_action"/>
+                  <menuitem name="Update Indexes" id="ui_udf_id" parent="update_data_files_menu" sequence="2" action="update_ind_action"/>
+                  <menuitem name="Check\Fix Files" id="cff_udf_id" parent="update_data_files_menu" sequence="3" action="buletin_action"/>
+                  <menuitem name="Upgrade Program" id="up_udf_id" parent="update_data_files_menu" sequence="4" action="buletin_action"/>
+                  <menuitem name="Avret File Import" id="afi_udf_id" parent="update_data_files_menu" sequence="5" action="buletin_action"/>
+              <menuitem name="Fleetwide Part Search" id="fleet_part_id" parent="utility_menu" sequence="3" action="buletin_action"/>
+              <menuitem name="Set Warning Times" id="set_warining_id" parent="utility_menu" sequence="4" action="warningtimes_action"/>
+              <menuitem name="Adjust Inventory Records" id="adjust_inv_menu" parent="utility_menu" sequence="5"/>
+                  <menuitem name="Part Numbers" id="pn_air_id" parent="adjust_inv_menu" sequence="1" action="invvar_report_action"/>
+                  <menuitem name="Bins" id="b_air_id" parent="adjust_inv_menu" sequence="2" action="invvar_report_action"/>
+                  <menuitem name="Locations" id="l_air_id" parent="adjust_inv_menu" sequence="3" action="invvar_report_action"/>
+                  <menuitem name="Models" id="m_air_id" parent="adjust_inv_menu" sequence="4" action="buletin_action"/>
+                  <menuitem name="Check for Corruption" id="cfc_air_id" parent="adjust_inv_menu" sequence="5" action="buletin_action"/>
+                  <menuitem name="Batch Inv. Update" id="biu_air_id" parent="adjust_inv_menu" sequence="6" action="buletin_action"/>
+                  <menuitem name="Batch Inv. by Bin" id="bibb_air_id" parent="adjust_inv_menu" sequence="7" action="buletin_action"/>
+              <menuitem name="Backup Data" id="backup_data_id" parent="utility_menu" sequence="6" action="base.action_model_model"/>
+              <menuitem name="Engine Cycles Setup" id="engine_cycles_menu" parent="utility_menu" sequence="7"/>
+                  <menuitem name="Pratt &amp; Whitney" id="pratandwhit_menu" parent="engine_cycles_menu" sequence="1"/>
+                      <menuitem name="PT6B-37A" id="pt6b_id" parent="pratandwhit_menu" sequence="1" action="pt6b_action"/>
+              <menuitem name="Security Setup" id="security_setup_id" parent="utility_menu" sequence="8" action="base.action_res_users"/>
+              <menuitem name="About..." id="ut_about_id" parent="utility_menu" sequence="9" action="about_action"/>
+    <!-- Change Menu Name -->
+    <record model="ir.ui.menu" id="purchase.menu_purchase_root">
+        <field name="name">Orders</field>
+        <field name="sequence">4</field>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_maintenance_title">
+        <field name="sequence">2</field>
+    </record>
+    <record model="ir.ui.menu" id="stock.menu_stock_root">
+        <field name="sequence">3</field>
+    </record>
+
+    <record model="ir.ui.menu" id="account.menu_finance">
+        <field name="invisible">True</field>
+    </record>
+    <record model="ir.ui.menu" id="hr.menu_hr_root">
+        <field name="invisible">True</field>
+    </record>
+    <record model="ir.ui.menu" id="fleet.menu_root">
+        <field name="invisible">True</field>
+    </record>
+
+    <record model="ir.ui.menu" id="maintenance.menu_m_request_form">
+        <field name="sequence">9</field>
+    </record>
+
+    <record model="ir.ui.menu" id="maintenance.menu_m_request_calendar">
+        <field name="sequence">10</field>
+    </record>
+
+
+    <!-- INVICIBILITY -->
+    
+    <record model="ir.ui.menu" id="base.menu_management">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="base.menu_administration">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="stock.stock_picking_type_menu">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+    
+    <record model="ir.ui.menu" id="maintenance.menu_equipment_form">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_m_dashboard">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+    
+    <record model="ir.ui.menu" id="mail.mail_channel_menu_root_chat">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="sales_team.menu_base_partner">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="mrp.menu_mrp_root">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="account.menu_finance">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="project.menu_main_pm">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="hr.menu_hr_root">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="fleet.menu_root">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <!-- MENU INVENTORY INVICIBILITY -->
+
+    <record model="ir.ui.menu" id="stock.menu_stock_warehouse_mgmt">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="stock.menu_stock_inventory_control">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="stock.menu_stock_sched">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="stock.menu_warehouse_report">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="stock.menu_warehouse_report">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+    
+    <record model="ir.ui.menu" id="stock.menu_stock_config_settings">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <!-- END MENU INVENTORY INVICIBILITY -->
+
+    <!-- MENU ORDER INVICIBILITY -->
+
+    <record model="ir.ui.menu" id="purchase.menu_procurement_management">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="purchase.menu_purchase_control">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="purchase.purchase_report">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="purchase.menu_purchase_config">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <!-- END MENU ORDER INVICIBILITY -->
+
+
+
+  
+  </data>
+</odoo>

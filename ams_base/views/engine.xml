@@ -1,0 +1,772 @@
+<odoo>
+  <data>
+    <record id='engine_custom_tree' model='ir.ui.view'>
+              <field name="name">engine.spare.tree.custom</field>
+              <field name="model">engine.spare</field>
+              <field name="arch" type="xml">
+                 <tree string="Form Engine Spare">
+                     <field name='name'/>
+                     <field name='acquisition_id'/>
+                     <field name='description'/>
+                     <field name="create_date"/>
+                     <field name="write_date"/>
+                     <field name='date_pemasangan'/>
+                     <field name='date_penurunan'/>
+                </tree>
+              </field>
+      </record>
+
+     <record id='engine_custom_form' model='ir.ui.view'>
+          <field name="name">engine.spare.custom</field>
+          <field name="model">engine.spare</field>
+          <field name="arch" type="xml">
+          <form string="Form Engine Spare">
+            <sheet>
+            <group>
+                 <field name='name'/>
+                 <field name='acquisition_id'/>
+                 <field name='description'/>
+                 <field name='date_pemasangan'/>
+                 <field name='date_penurunan'/>
+            </group>
+            <!-- <group>
+              <field name="total_hours"/>
+              <field name="total_cycles"/>
+              <field name="special_ratio_counting"/>
+            </group> -->
+            <notebook>
+            <field name='id' attrs="{'invisible':True}" />
+            <page string='Engine'>
+              <group>
+                <group>
+                <field name='engine_tsn' string='TSN'/>
+                <field name='engine_csn' string='CSN'/>
+                <field name='engine_tslsv' string='Time Since Overhaul'/>
+                <field name='engine_tslsv_hsi' string='Time Since HSI'/>
+                <!-- <field name='engine_cslsv' string='Cycles Since Overhaul' groups="ams_security.group_write_hours_cycles" /> -->
+                <field name='engine_cslsv' string='Cycles Since Overhaul' />
+                <!-- <field name='engine_cslsv_hsi' string='Cycles Since HSI' groups="ams_security.group_write_hours_cycles"/> -->
+                <field name='engine_cslsv_hsi' string='Cycles Since HSI'/>
+                <field name='engine_lastoh' string='Last Overhaul'/>
+                <field name='engine_hsi' string='Last HSI'/>
+                </group>
+              </group>
+            </page>
+            <!-- <page string='Propeller'>
+              <group>
+                <group>
+                 <field name='propeller'/>
+                <field name='propeller_tsn' string='TSN'/>
+                <field name='propeller_tslsv' string='TSLSV'/> 
+                <field name='propeller_lastoh' string='Last OH'/>
+                </group>
+               </group>
+            </page> -->
+             <!-- <page string="Components">
+                <field name="component_ids" mode="tree">
+                    <tree>
+                        <field name="product_id"/>
+                        <field name="part_number"/>
+                        <field name="serial_number"/>
+                        <field name="date_installed"/>
+                        <field name="ata_code"/>
+                        <field name="item"/>
+                    </tree>
+                </field>
+              </page>
+              <page string="Inspection">
+                <field name="inspection_ids" mode="tree">
+                    <tree>
+                        <field name="inspection_type"/>
+                        <field name="desc"/>
+                        <field name="ata_code"/>
+                    </tree>
+                </field>
+              </page> -->
+            </notebook>
+          </sheet>
+          </form>
+          </field>
+      </record>
+
+    <!-- Engine Type -->
+    <record id='custom_engine_engine_view_form' model='ir.ui.view'>
+        <field name="name">engine.engine.form</field>
+        <field name="model">engine.engine</field>
+        <field name="sequence">0</field>
+        <field name="arch" type="xml">
+          <form string="Form Engine Type">
+            <sheet>
+              <group>
+                  <field name="name"/>
+                  <field name="manufacture"/>
+              </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+    <record id='custom_engine_type_view_form' model='ir.ui.view'>
+        <field name="name">engine.type.form</field>
+        <field name="model">engine.type</field>
+        <field name="sequence">0</field>
+        <field name="arch" type="xml">
+            <form string="Form Engine Type">
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+
+              <button name="toggle_active" type="action" class="oe_stat_button" icon="fa-archive">
+                      <field name="aircraft_status" widget="boolean_button" options="{'terminology':{'string_true': 'Serviceable','hover_true': 'Serviceable','string_false': 'UnServiceable','hover_false': 'UnServiceable'}}"/>
+                  </button>
+              <button name="do_document_check"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-book"
+                  help="show Document of this engine"
+                  string="Document">
+                  <!-- <field name="some_count" widget="statinfo" string="Document"/> -->
+              </button>
+              <!-- <button name="return_action_to_open"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-tasks"
+                  help="show the contract for this vehicle">
+                  <field name="some_count" widget="statinfo" string="Log"/>
+              </button> -->
+              <button name="do_inspection"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-user"
+                  help="do an aircraft inspection"
+                  string="Inspection"> 
+                  <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+              </button>
+              <button name="do_overhaul"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-plane"
+                  help="show the contract for this vehicle"
+                  string="Overhaul">
+                  <!-- <field name="some_count" widget="statinfo" string="Overhaul"/> -->
+              </button>
+              <button name="do_hsi"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-fire"
+                  help="show the contract for this vehicle"
+                  string="HSI">
+              </button>
+              <button name="restore"
+                  type="object"
+                  class="oe_inline oe_stat_button"
+                  icon="fa-magic"
+                  help="Undo Delete"
+                  attrs="{'invisible':[('is_deleted', '=', False)]}"
+                  string="Restore"> 
+              </button>
+            </div>
+            <group>
+              <group>
+                <field name="is_deleted" attrs="{'invisible':True}" />
+                <field name='name'/>
+                <field name="engine_model"/>
+                <field name='category'/>
+                <field name='ownership'/>
+                <field name='delivery_date' attrs="{'invisible':[('ownership', '!=', 'owner')]}"/>
+                <field name='lessor' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+                <field name='start_lease' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+                <field name='normal_termination' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+                <field name='date_manufacture'/>
+                 <!-- <field name='propeller_type_id' string="propeller" attrs="{'invisible':[('category', '==', 'rotary')]}"/>       -->
+               </group>
+              <group>
+                <field name='esn' string="S/N"/>
+                <field name='fleet_id'/>
+                <field name='tsi'/>
+                <field name='csi'/>
+                <field name='installed_date'/>
+              <!--   <field name='rgb'/> -->
+              <!--
+                <field name='tsn'/>
+                 <field name='csn'/>
+                 <field name='tslsv'/>
+                 <field name='cslsv'/>
+                 <field name='last_oh'/>
+              -->
+              </group>
+              </group>
+              <button name="check_import_csv" string="Import" type="object"  groups="base.group_no_one"/>
+              <notebook>
+              <page string='Engine'>
+              <group>
+                <group>
+                  <field name='engine_tsn' string='TSN'/>
+                  <field name='engine_csn' string='CSN'/>
+                  <field name='engine_tso' string='TSO'/>
+                  <field name='engine_cso' string='CSO'/>
+                  <field name='engine_tslsv' string='Time Since Overhaul'/>
+                  <field name='engine_tslsv_hsi' string='Time Since HSI'/>
+                  <field name='engine_cslsv' string='Cycles Since Overhaul' attrs="{'invisible': [('engine_lastoh', '=', False)]}" />
+                  <field name='engine_cslsv_hsi' string='Cycles Since HSI' attrs="{'invisible': [('engine_hsi', '=', False)]}" />
+                </group>
+                <group>
+                  <field name='engine_lastoh' string='Last Overhaul'/>
+                  <field name='engine_hsi' string='Last HSI'/>
+                  <field name='last_overhoul_hours' string='Last Overhaul Hours' attrs="{'invisible': [('engine_lastoh', '=', False)]}"/>
+                  <field name="bel_view" attrs="{'invisible':True}"/>
+                  <field name='last_hsi_hours' string='Last HSI Hours' attrs="{'invisible': [('engine_hsi', '=', False)]}" />
+                </group>
+              </group>
+            </page>
+            <!-- <page string='Propeller' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+              <group>
+                <group>
+                 <field name='propeller'/>
+                <field name='propeller_tsn' string='TSN'/>
+                <field name='propeller_tslsv' string='TSLSV'/> 
+                <field name='propeller_lastoh' string='Last OH'/>
+                </group>
+               </group>
+            </page> -->
+            <page string="Components">
+                <field name="component_ids" mode="tree" widget="datatable">
+                    <tree colors="red:no_component==True;">
+                        <field name="no_component" invisible="1"/>
+                        <field name="product_id"/>
+                        <!-- <field name="part_name"/> -->
+                        <!-- <field name="part_number"/> -->
+                        <field name="serial_number"/>
+                        <field name="date_installed"/>
+                        <field name="ata_code"/>
+                        <field name="item"/>
+                    </tree>
+                    <form string="Components">
+                      <group>
+                        <group>
+                          <field name="have_cycles" attrs="{'invisible':True}"/>
+                          <field name="have_hours" attrs="{'invisible':True}"/>
+                          <field name="have_rins" attrs="{'invisible':True}"/>
+                          <field name="have_overhaul" attrs="{'invisible':True}"/>
+                          <field name="have_inspection" attrs="{'invisible':True}"/>
+                          <field name="have_service" attrs="{'invisible':True}"/>
+                          <field name="no_component" attrs="{'invisible':True}"/>
+                          <field name="id" attrs="{'invisible':True}"/>
+
+                          <field name="is_bel"/>
+                          <field name="product_id" attrs="{'readonly':[('id','!=',False)]}" domain="[('default_code','not like','PK')]"/>
+                          <field name="part_number"/>
+                          <field name="serial_number" attrs="{'readonly':[('id','!=',False)],'invisible':[('no_component','=',True)]}"/>
+                          <field name="date_installed" attrs="{'invisible':[('no_component','=',True)]}"/>
+                          <field name="ata_code"/>
+                          <field name="item"/>
+                          <field name="is_subcomp" attrs="{'invisible':True}"/>
+                        </group>
+                        <group>
+                          <div class="oe_button_box" name="button_box">
+                            <button name="%(return_action_override)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-exclamation-triangle"
+                                help="change hours / cycles value of this component"
+                                string="Override" attrs="{'invisible':['|',('no_component','=',True),('id','=',False)]}">
+                                <!-- <field name="some_count" widget="statinfo" string="Replace"/> -->
+                            </button>
+                            <button name="%(return_action_replace)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-exchange"
+                                help="replace this component"
+                                string="Replace" attrs="{'invisible':[('id','=',False)]}">
+                                <!-- <field name="some_count" widget="statinfo" string="Replace"/> -->
+                            </button>
+                            <button name="do_inspection"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-user"
+                                    help="do an aircraft inspection"
+                                    string="Inspection" attrs="{'invisible':['|','|',('have_inspection','=',False),('no_component','=',True),('id','=',False)]}"> 
+                                    <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+                                </button>
+                            <button name="do_service"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-plane"
+                                    help="do an aircraft service"
+                                    string="Service" attrs="{'invisible':['|','|',('have_service','=',False),('no_component','=',True),('id','=',False)]}"> 
+                                    <!-- <field name="some_count" widget="statinfo" string="Service"/> -->
+                                </button>
+                            <button name="do_overhaul"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-plane"
+                                    help="do an aircraft overhaul"
+                                    string="Overhaul" attrs="{'invisible':['|','|',('have_overhaul','=',False),('no_component','=',True),('id','=',False)]}"> 
+                                    <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+                                </button>
+                          </div>
+                        </group>
+                      </group>
+                      <group attrs="{'invisible':[('no_component','!=',True)]}">
+                        <h1 style="color:#F00;text-align:center;">No Component Installed !!!</h1>
+                      </group>
+                      <group attrs="{'invisible':[('no_component','=',True)]}">
+                        <notebook>
+                          <page string="Service Life">
+                            <group col="2">
+                                <group>
+                                    <field name="is_overhaul" attrs="{'readonly':[('id','!=',False)]}"/>
+                                    <field name="not_follow_parent" />
+                                </group>
+                                <group>
+                                    <field name="unknown_new"/>
+                                </group>
+                            </group>
+                            <group col="2">
+                                <group>
+                                  <field name="show_tsn" attrs="{'invisible':True}"></field>
+                                  <field name="show_csn" attrs="{'invisible':True}"></field>
+                                  <field name="show_tso" attrs="{'invisible':True}"></field>
+                                  <field name="show_cso" attrs="{'invisible':True}"></field>
+                                  
+                                  <field name="tsn" attrs="{'invisible':['&amp;',('id','!=',False),'|',('unknown_new', '=', True),('show_tsn','=',False)]}"/>
+                                  <field name="tso" attrs="{'invisible':['&amp;',('id','!=',False),('show_tso','=',False)]}"/>
+                                  <field name="ac_timeinstallation" attrs="{'invisible':['&amp;',('id','!=',False),('show_tsn','=',False)]}"/>
+                                  <field name="comp_timeinstallation" attrs="{'invisible':['&amp;',('id','!=',False),('show_tsn','=',False)]}"/>
+                                </group>
+                                <group>
+                                  <field name="csn" attrs="{'invisible':['&amp;',('id','!=',False),'|',('unknown_new', '=', True),('show_csn','=',False)]}"/>
+                                  <field name="cso" attrs="{'invisible':['&amp;',('id','!=',False),('show_cso','=',False)]}"/>
+                                  <field name="ac_cyclesinstallation" attrs="{'invisible':['&amp;',('id','!=',False),('show_csn','=',False)]}"/>
+                                  <field name="comp_cyclesinstallation" attrs="{'invisible':['&amp;',('id','!=',False),('show_csn','=',False)]}"/>
+                                </group>
+                            </group>
+                            <!-- <group>
+                                  <field name="merge_mp"/>
+                            </group> -->
+                            <group>
+                                <field name="serfice_life">
+                                  <tree string='Service Life'>
+                                    <field name="action_type"/>
+                                    <!-- <field name="last_done"/> -->
+                                    <!-- <field name="current_text" attrs="{'readonly':True}"/> -->
+                                    <!-- <field name="current_display"/> -->
+                                    <field name="text_value" attrs="{'required':True}"/>
+                                    <field name="text_unit"/>
+                                    <field name="extension" invisible="True"/>
+                                    <field name="text_extension" attrs="{'readonly':True}"/>
+                                    <field name="text_next_due" attrs="{'readonly':True}"/>
+                                    <!-- <field name="remaining_display"/> -->
+                                    <field name="text_remaining" attrs="{'readonly':True}"/>
+                                    <field name="since_new_text" attrs="{'readonly':True}"/>
+                                    <field name="since_overhaul_text" attrs="{'readonly':True}"/>
+                                    <field name="installed_at"/>
+                                    <field name="at_install"/>
+                                    <field name="comments_text"/>
+                                    <button name="do_ste" type="object" string="STE" class="oe_highlight" attrs="{'invisible':[('extension','!=',0)]}"/>
+                                  </tree>
+                                </field>
+                            </group>
+
+                              
+                          </page>
+                          <page string="Sub Components" attrs="{'invisible':[('is_subcomp', '=', True)]}">
+                              <field name="sub_part_ids" context="{'subcomponent':True}" widget="datatable">
+                                  <tree>
+                                      <field name="product_id"/>
+                                      <field name="part_number"/>
+                                      <field name="serial_number"/>
+                                      <field name="date_installed"/>
+                                      <field name="ata_code"/>
+                                      <field name="item"/>
+                                  </tree>
+                                  <form string="Components">
+                                    <group>
+                                      <group>
+                                        <field name="have_cycles" attrs="{'invisible':True}"/>
+                                        <field name="have_hours" attrs="{'invisible':True}"/>
+                                        <field name="have_rins" attrs="{'invisible':True}"/>
+                                        <field name="have_overhaul" attrs="{'invisible':True}"/>
+                                        <field name="have_inspection" attrs="{'invisible':True}"/>
+                                        <field name="have_service" attrs="{'invisible':True}"/>
+                                        <field name="no_component" attrs="{'invisible':True}"/>
+                                        <field name="id" attrs="{'invisible':True}"/>
+
+                                        <field name="is_bel"/>
+                                        <field name="product_id" attrs="{'readonly':[('id','!=',False)]}" domain="[('default_code','not like','PK')]"/>
+                                        <field name="part_number"/>
+                                        <field name="serial_number" attrs="{'readonly':[('id','!=',False)],'invisible':[('no_component','=',True)]}"/>
+                                        <field name="date_installed" attrs="{'invisible':[('no_component','=',True)]}"/>
+                                        <field name="ata_code"/>
+                                        <field name="item"/>
+                                        <field name="is_subcomp" attrs="{'invisible':True}"/>
+                                      </group>
+                                      <group>
+                                        <div class="oe_button_box" name="button_box">
+                                          <button name="%(return_action_override)d"
+                                              type="action"
+                                              class="oe_stat_button"
+                                              icon="fa-exclamation-triangle"
+                                              help="change hours / cycles value of this component"
+                                              string="Override" attrs="{'invisible':['|',('no_component','=',True),('id','=',False)]}">
+                                              <!-- <field name="some_count" widget="statinfo" string="Replace"/> -->
+                                          </button>
+                                          <button name="%(return_action_replace)d"
+                                              type="action"
+                                              class="oe_stat_button"
+                                              icon="fa-exchange"
+                                              help="replace this component"
+                                              string="Replace" attrs="{'invisible':[('id','=',False)]}">
+                                              <!-- <field name="some_count" widget="statinfo" string="Replace"/> -->
+                                          </button>
+                                          <button name="do_inspection"
+                                                  type="object"
+                                                  class="oe_stat_button"
+                                                  icon="fa-user"
+                                                  help="do an aircraft inspection"
+                                                  string="Inspection" attrs="{'invisible':['|','|',('have_inspection','=',False),('no_component','=',True),('id','=',False)]}"> 
+                                                  <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+                                              </button>
+                                          <button name="do_service"
+                                                  type="object"
+                                                  class="oe_stat_button"
+                                                  icon="fa-plane"
+                                                  help="do an aircraft service"
+                                                  string="Service" attrs="{'invisible':['|','|',('have_service','=',False),('no_component','=',True),('id','=',False)]}"> 
+                                                  <!-- <field name="some_count" widget="statinfo" string="Service"/> -->
+                                              </button>
+                                          <button name="do_overhaul"
+                                                  type="object"
+                                                  class="oe_stat_button"
+                                                  icon="fa-plane"
+                                                  help="do an aircraft overhaul"
+                                                  string="Overhaul" attrs="{'invisible':['|','|',('have_overhaul','=',False),('no_component','=',True),('id','=',False)]}"> 
+                                                  <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+                                              </button>
+                                        </div>
+                                      </group>
+                                    </group>
+                                    <group attrs="{'invisible':[('no_component','!=',True)]}">
+                                      <h1 style="color:#F00;text-align:center;">No Component Installed !!!</h1>
+                                    </group>
+                                    <group attrs="{'invisible':[('no_component','=',True)]}">
+                                      <notebook>
+                                        <page string="Service Life">
+                                          <group col="2">
+                                              <group>
+                                                  <field name="is_overhaul" attrs="{'readonly':[('id','!=',False)]}"/>
+                                                  <field name="not_follow_parent" />
+                                              </group>
+                                              <group>
+                                                  <field name="unknown_new"/>
+                                              </group>
+                                          </group>
+                                          <group col="2">
+                                              <group>
+                                                <field name="tsn" attrs="{'invisible':[('unknown_new', '=', True)]}" />
+                                                <field name="tso" attrs="{'invisible':['|',('id','=',False),('have_overhaul','=',False)]}"/>
+                                                <!-- <field name="tso" attrs="{'readonly':[('id','!=',False)]}"/> -->
+                                                <field name="ac_timeinstallation" string="Engine Hours At Installation"/>
+                                                <!-- <field name="ac_timeinstallation" attrs="{'readonly':[('id','!=',False)]}"/> -->
+                                                <field name="comp_timeinstallation" attrs="{'invisible':[('id','!=',False)]}"/>
+                                              </group>
+                                              <group>
+                                                <field name="csn" attrs="{'invisible':['|',('have_cycles','=',False),('unknown_new', '=', True)],'readonly':[('id','!=',False)]}"/>
+                                                <field name="cso" attrs="{'invisible':['|',('have_cycles','=',False),('id','=',False)],'readonly':True}"/>
+                                                <!-- <field name="cso" attrs="{'readonly':[('id','!=',False)]}"/> -->
+                                                <field name="ac_cyclesinstallation" attrs="{'readonly':[('id','!=',False)],'invisible':['&amp;',('have_cycles','=',False),('id','!=',False)]}"/>
+                                                <field name="comp_cyclesinstallation" attrs="{'invisible':['|',('have_cycles','=',False),('id','!=',False)]}"/>
+                                              </group>
+                                          </group>
+                                          <!-- <group>
+                                                <field name="merge_mp"/>
+                                          </group> -->
+                                          <group>
+                                              <field name="serfice_life">
+                                                <tree string='Service Life'>
+                                                  <field name="action_type"/>
+                                                  <!-- <field name="last_done"/> -->
+                                                  <!-- <field name="current_text" attrs="{'readonly':True}"/> -->
+                                                  <!-- <field name="current_display"/> -->
+                                                  <field name="text_value" attrs="{'required':True}"/>
+                                                  <field name="text_unit"/>
+                                                  <field name="extension" invisible="True"/>
+                                                  <field name="text_extension" attrs="{'readonly':True}"/>
+                                                  <field name="text_next_due" attrs="{'readonly':True}"/>
+                                                  <!-- <field name="remaining_display"/> -->
+                                                  <field name="text_remaining" attrs="{'readonly':True}"/>
+                                                  <field name="since_new_text" attrs="{'readonly':True}"/>
+                                                  <field name="since_overhaul_text" attrs="{'readonly':True}"/>
+                                                  <field name="installed_at"/>
+                                                  <field name="at_install"/>
+                                                  <field name="comments_text"/>
+                                                  <button name="do_ste" type="object" string="STE" class="oe_highlight" attrs="{'invisible':[('extension','!=',0)]}"/>
+                                                </tree>
+                                              </field>
+                                          </group>
+
+                                            
+                                        </page>
+                                        <page string="Sub Components" attrs="{'invisible':[('is_subcomp', '=', True)]}">
+                                            <field name="sub_part_ids" context="{'subcomponent':True}" widget="datatable">
+                                                <tree>
+                                                    <field name="product_id"/>
+                                                    <field name="part_number"/>
+                                                    <field name="serial_number"/>
+                                                    <field name="date_installed"/>
+                                                    <field name="ata_code"/>
+                                                    <field name="item"/>
+                                                </tree>
+                                            </field>
+                                        </page>
+                                        <page string="Document">
+                                            <button name="get_document"
+                                                  type="object"
+                                                  class="oe_stat_button pull-right"
+                                                  icon="fa-refresh"
+                                                  help="Refresh"
+                                                  string="Refresh" attrs="{'invisible':['|',('no_component','=',True),('id','=',False)]}"> 
+                                                  <!-- <field name="some_count" widget="statinfo" string="Service"/> -->
+                                              </button>
+                                            <button name="return_action_upload"
+                                                  type="object"
+                                                  class="oe_stat_button pull-right"
+                                                  icon="fa-upload"
+                                                  help="upload document"
+                                                  string="Upload" attrs="{'invisible':['|',('no_component','=',True),('id','=',False)]}"> 
+                                                  <!-- <field name="some_count" widget="statinfo" string="Service"/> -->
+                                              </button>
+                                            <field name="document_ids">
+                                              <tree string='Documents'>
+                                                <field name='file_name'/>
+                                                <field name='file'/>
+                                              </tree>
+                                            </field>
+                                        </page>
+                                      </notebook>
+                                    </group>
+
+                                  </form>                                    
+                              </field>
+                          </page>
+                          <page string="Document">
+                              <button name="get_document"
+                                    type="object"
+                                    class="oe_stat_button pull-right"
+                                    icon="fa-refresh"
+                                    help="Refresh"
+                                    string="Refresh" attrs="{'invisible':['|',('no_component','=',True),('id','=',False)]}"> 
+                                    <!-- <field name="some_count" widget="statinfo" string="Service"/> -->
+                                </button>
+                              <button name="return_action_upload"
+                                    type="object"
+                                    class="oe_stat_button pull-right"
+                                    icon="fa-upload"
+                                    help="upload document"
+                                    string="Upload" attrs="{'invisible':['|',('no_component','=',True),('id','=',False)]}"> 
+                                    <!-- <field name="some_count" widget="statinfo" string="Service"/> -->
+                                </button>
+                              <field name="document_ids">
+                                <tree string='Documents'>
+                                  <field name='file_name'/>
+                                  <field name='file'/>
+                                </tree>
+                              </field>
+                          </page>
+                        </notebook>
+                      </group>
+
+                    </form>                    
+                </field>
+              </page>
+              <page string="Inspection">
+                <field name="inspection_ids" mode="tree">
+                    <tree>
+                        <field name="inspection_type"/>
+                        <field name="desc"/>
+                        <field name="ata_code"/>
+                    </tree>
+                </field>
+              </page>
+              <page string="History">
+                <field name="history_line">
+                  <tree>
+                    <field name="fleet_id"/>
+                    <field name="ac_hours" string="AC/Hours"/>
+                    <field name="ac_cycles" string="AC/Cycles"/>
+                    <!-- <field name="hours"/> -->
+                    <!-- <field name="cycles"/> -->
+                    <field name="type"/>
+                    <field name="reason" attrs="{'invisible':[('type','=','attach'),('reason', '!=', 'False')]}"/>
+                  </tree>
+                </field>
+              </page>
+                <page string="Engine Detail" attrs="{'invisible':[('bel_view', '!=', False)]}">
+                  <notebook widget="leftigi">
+                    <page string='Documents Certificate'>
+                      <field name='document_ids'>
+                        <tree editable='button'>
+                          <field name='document_id' string='Document Name'/>
+                          <field name='file_data' widget='binary' file_name='file_name'/>
+                          <field name='date_expired'/>
+                        </tree>
+                      </field>
+                    </page>
+                  </notebook>
+                </page>
+            </notebook>
+            </sheet>
+            </form>
+        </field>
+</record>  
+
+<record id='custom_engine_type_view_tree' model='ir.ui.view'>
+        <field name="name">engine.type.tree</field>
+        <field name="model">engine.type</field>
+        <field name="arch" type="xml">
+            <tree string="Engine Spare">
+                 <field name='name'/>
+                 <field name='esn' string="Serial Number"/>
+                 <field name="create_date"/>
+                 <field name="write_date"/>
+                 <field name="engine_tsn" string="Total Hours"/>
+                 <field name="engine_csn" string="Total Cycles"/>
+                 <!-- <field name='ownership'/> -->
+                 <!-- <field name='delivery_date'/> -->
+                 <!-- <field name='lessor'/> -->
+                 <!-- <field name='start_lease'/> -->
+                 <!-- <field name='normal_termination'/> -->
+                 <!-- <field name='date_manufacture'/> -->
+              <!--   <field name='propeller_type_id'/>  -->
+            </tree>
+        </field>
+</record>  
+
+    <record model="ir.ui.view" id="engine_custom_type_search_view">
+        <field name="name">engine.type.search</field>
+        <field name="model">engine.type</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="name"/>
+              <field name='ownership'/>
+              <field name='delivery_date'/>
+              <field name='lessor'/>
+              <field name='start_lease'/>
+              <field name='normal_termination'/>
+              <field name='date_manufacture'/>             
+            </search>
+        </field>
+    </record>
+
+    <!-- View Wizard CSV Import -->
+    <record model="ir.ui.view" id="wizard_import_csv_engine">
+      <field name="name">wizard.import.csv.engine</field>
+      <field name="model">import.csv.engine</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="file" filename="filename" />
+              <field name="filename" invisible="1" />
+              <field name="engine_id" attrs="{'readonly':True}" />
+            </group>
+          </sheet>
+          <footer>
+            <button name="action_import" type="object" string="OK" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="custom_engine_type_action">
+      <field name="name">Engine</field>
+      <field name="res_model">engine.type</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'manual_edit':True}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="engine_action">
+      <field name="name">Engine Spare</field>
+      <field name="res_model">engine.spare</field>
+      <field name="view_id" ref="pelita_master_data.engine_spare_view_tree"/>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'manual_edit':True}</field>
+    </record>
+
+
+    <record id="engine_type_action_custom_tree" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="custom_engine_type_view_tree"/>
+        <field name="act_window_id" ref="custom_engine_type_action"/>
+        <field name="context">{'manual_edit':True}</field>
+    </record>
+
+    <record id="engine_type_action_custom" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="custom_engine_type_view_form"/>
+        <field name="act_window_id" ref="custom_engine_type_action"/>
+        <field name="context">{'manual_edit':True}</field>
+    </record>
+
+
+
+    <!-- 
+    <record id="airframe_current_custom_tree" model="ir.actions.act_window.view">
+        <field eval="3" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="pelita_master_data.engine_spare_view_tree"/>
+        <field name="act_window_id" ref="pelita_master_data.engine_spare_action"/>
+    </record>
+
+    <record id="airframe_action_current" model="ir.actions.act_window.view">
+        <field eval="4" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="pelita_master_data.engine_spare_view_form"/>
+        <field name="act_window_id" ref="pelita_master_data.engine_spare_action"/>
+    </record> -->
+
+    <!-- engine_custom_form -->
+    <record model="ir.ui.view" id="engine_custom_form_unreadonly">
+      <field name="name">engine.custom.form.unreadonly.form</field>
+      <field name="model">engine.type</field>
+      <field name="inherit_id" ref="custom_engine_type_view_form"/>
+      <field name="groups_id" eval="[(6, 0, [ref('ams_security.group_write_hours_cycles') ])]"/>
+      <field name="arch" type="xml">
+        <field name="engine_tsn" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="engine_csn" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="engine_tso" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="engine_cso" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+      </field>
+    </record>
+
+    <!-- engine_custom_form -->
+    <record model="ir.ui.view" id="engine_custom_form_readonly">
+      <field name="name">engine.custom.form.readonly.form</field>
+      <field name="model">engine.type</field>
+      <field name="inherit_id" ref="custom_engine_type_view_form"/>
+      <field name="groups_id" eval="[(6, 0, [ref('base.group_user') ])]"/>
+      <field name="arch" type="xml">
+        <field name="engine_tsn" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="engine_csn" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="engine_tso" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+        <field name="engine_cso" position="attributes">
+           <attribute name="readonly">0</attribute>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

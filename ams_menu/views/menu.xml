@@ -1,0 +1,223 @@
+<odoo>
+  <data>
+
+    <!-- MAINTENANCE -->
+
+    <record model="ir.ui.menu" id="maintenance.menu_m_request">
+      <field name="name">Aircraft Maintenance</field>
+      <field name="sequence">1</field>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_maintenance_title">
+      <field name="name">Maintenance</field>
+      <field name="sequence">0</field>
+    </record>
+    <record model="ir.actions.act_window" id="maintenance.hr_equipment_request_action">
+      <field name="name">Maintenance Planing</field>
+    </record>
+    <record model="ir.actions.act_window" id="maintenance.hr_equipment_request_action_cal">
+      <field name="name">Time Line</field>
+    </record>
+
+    <menuitem name="Aircraft Dashboard" id="aircraft_dashboard" parent="maintenance.menu_maintenance_title" action="ams_dashboard.action_dashboard" sequence="0" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"
+    />
+    <menuitem name="MDR Dashboard" id="action_mdr_dashboard_1" parent="maintenance.menu_maintenance_title" action="ams_dashboard.action_mdr_dashboard" sequence="0" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"
+    />
+    <menuitem name="Airframes" id="maintenance_aifrframe" parent="maintenance.menu_m_request" action="ams_base.fleet_action" sequence="10" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users,ams_security.group_write_airframe"
+    />
+    <menuitem name="Engine" id="maintenance_engine_type" parent="maintenance.menu_m_request" action="ams_base.custom_engine_type_action" sequence="20" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+    <menuitem name="Propeller" id="maintenance_propeller" parent="maintenance.menu_m_request" action="ams_base.propeller_actions_custom" sequence="30" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+    <menuitem name="Auxiliary Power Unit" id="maintenance_auxiliary" parent="maintenance.menu_m_request" action="ams_base.auxiliary_action" sequence="40" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+    <menuitem name="Inspection" id="maintenance_insp" parent="maintenance.menu_m_request" action="ams_airworthy.airworthy_inspection_action" sequence="41" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+        <!-- <menuitem name="Component" id="maintenance_auxiliary_component" parent="maintenance_auxiliary" sequence="40"/> -->
+            <!-- <menuitem name="Component history" id="maintenance_auxiliary_component_history" parent="maintenance_auxiliary_component" action="ams_base.auxiliary_action" sequence="40"/> -->
+        <!-- <menuitem name="Inspection" id="maintenance_auxiliary_inspection" parent="maintenance_auxiliary" sequence="50"/> -->
+
+
+
+    <!-- <menuitem name="GSE / Ground Service Equipment" id="maintenance_GSE" parent="maintenance.menu_m_request" action="ams_base.custom_gse_type_action" sequence="50"/> -->
+    <menuitem name="Daily Utilization" id="maintenance_inspection" parent="maintenance.menu_m_request" action="ams_daily.action_daily_utilz" sequence="60" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+    <menuitem name="Log" id="maintenance_log" parent="maintenance.menu_m_request" action="ams_airworthy.ams_log_action" sequence="70" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+    <menuitem name="Reliability" id="maintenance_reliability" parent="maintenance.menu_m_request" sequence="70" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+
+        <menuitem name="Power Assurance Check" id="maintenance_powerassurancecheck" parent="maintenance_reliability" action="ams_report.pac_action" sequence="10" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+        <!-- <menuitem name="Reliability Report" id="maintenance_reliabilityreport" parent="maintenance_reliability" action="ams_security.uc_action" sequence="20" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/> -->
+        <menuitem name="Engine Component Reliability" id="maintenance_enginereliability" parent="maintenance_reliability" action="ams_reliability.action_engine_reliability" sequence="30" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+        <menuitem name="Repetitive Discrepencies" id="maintenance_repetitivediscripencies" parent="maintenance_reliability" action="ams_reliability.action_repetitive_dicripencies" sequence="40" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+        <menuitem name="Component Reliability" id="maintenance_componentreliability" parent="maintenance_reliability" action="ams_reliability.action_component_reliability" sequence="50" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+    <menuitem name="Flight Maintenance Log" id="maintenance_fml" parent="maintenance.menu_m_request"  sequence="80" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users,ams_security.group_add_fml,ams_security.group_verify_fml"/>
+        <menuitem name="Add / Edit FML" id="maintenance_addfml" parent="maintenance_fml" action="ams_fml.fml_wizard" sequence="10" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+        <menuitem name="Verify Flight Maintenance Log" id="maintenance_verifyfml" parent="maintenance_fml" action="ams_fml.action_dummy_verify" sequence="20" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users,ams_security.group_add_fml,ams_security.group_verify_fml"/>
+        <!-- <menuitem name="Adjustment Time" id="maintenance_adjustment_time" parent="maintenance_fml" action="ams_fml.fml_action" sequence="30" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/> -->
+        <menuitem name="Manual Changes" id="maintenance_manualchanges" parent="maintenance_fml" action="ams_report.ams_manual_changes_report_action" sequence="40" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users,ams_security.group_add_fml,ams_security.group_verify_fml"/>
+    <menuitem name="Complied Inspection" id="maintenance_complied_inspection" parent="maintenance.menu_m_request" action="ams_airworthy.airworthy_inspection_action" sequence="90" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+    <!-- -->
+    <!-- <menuitem name="Basic Equipment List" id="maintenance_basic_equiment_list" parent="maintenance.menu_m_request" action="ams_base.fleet_bel_action" sequence="100" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/> -->
+    <!--  -->
+    <menuitem name="Supporting Facility" id="suport_fac_list" parent="maintenance.menu_m_request" sequence="110" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+        <menuitem name="Hangar Facility" id="hangar_fac" parent="suport_fac_list" action="ams_base.custom_hangar_action" sequence="120" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+        <menuitem name="GSE / Ground Service Equipment" id="maintenance_GSE" parent="suport_fac_list" action="ams_base.custom_gse_type_action" sequence="150" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+
+
+        <!-- <menuitem name="Airframe" id="basic_airframe" parent="maintenance_basic_equiment_list" action="ams_fml.fml_action" sequence="10"/> -->
+        <!-- <menuitem name="Engine" id="basic_engine" parent="maintenance_basic_equiment_list" action="ams_fml.fml_action" sequence="20"/> -->
+        <!-- <menuitem name="Auxiliary" id="basic_auxiliary" parent="maintenance_basic_equiment_list" action="ams_fml.fml_action" sequence="30"/> -->
+    <!-- <menuitem name="Engine Spare" id="maintenance_engine" parent="maintenance.menu_m_request" action="ams_base.engine_action" sequence="110"/> -->
+    <!-- <menuitem name="BEL Parts" id="maintenance_bel" parent="maintenance.menu_m_request" sequence="120"/> -->
+        <!-- <menuitem name="Airframes" id="maintenance_bel_aircraft" parent="maintenance_bel" action="ams_base.fleet_bel_action" sequence="1"/> -->
+        <!-- <menuitem name="Engine" id="maintenance_bulletin_engine" parent="maintenance_bel" action="ams_base.fleet_bel_action" sequence="2"/> -->
+        <!-- <menuitem name="Auxiliary" id="maintenance_bulletin_auxiliary" parent="maintenance_bel" action="ams_base.fleet_bel_action" sequence="3"/> -->
+    
+   <!--  <menuitem name="Modification" id="bulletin_main_menu" parent="maintenance.menu_maintenance_title" sequence="2"/>
+        <menuitem name="Airframes" id="bulletin_airframe" parent="bulletin_main_menu" action="ams_fml.fml_action" sequence="1"/> -->
+
+<menuitem name="Modification" id="main_menu_modification" parent="maintenance.menu_maintenance_title" sequence="2" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/>
+      <menuitem name="SB / Service Bulletin" id="modification_sborasb" parent="main_menu_modification" action="ams_bulletin.bulletin_sb_action" sequence="1" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/>
+      <menuitem name="AD / Airworthiness Directive" id="modification_ad" parent="main_menu_modification" action="ams_bulletin.bulletin_ad_action" sequence="2" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/>
+      <menuitem name="STC / Supplemental Type Certificate" id="modification_stc" parent="main_menu_modification" action="ams_bulletin.bulletin_stc_action" sequence="3" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/>
+      <menuitem name="Aircraft Alteration" id="modification_airframe_alterration" parent="main_menu_modification" action="ams_bulletin.alteration_action" sequence="4" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/>
+      <menuitem name="Fleetwide Bulletin Report" id="modification_fleet" parent="main_menu_modification" action="ams_bulletin.action_fbr_report" sequence="5" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/>
+      <menuitem name="Complied Bulletin" id="modification_complied" parent="main_menu_modification" sequence="6" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/>
+          <menuitem name="Complied Bulletin" id="modification_complied_bulletin" parent="modification_complied" action="ams_bulletin.complied_bulletin_action" sequence="7" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/>
+          <!-- <menuitem name="Complied Bulletin" id="modification_complied_bulletin" parent="modification_complied" action="ams_bulletin.bulletin_comply_action" sequence="7" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/> -->
+          <menuitem name="Report" id="modification_report" parent="modification_complied" action="ams_bulletin.action_complied_report" sequence="8" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/>
+      <menuitem name="Bulletin Authority Setup" id="modification_bulletin" parent="main_menu_modification" action="ams_bulletin.bulletin_agency" sequence="9" groups="ams_security.group_aircrraft_modification_managers,ams_security.group_aircrraft_modification_users"/>
+
+<menuitem name="Inventory" id="main_menu_inventory" parent="maintenance.menu_maintenance_title" sequence="3" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      <menuitem name="Master Part List" id="inventory_airframe" parent="main_menu_inventory" action="ams_base.part_action" sequence="2" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      <menuitem name="Inventory" id="inventory_engine" parent="main_menu_inventory" action="ams_inventory.ams_stock_action" sequence="3" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      <!-- <menuitem name="Inventory Movement" id="inventorymovement_engine" parent="main_menu_inventory" action="ams_inventory.inventory_ams_action" sequence="4" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/> -->
+      <menuitem name="Component Serial Number" id="inventory_component" parent="main_menu_inventory" action="ams_inventory.inventory_sn_action" sequence="5" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      <menuitem name="Component History" id="inventory_history" parent="main_menu_inventory" action="ams_base.action_component_history" sequence="6" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      <menuitem name="Vendors" id="inventory_vendors" parent="main_menu_inventory" action="ams_inventory.vendors_screen_action" sequence="7" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      <menuitem name="Data Import" id="inventory_data" parent="main_menu_inventory" action="ams_inventory.action_inventory_import" sequence="8" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      <menuitem name="PPE" id="ppe" parent="main_menu_inventory" action="ams_inventory.ppe_master_action" sequence="9" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+          <menuitem name="PPE" id="ppe_master" parent="ppe" action="ams_inventory.ppe_master_action" sequence="10" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+          <menuitem name="PPE Master" id="ppe_master_product" parent="ppe" action="ams_inventory.ppe_master_product_action" sequence="15" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+          <menuitem name="PPE Stock" id="ppe_stock" parent="ppe" action="ams_inventory.ppe_stock_action" sequence="20" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+          <menuitem name="PPE Usage" id="ppe_usage" parent="ppe" action="ams_inventory.ppe_usage_action" sequence="30" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      <menuitem name="Tools" id="inventory_tool" parent="main_menu_inventory" action="ams_base.custom_tool_action" sequence="10" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+          <menuitem name="Tools" id="inventory_tool_type" parent="inventory_tool" action="ams_base.custom_tool_action" sequence="1" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+          <menuitem name="Tools Movement" id="inventory_tool_movement" parent="inventory_tool" action="ams_base.tool_movement_action" sequence="2" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      <menuitem name="Receiving Inventory" id="recive_inventory" parent="main_menu_inventory" action="ams_inventory.receiving_inventory_ams_action" sequence="11" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      <menuitem name="Receiving Inventory Qualification" id="recive_inventory_template" parent="main_menu_inventory" action="ams_inventory.receiving_template_action" sequence="12" groups="ams_security.group_inventory_managers,ams_security.group_inventory_users"/>
+      
+<menuitem name="Instruction / Order" id="main_menu_workorder" parent="maintenance.menu_maintenance_title" sequence="4" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/>
+      <menuitem name="Work Order" id="workorder_workorder" parent="main_menu_workorder"  action="ams_order.work_order_ams_action" sequence="2" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/>
+      <menuitem name="MWO" id="workorder_mwo" parent="main_menu_workorder"  action="ams_order.mwork_order_ams_action" sequence="3" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/>
+      <menuitem name="Work Task Layout" id="workorder_worktasklayout" parent="main_menu_workorder"  action="ams_airworthy.checklist_action" sequence="4" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/>
+      <menuitem name="Inventory Request" id="workorder_inventory" parent="main_menu_workorder"  action="ams_inventory.inventory_request_action" sequence="5" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/>
+      <menuitem name="MI / TI / OTI / EO" id="mi_ti_oti_eo_menu" parent="main_menu_workorder" sequence="6" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/>
+              <menuitem name="MI/ Maintenance Instruction" id="mi_menu" parent="mi_ti_oti_eo_menu"  action="ams_document.document_mi_action" sequence="1" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/>
+              <menuitem name="TI/ Technical Information" id="ti_menu" parent="mi_ti_oti_eo_menu"  action="ams_document.document_ti_action" sequence="2" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/>
+              <menuitem name="OTI/ One Time Inspection" id="otimenu" parent="mi_ti_oti_eo_menu"  action="ams_document.document_oti_action" sequence="3" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/>
+              <menuitem name="EO/ Engineering Order" id="eo_menu" parent="mi_ti_oti_eo_menu"  action="ams_document.document_eo_action" sequence="5" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/>
+      <!-- <menuitem name="MEL Inventory Request" id="workorder_mel_invent" parent="main_menu_workorder"  action="ams_document.document_mel_action" sequence="7" groups="ams_security.group_instruction_managers,ams_security.group_instruction_users"/> -->
+
+<menuitem name="Planning" id="main_menu_planing" parent="maintenance.menu_maintenance_title" sequence="5" groups="ams_security.group_plaining_managers,ams_security.group_plaining_users"/>
+      <menuitem name="Maintenance Planning" id="planing_maintenance" parent="main_menu_planing"  action="maintenance.hr_equipment_request_action" sequence="2" groups="ams_security.group_plaining_managers,ams_security.group_plaining_users"/>
+      <menuitem name="Timeline" id="planing_timeline" parent="main_menu_planing"  action="maintenance.hr_equipment_request_action_cal" sequence="3" groups="ams_security.group_plaining_managers,ams_security.group_plaining_users"/>
+      <!-- <menuitem name="Budget Planning" id="planing_budgetplan" parent="main_menu_planing"  action="ams_security.uc_action" sequence="4" groups="ams_security.group_plaining_managers,ams_security.group_plaining_users"/> -->
+
+
+<menuitem name="Flight Maintenance" id="main_menu_flightmaintenance" parent="maintenance.menu_maintenance_title" sequence="6" groups="ams_security.group_flight_maintenance_managers,ams_security.group_flight_maintenance_users"/>
+      <menuitem name="Discrepencies Log" id="flightmaintenance_dis" parent="main_menu_flightmaintenance" action="ams_fml.discripencies_action" sequence="2" groups="ams_security.group_flight_maintenance_managers,ams_security.group_flight_maintenance_users"/>
+      <menuitem name="Corrective Action" id="flightmaintenance_cor" parent="main_menu_flightmaintenance" action="ams_fml.corrective_action_action" sequence="3" groups="ams_security.group_flight_maintenance_managers,ams_security.group_flight_maintenance_users"/>
+      <menuitem name="MEL" id="flightmaintenance_mel" parent="main_menu_flightmaintenance" action="ams_airworthy.mel_ext_action" sequence="4" groups="ams_security.group_flight_maintenance_managers,ams_security.group_flight_maintenance_users"/>
+      <menuitem name="Short Term Escalation" id="flightmaintenance_short" parent="main_menu_flightmaintenance" action="ams_airworthy.ster_action" sequence="5" groups="ams_security.group_flight_maintenance_managers,ams_security.group_flight_maintenance_users"/>
+
+<menuitem name="Training" id="main_menu_training" parent="maintenance.menu_maintenance_title" sequence="7" groups="ams_security.group_training_managers,ams_security.group_training_users"/>
+      <menuitem name="Training" id="training_training" parent="main_menu_training" action="ams_training.training_ams_action" sequence="1" groups="ams_security.group_training_managers,ams_security.group_training_users"/>
+      <menuitem name="Training Program" id="training_program" parent="main_menu_training" action="ams_training.training_program_action" sequence="2" groups="ams_security.group_training_managers,ams_security.group_training_users"/>
+      <menuitem name="Employee Settings" id="employee_setting" parent="main_menu_training" action="ams_training.employee_setting_action" sequence="3" groups="ams_security.group_training_managers,ams_security.group_training_users"/>
+      <menuitem name="Report Training" id="report_training" parent="main_menu_training" action="ams_training.report_training_action" sequence="4" groups="ams_security.group_training_managers,ams_security.group_training_users"/>
+
+<menuitem name="Settings" id="main_menu_setting" parent="maintenance.menu_maintenance_title" sequence="8" groups="ams_security.group_settings_managers,ams_security.group_settings_users"/>
+      <menuitem name="ATA Definition" id="setting_atadef" parent="main_menu_setting" action="ams_base.action_ata_setting" sequence="1" groups="ams_security.group_settings_managers,ams_security.group_settings_users"/>
+      <menuitem name="Base Operation" id="setting_baseoperation" parent="main_menu_setting" action="ams_base.base_operation" sequence="2" groups="ams_security.group_settings_managers,ams_security.group_settings_users"/>
+      <menuitem name="Area" id="setting_area" parent="main_menu_setting" action="ams_base.area" sequence="3" groups="ams_security.group_settings_managers,ams_security.group_settings_users"/>
+      <menuitem name="Bulletin Authority Setup" id="setting_bulletin" parent="main_menu_setting" action="ams_bulletin.bulletin_agency" sequence="4" groups="ams_security.group_settings_managers,ams_security.group_settings_users"/>
+      <menuitem name="Set Warning Time" id="setting_settime" parent="main_menu_setting" action="ams_base.setting_action" sequence="5" groups="ams_security.group_settings_managers,ams_security.group_settings_users"/>
+      <menuitem name="Inventory Location" id="setting_inventory" parent="main_menu_setting" action="ams_base.ams_bin_action" sequence="6" groups="ams_security.group_settings_managers,ams_security.group_settings_users"/>
+
+
+<menuitem name="Report" id="main_menu_report" parent="maintenance.menu_maintenance_title" sequence="9"/>
+      <menuitem name="Maintenance Due Report" id="report_maintenance" parent="main_menu_report" action="ams_document.action_main_due_report" sequence="2" groups="ams_security.group_reports_managers,ams_security.group_reports_users,ams_security.group_dashboard_jamal"/>
+      <!-- <menuitem name="Aircraft Data / Spesification" id="report_aircraft" parent="main_menu_report" action="ams_security.uc_action" sequence="3" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/> -->
+      <menuitem name="Aircraft Status" id="report_status" parent="main_menu_report" action="ams_report.aircraft_status_action" sequence="4" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Maintenance Tracking Report" id="report_maintenance_tracking_new" parent="main_menu_report" action="ams_tdr.mtr_action" sequence="5" groups="ams_security.group_reports_managers,ams_security.group_reports_users,ams_security.group_write_airframe"/>
+      <menuitem name="Fleetwide Report" id="report_fleet" parent="main_menu_report" action="ams_report.action_report_fleetwide" sequence="6" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Part Removal Report" id="report_part" parent="main_menu_report" action="ams_report.part_removals_report_action" sequence="7" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="ADC Report" id="report_bulletin" parent="main_menu_report" action="ams_report.adc_report_action" sequence="8" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Inspection Report" id="report_inspection" parent="main_menu_report" action="ams_report.ins_report_action" sequence="9" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <!-- <menuitem name="Inventory Request Report" id="report_inventory" parent="main_menu_report" action="ams_security.uc_action" sequence="10" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/> -->
+      <!-- <menuitem name="Reserve Value" id="report_reserve" parent="main_menu_report" action="ams_security.uc_action" sequence="11" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/> -->
+      <menuitem name="Premature Failures" id="report_premature" parent="main_menu_report" action="ams_report.premature_report_action" sequence="12" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Repetitive Discripencies" id="report_repetitive" parent="main_menu_report" action="ams_reliability.action_repetitive_dicripencies" sequence="13" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Modification / Alteration Report" id="report_modification_alteration" parent="main_menu_report" action="ams_bulletin.action_alteration_report" sequence="14" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="MI Report" id="report_mi_" parent="main_menu_report" action="ams_document.action_report_mi" sequence="15" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="TI Report" id="report_ti_" parent="main_menu_report" action="ams_document.action_report_ti" sequence="16" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="OTI Report" id="report_oti_" parent="main_menu_report" action="ams_document.action_report_oti" sequence="17" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="EO Report" id="report_eo_" parent="main_menu_report" action="ams_document.action_report_eo" sequence="18" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Scheduled WO Report" id="report_scheduled_wo" parent="main_menu_report" action="ams_report.work_order_schedule_action" sequence="19" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="UnScheduled WO Report" id="report_unscheduled_wo" parent="main_menu_report" action="ams_report.work_order_unschedule_action" sequence="20" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Scheduled MWO Report" id="report_scheduled_mwo" parent="main_menu_report" action="ams_report.maintenance_work_order_schedule_action" sequence="21" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="UnScheduled MWO Report" id="report_unscheduled_mwo" parent="main_menu_report" action="ams_report.maintenance_work_order_unschedule_action" sequence="22" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Component Changes Report" id="report_component_changes" parent="main_menu_report" action="ams_report.comp_removal_report_action" sequence="23" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="General Tools" id="report_general_tools" parent="main_menu_report" action="ams_report.general_tools_report_action" sequence="24" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="On Board Tools Report" id="report_on_board_tool" parent="main_menu_report" action="ams_report.on_boards_report_action" sequence="25" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Tools Calibration Report" id="report_calibration" parent="main_menu_report" action="ams_report.calibrations_report_action" sequence="26" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Tools Movement Report" id="report_movement" parent="main_menu_report" action="ams_report.action_tool_movement_report" sequence="27" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Oil Report" id="report_oil" parent="main_menu_report" action="ams_report.action_oil_report" sequence="29" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="MP Status Report" id="report_camp_status" parent="main_menu_report" action="ams_camp.action_report_camp" sequence="29" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Checklist Report" id="report_checklist" parent="main_menu_report" action="ams_report.action_report_checklist" sequence="30" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+      <menuitem name="Maintenance Planning" id="report_maintenance_planning" parent="main_menu_report" action="ams_report.maintenance_planing_report_action" sequence="31" groups="ams_security.group_reports_managers,ams_security.group_reports_users"/>
+
+
+<menuitem name="Publication" id="main_menu_publication" parent="maintenance.menu_maintenance_title" sequence="10" groups="ams_security.group_publication_managers,ams_security.group_publication_users"/>
+      <menuitem name="Aircraft Maintenance Program" id="publication_maintenance" parent="main_menu_publication" sequence="2" groups="ams_security.group_publication_managers,ams_security.group_publication_users"/>
+          <menuitem name="MP / Maintenance Program" id="publication_camp" parent="publication_maintenance" action="ams_camp.camp_action" sequence="3" groups="ams_security.group_publication_managers,ams_security.group_publication_users"/>
+          <menuitem name="Checklist" id="publication_check" parent="publication_maintenance" action="ams_airworthy.checklist_action" sequence="4" groups="ams_security.group_publication_managers,ams_security.group_publication_users"/>
+      <menuitem name="Technical Publication" id="publication_tech" parent="main_menu_publication" action="muk_dms.action_dms_documents" sequence="5" groups="ams_security.group_publication_managers,ams_security.group_publication_users"/>
+
+
+    <!-- Menu items hierachy -->
+    <!-- <menuitem
+        id="menu_quality_control" 
+        name="Quality Control"
+        sequence="0"/>
+   -->      <!-- web_icon="maintenance,static/description/icon.png" -->
+
+<!-- <menuitem name="Safety" id="safety_menu_ssq" parent="menu_quality_control" sequence="10"/>
+      <menuitem name="Safety" id="safety_action_ssq" parent="safety_menu_ssq" action="ams_security.uc_action" sequence="10"/>
+<menuitem name="QA &amp; QM" id="qaqm_menu_ssq" parent="menu_quality_control" sequence="20"/>
+      <menuitem name="Aircraft Date" id="aircraft_schedule" parent="qaqm_menu_ssq" action="ams_security.uc_action" sequence="10"/>
+      <menuitem name="Audit" id="audit_schedule" parent="qaqm_menu_ssq" action="ams_security.uc_action" sequence="20"/>
+            <menuitem name="Internal Audit" id="internal_audit_schedule" parent="audit_schedule" action="ams_base.internal_audit_schedule_action" sequence="10"/>
+                  <menuitem name="Schedule" id="schedule_internalaudit" parent="internal_audit_schedule" action="ams_base.internal_audit_schedule_action" sequence="10"/>
+                  <menuitem name="Laporan Audit" id="laporan_audit_internalaudit" parent="internal_audit_schedule" action="ams_security.uc_action" sequence="20"/>
+                  <menuitem name="Corrective Action Report" id="car_internalaudit" parent="internal_audit_schedule" action="ams_base.internal_audit_car_action" sequence="30"/>
+            <menuitem name="External Audit" id="external_audit_schedule" parent="audit_schedule" action="ams_base.external_audit_car_action" sequence="20"/>
+            <menuitem name="Third Party Audit" id="thirdparty_audit_schedule" parent="audit_schedule" action="ams_base.third_audit_car_action" sequence="30"/>
+      <menuitem name="Document Control" id="documentcontrol_schedule" parent="qaqm_menu_ssq" action="ams_security.uc_action" sequence="30"/>
+      <menuitem name="Manual" id="manual_schedule" parent="qaqm_menu_ssq" sequence="40"/>
+            <menuitem name="SOP" id="sop_manual" parent="manual_schedule" action="ams_security.uc_action" sequence="10"/>
+      <menuitem name="Checklist Audit" id="checklist_schedule" parent="qaqm_menu_ssq" action="ams_security.uc_action" sequence="50"/>
+      <menuitem name="Corrective Action" id="ca_schedule" parent="qaqm_menu_ssq" action="ams_security.uc_action" sequence="60"/>
+      <menuitem name="Aircraft Document" id="aircraftdoc_schedule" parent="qaqm_menu_ssq" action="ams_security.uc_action" sequence="70"/>
+      <menuitem name="Lisensing" id="linsensi_schedule" parent="qaqm_menu_ssq" action="ams_security.uc_action" sequence="80"/>
+<menuitem name="Security" id="security_menu_ssq" parent="menu_quality_control" sequence="30"/>
+      <menuitem name="Security" id="security_action_ssq" parent="security_menu_ssq" action="ams_security.uc_action" sequence="30"/>
+<menuitem name="Service Dificulity Report" id="service_menu_ssq" parent="menu_quality_control" sequence="40"/>
+      <menuitem name="Service Dificulity Report" id="service_action_ssq" parent="service_menu_ssq" action="ams_security.uc_action" sequence="40"/>
+ -->
+ 
+
+  </data>
+
+<!--   <data>
+    <menuitem name="Report" id="maintenance_reeport" parent="maintenance.menu_maintenance_title" action="ams_base.fleet_bel_action" sequence="999"/>
+        <menuitem name="Verify Flight Times" id="maintenance_vft" parent="maintenance_report" action="ams_fml.verify_flight_action" sequence="999"/>
+        <menuitem name="Manual" id="maintenance_manual" parent="maintenance_reeport" action="ams_fml.verify_manual_action" sequence="999"/>
+  </data> -->
+
+</odoo>

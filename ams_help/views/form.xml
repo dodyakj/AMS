@@ -1,0 +1,37 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="ams_manual_form">
+			<field name="name">ams.manual.form</field>
+			<field name="model">ams.help</field>
+			<field name="arch" type="xml">
+				<form string="Manual">
+					<sheet>
+						<group>
+							<field name="version"/>
+							<field name="release_date"/>
+						</group>
+						<group>
+							<field name="doc" nolabel="1" context="{'default_release_date':release_date,'default_version':version}">
+								<tree editable="bottom">
+									<field name="cover" widget="image" filename="file_cover"/>
+									<field name="doc" filename="name"/>
+									<field name="name" invisible="1"/>
+									<field name="file_cover" invisible="1"/>
+									<field name="release_date"/>
+									<field name="version"/>
+								</tree>
+							</field>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="ams_help_action" model="ir.actions.act_window">
+			<field name="name">Manual AMS</field>
+			<field name="res_model">ams.help</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem id="ams_help_menu" name="Manual" parent="base.menu_administration" action="ams_help_action"/>
+	</data>
+</odoo>

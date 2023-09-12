@@ -1,0 +1,116 @@
+ <odoo>
+   <data>
+     
+     <record model='ir.ui.view' id='insp_tree'>
+       <field name='name'>ams.inspection.tree</field>
+       <field name='model'>ams.inspection</field>
+       <field name='arch' type='xml'>
+         <tree string='Inspection'>
+            <field name="inspection_type"/>
+            <field name="desc"/>
+            <field name="ata_code"/>
+            <field name="status"/>
+         </tree>
+       </field>
+     </record>
+
+ <record id="insp_form_views" model="ir.ui.view">
+        <field name="name">ams.inspection.form</field>
+        <field name="model">ams.inspection</field>
+        <field name="view_mode">tree,form</field>
+        <field name="arch" type="xml">
+            <form string="Inspection">
+              <group>
+                <field name="inspection_type"/>
+                <field name="desc"/>
+                <field name="ata_code"/>
+                <field name="one_time_insp"/>
+              </group>
+              <group>
+                  <notebook>
+                    <page string="Service Life">
+                      <field name="serfice_life">
+                          <!-- <tree string='Serfice Life'>
+                            <field name="current" attrs="{'readonly':True}"/>
+                            <field name="extension" invisible="1"/>
+                            <field name="value"/>
+                            <field name="remaining" attrs="{'readonly':True}"/>
+                            <field name="unit"/>
+                          </tree> -->
+                          <tree string='Serfice Life'>
+                            <!-- <field name="action_type"/> -->
+                            <!-- <field name="current_text" attrs="{'readonly':True}"/> -->
+                            <!-- <field name="current_display"/> -->
+                            <!-- <field name="value" attrs="{'required':True}"/> -->
+                            <!-- <field name="extension" attrs="{'readonly':True}"/> -->
+                            <!-- <field name="next_text" attrs="{'readonly':True}"/> -->
+                            <!-- <field name="remaining_display"/> -->
+                            <!-- <field name="unit"/> -->
+                            <!-- <field name="comments"/> -->
+                            <!-- <button name="do_ste" type="object" string="STE" class="oe_highlight" attrs="{'invisible':[('extension','!=',0)]}"/> -->
+                            <field name="last_done"/>
+                            <!-- <field name="current_text" attrs="{'readonly':True}"/> -->
+                            <!-- <field name="current_display"/> -->
+                            <field name="value" attrs="{'required':True}"/>
+                            <field name="unit"/>
+                            <field name="extension" attrs="{'readonly':True}"/>
+                            <field name="next_text" attrs="{'readonly':True}"/>
+                            <!-- <field name="remaining_display"/> -->
+                            <field name="remaining_text" attrs="{'readonly':True}"/>
+                            <field name="comments_text"/>
+                            <button name="do_ste" type="object" string="STE" class="oe_highlight" attrs="{'invisible':[('extension','!=',0)]}"/>
+                          </tree>
+                        </field>
+                  </page>
+                  <page string="Detail">
+                    <group>
+                      <group>
+                        <!-- <field name="item"/> -->
+                        <!-- <field name="na_reason"/> -->
+                        <!-- <field name="master_insp_type"/> -->
+                        <field name="employee_id"/>
+                        <!-- <field name="show"/> -->
+                      </group>
+                      <group>
+                        <!-- <field name="return_uncomplied"/> -->
+                        <!-- <field name="hoobs"/> -->
+                        <field name="work_order_id"/>
+                      </group>
+                    </group>
+                  </page>
+                  <page string="Component Needed">
+                      <field name="needed_component_ids">
+                          <tree string='Component Needed' editable="bottom">
+                              <field name="product_id"/>
+                              <field name="part_number"/>
+                              <field name="amount"/>
+                              <field name="in_inventory"/>
+                          </tree>
+                      </field>
+                  </page>
+                  <page string="Document">
+                      <field name="attachment_ids"/>
+                  </page>
+                  <page string="Checklist">
+                    <group>
+                      <field name="checklist_id"/>
+                      <field name="todo_ids" attrs="{'invisible':[('todo_ids','=',[])]}"/>
+                      <field name="checklist_desc" attrs="{'invisible':[('desc','=',False)]}"/>
+                      <field name="file_name" invisible="1"/>
+                      <field widget="binary" name="checklist_file" filename="file_name" attrs="{'invisible':[('checklist_id','=',False)]}"/>
+                      <!-- <field name="checklist_file" attrs="{'invisible':[('checklist_id','=',False)]}"/> -->
+                    </group>
+                  </page>
+                  </notebook>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="comp_inspection_action" model="ir.actions.act_window">
+      <field name="name">Complied Inspection</field>
+      <field name="res_model">ams.inspection</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+   </data>
+ </odoo>

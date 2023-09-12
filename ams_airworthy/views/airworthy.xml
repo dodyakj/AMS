@@ -1,0 +1,348 @@
+<odoo>
+	<data>
+		<record id="airworthy_inspection_action" model="ir.actions.act_window">
+			<field name="name">Inspection</field>
+			<field name="res_model">airworthy.inspection</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record model='ir.ui.view' id='airworthy_inspection_tree'>
+			<field name='name'>airworthy.inspection.tree</field>
+			<field name='model'>airworthy.inspection</field>
+			<field name='arch' type='xml'>
+				<tree string='Complied Inspection' create="0" edit="0" duplicate="0" delete="0">
+					<field name="fleet_id"/>
+					<field name="engine_id"/>
+					<field name="propeller_id"/>
+					<field name="auxiliary_id"/>
+					<field name="service_life_id"/>
+					<field name="current_text"/>
+					<field name="next_text"/>
+					<field name="date"/>
+					<field name="employee_id"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="inspection_customs_search_view">
+        <field name="name">airworthy.inspection.search</field>
+        <field name="model">airworthy.inspection</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="fleet_id"/>
+							<field name="engine_id"/>
+							<field name="propeller_id"/>
+							<field name="auxiliary_id"/>
+							<field name="service_life_id"/>
+							<field name="current_text"/>
+							<field name="next_text"/>
+							<field name="date"/>
+							<field name="employee_id"/>           
+            </search>
+        </field>
+      </record>
+
+		<record model="ir.ui.view" id="airworthy_inspection_form">
+			<field name="name">airworthy.inspection.form</field>
+			<field name="model">airworthy.inspection</field>
+			<field name="arch" type="xml">
+				<form string="Inspection" create="0" edit="0" duplicate="0" delete="0">
+					<sheet>
+						<group>
+							<field name="fleet_id" options="{'no_quick_create':True,'no_create_edit':True}" attrs="{'invisible':[('fleet_id','=',False)],'readonly':True}"/>
+							<field name="engine_id" options="{'no_quick_create':True,'no_create_edit':True}" attrs="{'invisible':[('engine_id','=',False)],'readonly':True}"/>
+							<field name="propeller_id" options="{'no_quick_create':True,'no_create_edit':True}" attrs="{'invisible':[('propeller_id','=',False)],'readonly':True}"/>
+							<field name="auxiliary_id" options="{'no_quick_create':True,'no_create_edit':True}" attrs="{'invisible':[('auxiliary_id','=',False)],'readonly':True}"/>
+							<field name="part_id" options="{'no_quick_create':True,'no_create_edit':True}" attrs="{'invisible':[('part_id','=',False)],'readonly':True}"/>
+							<field name="inspection_id" options="{'no_quick_create':True,'no_create_edit':True}" attrs="{'invisible':[('part_id','!=',False)], 'required':[('part_id','=',False)]}" domain="['|','|','|','&amp;',('fleet_id','=',context.get('fleet_id')),('fleet_id','!=',False),'&amp;',('engine_id','=',context.get('engine_id')),('engine_id','!=',False),'&amp;',('auxiliary_id','=',context.get('auxiliary_id')),('auxiliary_id','!=',False),'&amp;',('propeller_id','=',context.get('propeller_id')),('propeller_id','!=',False)]"/>
+							<field name="service_life_id" options="{'no_quick_create':True,'no_create_edit':True}" domain="['&amp;',('action_type','=','inspection'),'|','&amp;',('part_id','=',part_id),('part_id','!=',False),'&amp;',('inspection_id','=',inspection_id),('inspection_id','!=',False)]"/>
+							<field name="rin_active" attrs="{'invisible':True}"/>
+							<field name="current_text"/>
+							<field name="next_text"/>
+						</group>
+						<group>
+							<div>
+								<field name="component_of" attrs="{'invisible':True}"/>
+								<label attrs="{'invisible':[('component_of','!=','airframe')]}" string="Current Aircraft" />
+								<label attrs="{'invisible':[('component_of','!=','propeller')]}" string="Current Aircraft" />
+								<label attrs="{'invisible':[('component_of','!=','engine')]}" string="Current Engine" />
+								<label attrs="{'invisible':[('component_of','!=','auxiliary')]}" string="Current Auxiliary" />
+							</div>
+						</group>
+						<group>
+							<group>
+								<field name="current_hours" string="hours"/>
+							</group>
+							<group>
+								<field name="current_cycles" string="cycles"/>
+							</group>
+							<group>
+								<field name="current_rins" string="rins" attrs="{'invisible':[('current_rins','=',0)]}"/>
+							</group>
+						</group>
+						<group string="Inspected At">
+							<group colspan="4">
+								<field name="date" string="Date"/>
+							</group>
+							<group>
+								<div>
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','airframe')]}" string="Aircraft Hours" />
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','propeller')]}" string="Aircraft Hours" />
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','engine')]}" string="Engine Hours" />
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','auxiliary')]}" string="Auxiliary Hours" />
+								</div>
+								<field class="gi_custom_input" nolabel="1" name="hours"/>
+
+								<div attrs="{'invisible':[('rin_active','=',False)]}">
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','airframe')]}" string="Aircraft RIN" />
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','propeller')]}" string="Aircraft RIN" />
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','engine')]}" string="Engine RIN" />
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','auxiliary')]}" string="Auxiliary RIN" />
+								</div>
+								<field class="gi_custom_input" name="rins" attrs="{'invisible':[('rin_active','=',False)]}"/>
+							</group>
+							<group>
+								<div>
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','airframe')]}" string="Aircraft Cycles" />
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','propeller')]}" string="Aircraft Cycles" />
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','engine')]}" string="Engine Cycles" />
+									<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','auxiliary')]}" string="Auxiliary Cycles" />
+								</div>
+								<field class="gi_custom_input" nolabel="1" name="cycles"/>
+							</group>
+						</group>
+						<group>
+							<field name="employee_id"/>
+							<field name="work_with" widget="radio"/>
+							<field name="wo_id" attrs="{'invisible':[('work_with','!=','wo')]}"/>
+							<field name="mwo_id" attrs="{'invisible':[('work_with','!=','mwo')]}"/>
+							<field name="unserviceable"/>
+						</group>
+						<group string="Checklist" attrs="{'invisible':[('checklist_id','=',False)]}">
+              <field name="checklist_id"/>
+              <field name="todo_ids" attrs="{'invisible':[('todo_ids','=',[])]}"/>
+              <field name="desc" attrs="{'invisible':[('desc','=',False)]}"/>
+              <field name="file_name" invisible="1"/>
+              <field name="id" invisible="1"/>
+              <field widget="binary" name="file" filename="file_name" attrs="{'invisible':[('id','=',False),('checklist_id','=',False)]}"/>
+              <!-- <field name="file" attrs="{'invisible':[('checklist_id','=',False)]}"/> -->
+            </group>
+	          <footer>
+	              <button string="Save" name="action_save" class="oe_link btn-primary" attrs="{'invisible':[('id','!=',False)]}"/>
+	              <button string="Cancel" class="oe_link btn-primary" special="cancel" attrs="{'invisible':[('id','!=',False)]}"/>
+	          </footer>
+			</sheet>
+			</form>
+		</field>
+	</record>
+
+	    <record model="ir.ui.view" id="hr_equipment_view_inherit_calendar">
+	        <field name="inherit_id" ref="maintenance.hr_equipment_view_calendar"/>
+	        <field name="name">equipment.request.inherit.calendar</field>
+	        <field name="model">maintenance.request</field>
+	        <field name="arch" type="xml">
+
+	        	<xpath expr="//calendar" position="attributes">
+	                <attribute name="color">fl_acquisition_id</attribute>
+	            </xpath>
+
+	            <field name="technician_user_id" position="replace"/>
+	            <field name="name" position="after">
+	            	<field name="fl_acquisition_id"/>
+	            </field>
+	        </field>
+	    </record>
+
+
+	    <record model="ir.ui.view" id="ams_checklist_form">
+	    	<field name="name">ams.checklist.form</field>
+	    	<field name="model">ams.checklist</field>
+	    	<field name="arch" type="xml">
+	    		<form string="Checklist">
+	    			<sheet>
+	    				<group>
+	    					<field name="checklist_model_id"/>
+	    					<field name="number"/>
+	    					<field name="todo_ids">
+								<tree string='Task' editable="bottom">
+									<field name='name'/>
+								</tree>
+							</field>
+							<field name="desc"/>
+							<field name="file_name" invisible="1"/>
+	    					<field widget="binary" name="file" filename="file_name" />
+	    				</group>
+	    			</sheet>
+	    		</form>
+	    	</field>
+	    </record>
+
+	    <record model='ir.ui.view' id='ams_checklist_tree'>
+	    	<field name='name'>ams.checklist.tree</field>
+	    	<field name='model'>ams.checklist</field>
+	    	<field name='arch' type='xml'>
+	    		<tree string='Checklist'>
+	    			<field name="checklist_model_id"/>
+						<field name="desc"/>
+						<field name="number"/>
+	    		</tree>
+	    	</field>
+	    </record>
+
+      <record model="ir.ui.view" id="ams_checklist_search_view">
+        <field name="name">ams.checklist.search</field>
+        <field name="model">ams.checklist</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="checklist_model_id"/>
+              <field name="desc"/>
+              <field name="number"/>             
+            </search>
+        </field>
+      </record>
+
+	    <record id="checklist_action" model="ir.actions.act_window">
+	    	<field name="name">Checklist</field>
+	    	<field name="res_model">ams.checklist</field>
+	    	<field name="view_type">form</field>
+	    	<field name="view_mode">tree,form</field>
+	    </record>
+
+	    <!-- Checklist Type -->
+
+			<record id='checklist_type_view_form' model='ir.ui.view'>
+        <field name="name">checklist.type.form</field>
+        <field name="model">ams.checklist.type</field>
+        <field name="arch" type="xml">
+            <form string="Form Checklist Type">
+            <sheet>
+              <group>
+                <field name='name'/>
+              </group>
+            </sheet>
+            </form>
+        </field>
+			</record>  
+
+			<record id='checklist_type_view_tree' model='ir.ui.view'>
+        <field name="name">checklist.type.tree</field>
+        <field name="model">ams.checklist.type</field>
+        <field name="arch" type="xml">
+            <tree string="Form Checklist Type">
+              <field name='name'/>
+            </tree>
+        </field>
+			</record>  
+
+			<record id='checklist_type_action' model='ir.actions.act_window'>
+        <field name="name">Checklist Type</field>
+        <field name="res_model">ams.checklist.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Checklist Type
+          </p>
+        </field>
+			</record>
+
+	    <record model="ir.ui.view" id="airworthy_overhaul_form">
+	    	<field name="name">airworthy.overhaul.form</field>
+	    	<field name="model">airworthy.overhaul</field>
+	    	<field name="arch" type="xml">
+	    		<form string="Overhaul">
+	    			<sheet>
+	    				<group>
+	    					<field name="id" invisible="1"/>
+	    					<field name="fleet_id" attrs="{'invisible':[('fleet_id','=',False)]}"/>
+	    					<field name="engine_id" attrs="{'invisible':[('engine_id','=',False)]}"/>
+	    					<field name="auxiliary_id" attrs="{'invisible':[('auxiliary_id','=',False)]}"/>
+	    					<field name="propeller_id" attrs="{'invisible':[('propeller_id','=',False)]}"/>
+	    					<field name="part_id" attrs="{'invisible':[('part_id','=',False)]}"/>
+	    					<group>
+	    						<field name="date"/>
+	    					</group>
+	    					<group>
+								<field name="finish_date"/>
+	    					</group>
+	    					<group colspan="2">
+							<field name="work_with" widget="radio"/>
+							<field name="wo_id" attrs="{'invisible':[('work_with','!=','wo')]}"/>
+							<field name="mwo_id" attrs="{'invisible':[('work_with','!=','mwo')]}"/>
+
+							<field name="component_of" attrs="{'invisible':True}"/>
+							<field name="rin_active" attrs="{'invisible':True}"/>
+								</group>
+							<!-- <group> -->
+								<group>
+									<field name="component_of" attrs="{'invisible':True}"/>
+									<h4 attrs="{'invisible':[('component_of','!=','airframe')]}" >Current Aircraft</h4>
+									<h4 attrs="{'invisible':[('component_of','!=','propeller')]}" >Current Aircraft</h4>
+									<h4 attrs="{'invisible':[('component_of','!=','engine')]}" >Current Engine</h4>
+									<h4 attrs="{'invisible':[('component_of','!=','auxiliary')]}" >Current Auxiliary</h4>
+							<!-- </group> -->
+							<!-- <group> -->
+								<!-- <div> -->
+									<field name="current_hours" string="hours"/>
+									<field name="current_cycles" string="cycles"/>
+									<field name="current_rins" string="rins" attrs="{'invisible':[('current_rins','=',0)]}"/>
+								</group>
+								<!-- </div> -->
+							<!-- </group> -->
+							<group string="Overhaul At">
+								<field name="overhaul_date"/>
+								<group>
+									<div>
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','airframe')]}" string="Aircraft Hours" />
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','propeller')]}" string="Aircraft Hours" />
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','engine')]}" string="Engine Hours" />
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','auxiliary')]}" string="Auxiliary Hours" />
+									</div>
+									<field class="gi_custom_input" nolabel="1" name="overhaul_hours"/>
+
+									<div attrs="{'invisible':[('rin_active','=',False)]}">
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','airframe')]}" string="Aircraft RIN" />
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','propeller')]}" string="Aircraft RIN" />
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','engine')]}" string="Engine RIN" />
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','auxiliary')]}" string="Auxiliary RIN" />
+									</div>
+									<field class="gi_custom_input" name="overhaul_rins" attrs="{'invisible':[('rin_active','=',False)]}"/>
+								</group>
+								<group>
+									<div>
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','airframe')]}" string="Aircraft Cycles" />
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','propeller')]}" string="Aircraft Cycles" />
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','engine')]}" string="Engine Cycles" />
+										<label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','auxiliary')]}" string="Auxiliary Cycles" />
+									</div>
+									<field class="gi_custom_input" nolabel="1" name="overhaul_cycles"/>
+								</group>
+							</group>
+
+							<!-- <field name="inspection_id" options="{'no_quick_create':True,'no_create_edit':True}" attrs="{'invisible':[('part_id','!=',False)], 'required':[('part_id','=',False)]}" domain="['|','|','|','&amp;',('fleet_id','=',context.get('fleet_id')),('fleet_id','!=',False),'&amp;',('engine_id','=',context.get('engine_id')),('engine_id','!=',False),'&amp;',('auxiliary_id','=',context.get('auxiliary_id')),('auxiliary_id','!=',False),'&amp;',('propeller_id','=',context.get('propeller_id')),('propeller_id','!=',False)]"/> -->
+							<field name="overhaul_sub"/>
+							<field name="part_ids" attrs="{'invisible':['|',('overhaul_sub','=',False),'&amp;',('part_id','!=',False),('part_ids','=',[])]}" domain="['|','|','|','&amp;',('fleet_id','=',context.get('fleet_id')),('fleet_id','!=',False),'&amp;',('engine_id','=',context.get('engine_id')),('engine_id','!=',False),'&amp;',('auxiliary_id','=',context.get('auxiliary_id')),('auxiliary_id','!=',False),'&amp;',('propeller_id','=',context.get('propeller_id')),('propeller_id','!=',False)]">
+								<tree string="Part Replace" editable="bottom">
+									<field name="is_overhaul"/>
+									<field name="part_id" attrs="{'invisible':True}"/>
+									<field name="product_id" attrs="{'invisible':True}"/>
+									<field name="part_name" attrs="{'readonly':True}"/>
+									<field name="old_serial_number" attrs="{'readonly':True}"/>
+									<field name="new_serial_number" attrs="{'readonly':[('is_overhaul','=',False)]}" domain="[('product_id','=',product_id)]"/>
+									<field name="hours"/>
+									<field name="cycles"/>
+								</tree>
+							</field>
+	    				</group>
+			          <footer>
+			              <button string="Save" name="action_save" class="oe_link btn-primary" attrs="{'invisible':[('id','!=',False)]}"/>
+			              <button string="Cancel" class="oe_link btn-primary" special="cancel" attrs="{'invisible':[('id','!=',False)]}"/>
+			          </footer>
+	    			</sheet>
+	    		</form>
+	    	</field>
+	    </record>
+
+	</data>
+</odoo>

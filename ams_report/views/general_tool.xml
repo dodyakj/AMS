@@ -1,0 +1,144 @@
+<odoo>
+  <data>
+  
+  <template id="general_tool_pdf">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                  <style>
+                    .orange {
+                      background-color: rgba(240, 70, 0, 1);
+                    }
+                    .green {
+                      background-color: rgba(35, 200, 40, 1);
+                    }
+                    .yellow {
+                      background-color: rgba(240, 200, 0, 1);
+                    }
+                    .red {
+                      background-color: rgba(255, 0, 0, 1);
+                    }
+                  </style>
+                    <div class="row">
+                        <div class="col-xs-2">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                              <p></p>
+                              <p>TOOLS &amp; CALIBRATION R/W</p>
+                        </div>
+                        <div class="col-xs-10 text-left">
+                            <h2><center>MASTER LIST TOOLS / EQUIP. CALIBRATION R/W</center></h2>
+                            <h2><center>PONDOK CABE</center></h2>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table table-bordered">
+                        <tr class="orange">
+                          <td><center><b>NO</b></center></td>
+                          <td><center><b>Part Name</b></center></td>
+                          <td><center><b>Part Number</b></center></td>
+                          <td><center><b>Serial Number</b></center></td>
+                          <td><center><b>Last Calib.</b></center></td>
+                          <td><center><b>Next Calib.</b></center></td>
+                          <td><center><b>Loc.</b></center></td>
+                          <td><center><b>Reason</b></center></td>
+                          <td><center><b>Date of sent</b></center></td>
+                          <td><center><b>Remark</b></center></td>
+                        </tr>
+                        <t t-set="nomer" t-value="1"/>
+                        <t t-foreach="data.gen_tool" t-as="gen">
+                            <tr>
+                                <td><div t-esc="nomer" /></td>
+                                <t t-set="nomer" t-value="nomer+1"/>
+                                <td> <div t-field="gen.tool" /></td>
+                                <td> <div t-field="gen.sn" /></td>
+                                <td><center> <div t-field="gen.last_calibration" /> </center></td>
+                                <td><center> <div t-field="gen.next_calibration" /> </center></td>
+                                <td><div t-field="gen.location" /></td>
+                                <td><div t-field="gen.status" /></td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+        <record id="papergeneral_tool" model="report.paperformat">
+            <field name="name">General Tools Report</field>
+            <field name="orientation">Landscape</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+       <report
+                id="print_general_tool_reports"
+                string="General Tools Report"
+                model="general.tool.report"
+                report_type="qweb-html"
+                file="ams_report.general_tool_pdf"
+                name="ams_report.general_tool_pdf"
+                paperformat="ams_report.papergeneral_tool"
+            />
+
+
+      <record id="general_tool_report_form" model="ir.ui.view">
+        <field name="name">general.tool.report.form</field>
+        <field name="model">general.tool.report</field>
+        <field name="view_mode">form</field>
+        <field name="arch" type="xml">
+            <form string="General Tools Report">
+          <group>
+            <field name="tool"/>
+            <field name="location"/>
+            <field name="calibrated"/>
+            <field name="next_calibrated" options="{'showType': 'months'}"/>
+            <field name="tool_in"/>
+          </group>
+          <group string="Data Tool" attrs="{'invisible':True}">
+            <field name="gen_tool">
+              <tree>
+                  <field name="tool"/>
+                  <field name="sn"/>
+                  <field name="location"/>
+                  <field name="last_calibration"/>
+                  <field name="next_calibration"/>
+                  <field name="status"/>
+              </tree>
+            </field>
+          </group>
+
+          <footer>
+            <button name="print_general_tool_reports" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+            <button special="cancel" string="Cancel"/>
+          </footer>
+            </form>
+        </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="general_tools_report_action">
+      <field name="name">General Tools Report</field>
+      <field name="res_model">general.tool.report</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+      <field name="target">new</field>
+    </record>   
+  </data>
+</odoo>

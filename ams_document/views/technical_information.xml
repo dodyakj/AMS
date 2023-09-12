@@ -1,0 +1,467 @@
+<odoo>
+
+    <template id="report_ti">
+            <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="data">
+                <t t-call="ams_document.internal_layout">
+                    <div class="page">
+                        <style type="text/css">
+                            .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+                                  position: relative;
+                                  min-height: 25px;
+                                }
+                        </style>
+                        <div class="bungkus">
+                            
+                            <div class="row" style="border:1px solid black">
+                                <div class="col-xs-8">
+                                    <h3>
+                                        <strong>PT. PELITA AIR SERVICE</strong> <br/>
+                                        AOC 121 - ENGINE DEPARTMENT <br/> <br/>
+                                    </h3>
+                                    <h2>
+                                        TECHNICAL INFORMATION
+                                    </h2>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            No.
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.no"/>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            Date
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.date"/>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            Attnd
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.attend"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            A/C Type
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.ac_type"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            Reference
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.reference"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            A/C Reg.
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.ac_req"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            Eff. Date
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.eff_date"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            A/C S/N.
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.ac_sn"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            System/ATA
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.system_ata"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            Subject
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.subject"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="row" style="border:1px solid black">
+                                        <div class="col-xs-3">
+                                            Compliance
+                                        </div>
+                                        <div class="col-xs-2">
+                                            :
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div t-field="data.compliance"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="border-left:1px solid black;border-right:1px solid black">
+                                <div class="col-xs-12" style="height:400px">
+                                    <div t-field="data.text"/>
+                                </div>
+                            </div>
+
+                            <div class="row" style="border-left:1px solid black;border-right:1px solid black">
+                                <div class="col-xs-12 text-right">
+                                    Chief Enginering <br/><br/><br/>
+
+                                    <strong>Hermawan Arianto</strong>
+                                </div>
+                            </div>
+                            <div class="row" style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black">
+                                <div class="col-xs-12 pull-left">
+                                    Copy to : <br/>
+                                    Chief Engineering <br/>
+                                    Chief Quality <br/>
+                                    QA &amp; QM Manager
+                                </div>
+                            </div>
+
+                        </div>
+                        <t t-if="data.compliance_sheet">                            
+                            <p style="page-break-after:always;">   </p>
+                               <div class="row">
+                                    <div class="col-xs-3 text-right">
+                                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 55px;"/>
+                                    </div>
+                                    <div class="col-xs-5 text-center">
+                                        <h3>
+                                        PT. PELITA AIR SERVICE <br/>
+                                        Engineering Departement <br/>
+                                        Techinical Service TI
+                                        </h3>
+                                        
+                                    </div>
+                                    <div class="col-xs-4 text-right" style="margin-top:20px;">
+                                        <h6>F0601.01.AUG.2000</h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <center>
+                                            <h1 style="text-decoration: underline">
+                                            COMPLETION SHEET
+                                            </h1>
+                                        </center>
+                                    </div>
+                                </div>
+                                <table class="table">
+                                    <tr>
+                                        <td style="width:40px;border-top:1px solid black" class="tbl">NUMBER</td>
+                                        <td style="width:10px;border-top:1px solid black" class="tb">:</td>
+                                        <td class="tb" style="border-top:1px solid black"> <t t-esc="data.no"/></td>
+                                        <td style="width:40px;border-top:1px solid black" class="tbl">AIRCRAFT TYPE</td>
+                                        <td style="width:10px;border-top:1px solid black" class="tb">:</td>
+                                        <td class="tbr" style="border-top:1px solid black"><t t-esc="data.ac_type"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40px;" class="tbl">DATE OF ISSUE</td>
+                                        <td style="width:10px" class="tb">:</td>
+                                        <td class="tb"><t t-esc="data.date"/></td>
+                                        <td style="width:40px;" class="tbl">AC/REG.</td>
+                                        <td style="width:10px" class="tb">:</td>
+                                        <td class="tbr"><t t-esc="data.ac_req"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40px;" class="tbl">SYSTEM</td>
+                                        <td style="width:10px" class="tb">:</td>
+                                        <td colspan="4" class="tbr"><t t-esc="data.system_ata"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40px;" class="tbl">SUBJECT</td>
+                                        <td style="width:10px" class="tb">:</td>
+                                        <td colspan="4" class="tbr"><t t-esc="data.no"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40px;" class="tbl">REFERENCE</td>
+                                        <td style="width:10px" class="tb">:</td>
+                                        <td colspan="4" class="tbr"><t t-esc="data.reference"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="height:75px" class="tblr">
+                                            <strong>
+                                                ACCOMPLISMENT INSTRUCTIONS : 
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="height:95px" class="tblr">
+                                            <strong>
+                                                RESULT OF INSPECTION/MODIFICATION : 
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="height:75px" class="tblr">
+                                            <strong>
+                                                REMARKS :  
+                                            </strong>
+                                            <t t-esc="data.remark_ref"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" class="tblr">
+                                            THE TI MENTIONED ABOVED HAS BEEN CARRIED OUT IN ACCORDANCE WITH REQUIREMENT OF THE CIVIL AVIATION SAFETY REGULATION.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="tblr">DATE :</td>
+                                        <td colspan="2" class="tblr">A/C HRS :</td>
+                                        <td colspan="2" class="tblr">A/C LDGS :</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="tblr">
+                                            <strong>SIGN 1</strong><br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                            <br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                        </td>
+                                        <td colspan="2" class="tblr">
+                                            <strong>SIGN 2</strong><br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                            <br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                        </td>
+                                        <td colspan="2" class="tblr">
+                                            <strong>SIGN 3</strong><br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                            <br/>
+                                            NAME : <br/>
+                                            <br/>
+                                            SIGN : <br/>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </t>                        
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+  <data>
+
+        <record id="paperformat_ti" model="report.paperformat">
+            <field name="name">Technical Information Report</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="print_ti_pdf"
+                string="Technical Information"
+                model="document.ti"
+                report_type="qweb-html"
+                file="ams_document.report_ti"
+                name="ams_document.report_ti"
+                paperformat="ams_document.paperformat_ti"
+            />
+
+
+
+    <record model="ir.ui.view" id="document_ti_type_tree">
+      <field name="name">document.ti.tree</field>
+      <field name="model">document.ti</field>
+      <field name="arch" type="xml">
+        <tree>
+			<field name="no"/>
+			<field name="date"/>
+			<field name="attend"/>
+			<field name="ac_type"/>
+			<field name="ac_req"/>
+			<field name="ac_sn"/>
+			<field name="subject"/>
+			<field name="reference"/>
+			<field name="eff_date"/>
+			<field name="system_ata"/>
+			<field name="compliance"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="document_ti_type_search_view">
+        <field name="name">document.ti.search</field>
+        <field name="model">document.ti</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="no"/>
+                <field name="date"/>
+                <field name="attend"/>
+                <field name="ac_type"/>
+                <field name="ac_req"/>
+                <field name="ac_sn"/>
+                <field name="subject"/>
+                <field name="reference"/>
+                <field name="eff_date"/>
+                <field name="system_ata"/>
+                <field name="compliance"/>             
+            </search>
+        </field>
+      </record>
+
+
+    <record model="ir.ui.view" id="document_ti_type_form">
+        <field name="name">document.ti.form</field>
+        <field name="model">document.ti</field>
+        <field name="arch" type="xml">
+            <form string="Technical Information">
+                <sheet string="Technical Information">
+                    <group>
+                        <group class="pull-right">
+                            <field name="no"/>
+                            <field name="date"/>
+                            <field name="attend"/>
+                        </group>
+                    </group>
+                    <group col="4">
+                        <field name="ac_type"/>
+                        <field name="reference"/>
+                        <field name="ac_req"/>
+                        <field name="eff_date"/>
+                        <field name="ac_sn"/>
+                        <field name="system_ata"/>
+                        <field name="subject"/>
+                        <field name="compliance"/>
+                        <field name="file_uploads" filename="filename"/>
+                        <field name="filename" invisible="1"/>
+                    </group>
+                        <field name="text"/>
+                        <group>
+                            <group string="Copy to">
+                                <field name="ce_check"/>
+                                <field name="cq_check"/>
+                                <field name="qq_check"/>
+                            </group>
+                        </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+	<record model="ir.actions.act_window" id="document_ti_action">
+        <field name="name">Technical Information</field>
+        <field name="res_model">document.ti</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Technical Information
+            </p>
+        </field>
+    </record>  
+  </data>
+</odoo>

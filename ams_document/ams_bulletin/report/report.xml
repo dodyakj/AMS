@@ -1,0 +1,188 @@
+<odoo>
+  <data>
+
+        <record id="paperformat_fleetwide_repo" model="report.paperformat">
+            <field name="name">Bulletin In Fleet</field>
+            <field name="orientation">Portrait</field>
+<!--             <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field> -->
+        </record>
+
+        <report
+                id="print_fbr_pdf"
+                string="Bulletin In Fleet"
+                model="report.fleetwide_bulletin"
+                report_type="qweb-pdf"
+                file="ams_bulletin.report_fbr"
+                name="ams_bulletin.report_fbr"
+                paperformat="ams_bulletin.paperformat_fleetwide_repo"
+            />
+
+
+    <record model="ir.ui.view" id="fleetfbr_form">
+      <field name="name">report.fleetwide_bulletin.form</field>
+      <field name="model">report.fleetwide_bulletin</field>
+      <field name="arch" type="xml">
+        <form string="description">
+          <sheet>
+            <group>
+              <field name="type"/>
+              <field name="number_sb" attrs="{'invisible':[('type','!=','sb')]}"/>
+              <field name="number_ad" attrs="{'invisible':[('type','!=','ad')]}"/>
+              <field name="number_stc" attrs="{'invisible':[('type','!=','stc')]}"/>
+            </group>
+            <group>
+              <group>
+                <field name="sort_by" widget="radio" options="{'horizontal': true}"/>
+                <field name="order_by" widget="radio" options="{'horizontal': true}"/>
+              </group>
+            </group>
+          </sheet>
+          <footer>
+            <button name="print_fbr_pdf" type="object" string="Print" class="oe_highlight"/>
+            <button special="cancel" string="Cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_fbr_report" model="ir.actions.act_window">
+      <field name="name">Fleetwide Bulletin Report</field>
+      <field name="res_model">report.fleetwide_bulletin</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+<!-- ALTERATION REPORT -->
+
+        <record id="paperon_alterrtion" model="report.paperformat">
+            <field name="name">Modification / Alteration Report</field>
+            <field name="orientation">Landscape</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+            <report
+                    id="print_alteration"
+                    string="Modification / Alteration Report"
+                    model="bulletin.alteration.report"
+                    report_type="qweb-html"
+                    file="ams_bulletin.report_alteration_pdf"
+                    name="ams_bulletin.report_alteration_pdf"
+                    paperformat="ams_bulletin.paperon_alterrtion"
+                />
+
+
+              <record model="ir.ui.view" id="alteration_form">
+                <field name="name">bulletin.alteration.report.form</field>
+                <field name="model">bulletin.alteration.report</field>
+                <field name="arch" type="xml">
+                  <form string="Modification / Alteration Report">
+                    <sheet>
+                      <group>
+                        <field name="fleet_id"/>
+                        <field name="date"/>
+                        <field name="number"/>
+                        <field name="status" />
+                      </group>
+                      <group>
+                        <group>
+                          <field name="sort_by" widget="radio" options="{'horizontal': true}"/>
+                          <field name="order_by" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                      </group>
+                    </sheet>
+                    <footer>
+                      <button name="print_alteration" type="object" string="Print" class="oe_highlight"/>
+                      <button special="cancel" string="Cancel"/>
+                    </footer>
+                  </form>
+                </field>
+              </record>
+
+              <record id="action_alteration_report" model="ir.actions.act_window">
+                <field name="name">Modification / Alteration Report</field>
+                <field name="res_model">bulletin.alteration.report</field>
+                <field name="view_mode">form</field>
+                <field name="target">new</field>
+              </record>
+
+
+<!-- Complied bulletin REPORT -->
+
+        <record id="paper_complied_bullentin" model="report.paperformat">
+            <field name="name">Complied Bulletin Report</field>
+            <field name="orientation">Landscape</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+            <report
+                    id="print_complied_bulletin"
+                    string="Complied Bulletin Report"
+                    model="bulletin.aircraft.affected.report"
+                    report_type="qweb-html"
+                    file="ams_bulletin.report_complied"
+                    name="ams_bulletin.report_complied"
+                    paperformat="ams_bulletin.paper_complied_bullentin"
+                />
+
+
+              <record model="ir.ui.view" id="complied_form">
+                <field name="name">bulletin.aircraft.affected.report.form</field>
+                <field name="model">bulletin.aircraft.affected.report</field>
+                <field name="arch" type="xml">
+                  <form string="Complied Bulletin Report">
+                    <sheet>
+                      <group>
+                        <field name="type"/>
+                      </group>
+                      <group>
+                        <group>
+                          <field name="sort_by" widget="radio" options="{'horizontal': true}"/>
+                          <field name="order_by" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                      </group>
+                    </sheet>
+                    <footer>
+                      <button name="print_complied_bulletin" type="object" string="Print" class="oe_highlight"/>
+                      <button special="cancel" string="Cancel"/>
+                    </footer>
+                  </form>
+                </field>
+              </record>
+
+              <record id="action_complied_report" model="ir.actions.act_window">
+                <field name="name">Complied Bulletin Report</field>
+                <field name="res_model">bulletin.aircraft.affected.report</field>
+                <field name="view_mode">form</field>
+                <field name="target">new</field>
+              </record>
+
+
+  </data>
+</odoo>

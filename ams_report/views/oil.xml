@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="oil_report_form">
+      <field name="name">oil.report.form</field>
+      <field name="model">oil.report</field>
+      <field name="arch" type="xml">
+        <form string="Oil Report">
+          
+          <group>
+            <field name="model_ac" required="1"/>
+            <field name="date" options="{'showType': 'years'}"/>
+            <!-- <field name="sort_by" widget="radio" options="{'horizontal': true}"/> -->
+            <!-- <field name="order_by" widget="radio" options="{'horizontal': true}"/> -->
+          </group>
+          <group string="Data Oil" attrs="{'invisible':True}">
+            <field name="data_id"/>
+          </group>
+
+          <footer>
+            <!-- <button name="print_tools_movement_pdf" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" /> -->
+            <button name="export_xls"  context="{'xls_export':1}" icon="fa-download" type="object" string="Print XLS" class="oe_highlight" />
+            <button special="cancel" string="Cancel"/>
+          </footer>
+          
+        </form>
+      </field>
+    </record>
+
+    <report
+            id="oil_report_xls"
+            model="oil.report"
+            string=" "
+            report_type="xlsx"
+            name="ams_report.oil_report.xlsx"
+            file="ams_report.oil_report.xlsx"
+            attachment_use="False"
+        />
+
+    <record id="action_oil_report" model="ir.actions.act_window">
+      <field name="name">Oil Report</field>
+      <field name="res_model">oil.report</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+      <field name="target">new</field>
+    </record>
+  </data>
+</odoo>

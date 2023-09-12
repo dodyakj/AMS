@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+    <record id='base_operation' model='ir.actions.act_window'>
+        <field name="name">Base Operation</field>
+        <field name="res_model">base.operation</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Base Operation
+            </p>
+        </field>
+    </record>
+
+    <record id='area' model='ir.actions.act_window'>
+        <field name="name">Area</field>
+        <field name="res_model">area.operation</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Base Operation
+            </p>
+        </field>
+    </record>
+
+    <record id="custom_form_inherit_base_operation" model="ir.ui.view">
+        <field name="name">custom.form.inherit.base.operation</field>
+        <field name="model">base.operation</field>
+        <field name="inherit_id" ref="pelita_operation.base_operation_form"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='coordinate']" position="after">
+                <field name="warehouse_id" />
+            </xpath>
+        </field>
+    </record>
+
+  </data>
+</odoo>

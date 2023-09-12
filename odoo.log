@@ -1,0 +1,226 @@
+2019-08-15 08:57:07,487 7152 INFO ? odoo: Odoo version 10.0-20180102
+2019-08-15 08:57:07,487 7152 INFO ? odoo: Using configuration file at E:\ams\odoo.conf
+2019-08-15 08:57:07,487 7152 INFO ? odoo: addons paths: ['/home/hoster/hosting/ams.cendanajkt.online/data\\addons\\10.0', u'E:\\home\\hoster\\odoo\\addons', u'E:\\home\\hoster\\hosting\\dof.cendanajkt.online\\public_html', 'C:\\Program Files (x86)\\Odoo 10.0\\server\\odoo\\addons']
+2019-08-15 08:57:07,489 7152 INFO ? odoo: database: ginro@localhost:5432
+2019-08-15 08:57:07,513 7152 INFO ? odoo.service.server: HTTP service (werkzeug) running on 0.0.0.0:1004
+2019-08-15 09:10:54,854 7152 INFO ? odoo.service.server: Initiating shutdown
+2019-08-15 09:10:54,854 7152 INFO ? odoo.service.server: Hit CTRL-C again or send a second signal to force the shutdown.
+2019-08-15 09:11:07,602 9032 INFO ? odoo: Odoo version 10.0-20180102
+2019-08-15 09:11:07,604 9032 INFO ? odoo: Using configuration file at E:\ams\odoo.conf
+2019-08-15 09:11:07,605 9032 INFO ? odoo: addons paths: ['/home/hoster/hosting/ams.cendanajkt.online/data\\addons\\10.0', u'E:\\home\\hoster\\odoo\\addons', u'E:\\home\\hoster\\hosting\\dof.cendanajkt.online\\public_html', 'C:\\Program Files (x86)\\Odoo 10.0\\server\\odoo\\addons']
+2019-08-15 09:11:07,605 9032 INFO ? odoo: database: ginro@localhost:5432
+2019-08-15 09:11:07,641 9032 INFO ? odoo.service.server: HTTP service (werkzeug) running on 0.0.0.0:1004
+2019-08-15 09:11:15,658 9032 INFO ? werkzeug: 127.0.0.1 - - [15/Aug/2019 09:11:15] "POST /web/dataset/call_kw/ams.mtr/create HTTP/1.0" 500 -
+2019-08-15 09:11:15,782 9032 ERROR ? werkzeug: Error on request:
+Traceback (most recent call last):
+  File "werkzeug\serving.py", line 177, in run_wsgi
+    
+  File "werkzeug\serving.py", line 165, in execute
+    
+  File "C:\Program Files (x86)\Odoo 10.0\server\odoo\service\server.py", line 246, in app
+    return self.app(e, s)
+  File "C:\Program Files (x86)\Odoo 10.0\server\odoo\service\wsgi_server.py", line 186, in application
+    return application_unproxied(environ, start_response)
+  File "C:\Program Files (x86)\Odoo 10.0\server\odoo\service\wsgi_server.py", line 172, in application_unproxied
+    result = handler(environ, start_response)
+  File "C:\Program Files (x86)\Odoo 10.0\server\odoo\http.py", line 1307, in __call__
+    self.load_addons()
+  File "C:\Program Files (x86)\Odoo 10.0\server\odoo\http.py", line 1316, in load_addons
+    for module in sorted(os.listdir(str(addons_path))):
+WindowsError: [Error 3] The system cannot find the path specified: 'E:\\home\\hoster\\odoo\\addons/*.*'
+2019-08-15 09:11:18,015 9032 INFO ams_live odoo.modules.loading: loading 1 modules...
+2019-08-15 09:11:19,424 9032 INFO ams_live odoo.modules.loading: 1 modules loaded in 1.41s, 1 queries
+2019-08-15 09:11:19,438 9032 WARNING ams_live odoo.modules.graph: module muk_web_preview_audio: not installable, skipped
+2019-08-15 09:11:19,440 9032 WARNING ams_live odoo.modules.graph: module muk_web_preview_image: not installable, skipped
+2019-08-15 09:11:19,441 9032 WARNING ams_live odoo.modules.graph: module muk_web_preview_video: not installable, skipped
+2019-08-15 09:11:19,483 9032 WARNING ams_live odoo.modules.graph: module muk_web_client_refresh: not installable, skipped
+2019-08-15 09:11:19,500 9032 WARNING ams_live odoo.modules.graph: module web_map: not installable, skipped
+2019-08-15 09:11:19,553 9032 WARNING ams_live odoo.modules.graph: module odoo_web_login: not installable, skipped
+2019-08-15 09:11:19,555 9032 WARNING ams_live odoo.modules.graph: module ams_base: not installable, skipped
+2019-08-15 09:11:19,596 9032 WARNING ams_live odoo.modules.graph: module pelita_operation: not installable, skipped
+2019-08-15 09:11:19,608 9032 WARNING ams_live odoo.modules.graph: module ams_training: not installable, skipped
+2019-08-15 09:11:19,634 9032 WARNING ams_live odoo.modules.graph: module pas_dms: not installable, skipped
+2019-08-15 09:11:19,635 9032 WARNING ams_live odoo.modules.graph: module pelita_crew: not installable, skipped
+2019-08-15 09:11:19,665 9032 WARNING ams_live odoo.modules.graph: module eofice: not installable, skipped
+2019-08-15 09:11:19,674 9032 WARNING ams_live odoo.modules.graph: module ams_menu: not installable, skipped
+2019-08-15 09:11:19,674 9032 WARNING ams_live odoo.modules.graph: module ams_security: not installable, skipped
+2019-08-15 09:11:19,676 9032 WARNING ams_live odoo.modules.graph: module ib_base_pelita: not installable, skipped
+2019-08-15 09:11:19,677 9032 WARNING ams_live odoo.modules.graph: module search_table_widget: not installable, skipped
+2019-08-15 09:11:19,698 9032 WARNING ams_live odoo.modules.graph: module ib_pelita_report: not installable, skipped
+2019-08-15 09:11:19,700 9032 WARNING ams_live odoo.modules.graph: module jkw_report_pelita: not installable, skipped
+2019-08-15 09:11:19,717 9032 WARNING ams_live odoo.modules.graph: module web_gantt_view: not installable, skipped
+2019-08-15 09:11:19,724 9032 WARNING ams_live odoo.modules.graph: module muk_web_client: not installable, skipped
+2019-08-15 09:11:19,744 9032 WARNING ams_live odoo.modules.graph: module muk_dms_access: not installable, skipped
+2019-08-15 09:11:19,746 9032 WARNING ams_live odoo.modules.graph: module ams_daily: not installable, skipped
+2019-08-15 09:11:19,747 9032 WARNING ams_live odoo.modules.graph: module muk_web_preview_attachment: not installable, skipped
+2019-08-15 09:11:19,780 9032 WARNING ams_live odoo.modules.graph: module ams_report: not installable, skipped
+2019-08-15 09:11:19,808 9032 WARNING ams_live odoo.modules.graph: module pelita_equipment: not installable, skipped
+2019-08-15 09:11:19,822 9032 WARNING ams_live odoo.modules.graph: module pelita_sale: not installable, skipped
+2019-08-15 09:11:19,835 9032 WARNING ams_live odoo.modules.graph: module muk_dms_file: not installable, skipped
+2019-08-15 09:11:19,836 9032 WARNING ams_live odoo.modules.graph: module ams_inventory: not installable, skipped
+2019-08-15 09:11:19,839 9032 WARNING ams_live odoo.modules.graph: module contract: not installable, skipped
+2019-08-15 09:11:19,841 9032 WARNING ams_live odoo.modules.graph: module partner_pelita: not installable, skipped
+2019-08-15 09:11:19,849 9032 WARNING ams_live odoo.modules.graph: module document_attachment_manage: not installable, skipped
+2019-08-15 09:11:19,865 9032 WARNING ams_live odoo.modules.graph: module ams_fml: not installable, skipped
+2019-08-15 09:11:19,867 9032 WARNING ams_live odoo.modules.graph: module ams_order: not installable, skipped
+2019-08-15 09:11:19,874 9032 WARNING ams_live odoo.modules.graph: module muk_dms: not installable, skipped
+2019-08-15 09:11:19,875 9032 WARNING ams_live odoo.modules.graph: module swr_datepicker: not installable, skipped
+2019-08-15 09:11:19,891 9032 WARNING ams_live odoo.modules.graph: module ams_camp: not installable, skipped
+2019-08-15 09:11:19,894 9032 WARNING ams_live odoo.modules.graph: module jasper_reports: not installable, skipped
+2019-08-15 09:11:19,907 9032 WARNING ams_live odoo.modules.graph: module ams_codectr: not installable, skipped
+2019-08-15 09:11:19,908 9032 WARNING ams_live odoo.modules.graph: module ir_sequence_autoreset: not installable, skipped
+2019-08-15 09:11:19,910 9032 WARNING ams_live odoo.modules.graph: module jasper_load: not installable, skipped
+2019-08-15 09:11:19,921 9032 WARNING ams_live odoo.modules.graph: module pelita_master_data: not installable, skipped
+2019-08-15 09:11:19,930 9032 WARNING ams_live odoo.modules.graph: module inputmask_widget: not installable, skipped
+2019-08-15 09:11:19,931 9032 WARNING ams_live odoo.modules.graph: module muk_web_preview: not installable, skipped
+2019-08-15 09:11:19,934 9032 WARNING ams_live odoo.modules.graph: module paiis_corrective: not installable, skipped
+2019-08-15 09:11:19,937 9032 WARNING ams_live odoo.modules.graph: module report_xlsx: not installable, skipped
+2019-08-15 09:11:19,957 9032 WARNING ams_live odoo.modules.graph: module web_favicon: not installable, skipped
+2019-08-15 09:11:19,959 9032 WARNING ams_live odoo.modules.graph: module web_widget_color: not installable, skipped
+2019-08-15 09:11:19,960 9032 WARNING ams_live odoo.modules.graph: module ams_tdr: not installable, skipped
+2019-08-15 09:11:19,960 9032 WARNING ams_live odoo.modules.graph: module ams_dashboard: not installable, skipped
+2019-08-15 09:11:19,963 9032 WARNING ams_live odoo.modules.graph: module ams_reliability: not installable, skipped
+2019-08-15 09:11:19,963 9032 WARNING ams_live odoo.modules.graph: module ams_airworthy: not installable, skipped
+2019-08-15 09:11:19,964 9032 WARNING ams_live odoo.modules.graph: module ams_calm: not installable, skipped
+2019-08-15 09:11:19,967 9032 WARNING ams_live odoo.modules.graph: module ams_bulletin: not installable, skipped
+2019-08-15 09:11:19,969 9032 WARNING ams_live odoo.modules.graph: module ams_document: not installable, skipped
+2019-08-15 09:11:19,976 9032 INFO ams_live odoo.modules.loading: loading 60 modules...
+2019-08-15 09:11:21,588 9032 INFO ams_live odoo.addons.report.models.report: Will use the Wkhtmltopdf binary at C:\Program Files (x86)\Odoo 10.0\thirdparty\wkhtmltopdf.exe
+2019-08-15 09:11:24,072 9032 INFO ams_live odoo.modules.loading: 60 modules loaded in 4.10s, 2 queries
+2019-08-15 09:11:25,372 9032 INFO ams_live odoo.modules.loading: Modules loaded.
+2019-08-15 09:11:25,385 9032 INFO ams_live odoo.addons.base.ir.ir_http: Generating routing map
+2019-08-15 09:11:25,387 9032 INFO ams_live odoo.addons.base.ir.ir_http: Generating routing map
+2019-08-15 09:11:25,387 9032 INFO ams_live odoo.addons.base.ir.ir_http: Generating routing map
+2019-08-15 09:11:25,388 9032 INFO ams_live odoo.addons.base.ir.ir_http: Generating routing map
+2019-08-15 09:11:25,388 9032 INFO ams_live odoo.addons.base.ir.ir_http: Generating routing map
+2019-08-15 09:11:25,788 9032 INFO ams_live odoo.addons.base.ir.ir_http: Generating routing map
+2019-08-15 09:11:26,993 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:11:26] "POST /web/webclient/version_info HTTP/1.0" 200 -
+2019-08-15 09:11:27,040 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:11:27] "POST /web/webclient/version_info HTTP/1.0" 200 -
+2019-08-15 09:11:27,095 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:11:27] "POST /web/webclient/version_info HTTP/1.0" 200 -
+2019-08-15 09:11:27,108 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:11:27] "POST /web/dataset/call_kw/ams.mtr/create HTTP/1.0" 200 -
+2019-08-15 09:11:27,193 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:11:27] "POST /web/webclient/version_info HTTP/1.0" 200 -
+2019-08-15 09:11:27,193 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:11:27] "POST /web/webclient/version_info HTTP/1.0" 200 -
+2019-08-15 09:11:29,052 9032 INFO ? odoo.addons.bus.models.bus: Bus.loop listen imbus on db postgres
+2019-08-15 09:11:39,618 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:11:39] "GET /web? HTTP/1.0" 303 -
+2019-08-15 09:11:39,671 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:11:39] "GET /web/login HTTP/1.0" 302 -
+2019-08-15 09:11:40,819 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:40,838 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:45,335 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:45,384 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:45,857 9032 INFO ams_live odoo.models.unlink: User #1 deleted ir.attachment records with IDs: [5513]
+2019-08-15 09:11:46,138 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:11:46] "GET /id_ID/web/login HTTP/1.0" 200 -
+2019-08-15 09:11:54,493 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,512 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,516 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,523 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,532 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,532 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,621 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,645 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,647 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,657 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,663 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:11:54,663 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:12:01,654 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:12:01,694 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:12:01,858 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:12:01,971 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:12:02,125 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:12:02,130 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:12:02,438 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:02] "GET /web/static/src/less/web.assets_frontend/variables.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:02,444 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:02] "GET /web/static/lib/bootstrap/less/mixins/web.assets_frontend/buttons.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:02,461 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:02] "GET /web/static/lib/bootstrap/less/mixins/web.assets_frontend/vendor-prefixes.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:02,509 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:02] "GET /web/static/src/less/web.assets_frontend/utils.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:02,605 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:02] "GET /web/static/lib/bootstrap/less/web.assets_frontend/variables.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:02,607 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:02] "GET /web_editor/static/src/less/web.assets_frontend/web_editor.variables.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,078 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /web/static/src/less/web.assets_frontend/import_bootstrap.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,082 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /web_editor/static/src/less/web.assets_frontend/web_editor.common.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,099 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /odoo_web_login/static/src/css/web_login_style.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,158 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /website/static/src/less/web.assets_frontend/website.ui.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,266 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /website/static/src/less/web.assets_frontend/website.wrapwrap.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,273 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /website/static/src/less/web.assets_frontend/website.ui.components.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,519 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /web/content/5515-dd80590/web.assets_frontend.js HTTP/1.0" 200 -
+2019-08-15 09:12:03,700 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /website/static/src/less/web.assets_frontend/website.snippets.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,707 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /website/static/src/less/web.assets_frontend/website.zoomodoo.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,719 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /website_mail/static/src/css/website_mail.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,740 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /website_form/static/src/less/web.assets_frontend/website_form.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:03,752 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:03] "GET /web/static/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css HTTP/1.0" 404 -
+2019-08-15 09:12:05,821 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:05] "POST /website/translations HTTP/1.0" 200 -
+2019-08-15 09:12:05,867 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:05] "GET /web_favicon/favicon HTTP/1.0" 404 -
+2019-08-15 09:12:17,690 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:17] "GET / HTTP/1.0" 302 -
+2019-08-15 09:12:17,913 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:12:19,063 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:19] "POST /longpolling/poll HTTP/1.0" 200 -
+2019-08-15 09:12:19,209 9032 ERROR ams_live odoo.service.server: Exception happened during processing of request from ('127.0.0.1', 15947)
+Traceback (most recent call last):
+  File "SocketServer.pyc", line 599, in process_request_thread
+  File "SocketServer.pyc", line 334, in finish_request
+  File "SocketServer.pyc", line 657, in __init__
+  File "SocketServer.pyc", line 716, in finish
+  File "socket.pyc", line 283, in close
+  File "socket.pyc", line 307, in flush
+error: [Errno 10053] An established connection was aborted by the software in your host machine
+2019-08-15 09:12:20,164 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:12:20,213 9032 WARNING ams_live odoo.modules.module: module odoo_web_login: module not found
+2019-08-15 09:12:20,259 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:20] "GET /id_ID/ HTTP/1.0" 200 -
+2019-08-15 09:12:20,928 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:20] "GET /web/static/lib/bootstrap/less/web.assets_frontend/variables.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:20,941 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:20] "GET /web/static/lib/bootstrap/less/mixins/web.assets_frontend/vendor-prefixes.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:20,953 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:20] "GET /web/static/lib/bootstrap/less/mixins/web.assets_frontend/buttons.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:20,982 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:20] "GET /web/static/src/less/web.assets_frontend/utils.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:20,983 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:20] "GET /web/static/src/less/web.assets_frontend/variables.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:20,987 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:20] "GET /web_editor/static/src/less/web.assets_frontend/web_editor.variables.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:21,151 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:21] "GET /web/static/src/less/web.assets_frontend/import_bootstrap.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:22,177 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /web_editor/static/src/less/web.assets_frontend/web_editor.common.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:22,243 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /website/static/src/less/web.assets_frontend/website.ui.components.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:22,244 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /website/static/src/less/web.assets_frontend/website.ui.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:22,246 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /odoo_web_login/static/src/css/web_login_style.css HTTP/1.0" 404 -
+2019-08-15 09:12:22,256 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /website/static/src/less/web.assets_frontend/website.snippets.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:22,259 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /website/static/src/less/web.assets_frontend/website.wrapwrap.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:22,384 9032 INFO ams_live odoo.addons.base.ir.ir_attachment: _read_file reading /home/hoster/hosting/ams.cendanajkt.online/data\filestore\ams_live\cd/cd75a5757973518fcc8feea81f2970a2db3f3563
+Traceback (most recent call last):
+  File "C:\Program Files (x86)\Odoo 10.0\server\odoo\addons\base\ir\ir_attachment.py", line 100, in _file_read
+IOError: [Errno 2] No such file or directory: u'/home/hoster/hosting/ams.cendanajkt.online/data\\filestore\\ams_live\\cd/cd75a5757973518fcc8feea81f2970a2db3f3563'
+2019-08-15 09:12:22,384 9032 INFO ams_live odoo.addons.base.ir.ir_attachment: _read_file reading /home/hoster/hosting/ams.cendanajkt.online/data\filestore\ams_live\e0/e0bc1a56b47dbdda322037047f485d24b08e1044
+Traceback (most recent call last):
+  File "C:\Program Files (x86)\Odoo 10.0\server\odoo\addons\base\ir\ir_attachment.py", line 100, in _file_read
+IOError: [Errno 2] No such file or directory: u'/home/hoster/hosting/ams.cendanajkt.online/data\\filestore\\ams_live\\e0/e0bc1a56b47dbdda322037047f485d24b08e1044'
+2019-08-15 09:12:22,394 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /web/image/2488 HTTP/1.0" 304 -
+2019-08-15 09:12:22,394 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /web/image/2489 HTTP/1.0" 304 -
+2019-08-15 09:12:22,542 9032 INFO ams_live odoo.addons.base.ir.ir_attachment: _read_file reading /home/hoster/hosting/ams.cendanajkt.online/data\filestore\ams_live\44/4428de58c706f3e372e3173ade8c56257541e906
+Traceback (most recent call last):
+  File "C:\Program Files (x86)\Odoo 10.0\server\odoo\addons\base\ir\ir_attachment.py", line 100, in _file_read
+IOError: [Errno 2] No such file or directory: u'/home/hoster/hosting/ams.cendanajkt.online/data\\filestore\\ams_live\\44/4428de58c706f3e372e3173ade8c56257541e906'
+2019-08-15 09:12:22,546 9032 INFO ams_live odoo.addons.base.ir.ir_attachment: _read_file reading /home/hoster/hosting/ams.cendanajkt.online/data\filestore\ams_live\8c/8c7b76e26515bb068fdcb61ee74a3562c983ccb7
+Traceback (most recent call last):
+  File "C:\Program Files (x86)\Odoo 10.0\server\odoo\addons\base\ir\ir_attachment.py", line 100, in _file_read
+IOError: [Errno 2] No such file or directory: u'/home/hoster/hosting/ams.cendanajkt.online/data\\filestore\\ams_live\\8c/8c7b76e26515bb068fdcb61ee74a3562c983ccb7'
+2019-08-15 09:12:22,555 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /web/image/2491 HTTP/1.0" 304 -
+2019-08-15 09:12:22,559 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /web/image/2492 HTTP/1.0" 304 -
+2019-08-15 09:12:22,696 9032 INFO ams_live odoo.addons.base.ir.ir_attachment: _read_file reading /home/hoster/hosting/ams.cendanajkt.online/data\filestore\ams_live\4f/4f3d7644f61356efd6a084b4c206cbe08d55eaae
+Traceback (most recent call last):
+  File "C:\Program Files (x86)\Odoo 10.0\server\odoo\addons\base\ir\ir_attachment.py", line 100, in _file_read
+IOError: [Errno 2] No such file or directory: u'/home/hoster/hosting/ams.cendanajkt.online/data\\filestore\\ams_live\\4f/4f3d7644f61356efd6a084b4c206cbe08d55eaae'
+2019-08-15 09:12:22,707 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /web/image/2493 HTTP/1.0" 304 -
+2019-08-15 09:12:22,773 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /website_mail/static/src/css/website_mail.css HTTP/1.0" 404 -
+2019-08-15 09:12:22,782 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /website/static/src/less/web.assets_frontend/website.zoomodoo.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:22,799 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /website_form/static/src/less/web.assets_frontend/website_form.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:22,801 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:22] "GET /web/static/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css HTTP/1.0" 404 -
+2019-08-15 09:12:23,686 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:23] "POST /website/translations HTTP/1.0" 200 -
+2019-08-15 09:12:40,486 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:40] "GET /id_ID/web/login HTTP/1.0" 200 -
+2019-08-15 09:12:41,140 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /web/static/src/less/web.assets_frontend/import_bootstrap.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,145 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /web_editor/static/src/less/web.assets_frontend/web_editor.common.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,153 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /web/static/lib/bootstrap/less/web.assets_frontend/variables.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,158 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /web/static/lib/bootstrap/less/mixins/web.assets_frontend/vendor-prefixes.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,167 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /web/static/src/less/web.assets_frontend/variables.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,168 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /web/static/lib/bootstrap/less/mixins/web.assets_frontend/buttons.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,759 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /web/static/src/less/web.assets_frontend/utils.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,763 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /web_editor/static/src/less/web.assets_frontend/web_editor.variables.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,773 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /website/static/src/less/web.assets_frontend/website.zoomodoo.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,780 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /website_mail/static/src/css/website_mail.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,806 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /website_form/static/src/less/web.assets_frontend/website_form.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:41,809 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:41] "GET /web/static/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css HTTP/1.0" 404 -
+2019-08-15 09:12:42,325 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:42] "GET /odoo_web_login/static/src/css/web_login_style.css HTTP/1.0" 404 -
+2019-08-15 09:12:42,342 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:42] "GET /website/static/src/less/web.assets_frontend/website.ui.components.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:42,345 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:42] "GET /website/static/src/less/web.assets_frontend/website.ui.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:42,357 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:42] "GET /website/static/src/less/web.assets_frontend/website.wrapwrap.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:42,358 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:42] "GET /website/static/src/less/web.assets_frontend/website.snippets.less.css HTTP/1.0" 404 -
+2019-08-15 09:12:42,630 9032 INFO ams_live werkzeug: 127.0.0.1 - - [15/Aug/2019 09:12:42] "POST /website/translations HTTP/1.0" 200 -

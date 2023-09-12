@@ -1,0 +1,302 @@
+<odoo>
+  <data>
+
+    <record id='custom_tool_type_view_form' model='ir.ui.view'>
+        <field name="name">tool.type.form</field>
+        <field name="model">tool.type</field>
+        <field name="arch" type="xml">
+            <form string="Tools">
+              <header>
+                <field name="status" widget="statusbar" statusbar_visible="available,qurantine,calibrate,unserviceable" statusbar_colors='{"available":"green","qurantine":"red","calibrate":"red","unserviceable":"green"}'/>
+              </header>
+            <sheet>
+              <div class="oe_button_box" name="button_box">
+
+                <button name="do_qurantine_start" 
+                  attrs="{'invisible':['|',('status', '=', 'qurantine'),('id', '=', False)]}"
+                  type="object" 
+                  class="oe_stat_button" 
+                  icon="fa-lock"
+                  string="Qurantine"
+                  help="show the contract for this vehicle">
+                </button>
+
+                <button name="do_qurantine_end" 
+                  attrs="{'invisible':[('status', '!=', 'qurantine')]}"
+                  type="object" 
+                  class="oe_stat_button" 
+                  icon="fa-unlock"
+                  string="End Qurantine"
+                  help="show the contract for this vehicle">
+                </button>
+                
+                <button name="do_calibarted"
+                  attrs="{'invisible':['|', ('need_calibrate', '=', False), ('status', '=', 'calibrate')]}"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-clock-o"
+                  string="Calibrate"
+                  help="show the contract for this vehicle">
+                </button>
+
+                <button name="do_calibarted_end"
+                  attrs="{'invisible':[('status', '!=', 'calibrate')]}"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-clock-o"
+                  string="End Calibrate"
+                  help="show the contract for this vehicle">
+                </button>
+              </div>
+            <group>
+              <group>
+                <field name="id" invisible="1"/>
+                <field name="spesial_tool"/>
+                <field name="tool_type_line" attrs="{'invisible':[('spesial_tool', '=', False)]}"/>
+                <field name='tool' string="Tools Name" attrs="{'required':True}"/>
+                <field name='ownership'/>
+                <field name='delivery_date' attrs="{'invisible':[('ownership', '!=', 'owner')]}"/>
+                <field name='lessor' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+                <field name='start_lease' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+                <field name='normal_termination' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+                <field name='date_manufacture'/>
+                <field name='vendors'/>
+                <field name="need_calibrate" attrs="{'readonly':['|',('id', '=', False),('status', '=', 'calibrate')]}"/>
+                <field name="get_calibrate" invisible="1"/>
+                <field name='calibrate_last' attrs="{'readonly': True, 'invisible':[('need_calibrate', '=', False)]}"/>
+                <field name='calibrate_next' attrs="{'readonly': True, 'invisible':[('need_calibrate', '=', False)]}"/>
+               </group>
+              <group>
+                <field name='esn'/>
+                <field name='part_num'/>
+                <field name='type'/>
+                <field name="remark"/>
+                <field name='fleet_id' attrs="{'invisible':[('type', '!=', 'onboard')]}"/>
+                <field name='base_id' attrs="{'invisible':[('type', '!=', 'onground')]}"/>
+                <!-- <field name="status" attrs="{'readonly':True}"/> -->
+                <field name="file_name" invisible="1"/>
+                <field widget="binary" name="document_tool" filename="file_name" attrs="{'invisible':[('calibrate_line', '=', 'False')]}"/>
+              </group>
+              </group>
+              <notebook>
+                <page string="History Qurantine">
+                  <field name="qurantine_line" attrs="{'readonly':True}">
+                    <tree string="Document" editable="bottom">
+                      <field name="qurantine_start"/>
+                      <field name="qurantine_end"/>
+                      <field name="reason"/>
+                      <field name="file_name" invisible="1"/>
+                      <field widget="binary" name="document_qurantine" filename="file_name"/>
+                      <!-- <field name="document_qurantine"/> -->
+                    </tree>
+                  </field>
+                </page>
+                <page string="History Calibrate">
+                  <field name="calibrate_line" attrs="{'readonly':True}"> 
+                    <tree string="Document" editable="bottom">
+                      <field name="calibrate_last"/>
+                      <field name="calibrate_next"/>
+                      <field name="file_name" invisible="1"/>
+                      <field widget="binary" name="document_calibrate" filename="file_name"/>
+                      <!-- <field name="document_calibrate"/> -->
+                    </tree>
+                  </field>
+                </page>
+              </notebook>
+              <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+              </div>
+            </sheet>
+            </form>
+        </field>
+    </record>  
+
+    <record id='custom_tool_type_view_tree' model='ir.ui.view'>
+        <field name="name">tool.type.tree</field>
+        <field name="model">tool.type</field>
+        <field name="arch" type="xml">
+            <tree string="Tool">
+                 <field name='tool' string="Tools"/>
+                 <field name='ownership'/>
+                 <field name='date_manufacture'/>
+                 <field name='count_calibrate' string="Total Calibrated"/> 
+                 <field name='vendors'/>
+                 <field name="status"/>
+            </tree>
+        </field>
+    </record>  
+
+    <record model="ir.ui.view" id="tool_custom_type_search_view">
+        <field name="name">tool.type.search</field>
+        <field name="model">tool.type</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name='tool' string="Tools"/>
+                 <field name='ownership'/>
+                 <field name='date_manufacture'/>
+                 <field name='count_calibrate' string="Total Calibrated"/> 
+                 <field name='vendors'/>
+                 <field name="status"/>             
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="custom_tool_action">
+        <field name="name">Tool</field>
+        <field name="res_model">tool.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Tools
+            </p>
+        </field>
+    </record>
+
+
+    <record id='custom_tool_movement_view_form' model='ir.ui.view'>
+        <field name="name">tool.movement.form</field>
+        <field name="model">tool.movement</field>
+        <field name="arch" type="xml">
+            <form string="Tools Movement">
+              <!-- <header>
+                <button name="get_request" string="Request" type="object"  class="oe_highlight" attrs="{'invisible':[('status','!=', 'request')]}"/>
+                <button name="get_onhand" string="On Hand" type="object"  class="oe_highlight" attrs="{'invisible':[('status','!=', 'onhand')]}"/>
+                <button name="get_complete" string="Complete" type="object"  class="oe_highlight" attrs="{'invisible':[('status','!=', 'complete')]}"/>
+                <field name="status" widget="statusbar" statusbar_visible="request,onhand,complete"/>
+              </header> -->
+              <sheet>
+                <group>
+                <group>
+                   <field name="id" attrs="{'invisible':True}"/>
+                   <field name="name" attrs="{'invisible':[('id','=',False)]}"/>
+                   <field name='employee'/>
+                   <field name="tool"/>
+                   <field name="refer"/>
+                   <!-- <field name="refer_ad" attrs="{'invisible':[('refer','!=','AD')]}" domain="[('type','=','AD')]"/>
+                   <field name="refer_sb" attrs="{'invisible':[('refer','!=','SB')]}" domain="[('type','=','SB')]"/>
+                   <field name="refer_stc" attrs="{'invisible':[('refer','!=','STC')]}" domain="[('type','=','STC')]"/>
+                   <field name="refer_ser" attrs="{'invisible':[('refer','!=','SERVICE')]}" domain="[('type','=','SERVICE')]"/>
+                   <field name="refer_eo" attrs="{'invisible':[('refer','!=','EO')]}"/>
+                   <field name="refer_mi" attrs="{'invisible':[('refer','!=','MI')]}"/>
+                   <field name="refer_ti" attrs="{'invisible':[('refer','!=','TI')]}"/>
+                   <field name="refer_oti" attrs="{'invisible':[('refer','!=','OTI')]}"/> -->
+                </group>
+                <group>
+                   <field name="date"/>
+                   <field name="time"/>
+                   <field name="status"/>
+                   <field name="location"/>
+                </group>
+                </group>
+                <group>
+                   <field name="remark" colspan="4"/>
+                </group>
+              </sheet>
+            </form>
+        </field>
+    </record> 
+
+    <record id='tool_movement_view_tree' model='ir.ui.view'>
+        <field name="name">tool.movement.tree</field>
+        <field name="model">tool.movement</field>
+        <field name="arch" type="xml">
+            <tree string="Tool Movement">
+                 <field name="name"/>
+                 <field name='employee'/>
+                 <field name='tool' string="Tools"/>
+                 <field name='refer'/>
+                 <field name='date'/>
+            </tree>
+        </field>
+    </record> 
+
+    <record model="ir.ui.view" id="tool_movement_search_view">
+        <field name="name">tool.movement.search</field>
+        <field name="model">tool.movement</field>
+        <field name="arch" type="xml">
+            <search>
+                 <field name="name"/>
+                 <field name='employee'/>
+                 <field name='tool' string="Tools"/>
+                 <field name='refer'/>
+                 <field name='date'/>             
+            </search>
+        </field>
+    </record> 
+
+    <record model="ir.actions.act_window" id="tool_movement_action">
+        <field name="name">Tool Movement</field>
+        <field name="res_model">tool.movement</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Tool Movement
+            </p>
+        </field>
+    </record>
+
+    <record id='doing_tool_calibrate_view_form' model='ir.ui.view'>
+        <field name="name">tool.calibrate.form</field>
+        <field name="model">tool.calibrate</field>
+        <field name="arch" type="xml">
+            <form string="Calibrated">
+              <group>
+                <group string="Calibration">
+                  <field name='calibrate_last' attrs="{'required':True}"/>
+                  <field name='calibrate_next' attrs="{'required':True}"/>
+                  <field name="file_name" invisible="1"/>
+                  <field widget="binary" name="document_calibrate" filename="file_name"/>
+                </group>
+              </group>
+              <footer>
+                <button name="action_save" string="Save" class="oe_link btn-primary"/>
+                <button string="Close" class="oe_link btn-primary" special="cancel"/>
+              </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id='tool_qurantine_view_form' model='ir.ui.view'>
+        <field name="name">tool.qurantine.form</field>
+        <field name="model">tool.qurantine</field>
+        <field name="arch" type="xml">
+            <form string="Qurantine">
+              <group>
+                <group string="Qurantine">
+                  <field name='qurantine_start' attrs="{'required':True}"/>
+                  <field name='reason'/>
+                  <field name="file_name" invisible="1"/>
+                  <field widget="binary" name="document_qurantine" filename="file_name"/>
+                </group>
+              </group>
+              <footer>
+                <button name="action_save" string="Save" class="oe_link btn-primary"/>
+                <button string="Cancel" class="oe_link btn-primary" special="cancel"/>
+              </footer>
+            </form>
+        </field>
+    </record> 
+
+    <record id='tool_qurantineand_view_form' model='ir.ui.view'>
+        <field name="name">tool.qurantineand.form</field>
+        <field name="model">tool.qurantineand</field>
+        <field name="arch" type="xml">
+            <form string="Qurantine">
+              <group>
+                <group string="And Qurantine">
+                  <field name='qurantine_end' attrs="{'required':True}"/>
+                  <field name="file_name" invisible="1"/>
+                  <field widget="binary" name="document_qurantine" filename="file_name"/>
+                </group>
+              </group>
+              <footer>
+                <button name="action_save" string="Save" class="oe_link btn-primary"/>
+                <button string="Cancel" class="oe_link btn-primary" special="cancel"/>
+              </footer>
+            </form>
+        </field>
+    </record>  
+
+  </data>
+</odoo>

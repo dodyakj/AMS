@@ -1,0 +1,1379 @@
+ <odoo>
+<data>
+  
+<template id="report_adc">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-3">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-9">
+                          <div class="row" style="margin-bottom:10px">
+                            <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                            <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                            <div class="row">
+                              <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Airframe</span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <table style="font-size:12px" class="col-xs-12">
+                                <tr>
+                                  <th width="15%"></th>
+                                  <th width="45"></th>
+                                  <th width="15%"></th>
+                                  <th width="25"></th>
+                                </tr>
+                                <tr>
+                                  <td>Aircraft Reg.</td>
+                                  <td><span t-esc="data.fleet_id.name"></span></td>
+                                  <td>Aircraft Type</td>
+                                  <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                </tr>
+                                <tr>
+                                  <td>Aircraft Serial Number</td>
+                                  <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                  <td>Engine Type</td>
+                                  <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                </tr>
+                                <tr>
+                                  <td>Airframe Hours</td>
+                                  <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                  <td>Propeller</td>
+                                  <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                </tr>
+                                <tr>
+                                  <td>Airframe Cycles</td>
+                                  <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                  <td>Auxiliary Power Unit</td>
+                                  <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <table class="table table-bordered" style="font-size:12px;">
+                        <tr style="background-color:gray;">
+                          <td width="3%"><center>No</center></td>
+                          <td width="10%"><center>DGAC</center></td>
+                          <td width="10%"><center>Foreign AD</center></td>
+                          <td width="10%"><center>SB Reference</center></td>
+                          <td width="30%"><center>Subject</center></td>
+                          <td width="8%"><center>Date of Compilance</center></td>
+                          <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                          <td width="8%"><center>One Time / Recurring</center></td>
+                          <td  width="13%"><center>Remarks</center></td>
+                        </tr>
+                        <t t-set="nomer" t-value="1"/>
+                        <t t-foreach="data.bulletin_line" t-as="adc">
+                            <tr>
+                                <td><div t-esc="nomer" /></td>
+                                <t t-set="nomer" t-value="nomer+1"/>
+	                              <td>
+		                              <t t-foreach="adc.dgac_ids" t-as="id_dgac">
+		                                	<div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+	                                  </t>
+	                              </td>
+	                                <td> 
+	                                  <t t-foreach="adc.inter_ids" t-as="id_inter">
+	                                    	<div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+	                                  </t>
+	                                </td>
+                                
+                                <t t-if="adc.sb_ids">
+                                <t t-foreach="adc.sb_ids" t-as="id_sb" >
+                                  <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                </t>
+                                </t>
+                                <t t-if="not adc.sb_ids">
+                                  <td> </td>
+                                </t>
+                                <td> <div t-esc="adc.subject" /> </td>
+                                <t t-if="adc.date_compli">
+                                  <td> <div t-esc="adc.date_compli" /> </td>
+                              </t>
+                                <t t-if="not adc.date_compli">
+                                  <td></td>
+                                </t>
+                                <t t-if="adc.total_hours">
+                                  <td><div t-esc="adc.total_hours" /><div t-esc="adc.total_cycle" /> </td>
+                                </t>
+                                <t t-if="not adc.total_hours">
+                                  <td><div t-esc="adc.total_hours" /> <div t-esc="adc.total_cycle" /></td>
+                                </t>
+                                <t t-if="adc.recurring">
+                                  <td><div t-esc="adc.recurring" /> </td>
+                                </t>
+                                <t t-if="not adc.recurring">
+                                  <td> </td>
+                                </t>
+                                <td> <div t-esc="adc.remarks" /> </td>
+                            </tr>
+                        </t>
+                    </table>
+                
+                  <t t-if="data.get_engine(1)">
+                    <p style="page-break-after:always;">   </p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                          </div>
+                          <div class="col-xs-9">
+                            <div class="row" style="margin-bottom:10px">
+                              <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                              <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                              <div class="row">
+                                <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Engine</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <table style="font-size:12px" class="col-xs-12">
+                                  <tr>
+                                    <th width="15%"></th>
+                                    <th width="45"></th>
+                                    <th width="15%"></th>
+                                    <th width="25"></th>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Reg.</td>
+                                    <td><span t-esc="data.fleet_id.name"></span></td>
+                                    <td>Aircraft Type</td>
+                                    <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Serial Number</td>
+                                    <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                    <td>Engine Type</td>
+                                    <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Hours</td>
+                                    <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                    <td>Propeller</td>
+                                    <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Cycles</td>
+                                    <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                    <td>Auxiliary Power Unit</td>
+                                    <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <br/>
+                      <table class="table table-bordered" style="font-size:12px;">
+                          <tr style="background-color:gray;">
+                            <td width="3%"><center>No</center></td>
+                            <td width="10%"><center>DGAC</center></td>
+                            <td width="10%"><center>Foreign AD</center></td>
+                            <td width="10%"><center>SB Reference</center></td>
+                            <td width="30%"><center>Subject</center></td>
+                            <td width="8%"><center>Date of Compilance</center></td>
+                            <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                            <td width="8%"><center>One Time / Recurring</center></td>
+                            <td  width="13%"><center>Remarks</center></td>
+                          </tr>
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.get_engine(1)" t-as="adc">
+                              <tr>
+                                  <td><div t-esc="nomer" /></td>
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <td>
+                                    <t t-foreach="adc_value['dgac_ids']" t-as="id_dgac">
+                                        <div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+                                      </t>
+                                  </td>
+                                    <td> 
+                                      <t t-foreach="adc_value['inter_ids']" t-as="id_inter">
+                                          <div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+                                      </t>
+                                    </td>
+                                  
+                                  <t t-foreach="adc_value['sb_ids']" t-as="id_sb" >
+                                    <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                  </t>
+                                
+                                  <td> <div t-esc="adc_value['subject']" /> </td>
+                                  <t t-if="adc_value['date_compli']">
+                                    <td> <div t-esc="adc_value['date_compli']" /> </td>
+                                </t>
+                                  <t t-if="not adc_value['date_compli']">
+                                    <td></td>
+                                  </t>
+                                  <t t-if="adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /><div t-esc="adc_value['total_cycle']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /> <div t-esc="adc_value['total_cycle']" /></td>
+                                  </t>
+                                  <t t-if="adc_value['recurring']">
+                                    <td><div t-esc="adc_value['recurring']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['recurring']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['remarks']" /> </td>
+                              </tr>
+                          </t>
+                      </table>
+                  </t>
+                  <t t-if="data.get_engine(2)">
+                    <p style="page-break-after:always;">   </p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                          </div>
+                          <div class="col-xs-9">
+                            <div class="row" style="margin-bottom:10px">
+                              <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                              <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                              <div class="row">
+                                <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Engine</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <table style="font-size:12px" class="col-xs-12">
+                                  <tr>
+                                    <th width="15%"></th>
+                                    <th width="45"></th>
+                                    <th width="15%"></th>
+                                    <th width="25"></th>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Reg.</td>
+                                    <td><span t-esc="data.fleet_id.name"></span></td>
+                                    <td>Aircraft Type</td>
+                                    <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Serial Number</td>
+                                    <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                    <td>Engine Type</td>
+                                    <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Hours</td>
+                                    <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                    <td>Propeller</td>
+                                    <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Cycles</td>
+                                    <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                    <td>Auxiliary Power Unit</td>
+                                    <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <br/>
+                      <table class="table table-bordered" style="font-size:12px;">
+                          <tr style="background-color:gray;">
+                            <td width="3%"><center>No</center></td>
+                            <td width="10%"><center>DGAC</center></td>
+                            <td width="10%"><center>Foreign AD</center></td>
+                            <td width="10%"><center>SB Reference</center></td>
+                            <td width="30%"><center>Subject</center></td>
+                            <td width="8%"><center>Date of Compilance</center></td>
+                            <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                            <td width="8%"><center>One Time / Recurring</center></td>
+                            <td  width="13%"><center>Remarks</center></td>
+                          </tr>
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.get_engine(2)" t-as="adc">
+                              <tr>
+                                  <td><div t-esc="nomer" /></td>
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <td>
+                                    <t t-if="adc_value['dgac_ids']">
+                                    <t t-foreach="adc_value['dgac_ids']" t-as="id_dgac">
+                                        <div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+                                      </t>
+                                    </t>
+                                  </td>
+                                    <td> 
+                                      <t t-if="adc_value['inter_ids']">
+                                      <t t-foreach="adc_value['inter_ids']" t-as="id_inter">
+                                          <div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+                                      </t>
+                                      </t>
+                                    </td>
+                                  
+                                  <t t-if="adc_value['sb_ids']">
+                                  <t t-foreach="adc_value['sb_ids']" t-as="id_sb" >
+                                    <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                  </t>
+                                  </t>
+                                  <t t-if="not adc_value['sb_ids']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['subject']" /> </td>
+                                  <t t-if="adc_value['date_compli']">
+                                    <td> <div t-esc="adc_value['date_compli']" /> </td>
+                                </t>
+                                  <t t-if="not adc_value['date_compli']">
+                                    <td></td>
+                                  </t>
+                                  <t t-if="adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /><div t-esc="adc_value['total_cycle']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /> <div t-esc="adc_value['total_cycle']" /></td>
+                                  </t>
+                                  <t t-if="adc_value['recurring']">
+                                    <td><div t-esc="adc_value['recurring']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['recurring']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['remarks']" /> </td>
+                              </tr>
+                          </t>
+                      </table>
+                  </t>
+                  <t t-if="data.get_engine(3)">
+                    <p style="page-break-after:always;">   </p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                          </div>
+                          <div class="col-xs-9">
+                            <div class="row" style="margin-bottom:10px">
+                              <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                              <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                              <div class="row">
+                                <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Engine</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <table style="font-size:12px" class="col-xs-12">
+                                  <tr>
+                                    <th width="15%"></th>
+                                    <th width="45"></th>
+                                    <th width="15%"></th>
+                                    <th width="25"></th>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Reg.</td>
+                                    <td><span t-esc="data.fleet_id.name"></span></td>
+                                    <td>Aircraft Type</td>
+                                    <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Serial Number</td>
+                                    <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                    <td>Engine Type</td>
+                                    <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Hours</td>
+                                    <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                    <td>Propeller</td>
+                                    <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Cycles</td>
+                                    <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                    <td>Auxiliary Power Unit</td>
+                                    <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <br/>
+                      <table class="table table-bordered" style="font-size:12px;">
+                          <tr style="background-color:gray;">
+                            <td width="3%"><center>No</center></td>
+                            <td width="10%"><center>DGAC</center></td>
+                            <td width="10%"><center>Foreign AD</center></td>
+                            <td width="10%"><center>SB Reference</center></td>
+                            <td width="30%"><center>Subject</center></td>
+                            <td width="8%"><center>Date of Compilance</center></td>
+                            <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                            <td width="8%"><center>One Time / Recurring</center></td>
+                            <td  width="13%"><center>Remarks</center></td>
+                          </tr>
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.get_engine(3)" t-as="adc">
+                              <tr>
+                                  <td><div t-esc="nomer" /></td>
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <td>
+                                    <t t-if="adc_value['dgac_ids']">
+                                    <t t-foreach="adc_value['dgac_ids']" t-as="id_dgac">
+                                        <div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+                                      </t>
+                                    </t>
+                                  </td>
+                                    <td> 
+                                      <t t-if="adc_value['inter_ids']">
+                                      <t t-foreach="adc_value['inter_ids']" t-as="id_inter">
+                                          <div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+                                      </t>
+                                      </t>
+                                    </td>
+                                  
+                                  <t t-if="adc_value['sb_ids']">
+                                  <t t-foreach="adc_value['sb_ids']" t-as="id_sb" >
+                                    <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                  </t>
+                                  </t>
+                                  <t t-if="not adc_value['sb_ids']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['subject']" /> </td>
+                                  <t t-if="adc_value['date_compli']">
+                                    <td> <div t-esc="adc_value['date_compli']" /> </td>
+                                </t>
+                                  <t t-if="not adc_value['date_compli']">
+                                    <td></td>
+                                  </t>
+                                  <t t-if="adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /><div t-esc="adc_value['total_cycle']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /> <div t-esc="adc_value['total_cycle']" /></td>
+                                  </t>
+                                  <t t-if="adc_value['recurring']">
+                                    <td><div t-esc="adc_value['recurring']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['recurring']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['remarks']" /> </td>
+                              </tr>
+                          </t>
+                      </table>
+                  </t>
+                  <t t-if="data.get_engine(4)">
+                    <p style="page-break-after:always;">   </p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                          </div>
+                          <div class="col-xs-9">
+                            <div class="row" style="margin-bottom:10px">
+                              <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                              <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                              <div class="row">
+                                <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Engine</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <table style="font-size:12px" class="col-xs-12">
+                                  <tr>
+                                    <th width="15%"></th>
+                                    <th width="45"></th>
+                                    <th width="15%"></th>
+                                    <th width="25"></th>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Reg.</td>
+                                    <td><span t-esc="data.fleet_id.name"></span></td>
+                                    <td>Aircraft Type</td>
+                                    <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Serial Number</td>
+                                    <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                    <td>Engine Type</td>
+                                    <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Hours</td>
+                                    <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                    <td>Propeller</td>
+                                    <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Cycles</td>
+                                    <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                    <td>Auxiliary Power Unit</td>
+                                    <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <br/>
+                      <table class="table table-bordered" style="font-size:12px;">
+                          <tr style="background-color:gray;">
+                            <td width="3%"><center>No</center></td>
+                            <td width="10%"><center>DGAC</center></td>
+                            <td width="10%"><center>Foreign AD</center></td>
+                            <td width="10%"><center>SB Reference</center></td>
+                            <td width="30%"><center>Subject</center></td>
+                            <td width="8%"><center>Date of Compilance</center></td>
+                            <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                            <td width="8%"><center>One Time / Recurring</center></td>
+                            <td  width="13%"><center>Remarks</center></td>
+                          </tr>
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.get_engine(4)" t-as="adc">
+                              <tr>
+                                  <td><div t-esc="nomer" /></td>
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <td>
+                                    <t t-if="adc_value['dgac_ids']">
+                                    <t t-foreach="adc_value['dgac_ids']" t-as="id_dgac">
+                                        <div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+                                      </t>
+                                    </t>
+                                  </td>
+                                    <td> 
+                                      <t t-if="adc_value['inter_ids']">
+                                      <t t-foreach="adc_value['inter_ids']" t-as="id_inter">
+                                          <div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+                                      </t>
+                                      </t>
+                                    </td>
+                                  
+                                  <t t-if="adc_value['sb_ids']">
+                                  <t t-foreach="adc_value['sb_ids']" t-as="id_sb" >
+                                    <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                  </t>
+                                  </t>
+                                  <t t-if="not adc_value['sb_ids']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['subject']" /> </td>
+                                  <t t-if="adc_value['date_compli']">
+                                    <td> <div t-esc="adc_value['date_compli']" /> </td>
+                                </t>
+                                  <t t-if="not adc_value['date_compli']">
+                                    <td></td>
+                                  </t>
+                                  <t t-if="adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /><div t-esc="adc_value['total_cycle']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /> <div t-esc="adc_value['total_cycle']" /></td>
+                                  </t>
+                                  <t t-if="adc_value['recurring']">
+                                    <td><div t-esc="adc_value['recurring']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['recurring']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['remarks']" /> </td>
+                              </tr>
+                          </t>
+                      </table>
+                  </t>
+                  <t t-if="data.get_auxiliary()">
+                    <p style="page-break-after:always;">   </p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                          </div>
+                          <div class="col-xs-9">
+                            <div class="row" style="margin-bottom:10px">
+                              <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                              <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                              <div class="row">
+                                <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Auxiliary</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <table style="font-size:12px" class="col-xs-12">
+                                  <tr>
+                                    <th width="15%"></th>
+                                    <th width="45"></th>
+                                    <th width="15%"></th>
+                                    <th width="25"></th>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Reg.</td>
+                                    <td><span t-esc="data.fleet_id.name"></span></td>
+                                    <td>Aircraft Type</td>
+                                    <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Serial Number</td>
+                                    <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                    <td>Engine Type</td>
+                                    <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Hours</td>
+                                    <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                    <td>Propeller</td>
+                                    <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Cycles</td>
+                                    <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                    <td>Auxiliary Power Unit</td>
+                                    <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <br/>
+                      <table class="table table-bordered" style="font-size:12px;">
+                          <tr style="background-color:gray;">
+                            <td width="3%"><center>No</center></td>
+                            <td width="10%"><center>DGAC</center></td>
+                            <td width="10%"><center>Foreign AD</center></td>
+                            <td width="10%"><center>SB Reference</center></td>
+                            <td width="30%"><center>Subject</center></td>
+                            <td width="8%"><center>Date of Compilance</center></td>
+                            <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                            <td width="8%"><center>One Time / Recurring</center></td>
+                            <td  width="13%"><center>Remarks</center></td>
+                          </tr>
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.get_auxiliary()" t-as="adc">
+                              <tr>
+                                  <td><div t-esc="nomer" /></td>
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <td>
+                                    <t t-if="adc_value['dgac_ids']">
+                                    <t t-foreach="adc_value['dgac_ids']" t-as="id_dgac">
+                                        <div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+                                      </t>
+                                    </t>
+                                  </td>
+                                    <td> 
+                                      <t t-if="adc_value['inter_ids']">
+                                      <t t-foreach="adc_value['inter_ids']" t-as="id_inter">
+                                          <div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+                                      </t>
+                                      </t>
+                                    </td>
+                                  
+                                  <t t-if="adc_value['sb_ids']">
+                                  <t t-foreach="adc_value['sb_ids']" t-as="id_sb" >
+                                    <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                  </t>
+                                  </t>
+                                  <t t-if="not adc_value['sb_ids']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['subject']" /> </td>
+                                  <t t-if="adc_value['date_compli']">
+                                    <td> <div t-esc="adc_value['date_compli']" /> </td>
+                                </t>
+                                  <t t-if="not adc_value['date_compli']">
+                                    <td></td>
+                                  </t>
+                                  <t t-if="adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /><div t-esc="adc_value['total_cycle']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /> <div t-esc="adc_value['total_cycle']" /></td>
+                                  </t>
+                                  <t t-if="adc_value['recurring']">
+                                    <td><div t-esc="adc_value['recurring']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['recurring']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['remarks']" /> </td>
+                              </tr>
+                          </t>
+                      </table>
+                  </t>
+                  <t t-if="data.get_propeller(1)">
+                    <p style="page-break-after:always;">   </p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                          </div>
+                          <div class="col-xs-9">
+                            <div class="row" style="margin-bottom:10px">
+                              <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                              <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                              <div class="row">
+                                <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Propeller</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <table style="font-size:12px" class="col-xs-12">
+                                  <tr>
+                                    <th width="15%"></th>
+                                    <th width="45"></th>
+                                    <th width="15%"></th>
+                                    <th width="25"></th>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Reg.</td>
+                                    <td><span t-esc="data.fleet_id.name"></span></td>
+                                    <td>Aircraft Type</td>
+                                    <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Serial Number</td>
+                                    <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                    <td>Engine Type</td>
+                                    <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Hours</td>
+                                    <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                    <td>Propeller</td>
+                                    <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Cycles</td>
+                                    <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                    <td>Auxiliary Power Unit</td>
+                                    <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <br/>
+                      <table class="table table-bordered" style="font-size:12px;">
+                          <tr style="background-color:gray;">
+                            <td width="3%"><center>No</center></td>
+                            <td width="10%"><center>DGAC</center></td>
+                            <td width="10%"><center>Foreign AD</center></td>
+                            <td width="10%"><center>SB Reference</center></td>
+                            <td width="30%"><center>Subject</center></td>
+                            <td width="8%"><center>Date of Compilance</center></td>
+                            <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                            <td width="8%"><center>One Time / Recurring</center></td>
+                            <td  width="13%"><center>Remarks</center></td>
+                          </tr>
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.get_propeller(1)" t-as="adc">
+                              <tr>
+                                  <td><div t-esc="nomer" /></td>
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <td>
+                                    <t t-if="adc_value['dgac_ids']">
+                                    <t t-foreach="adc_value['dgac_ids']" t-as="id_dgac">
+                                        <div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+                                      </t>
+                                    </t>
+                                  </td>
+                                    <td> 
+                                      <t t-if="adc_value['inter_ids']">
+                                      <t t-foreach="adc_value['inter_ids']" t-as="id_inter">
+                                          <div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+                                      </t>
+                                      </t>
+                                    </td>
+                                  
+                                  <t t-if="adc_value['sb_ids']">
+                                  <t t-foreach="adc_value['sb_ids']" t-as="id_sb" >
+                                    <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                  </t>
+                                  </t>
+                                  <t t-if="not adc_value['sb_ids']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['subject']" /> </td>
+                                  <t t-if="adc_value['date_compli']">
+                                    <td> <div t-esc="adc_value['date_compli']" /> </td>
+                                </t>
+                                  <t t-if="not adc_value['date_compli']">
+                                    <td></td>
+                                  </t>
+                                  <t t-if="adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /><div t-esc="adc_value['total_cycle']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /> <div t-esc="adc_value['total_cycle']" /></td>
+                                  </t>
+                                  <t t-if="adc_value['recurring']">
+                                    <td><div t-esc="adc_value['recurring']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['recurring']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['remarks']" /> </td>
+                              </tr>
+                          </t>
+                      </table>
+                  </t>
+                  <t t-if="data.get_propeller(2)">
+                    <p style="page-break-after:always;">   </p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                          </div>
+                          <div class="col-xs-9">
+                            <div class="row" style="margin-bottom:10px">
+                              <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                              <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                              <div class="row">
+                                <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Propeller</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <table style="font-size:12px" class="col-xs-12">
+                                  <tr>
+                                    <th width="15%"></th>
+                                    <th width="45"></th>
+                                    <th width="15%"></th>
+                                    <th width="25"></th>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Reg.</td>
+                                    <td><span t-esc="data.fleet_id.name"></span></td>
+                                    <td>Aircraft Type</td>
+                                    <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Serial Number</td>
+                                    <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                    <td>Engine Type</td>
+                                    <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Hours</td>
+                                    <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                    <td>Propeller</td>
+                                    <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Cycles</td>
+                                    <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                    <td>Auxiliary Power Unit</td>
+                                    <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <br/>
+                      <table class="table table-bordered" style="font-size:12px;">
+                          <tr style="background-color:gray;">
+                            <td width="3%"><center>No</center></td>
+                            <td width="10%"><center>DGAC</center></td>
+                            <td width="10%"><center>Foreign AD</center></td>
+                            <td width="10%"><center>SB Reference</center></td>
+                            <td width="30%"><center>Subject</center></td>
+                            <td width="8%"><center>Date of Compilance</center></td>
+                            <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                            <td width="8%"><center>One Time / Recurring</center></td>
+                            <td  width="13%"><center>Remarks</center></td>
+                          </tr>
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.get_propeller(2)" t-as="adc">
+                              <tr>
+                                  <td><div t-esc="nomer" /></td>
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <td>
+                                    <t t-if="adc_value['dgac_ids']">
+                                    <t t-foreach="adc_value['dgac_ids']" t-as="id_dgac">
+                                        <div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+                                      </t>
+                                    </t>
+                                  </td>
+                                    <td> 
+                                      <t t-if="adc_value['inter_ids']">
+                                      <t t-foreach="adc_value['inter_ids']" t-as="id_inter">
+                                          <div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+                                      </t>
+                                      </t>
+                                    </td>
+                                  
+                                  <t t-if="adc_value['sb_ids']">
+                                  <t t-foreach="adc_value['sb_ids']" t-as="id_sb" >
+                                    <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                  </t>
+                                  </t>
+                                  <t t-if="not adc_value['sb_ids']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['subject']" /> </td>
+                                  <t t-if="adc_value['date_compli']">
+                                    <td> <div t-esc="adc_value['date_compli']" /> </td>
+                                </t>
+                                  <t t-if="not adc_value['date_compli']">
+                                    <td></td>
+                                  </t>
+                                  <t t-if="adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /><div t-esc="adc_value['total_cycle']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /> <div t-esc="adc_value['total_cycle']" /></td>
+                                  </t>
+                                  <t t-if="adc_value['recurring']">
+                                    <td><div t-esc="adc_value['recurring']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['recurring']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['remarks']" /> </td>
+                              </tr>
+                          </t>
+                      </table>
+                  </t>
+                  <t t-if="data.get_propeller(3)">
+                    <p style="page-break-after:always;">   </p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                          </div>
+                          <div class="col-xs-9">
+                            <div class="row" style="margin-bottom:10px">
+                              <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                              <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                              <div class="row">
+                                <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Propeller</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <table style="font-size:12px" class="col-xs-12">
+                                  <tr>
+                                    <th width="15%"></th>
+                                    <th width="45"></th>
+                                    <th width="15%"></th>
+                                    <th width="25"></th>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Reg.</td>
+                                    <td><span t-esc="data.fleet_id.name"></span></td>
+                                    <td>Aircraft Type</td>
+                                    <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Serial Number</td>
+                                    <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                    <td>Engine Type</td>
+                                    <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Hours</td>
+                                    <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                    <td>Propeller</td>
+                                    <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Cycles</td>
+                                    <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                    <td>Auxiliary Power Unit</td>
+                                    <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <br/>
+                      <table class="table table-bordered" style="font-size:12px;">
+                          <tr style="background-color:gray;">
+                            <td width="3%"><center>No</center></td>
+                            <td width="10%"><center>DGAC</center></td>
+                            <td width="10%"><center>Foreign AD</center></td>
+                            <td width="10%"><center>SB Reference</center></td>
+                            <td width="30%"><center>Subject</center></td>
+                            <td width="8%"><center>Date of Compilance</center></td>
+                            <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                            <td width="8%"><center>One Time / Recurring</center></td>
+                            <td  width="13%"><center>Remarks</center></td>
+                          </tr>
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.get_propeller(3)" t-as="adc">
+                              <tr>
+                                  <td><div t-esc="nomer" /></td>
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <td>
+                                    <t t-if="adc_value['dgac_ids']">
+                                    <t t-foreach="adc_value['dgac_ids']" t-as="id_dgac">
+                                        <div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+                                      </t>
+                                    </t>
+                                  </td>
+                                    <td> 
+                                      <t t-if="adc_value['inter_ids']">
+                                      <t t-foreach="adc_value['inter_ids']" t-as="id_inter">
+                                          <div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+                                      </t>
+                                      </t>
+                                    </td>
+                                  
+                                  <t t-if="adc_value['sb_ids']">
+                                  <t t-foreach="adc_value['sb_ids']" t-as="id_sb" >
+                                    <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                  </t>
+                                  </t>
+                                  <t t-if="not adc_value['sb_ids']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['subject']" /> </td>
+                                  <t t-if="adc_value['date_compli']">
+                                    <td> <div t-esc="adc_value['date_compli']" /> </td>
+                                </t>
+                                  <t t-if="not adc_value['date_compli']">
+                                    <td></td>
+                                  </t>
+                                  <t t-if="adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /><div t-esc="adc_value['total_cycle']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /> <div t-esc="adc_value['total_cycle']" /></td>
+                                  </t>
+                                  <t t-if="adc_value['recurring']">
+                                    <td><div t-esc="adc_value['recurring']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['recurring']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['remarks']" /> </td>
+                              </tr>
+                          </t>
+                      </table>
+                  </t>
+                  <t t-if="data.get_propeller(4)">
+                    <p style="page-break-after:always;">   </p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                          </div>
+                          <div class="col-xs-9">
+                            <div class="row" style="margin-bottom:10px">
+                              <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                              <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                              <div class="row">
+                                <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Propeller</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <table style="font-size:12px" class="col-xs-12">
+                                  <tr>
+                                    <th width="15%"></th>
+                                    <th width="45"></th>
+                                    <th width="15%"></th>
+                                    <th width="25"></th>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Reg.</td>
+                                    <td><span t-esc="data.fleet_id.name"></span></td>
+                                    <td>Aircraft Type</td>
+                                    <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Serial Number</td>
+                                    <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                    <td>Engine Type</td>
+                                    <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Hours</td>
+                                    <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                    <td>Propeller</td>
+                                    <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Cycles</td>
+                                    <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                    <td>Auxiliary Power Unit</td>
+                                    <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <br/>
+                      <table class="table table-bordered" style="font-size:12px;">
+                          <tr style="background-color:gray;">
+                            <td width="3%"><center>No</center></td>
+                            <td width="10%"><center>DGAC</center></td>
+                            <td width="10%"><center>Foreign AD</center></td>
+                            <td width="10%"><center>SB Reference</center></td>
+                            <td width="30%"><center>Subject</center></td>
+                            <td width="8%"><center>Date of Compilance</center></td>
+                            <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                            <td width="8%"><center>One Time / Recurring</center></td>
+                            <td  width="13%"><center>Remarks</center></td>
+                          </tr>
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.get_propeller(4)" t-as="adc">
+                              <tr>
+                                  <td><div t-esc="nomer" /></td>
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <td>
+                                    <t t-if="adc_value['dgac_ids']">
+                                    <t t-foreach="adc_value['dgac_ids']" t-as="id_dgac">
+                                        <div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+                                      </t>
+                                    </t>
+                                  </td>
+                                    <td> 
+                                      <t t-if="adc_value['inter_ids']">
+                                      <t t-foreach="adc_value['inter_ids']" t-as="id_inter">
+                                          <div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+                                      </t>
+                                      </t>
+                                    </td>
+                                  
+                                  <t t-if="adc_value['sb_ids']">
+                                  <t t-foreach="adc_value['sb_ids']" t-as="id_sb" >
+                                    <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                  </t>
+                                  </t>
+                                  <t t-if="not adc_value['sb_ids']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['subject']" /> </td>
+                                  <t t-if="adc_value['date_compli']">
+                                    <td> <div t-esc="adc_value['date_compli']" /> </td>
+                                </t>
+                                  <t t-if="not adc_value['date_compli']">
+                                    <td></td>
+                                  </t>
+                                  <t t-if="adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /><div t-esc="adc_value['total_cycle']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /> <div t-esc="adc_value['total_cycle']" /></td>
+                                  </t>
+                                  <t t-if="adc_value['recurring']">
+                                    <td><div t-esc="adc_value['recurring']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['recurring']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['remarks']" /> </td>
+                              </tr>
+                          </t>
+                      </table>
+                  </t>
+                  <t t-if="data.get_component()">
+                    <p style="page-break-after:always;">   </p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                          </div>
+                          <div class="col-xs-9">
+                            <div class="row" style="margin-bottom:10px">
+                              <h5 class="text-center col-xs-8">AIRWORTHINESS DIRECTIVE COMPLIANCE RECORD</h5>
+                              <h6 class="text-center col-xs-4" t-esc="data.create_date"></h6>
+                              <div class="row">
+                                <span class="text-center col-xs-8" style="font-size:12px; margin-top:-5px">Component</span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <table style="font-size:12px" class="col-xs-12">
+                                  <tr>
+                                    <th width="15%"></th>
+                                    <th width="45"></th>
+                                    <th width="15%"></th>
+                                    <th width="25"></th>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Reg.</td>
+                                    <td><span t-esc="data.fleet_id.name"></span></td>
+                                    <td>Aircraft Type</td>
+                                    <td><span t-esc="data.fleet_id.aircraft_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Aircraft Serial Number</td>
+                                    <td><span t-esc="data.fleet_id.vin_sn"></span></td>
+                                    <td>Engine Type</td>
+                                    <td><span t-esc="data.fleet_id.engine_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Hours</td>
+                                    <td><span t-esc="data.fleet_id.total_hours"></span></td>
+                                    <td>Propeller</td>
+                                    <td><span t-esc="data.fleet_id.propeller_type_id.name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Airframe Cycles</td>
+                                    <td><span t-esc="data.fleet_id.total_landings"></span></td>
+                                    <td>Auxiliary Power Unit</td>
+                                    <td><span t-esc="data.fleet_id.auxiliary_type_id.name"></span></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <br/>
+                      <table class="table table-bordered" style="font-size:12px;">
+                          <tr style="background-color:gray;">
+                            <td width="3%"><center>No</center></td>
+                            <td width="10%"><center>DGAC</center></td>
+                            <td width="10%"><center>Foreign AD</center></td>
+                            <td width="10%"><center>SB Reference</center></td>
+                            <td width="30%"><center>Subject</center></td>
+                            <td width="8%"><center>Date of Compilance</center></td>
+                            <td width="8%"><center>Airframe Total Time at Comp.</center></td>
+                            <td width="8%"><center>One Time / Recurring</center></td>
+                            <td  width="13%"><center>Remarks</center></td>
+                          </tr>
+                          <t t-set="nomer" t-value="1"/>
+                          <t t-foreach="data.get_propeller()" t-as="adc">
+                              <tr>
+                                  <td><div t-esc="nomer" /></td>
+                                  <t t-set="nomer" t-value="nomer+1"/>
+                                  <td>
+                                    <t t-if="adc_value['dgac_ids']">
+                                    <t t-foreach="adc_value['dgac_ids']" t-as="id_dgac">
+                                        <div t-esc="id_dgac.name" /><div t-esc="id_dgac.date" />
+                                      </t>
+                                    </t>
+                                  </td>
+                                    <td> 
+                                      <t t-if="adc_value['inter_ids']">
+                                      <t t-foreach="adc_value['inter_ids']" t-as="id_inter">
+                                          <div t-esc="id_inter.name" /><div t-esc="id_inter.date" />
+                                      </t>
+                                      </t>
+                                    </td>
+                                  
+                                  <t t-if="adc_value['sb_ids']">
+                                  <t t-foreach="adc_value['sb_ids']" t-as="id_sb" >
+                                    <td> <div t-esc="id_sb.name" /> <div t-esc="id_sb.date" /></td>
+                                  </t>
+                                  </t>
+                                  <t t-if="not adc_value['sb_ids']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['subject']" /> </td>
+                                  <t t-if="adc_value['date_compli']">
+                                    <td> <div t-esc="adc_value['date_compli']" /> </td>
+                                </t>
+                                  <t t-if="not adc_value['date_compli']">
+                                    <td></td>
+                                  </t>
+                                  <t t-if="adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /><div t-esc="adc_value['total_cycle']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['total_hours']">
+                                    <td><div t-esc="adc_value['total_hours']" /> <div t-esc="adc_value['total_cycle']" /></td>
+                                  </t>
+                                  <t t-if="adc_value['recurring']">
+                                    <td><div t-esc="adc_value['recurring']" /> </td>
+                                  </t>
+                                  <t t-if="not adc_value['recurring']">
+                                    <td> </td>
+                                  </t>
+                                  <td> <div t-esc="adc_value['remarks']" /> </td>
+                              </tr>
+                          </t>
+                      </table>
+                  </t>
+                  
+
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</data>
+
+  <data>
+        <record id="paperadc" model="report.paperformat">
+            <field name="name">ADC Report</field>
+            <field name="orientation">Landscape</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+       <report
+                id="print_adc_reports"
+                string="AIRWORTHINESS DIRECTIVE COMPLIANCE Report"
+                model="ams.adc.report"
+                report_type="qweb-html"
+                file="ams_report.report_adc"
+                name="ams_report.report_adc"
+                paperformat="ams_report.paperadc"
+            />
+ 
+  <record id="adc_report_form" model="ir.ui.view">
+        <field name="name">ams.adc.report.form</field>
+        <field name="model">ams.adc.report</field>
+        <field name="view_mode">form</field>
+        <field name="arch" type="xml">
+            <form string="ADC Report">
+          <group>
+          <group>
+            <field name="fleet_id"/>
+            <field name="bulletin_line" editable="bottom" invisible="1">
+                  <tree>
+                    <field name='dgac_ids'/>
+                    <field name='inter_ids'/>
+                    <field name='sb_ids'/>
+                    <field name='subject'/>
+                    <field name='date_compli'/>
+                    <field name='total_hours'/>
+                    <field name='total_cycle'/>
+                    <field name='recurring'/>
+                    <field name='remarks'/>
+                  </tree>
+            </field>
+          </group>
+          </group>
+
+          <footer>
+            <button name="print_adc_reports" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+            <button special="cancel" string="Cancel"/>
+          </footer>
+            </form>
+        </field>
+      </record>
+
+
+<record id="adc_report_action" model="ir.actions.act_window">
+  <field name="name">ADC Report</field>
+  <field name="res_model">ams.adc.report</field>
+  <field name="view_type">form</field>
+  <field name="view_mode">form</field>
+    <field name="limit">1</field>
+  <field name="target">new</field>
+</record>
+</data>
+</odoo>

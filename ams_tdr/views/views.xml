@@ -1,0 +1,43 @@
+<odoo>
+  <data>
+    <record id="action_ams_tdr" model="ir.actions.act_window">
+      <field name="name">name</field>
+      <field name="res_model">ams.mtr</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.ui.view" id="ams_tdr_form">
+      <field name="name">ams.mtr.form</field>
+      <field name="model">ams.mtr</field>
+      <field name="arch" type="xml">
+        <form string="Technical Data Record">
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="fleet_id"/>
+            </group>
+            <field name="component_ids">
+              <tree string='Component' editable="bottom" create="false">
+                <field name="component_id" attrs="{'readonly':True}"/>
+                <field name="ata_id"/>
+                <field name="item_pos"/>
+                <field name="component_name"/>
+                <field name="part"/>
+                <field name="serial"/>
+                <field name="installed_at"/>
+                <field name="tsn"/>
+                <field name="tso"/>
+                <field name="installed_at"/>
+                <field name="service_life"/>
+                <field name="due_at"/>
+                <field name="remaining"/>
+                <field name="expired"/>
+              </tree>
+            </field>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,48 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="ams_calm_form">
+      <field name="name">ams.calm.form</field>
+      <field name="model">ams.calm</field>
+      <field name="arch" type="xml">
+        <form string="CALM IMPORT" create="0" edit="0" duplicate="0" >
+          <sheet>
+            <group>
+              <div class="oe_button_box" name="button_box">
+                <button name="comply"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-plane"
+                    help="show the contract for this vehicle"
+                    string="Import">
+                </button>
+                <button name="convert"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-plane"
+                    help="show the contract for this vehicle"
+                    string="Convert DBF">
+                </button>
+              </div>
+            </group>
+            <group>
+              <field name="filename" invisible="1"/>
+              <field widget="binary" name="file" file_name="filename" options='{"max_file_size": "20g"}'/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_ams_calm" model="ir.actions.act_window">
+      <field name="name">Calm data Import</field>
+      <field name="res_model">ams.calm</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+    </record>
+
+    <menuitem name="CALM Data Import" id="fleet_import_menu" parent="ams_menu.main_menu_setting" sequence="98" action="action_ams_calm"/>
+
+
+  </data>
+</odoo>

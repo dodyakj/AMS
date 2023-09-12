@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <template id="assets_backend" name="petstore_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/ams_dashboard/static/src/css/style.css"/>
+
+                <link rel="stylesheet" href="/ams_dashboard/static/lib/datatables-plugins/dataTables.bootstrap.css"/>
+                <link rel="stylesheet" href="/ams_dashboard/static/lib/datatables-responsive/dataTables.responsive.css"/>
+                <script type="text/javascript" src="/ams_dashboard/static/lib/datatables/js/jquery.dataTables.min.js"/>
+                <script type="text/javascript" src="/ams_dashboard/static/lib/datatables-plugins/dataTables.bootstrap.min.js"/>
+                <script type="text/javascript" src="/ams_dashboard/static/lib/datatables-responsive/dataTables.responsive.js"/>
+
+                <script type="text/javascript" src="/ams_dashboard/static/src/js/Chart.min.js"/>
+                <script type="text/javascript" src="/ams_dashboard/static/src/js/utils.js"/>
+                <script type="text/javascript" src="/ams_dashboard/static/src/js/javascript.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

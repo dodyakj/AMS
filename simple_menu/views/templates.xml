@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <!-- add css / js -->
+        <template id="simple_menu_assets_backend_css" name="js assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                 <link href="/simple_menu/static/css/style.css" rel="stylesheet" type="text/css"/>
+            </xpath>
+        </template>
+
+        <template id="simple_menu_assets_backend_js" name="simple manu assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/simple_menu/static/js/script.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

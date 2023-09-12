@@ -1,0 +1,20 @@
+.tbl{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+}
+.tb{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+.tbr{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+}
+.tblr{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+	border-left: 1px solid black;
+}

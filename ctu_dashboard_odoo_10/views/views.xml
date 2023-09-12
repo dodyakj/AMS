@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+      
+      <record id="dashboard_action_main_menu_marketing" model="ir.actions.client">
+        <field name="name">Dashboard</field>
+        <field name="tag">ctu_dashboard_odoo_10_dashboard_marketing</field>
+      </record>
+
+      <menuitem id="dashboard_menu_marketing" name="Dashboard" action="dashboard_action_main_menu_marketing" sequence="0" web_icon="ctu_dashboard_odoo_10,static/description/logo_menu.png" groups="base.group_no_one"/>
+  </data>
+</odoo>

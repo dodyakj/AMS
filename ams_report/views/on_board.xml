@@ -1,0 +1,116 @@
+<odoo>
+
+<template id="on_board_pdf">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-4">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-8">
+                            <h2 class="text-left">On Boards Report</h2>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table table-bordered">
+                        <tr>
+                          <td><center><b>Tool Name</b></center></td>
+                          <td><center><b>S/N</b></center></td>
+                          <td><center><b>Aircraft</b></center></td>
+                          <td><center><b>Last Calibrated</b></center></td>
+                          <td><center><b>Next Calibrated</b></center></td>
+                        </tr>
+                        <t t-foreach="data.tool_id" t-as="tool">
+                            <tr>
+                                <td> <div t-field="tool.tool" /></td>
+                                <td> <div t-field="tool.sn" /></td>
+                                <td><div t-field="tool.location" /></td>
+                                <td><center> <div t-field="tool.last_calibration" /> </center></td>
+                                <td><center> <div t-field="tool.next_calibration" /> </center></td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+  <data>
+        <record id="paperon_board" model="report.paperformat">
+            <field name="name">On Boards Report</field>
+            <field name="orientation">Landscape</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+       <report
+                id="print_on_board_reports"
+                string="On Boards Report"
+                model="on.board.report"
+                report_type="qweb-html"
+                file="ams_report.on_board_pdf"
+                name="ams_report.on_board_pdf"
+                paperformat="ams_report.paperon_board"
+            />
+
+
+      <record id="on_board_report_form" model="ir.ui.view">
+        <field name="name">on.board.report.form</field>
+        <field name="model">on.board.report</field>
+        <field name="view_mode">form</field>
+        <field name="arch" type="xml">
+            <form string="On Boards Report">
+          <group>
+            <field name="tool"/>
+            <field name="location"/>
+            <field name="calibrated"/>
+            <field name="next_calibrated" options="{'showType': 'months'}"/>
+          </group>
+          <group string="Data Tool" attrs="{'invisible':True}">
+            <field name="tool_id">
+              <tree>
+                  <field name="tool"/>
+                  <field name="sn"/>
+                  <field name="location"/>
+                  <field name="last_calibration"/>
+                  <field name="next_calibration"/>
+              </tree>
+            </field>
+          </group>
+
+          <footer>
+            <button name="print_on_board_reports" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+            <button special="cancel" string="Cancel"/>
+          </footer>
+            </form>
+        </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="on_boards_report_action">
+      <field name="name">On Boards Report</field>
+      <field name="res_model">on.board.report</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+      <field name="target">new</field>
+    </record>   
+  </data>
+</odoo>

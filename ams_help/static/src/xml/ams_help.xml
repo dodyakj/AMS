@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ams_help.dashboard">
+        <!--style which removes the control panel from dashboard-->
+        <style type="text/css" t-if="! widget.isFirefox">
+            .o_control_panel.o_breadcrumb_full, .oe_view_nocontent {
+                display: none;
+            }
+        </style>
+        <!--View-->
+        <div class="openerp oe_kanban_view hr_dash col-xs-12 col-md-12 col-lg-12 col-sm-8">
+            <div class="col-md-12" style="padding-left:200px">
+                <div class="col-md-4">
+                    <div class="media">
+                        <a class="pull-left my_profile">
+                            <img class="media-object"
+                                 src="/ams_help/static/img/logo.png"
+                                 style="width:100%"
+                            />
+                        </a>
+                    </div>
+                </div>
+
+                <!--Dashboard buttons-->
+                <div class="col-md-8" style="padding-top: 16px">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-12" style="margin-top:15px;">
+                          <h2 style="margin-top:9px;">MRO &amp; INDUSTRIAL APPLICATION</h2>
+                          <h2 style="margin-top:9px;">PT. INDOPELITA</h2>
+                          <h3 style="margin-top:9px;">Version : <span t-esc="widget.manual_data.version"/></h3>
+                          <h3 style="margin-top:9px;">Release Date : <span t-esc="widget.manual_data.release_date"  t-field-options='{"widget": "date"}' /></h3>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row" style="margin-bottom:75px;">
+                        <div class="col-md-12" style="padding-left:200px">
+                            <h1>List Manual</h1>
+                        </div>
+                     </div>
+                    <div class="row" t-foreach="widget.manual_data.doc" t-as="e">
+                        <div class="col-md-12" style="margin-bottom:75px;" >
+                            <div class="col-md-3">
+                                <figure class='book' style="margin-left:150px;">
+                                    <ul class='hardcover_front'>
+                                        <li t-if ="e['file_cover']">
+                                            <img t-att-src="'ams_help/'+e['id']+'/image.jpeg'" alt="" width="100%" height="100%"/>
+                                        </li>
+                                        <li t-if ="! e['file_cover']">
+                                            <img src="" alt="" width="100%" height="100%"/>
+                                        </li>
+                                        <li></li>
+                                    </ul>
+                                    <ul class='page'>
+                                        <li></li>
+                                        <li>
+                                            <a class="btns" t-att-href="'ams_help/'+e['id']+'/doc.pdf'" target="new" t-att-download="e['name']">Download</a>
+                                        </li>
+                                        <li></li>
+                                        <li></li>
+                                        <li></li>
+                                    </ul>
+                                    <ul class='hardcover_back'>
+                                        <li></li>
+                                        <li></li>
+                                    </ul>
+                                    <ul class='book_spine'>
+                                        <li></li>
+                                        <li></li>
+                                    </ul>
+                                </figure>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 style="margin-top:7px;">Name : <span t-esc="e['name']"/></h3>
+                                <h3 style="margin-top:7px;">Version : <span t-esc="e['version']"/></h3>
+                                <h3 style="margin-bottom: 7px;margin-top:7px;">Release Date : <span t-esc="e['release_date']"/></h3>
+                            </div>
+                            <div class="col-md-2">
+                                <a class="btn btn-primary" style="margin-top:5px;margin-bottom:5px;" t-att-href="'ams_help/'+e['id']+'/doc.pdf'" target="new" t-att-download="e['name']"><i class="fa fa-download"></i> Download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

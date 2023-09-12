@@ -1,0 +1,51 @@
+<odoo>
+  <data>
+            <record id="paperformat_work_order_" model="report.paperformat">
+                <field name="name">Work Order</field>
+                <field name="orientation">Portrait</field>
+                <field name="default" eval="True" />
+                <field name="page_height">0</field>
+                <field name="page_width">0</field>
+                <field name="margin_top">8</field>
+                <field name="margin_bottom">0</field>
+                <field name="margin_left">3</field>
+                <field name="margin_right">0</field>
+                <field name="header_line" eval="False"/>
+                <field name="header_spacing">5</field>
+                <field name="dpi">90</field>
+            </record>
+            <record id="paperformat_maintenance_work_order_" model="report.paperformat">
+                <field name="name">Maintenance Work Order</field>
+                <field name="orientation">Portrait</field>
+                <field name="default" eval="True" />
+                <field name="page_height">0</field>
+                <field name="page_width">0</field>
+                <field name="margin_top">8</field>
+                <field name="margin_bottom">0</field>
+                <field name="margin_left">3</field>
+                <field name="margin_right">0</field>
+                <field name="header_line" eval="False"/>
+                <field name="header_spacing">5</field>
+                <field name="dpi">90</field>
+            </record>
+            <report
+                    id="print_engine_work_order_pdf"
+                    string="Work Order"
+                    model="ams.work.order"
+                    report_type="qweb-html"
+                    file="ams_order.report_work_order"
+                    name="ams_order.report_work_order"
+                    paperformat="ams_order.paperformat_work_order_"
+                />
+            <report
+                    id="print_mainteenance_work_order_pdf"
+                    string="Maintenance Work Order"
+                    model="ams.mwo"
+                    report_type="qweb-html"
+                    file="ams_order.report_maintenance_work_order_"
+                    name="ams_order.report_maintenance_work_order_"
+                    paperformat="ams_order.paperformat_maintenance_work_order_"
+                />
+
+  </data>
+</odoo>

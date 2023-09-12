@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<template id="report_maintenance_work_order_">
+	<!-- Multicompany -->
+	<t t-if="not o and doc">
+	    <t t-set="o" t-value="doc"/>
+	</t>
+	<t t-if="o and 'company_id' in o">
+	    <t t-set="company" t-value="o.company_id"></t>
+	</t>
+	<t t-if="not o or not 'company_id' in o">
+	    <t t-set="company" t-value="res_company"></t>
+	</t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                      <style>
+                        ol {
+                        padding-left : 35px;
+                        }
+                      </style>
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 65px;"/>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h3>PT PELITA AIR SERVICE</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td style="height:35px"><center><b><h4>MAINTENANCE ORDER</h4></b></center></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">No.</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.mwo_no"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Tanggal</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.date"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-xs-6">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td style="height:35px">
+                                        <div class="row">
+                                            <div class="col-xs-4">Lokasi Pekerjaan</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.location"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Diterbitkan oleh</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6">Engineering Division</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Reff. No.</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.ref"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td><center><h5>PIHAK PERTAMA</h5></center></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Nama</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.nama_pihak"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Jabatan</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.jabatan"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Perusahaan</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.perusahaan.name"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Alamat</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.alamat"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-xs-6">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td><center><h5>PIHAK KEDUA</h5></center></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Nama</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.nama_pihak2"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Jabatan</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.jabatan2"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Perusahaan</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.perusahaan2.name"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-4">Alamat</div>
+                                            <div class="col-xs-2">:</div>
+                                            <div class="col-xs-6"><div style="display:inline" t-field="data.alamat2"/></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <table class="table table-bordered"><tr><td><center><b>DIMANA</b></center></td></tr></table>
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <b>PIHAK PERTAMA</b> memberikan pekerjaan dan <b>PIHAK KEDUA</b> menerima pekerjaan dari <b>PIHAK PERTAMA</b> dan kedua pihak sepakat untuk meelakukan hubungan pekerjaan di antara kedia pihak sesuai dengan syarat dan ketentuan tertulis di bawah
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table class="table">
+                                <tr>
+                                    <td style="border-top:1px solid #DDD;border-left:1px solid #DDD;border-right:1px solid #DDD">1.</td>
+                                    <td style="width:225px;border-top:1px solid #DDD">Macam Pekerjaan</td>
+                                    <td style="border-top:1px solid #DDD">:</td>
+                                    <td style="border-top:1px solid #DDD;border-right:1px solid #DDD"><div style="display:inline" t-field="data.macam"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border-left:1px solid #DDD;border-right:1px solid #DDD">2.</td>
+                                    <td style="width:225px;">Syarat - syarat pekerjaan</td>
+                                    <td>:</td>
+                                    <td style="border-right:1px solid #DDD"><div style="display:inline" t-field="data.syarat"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border-left:1px solid #DDD;border-right:1px solid #DDD">3.</td>
+                                    <td style="width:225px;">Waktu Pelaksanaan</td>
+                                    <td>:</td>
+                                    <td style="border-right:1px solid #DDD"><div style="display:inline" t-field="data.waktu"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border-left:1px solid #DDD;border-right:1px solid #DDD">4.</td>
+                                    <td style="width:225px;">Harga pekerjaan</td>
+                                    <td>:</td>
+                                    <td style="border-right:1px solid #DDD"><div style="display:inline" t-field="data.harga"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border-left:1px solid #DDD;border-right:1px solid #DDD">5.</td>
+                                    <td style="width:225px;">Cara Pembayaran</td>
+                                    <td>:</td>
+                                    <td style="border-right:1px solid #DDD"><div style="display:inline" t-field="data.pembayaran"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom:1px solid #DDD;border-left:1px solid #DDD;border-right:1px solid #DDD">6.</td>
+                                    <td style="width:225px;border-bottom:1px solid #DDD;">Sangsi</td>
+                                    <td style="border-bottom:1px solid #DDD;">:</td>
+                                    <td style="border-right:1px solid #DDD;border-bottom:1px solid #DDD;"><div style="display:inline" t-field="data.sangsi"/></td>
+                                    <!-- <td>Apabila dalam jangka waktu seperti disebutkan dalam butir 3 (tiga) pada WO ini PIHAK KEDUA tidak dapat memenuhi kewajibannya, maka PIHAK KEDUA dikenakan denda sebesar 0,5% perhari dari perkiraan total harga pekerjaan dan apabila PIHAK PERTAMA tidak dapat memenuhi butir 5, maka PIHAK PERTAMA akan dikenakan denda yang sama.</td> -->
+                                </tr>
+                                
+                            </table>
+                        </div>
+                    </div>
+                    <br/><br/><br/>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td><center><h5>PIHAK PERTAMA</h5></center></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <center>
+                                            Tanda Tangan
+                                            <br/><br/><br/><br/>
+
+                                            ( <div style="display:inline" t-field="data.nama_pihak"/> )
+                                        </center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-xs-2">
+                            <span> </span>
+                        </div>
+                        <div class="col-xs-5">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td><center><h5>PIHAK KEDUA</h5></center></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <center>
+                                            Tanda Tangan
+                                            <br/><br/><br/><br/>
+
+                                            ( <div style="display:inline" t-field="data.nama_pihak2"/> )
+                                        </center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+ </data>
+</odoo>

@@ -1,0 +1,20 @@
+<odoo>
+	<data>
+		<record id="group_mwo_create" model="res.groups">
+			<field name="name">MWO Create</field>
+			<field name="category_id" ref="ams_security.module_category_instruction"/>
+		</record>
+		<record id="group_mwo_confrim" model="res.groups">
+			<field name="name">MWO Confrim</field>
+			<field name="category_id" ref="ams_security.module_category_instruction"/>
+		</record>
+		<record id="group_wo_create" model="res.groups">
+			<field name="name">WO Create</field>
+			<field name="category_id" ref="ams_security.module_category_instruction"/>
+		</record>
+		<record id="group_wo_confrim" model="res.groups">
+			<field name="name">WO Confrim</field>
+			<field name="category_id" ref="ams_security.module_category_instruction"/>
+		</record>
+	</data>
+</odoo>

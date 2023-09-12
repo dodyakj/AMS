@@ -1,0 +1,318 @@
+<odoo>
+
+<template id="wo_pdf">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-4">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-8">
+                            <h2 class="text-left">Work Order Report</h2>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                              <th><center><b>Work Order Number</b></center></th>
+                              <th><center><b>Date Issued</b></center></th>
+                              <th><center><b>Aircraft</b></center></th>
+                              <th><center><b>Type</b></center></th>
+                              <th><center><b>Status</b></center></th>
+                              <th><center><b>Description</b></center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="data.wo_id">
+                                <t t-foreach="data.wo_id" t-as="wo">
+                                    <tr>
+                                        <td><t t-esc="wo.name" /></td>
+                                        <td><t t-esc="wo.date_issued" /></td>
+                                        <td><t t-esc="wo.ac.name" /></td>
+                                        <td><t t-esc="wo.wo_type" /></td>
+                                        <td><t t-esc="wo.status" /></td>
+                                        <td>
+                                            <t t-if="data.countId(wo.des_id) == 1">
+                                                <t t-if="wo.wo_type == 'material'">
+                                                    <t t-esc="wo.des_id.take_action" />
+                                                </t>
+                                                <t t-if="wo.wo_type == 'inspection'">
+                                                    <t t-esc="data.cleanhtml(wo.des_id.text)" />
+                                                </t>
+                                            </t>
+                                            <t t-if="data.countId(wo.des_id) >= 2">
+                                                <t t-foreach="wo.des_id" t-as="desc">
+                                                    <t t-if="desc.wo_type == 'material'">
+                                                        <t t-esc="desc.take_action" />
+                                                        <br/>
+                                                    </t>
+                                                    <t t-if="desc.wo_type == 'inspection'">
+                                                        <t t-esc="data.cleanhtml(desc.text)" />
+                                                        <br/>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <tr>
+                                    <td colspan="6" align="center"><strong>There's No Data</strong></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+<template id="mwo_pdf">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-4">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-4">
+                            <center><h2>Maintenance Work Order Report</h2></center>
+                        </div>
+                        <div class="col-xs-4">
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <tr>
+                          <td><center><b>Maintenance Work Order Number</b></center></td>
+                          <td><center><b>Date Issued</b></center></td>
+                          <td><center><b>Aircraft</b></center></td>
+                          <td><center><b>Type</b></center></td>
+                          <td><center><b>Status</b></center></td>
+                          <td><center><b>Description</b></center></td>
+                        </tr>
+                        <t t-foreach="data.mwo_id" t-as="mwo">
+                            <tr>
+                                <td> <div t-field="mwo.name" /></td>
+                                <td> <div t-field="mwo.date" /></td>
+                                <td><div t-field="mwo.ac" /></td>
+                                <td><div t-field="mwo.mwo_type" /></td>
+                                <td><div t-field="mwo.status" /></td>
+                                <td><div t-field="mwo.macam" /></td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+    <data>
+       <report
+                id="print_wo_pdf"
+                string="Work Order Report"
+                model="ams.work.order.report"
+                report_type="qweb-html"
+                file="ams_report.wo_pdf"
+                name="ams_report.wo_pdf"
+                paperformat="ams_report.papergeneral_tool"
+            />       
+        <report
+                id="print_mwo_pdf"
+                string="Maintenance Work Order Report"
+                model="ams.mwo.report"
+                report_type="qweb-html"
+                file="ams_report.mwo_pdf"
+                name="ams_report.mwo_pdf"
+                paperformat="ams_report.papergeneral_tool"
+            />
+
+
+
+
+    <record model="ir.ui.view" id="work_order_report_form">
+        <field name="name">ams.work.order.report.form</field>
+        <field name="model">ams.work.order.report</field>
+        <field name="arch" type="xml">
+            <form string="Work Order Report">
+                <sheet string="Work Order Report">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            Type 
+                        </div>
+                        <div class="col-xs-10">
+                            <field name="wo_type" widget="radio" options="{'horizontal':True}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            Date 
+                        </div>
+                        <div class="col-xs-5">
+                            <field name="start_date"/> -
+                            <field name="end_date"/>
+                        </div>
+                        <div class="col-xs-5">
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="type" attrs="{'invisible':True}"/>
+                            <field name="schedule" attrs="{'invisible':True}"/>
+                            <field name="aircraft"/>
+                            <field name="sort_by" widget="radio" options="{'horizontal':True}"/>
+                            <field name="order_by" widget="radio" options="{'horizontal':True}"/>
+                        </group>
+                    </group>
+                  <footer>
+                    <button name="print_wo_pdf" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+                    <!-- <button name="export_xls"  context="{'xls_export':1}" icon="fa-download" type="object" string="Print XLS" class="oe_highlight" /> -->
+                    <button special="cancel" string="Cancel"/>
+                  </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="work_order_general_filter" model="ir.ui.view">
+        <field name="name">ams.work.order.report.select</field>
+        <field name="model">ams.work.order.report</field>
+        <field name="arch" type="xml">
+            <search string="Work Order Report">
+               <!-- <filter string="AD - Airworthiness Directive" name="filter_ad" domain="[('type','=','AD')]"/>
+               <filter string="SB - Service Bulletin" name="filter_sb" domain="[('type','=','SB')]"/>
+               <filter string="STC - Suplemental Type Certificate" name="filter_stc" domain="[('type','=','STC')]"/>
+               <filter string="SERVICE - Service" name="filter_service" domain="[('type','=','SERVICE')]"/> -->
+           </search>
+        </field>
+    </record>
+
+
+
+    <record model="ir.actions.act_window" id="work_order_schedule_action">
+        <field name="name">Schedule WO Report</field>
+        <field name="res_model">ams.work.order.report</field>
+        <field name="search_view_id" ref="work_order_general_filter"/>
+        <field name="context">{'schedule_type':'schedule'}</field>
+        <field name="domain">[('type', '=', 'schedule')]</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="work_order_unschedule_action">
+        <field name="name">Unschedule WO Report</field>
+        <field name="res_model">ams.work.order.report</field>
+        <field name="search_view_id" ref="work_order_general_filter"/>
+        <field name="context">{'schedule_type':'unschedule'}</field>
+        <field name="domain">[('type', '=', 'unschedule')]</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <record model="ir.ui.view" id="maintenance_work_order_report_form">
+        <field name="name">ams.mwo.report.form</field>
+        <field name="model">ams.mwo.report</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Work Order Report">
+                <sheet string="Maintenance Work Order Report">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            Type 
+                        </div>
+                        <div class="col-xs-10">
+                            <field name="mwo_type" widget="radio" options="{'horizontal':True}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            Date 
+                        </div>
+                        <div class="col-xs-5">
+                            <field name="start_date"/> -
+                            <field name="end_date"/>
+                        </div>
+                        <div class="col-xs-5">
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="type" attrs="{'invisible':True}"/>
+                            <field name="schedule" attrs="{'invisible':True}"/>
+                            <field name="aircraft"/>
+                            <field name="sort_by" widget="radio" options="{'horizontal':True}"/>
+                            <field name="order_by" widget="radio" options="{'horizontal':True}"/>
+                        </group>
+                    </group>
+                  <footer>
+                    <button name="print_mwo_pdf" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+                    <!-- <button name="export_xls"  context="{'xls_export':1}" icon="fa-download" type="object" string="Print XLS" class="oe_highlight" /> -->
+                    <button special="cancel" string="Cancel"/>
+                  </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="maintenance_work_order_general_filter" model="ir.ui.view">
+        <field name="name">ams.mwo.report.select</field>
+        <field name="model">ams.mwo.report</field>
+        <field name="arch" type="xml">
+            <search string="Maintenance Work Order Report">
+               <!-- <filter string="AD - Airworthiness Directive" name="filter_ad" domain="[('type','=','AD')]"/>
+               <filter string="SB - Service Bulletin" name="filter_sb" domain="[('type','=','SB')]"/>
+               <filter string="STC - Suplemental Type Certificate" name="filter_stc" domain="[('type','=','STC')]"/>
+               <filter string="SERVICE - Service" name="filter_service" domain="[('type','=','SERVICE')]"/> -->
+           </search>
+        </field>
+    </record>
+
+
+
+    <record model="ir.actions.act_window" id="maintenance_work_order_schedule_action">
+        <field name="name">Schedule MWO Report</field>
+        <field name="res_model">ams.mwo.report</field>
+        <field name="search_view_id" ref="maintenance_work_order_general_filter"/>
+        <field name="context">{'schedule_type':'schedule'}</field>
+        <field name="domain">[('type', '=', 'schedule')]</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maintenance_work_order_unschedule_action">
+        <field name="name">Unschedule MWO Report</field>
+        <field name="res_model">ams.mwo.report</field>
+        <field name="search_view_id" ref="maintenance_work_order_general_filter"/>
+        <field name="context">{'schedule_type':'unschedule'}</field>
+        <field name="domain">[('type', '=', 'unschedule')]</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+  </data>
+</odoo>

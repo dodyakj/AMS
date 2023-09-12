@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    
+<template id="report_work_order">
+	<!-- Multicompany -->
+	<t t-if="not o and doc">
+	    <t t-set="o" t-value="doc"/>
+	</t>
+	<t t-if="o and 'company_id' in o">
+	    <t t-set="company" t-value="o.company_id"></t>
+	</t>
+	<t t-if="not o or not 'company_id' in o">
+	    <t t-set="company" t-value="res_company"></t>
+	</t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                    <t t-if="data.wo_type == 'material'">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                            </div>
+                            <div class="col-xs-6 text-center">
+                                <h1>PT PELITA AIR SERVICE</h1>
+                                <h3>ENGINEERING DEPARTMENT</h3>
+                                <h2>WORK ORDER</h2>
+                            </div>
+                            <div class="col-xs-3 text-right" style="margin-top:20px;">
+                                F0801.02 AUG 2001 <br/>
+                                Rev. : 04
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>
+                                    Date : <div style="display:inline" t-field="data.date_issued"/>
+                                </td>
+                                <td>
+                                    WO No. : <div style="display:inline" t-field="data.wo_no"/>
+                                </td>
+                                <td>
+                                    Ref : <div style="display:inline" t-field="data.ref"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <center><strong>Aircraft</strong></center>
+                                </td>
+                                <td>
+                                    <center><strong>Component</strong></center>
+                                </td>
+                                <td>
+                                    <center><strong>Address</strong></center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Type</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.type"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Part Name</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.part_name.name"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-12">To : <div style="display:inline" t-field="data.to"/></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Registration</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.ac"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Part Number</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.part_number"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4"></div>
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-6"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Serial Number</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.serial_no"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Serial Number</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.serial_no"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4"></div>
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-6"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Acft.Hrs./Cycle</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.hr_cy"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">TSN / TSO</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.tsn_tso"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-12">CC : <div style="display:inline" t-field="data.cc"/></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Inspection Type</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.ins_type"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Work Required</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.work_req"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4"></div>
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-6"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="3" rowspan="2" style="vertical-align : middle;text-align:center;"> <center><strong>Description</strong></center> </td>
+                                <td rowspan="2" style="vertical-align : middle;text-align:center;"> <center><strong>Date</strong></center> </td>
+                                <td rowspan="2" style="vertical-align : middle;text-align:center;"> <center><strong>Man Power</strong></center> </td>
+                                <td colspan="2" style="vertical-align : middle;text-align:center;"> <center><strong>Hour</strong></center> </td>
+                                <td rowspan="2" style="vertical-align : middle;text-align:center;"> <center><strong>Man Hours</strong></center> </td>
+                                
+                            </tr>
+                            <tr>
+                                <td> <center><strong>Start</strong></center> </td>
+                                <td> <center><strong>Finish</strong></center> </td>
+                            </tr>
+                            <t t-foreach="data.des_id" t-as="des">
+                                <tr>
+                                    <td colspan="3" rowspan="4">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                Inspection to be carried out on the Aircraft <b t-field="data.type"/> reg.<b t-field="data.ac.aircraft_name"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                Inspection
+                                            </div>
+                                            <div class="col-xs-2">
+                                                :
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div style="display:inline" t-field="des.inspection"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                Refer To
+                                            </div>
+                                            <div class="col-xs-2">
+                                                :
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div style="display:inline" t-field="des.refer_to"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                Due At
+                                            </div>
+                                            <div class="col-xs-2">
+                                                :
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div style="display:inline" t-field="des.due_at"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                Take Action
+                                            </div>
+                                            <div class="col-xs-2">
+                                                :
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div style="display:inline" t-field="des.take_action"/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><div style="display:inline" t-field="des.date"/></td>
+                                    <td><div style="display:inline" t-field="des.man_power"/></td>
+                                    <td><div style="display:inline" t-field="des.start"/></td>
+                                    <td><div style="display:inline" t-field="des.finish"/></td>
+                                    <td><div style="display:inline" t-field="des.man_hours"/></td>
+                                </tr>
+                                <tr>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                </tr>
+                                <tr>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                </tr>
+                                <tr>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                    <td><br/><br/></td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td>No.</td>
+                                <td>Material Required</td>
+                                <td>Part Number</td>
+                                <td>QTY</td>
+                                <td colspan="4">Spesial Tool Required</td>
+                            </tr>
+                            <t t-set="nomer" t-value="1"/>
+                            <t t-foreach="data.mr_id" t-as="material">
+                                <tr>
+                                    <td> <div t-esc="nomer"/> </td>
+                                    <t t-set="nomer" t-value="nomer+1"/>
+                                    <td><div style="display:inline" t-field="material.name"/></td>
+                                    <td><div style="display:inline" t-field="material.name.name"/></td>
+                                    <td><div style="display:inline" t-field="material.qty_req"/></td>
+                                    <td colspan="2"><div style="display:inline" t-field="material.spesial_tool"/></td>
+                                    <td colspan="2"><div style="display:inline" t-field="material.spesial_tool_qty"/></td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="8">
+                                    <div class="row">
+                                        <div class="col-xs-2 text-right">
+                                            <strong>Note :</strong>
+                                        </div>
+                                        <div class="col-xs-10">
+                                            <div style="display:inline" t-field="data.note"/>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" style="margin :0px; padding : 0px">
+                                    <table class="table" style="height: 125px;width: 100%; font-weight: bold;margin-bottom: 0px;">
+                                        <tr>
+                                            <td colspan="3"><center>Recorded by : </center></td>
+                                            <td style="border-left:1px solid #dddddd"><center>Charter by : </center></td>
+                                            <td rowspan="4" style="border-left:1px solid #dddddd">
+                                                <table style="height: 100%; width:100%">
+                                                    <tr height="15%">
+                                                        <td>Issued by </td>
+                                                        <td>: <Span t-field="data.issued_by.job_id.name"></Span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">Sign</td>
+                                                    </tr>
+                                                    <tr height="15%">
+                                                        <td>Name</td>
+                                                        <td>: <span t-field="data.issued_by.name"></span></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table style="text-align: center; width: 100%">
+                                                    <tr>
+                                                        <td><u>Date</u></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span t-field="data.recorded_date"></span></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="border-left:1px solid #dddddd">
+                                                <table style="text-align: center; width: 100%">
+                                                    <tr>
+                                                        <td><u>Name</u></td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td><span t-field="data.recorded.name"></span></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="border-left:1px solid #dddddd">
+                                                <table style="text-align: center; width: 100%">
+                                                    <tr>
+                                                        <td><u>QTR No.</u></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span t-field="data.otr_record"></span></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="border-left:1px solid #dddddd">
+                                                <center>
+                                                    <span t-esc="data.get_last_utils()"></span>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"><center>Performed</center></td>
+                                            <td style="border-left:1px solid #dddddd"><u><center>Total Mhrs</center></u></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table style="text-align: center; width: 100%">
+                                                    <tr>
+                                                        <td>
+                                                            <u>Base</u>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="25px"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="border-left:1px solid #dddddd">
+                                                <table style="text-align: center; width: 100%">
+                                                    <tr>
+                                                        <td><u>Date</u></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="25px"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="border-left:1px solid #dddddd">
+                                                <table style="text-align: center; width: 100%">
+                                                    <tr>
+                                                        <td><u>Acft. Hrs / Cycles</u></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="25px"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="border-left:1px solid #dddddd"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </t>
+                    <t t-if="data.wo_type == 'inspection'">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                            </div>
+                            <div class="col-xs-6 text-center">
+                                <h1>PT PELITA AIR SERVICE</h1>
+                                <h3>ENGINEERING DEPARTMENT</h3>
+                                <h2>WORK ORDER</h2>
+                            </div>
+                            <div class="col-xs-3 text-right" style="margin-top:20px;">
+                                F0801.02 AUG 2001 <br/>
+                                Rev. : 04
+                            </div>
+                        </div>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>
+                                    Date : <div style="display:inline" t-field="data.date_issued"/>
+                                </td>
+                                <td>
+                                    WO No. : <div style="display:inline" t-field="data.wo_no"/>
+                                </td>
+                                <td>
+                                    Ref : <div style="display:inline" t-field="data.ref"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <center><strong>Aircraft</strong></center>
+                                </td>
+                                <td>
+                                    <center><strong>Component</strong></center>
+                                </td>
+                                <td>
+                                    <center><strong>Address</strong></center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Type</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.type"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Part Name</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.part_name.name"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-12">To : <div style="display:inline" t-field="data.to"/></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Registration</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.ac"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Part Number</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.part_number"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4"></div>
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-6"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Serial Number</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.serial_no"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Serial Number</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.serial_no"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4"></div>
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-6"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Acft.Hrs./Cycle</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.hr_cy"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">TSN / TSO</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.tsn_tso"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-12">CC : <div style="display:inline" t-field="data.cc"/></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Inspection Type</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.ins_type"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4">Work Required</div>
+                                        <div class="col-xs-2">:</div>
+                                        <div class="col-xs-6" style="text-align: left"><div style="display:inline" t-field="data.work_req"/></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-xs-4"></div>
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-6"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <th rowspan="2" style="vertical-align : middle;text-align:center;"><center><strong>No</strong></center></th>
+                                <th rowspan="2" style="vertical-align : middle;text-align:center;"><center><strong>Description</strong></center></th>
+                                <th rowspan="2" style="vertical-align : middle;text-align:center;"><center><strong>Date</strong></center></th>
+                                <th rowspan="2" style="vertical-align : middle;text-align:center;"><center><strong>Man Power</strong></center></th>
+                                <th colspan="2" style="vertical-align : middle;text-align:center;"><center><strong>Hour</strong></center></th>
+                                <th rowspan="2" style="vertical-align : middle;text-align:center;"><center><strong>Man Hour</strong></center></th>
+                            </tr>
+                            <tr>
+                                <td><center><strong>Start</strong></center></td>
+                                <td><center><strong>Finish</strong></center></td>
+                            </tr>
+                            <t t-set="i" t-value="1"/>
+                            <t t-foreach="data.des_id" t-as="des">
+                                <tr>
+                                    <td> <div t-esc="i"/> </td>
+                                    <t t-set="i" t-value="i+1"/>
+                                    <td><p t-field="des.text"/>
+                                    </td>
+                                    <td><div style="display:inline" t-field="des.date"/></td>
+                                    <td><div style="display:inline" t-field="des.man_power"/></td>
+                                    <td><div style="display:inline" t-field="des.start"/></td>
+                                    <td><div style="display:inline" t-field="des.finish"/></td>
+                                    <td><div style="display:inline" t-field="des.man_hours"/></td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="2">
+                                    Note : <div style="display:inline" t-field="data.note"/>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding: 0px;margin:0px">
+                                    <table class="table" style="margin-bottom:0px;">
+                                        <tr>
+                                            <th colspan="3" style="border:0.5px solid #DDD">
+                                                <center>Recorded by :</center>
+                                            </th>
+                                            <th colspan="2" style="border:0.5px solid #DDD">
+                                                <center>Material Used</center>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:0.5px solid #DDD">
+                                                <center>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            Date
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            <br/><br/>
+                                                        </div>
+                                                    </div>
+                                                </center>
+                                            </td>
+                                            <td style="border:0.5px solid #DDD">
+                                                <center>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            Name
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            <br/><br/>
+                                                        </div>
+                                                    </div>
+                                                </center>
+                                            </td>
+                                            <td style="border:0.5px solid #DDD">
+                                                <center>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            Sign
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            <br/><br/>
+                                                        </div>
+                                                    </div>
+                                                </center>
+                                            </td>
+                                            <td style="border:0.5px solid #DDD">
+                                                <center>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            NIL
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            <br/><br/>
+                                                        </div>
+                                                    </div>
+                                                </center>
+                                            </td>
+                                            <td style="border:0.5px solid #DDD">
+                                                <center>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                           
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            List Attached
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="com-xs-12">
+                                                            <br/><br/>
+                                                        </div>
+                                                    </div>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td colspan="5" cellspacing="0" style="padding: 0px;margin:0px">
+                                    <table class="table" style="margin-bottom:0px;">
+                                        <tr>
+                                            <th colspan="2" style="border:0.5px solid #DDD"><center><strong>Performed</strong></center></th>
+                                            <th style="border:0.5px solid #DDD"><center><strong>Total MHrs</strong></center></th>
+                                        </tr>
+                                        <tr>
+                                            <td style="border:0.5px solid #DDD"><center><strong>Date</strong></center><br/><br/></td>
+                                            <td style="border:0.5px solid #DDD"><center><strong>Acft. Hrs / Cycles</strong></center><br/><br/></td>
+                                            <td style="border:0.5px solid #DDD"><br/><br/><br/></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" cellspacing="0" style="padding: 0px;margin:0px">
+                                    <table class="table table-bordered" style="margin-bottom:0px;">
+                                      <tr>
+                                          <td>
+                                              <div class="row">
+                                                    <div class="col-xs-12">
+                                                        Performed by : 
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        Sign :
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 zero_min_height">
+                                                        <div style="border-bottom: 1px solid white;"><br/><br/><br/></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 zero_min_height">
+                                                        <div style="border-bottom: 1px solid #DDD;"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        OTR No/Name : <div style="display:inline" t-field="data.otr_ins"/> / <div style="display:inline" t-field="data.inspector"/>
+                                                    </div>
+                                                </div>
+                                          </td>
+                                               <td>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            Inspector : 
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            Sign :
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 zero_min_height">
+                                                            <div style="border-bottom: 1px solid white;"><br/><br/><br/></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 zero_min_height">
+                                                            <div style="border-bottom: 1px solid #DDD;"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            Insp No/Name : <div style="display:inline" t-field="data.insp_no"/> / <div style="display:inline" t-field="data.inspector"/>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- <td>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            Supervisor : 
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            Sign :
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 zero_min_height">
+                                                            <div style="border-bottom: 1px solid white;"><br/><br/><br/></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 zero_min_height">
+                                                            <div style="border-bottom: 1px solid #DDD;"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            Name : <div style="display:inline" t-field="data.supervisor"/>
+                                                        </div>
+                                                    </div>
+                                                </td> -->
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            Issued by : 
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            Dept :
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 zero_min_height">
+                                                            <div style="border-bottom: 1px solid white;"><br/><br/><br/></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 zero_min_height">
+                                                            <div style="border-bottom: 1px solid #DDD;"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            Name : <div style="display:inline" t-field="data.issued_by"/>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>  
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</data>
+ 
+</odoo>

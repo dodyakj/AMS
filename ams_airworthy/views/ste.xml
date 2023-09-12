@@ -1,0 +1,421 @@
+<odoo>
+
+
+<template id="internal_layout">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="ams_airworthy.external_layout_header" />
+    <t t-raw="0" />
+    <t t-call="ams_airworthy.external_layout_footer" />
+</template>
+
+<template id="external_layout_header">
+    <div class="header">
+    </div>
+</template>
+
+<template id="external_layout_footer">
+        <div class="footer">
+            <div class="row">
+                <div class="col-xs-2 pull-left">
+                    <small>
+                        <span>Page</span>
+                        <span class="page" />
+                        of
+                        <span class="topage" />
+                    </small>
+                </div>
+            </div>
+        </div>    
+</template>
+
+
+    <template id="report_ste">
+            <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="data">
+                <t t-call="ams_airworthy.internal_layout">
+                    <div class="page">
+                        <style type="text/css">
+                            .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+                                  position: relative;
+                                  min-height: 25px;
+                                }
+                        </style>
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                	<center>
+                                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                                        <h4><strong>PT. PELITA AIR SERVICE</strong></h4>
+                                         <b>MAINTENANCE DIVISION </b>
+                                        <h3><strong>SHORT TERM ESCALATION REQUEST</strong></h3>
+                                	</center>
+                                </div>
+                            </div>   
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table" border="0">
+                                        <tr>
+                                            <td width="150">A/C Registration</td>
+                                            <td width="15">:</td>
+                                            <td width="225">
+                                                <span t-field="data.fleet_id.name" />
+                                            </td>
+                                            <td width="150">Request No</td>
+                                            <td width="15">:</td>
+                                            <td width="225">
+                                                <span t-field="data.name" />
+                                            </td>
+                                        </tr>   
+                                        <tr>
+                                            <td width="150">A/C Make/Model</td>
+                                            <td width="15">:</td>
+                                            <td width="225">
+                                                <span t-field="data.model_id.name" />
+                                            </td>
+                                            <td width="150">Date</td>
+                                            <td width="15">:</td>
+                                            <td width="225">
+                                                <span t-field="data.date" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="150">Type of Inspection</td>
+                                            <td width="15">:</td>
+                                            <td width="225">
+                                                
+                                            </td>
+                                            <td width="150">Current Limit</td>
+                                            <td width="15">:</td>
+                                            <td width="225">
+                                                <span t-field="data.date_limit" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="150">Engine Position</td>
+                                            <td width="15">:</td>
+                                            <td width="225">
+                                                <span t-field="data.part_id.engine_id.name" />
+                                            </td>
+                                            <td width="150">Serial Number</td>
+                                            <td width="15">:</td>
+                                            <td width="225">
+                                                <span t-field="data.part_id.serial_number.name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="150">Component Name</td>
+                                            <td width="15">:</td>
+                                            <td width="225">
+                                                <span t-field="data.part_id.part_name" />
+                                            </td>
+                                            <td width="150">Position</td>
+                                            <td width="15">:</td>
+                                            <td width="225">
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="150" style="border:none;">Part No.</td>
+                                            <td width="15" style="border:none;">:</td>
+                                            <td width="225" style="border:none;">
+                                                <span t-field="data.part_id.part_number" />
+                                            </td>
+                                            <td width="150" style="border:none;">Request Limit</td>
+                                            <td width="15" style="border:none;">:</td>
+                                            <td width="225" style="border:none;">
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="150" style="border:none;">Serial No.</td>
+                                            <td width="15" style="border:none;">:</td>
+                                            <td width="225" style="border:none;">
+                                                
+                                            </td>
+                                            <td width="150" style="border:none;">Time Request</td>
+                                            <td width="15" style="border:none;">:</td>
+                                            <td width="225" style="border:none;">
+                                                <span t-field="data.concur_date" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right" colspan="6">HRS/CTC/CAL</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left" colspan="6" style="border:none;height:100px;">
+                                                Reason : <div t-field="data.reason"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left" colspan="3">
+                                                <span>Short Term Escalation Limit</span>
+                                            </td>
+                                            <td class="text-left">
+                                                1)<br/><br/>
+                                                Hours
+                                            </td>
+                                            <td class="text-left">
+                                                2)<br/><br/>
+                                                Cycles
+                                            </td>
+                                            <td class="text-left">
+                                                3)<br/><br/>
+                                                Calendar Days
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="text-left">
+                                                <span>Request By</span>
+                                                <div style="margin-top:45px;border-top:1px solid black;">
+                                                    Chief Enginering
+                                                </div>
+                                            </td>
+                                            <td colspan="4" class="text-left">
+                                                <div style="margin-top:65px;border-top:1px solid black;width:100px;">
+                                                    Date
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><span t-field="data.create_by.name" /></td>
+                                            <td colspan="4"><span t-field="data.concur_date"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-left">
+                                                Inspector Limitation Verification ;
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-left">
+                                                Performance of the Aircraft is normal
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-left">
+                                                Ref. Authorization, Condition &amp; Limitations (D76 Short Term Escalation Authorization)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="text-left">Short Term Escalation of : </td>
+                                            <td colspan="4" class="text-right">
+                                                is Approved <input type="checkbox" style="outline:none;background:#FFF;" />
+                                                Disapproved <input type="checkbox" style="outline:none;background:#FFF;" />
+                                                By  
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" style="border:none">
+                                                Approval No :
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" height="80"></td>
+                                            <td colspan="2" height="80">
+                                                <div style="margin-top:65px">Date : <span t-field="data.qa_approve_date" /></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6">
+                                                Chief Quality Control
+                                            </td>
+                                        </tr>
+                                        <t t-if="data.dgca">
+                                            <tr>
+                                                <td colspan="2" class="text-left">Short Term Escalation of : </td>
+                                                <td colspan="4" class="text-right">
+                                                    is Approved <input type="checkbox" style="outline:none;background:#FFF;" />
+                                                    Disapproved <input type="checkbox" style="outline:none;background:#FFF;" />
+                                                    By
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6" style="border:none">
+                                                    DGCA Approval No :
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" height="80"></td>
+                                                <td colspan="2" height="80">
+                                                    <div style="margin-top:65px">Date : <span t-field="data.dgca_approve_date" /></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="text-center">
+                                                    DGCA Representative Approved<br/>
+                                                    Airworthiness Inspector Recommendation
+                                                </td>
+                                                <td colspan="3"></td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+  <data>
+
+        <record id="paperformat_ster" model="report.paperformat">
+            <field name="name">Short Term Escalation Request</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="print_ste_pdf"
+                string="Short Term Escalation Request"
+                model="airworthy.ste"
+                report_type="qweb-html"
+                file="ams_airworthy.report_ste"
+                name="ams_airworthy.report_ste"
+                paperformat="ams_airworthy.paperformat_ster"
+            />
+
+		<record model='ir.ui.view' id='ster_tree'>
+			<field name='name'>airworthy.ste.tree</field>
+			<field name='model'>airworthy.ste</field>
+			<field name='arch' type='xml'>
+				<tree string='Short Term Escalation Request'>
+					<field name="name"/>
+					<field name="date"/>
+					<field name="fleet_id"/>
+                    <field name="reason"/>
+                    <field name="status"/>
+				</tree>
+			</field>
+		</record>
+
+        <record model="ir.ui.view" id="ster_search_view">
+        <field name="name">airworthy.ste.search</field>
+        <field name="model">airworthy.ste</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="fleet_id"/>
+                <field name="reason"/>
+                <field name="status"/>            
+            </search>
+        </field>
+      </record>
+
+        <record model="ir.ui.view" id="airworthy_ste_form">
+            <field name="name">airworthy.ste.form</field>
+            <field name="model">airworthy.ste</field>
+            <field name="arch" type="xml">
+                <form string="Short Term Escalation">
+                    <sheet>
+                        <group>
+                          <div class="oe_button_box" name="button_box">
+                            <button name="acc_concur"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-thubs-o-up"
+                                help="change hours / cycles value of this component"
+                                string="Concur" attrs="{'invisible':['|',('status','!=','waiting'),('id','=',False)]}">
+                            </button>
+                            <button name="reject_concur"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-times"
+                                help="do an aircraft inspection"
+                                string="Non-Concur" attrs="{'invisible':['|',('status','!=','waiting'),('id','=',False)]}"> >
+                            </button>
+                            <button name="acc_qa"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-thubs-o-up"
+                                help="change hours / cycles value of this component"
+                                string="QA/QM Approve" attrs="{'invisible':['|',('status','!=','concur'),('id','=',False)]}">
+                            </button>
+                            <button name="reject_qa"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-times"
+                                help="do an aircraft inspection"
+                                string="QA/QM Reject" attrs="{'invisible':['|',('status','!=','concur'),('id','=',False)]}"> >
+                            </button>
+                            <button name="acc_dgca"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-thubs-o-up"
+                                help="change hours / cycles value of this component"
+                                string="DGCA Approve" attrs="{'invisible':['|',('status','!=','qaapprove'),('id','=',False)]}">
+                            </button>
+                            <button name="reject_dgca"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-times"
+                                help="do an aircraft inspection"
+                                string="DGCA Reject" attrs="{'invisible':['|',('status','!=','qaapprove'),('id','=',False)]}"> >
+                            </button>
+                          </div>
+                        </group>
+                        <group>
+                            <field name="id" attrs="{'invisible':True}"/>
+                            <field name="dgca" string="For DGCA"/>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="fleet_id"/>
+                            <field name="model_id"/>
+                            <field name="bulletin_id" attrs="{'invisible':[('bulletin_id','=',False)]}"/>
+                            <field name="part_id" attrs="{'invisible':[('part_id','=',False)]}"/>
+                            <field name="date_limit"/>
+                            <field name="service_life_id"/>
+                            <field name="value"/>
+                            <field name="status" attrs="{'readonly':True}"/>
+                            <field name="reason"/>
+                        </group>
+                        <group>
+                            <field name="concur_date"/>
+                            <field name="qa_approve_date"/>
+                            <field name="dgca_approve_date"/>
+                            <field name="create_by"/>
+                            <field name="concur_by"/>
+                            <field name="qa_approval_by"/>
+                            <field name="dgca_approval_by"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ster_action" model="ir.actions.act_window">
+			<field name="name">Short Term Escalation Request</field>
+			<field name="res_model">airworthy.ste</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+	</data>
+</odoo>

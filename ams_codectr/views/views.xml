@@ -1,0 +1,40 @@
+<odoo>
+  <data>
+    
+    <record model="ir.actions.act_window" id="vendor_code_action">
+      <field name="name">Vendor Code Counter</field>
+      <field name="res_model">ams_codectr.code</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="context">{'models':'res.partner.code','caption':'Vendor Code Counter'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="repair_order_code_action">
+      <field name="name">Repair Order Counter</field>
+      <field name="res_model">ams_codectr.code</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="context">{'models':'ams.repair_order.code','caption':'Repair Order Counter'}</field>
+    </record>
+    
+    <record model="ir.ui.view" id="ams_codectr_code_form">
+      <field name="name">ams_codectr_code.form</field>
+      <field name="model">ams_codectr.code</field>
+      <field name="arch" type="xml">
+        <form string="description">
+          <sheet>
+              <field name="label" nolabel="1"/>
+              <field name="value" nolabel="1"/>
+              <field name="name" attrs="{'invisible':True}"/>
+          </sheet>
+          <footer>
+              <button name="save" string="Save" type="object" class="oe_highlight"/>
+              or
+              <button string="Cancel" class="oe_link" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,139 @@
+<odoo>
+
+<template id="premature_pdf">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-4">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-8">
+                            <h2 class="text-left">Premature Value Report</h2>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table table-bordered">
+                        <tr>
+                          <td rowspan="2"><center><b>Date</b></center></td>
+                          <td rowspan="2"><center><b>Aircraft</b></center></td>
+                          <td rowspan="2"><center><b>Type</b></center></td>
+                          <td rowspan="2"><center><b>Component</b></center></td>
+                          <td rowspan="2"><center><b>Serial</b></center></td>
+                          <td rowspan="2"><center><b>Replacement Serial</b></center></td>
+                          <td colspan="2"><center><b>Aircraft</b></center></td>
+                          <td colspan="2"><center><b>Component</b></center></td>
+                        </tr>
+                        <tr>
+                          <td><center><b>Hours</b></center></td>
+                          <td><center><b>Cycles</b></center></td>
+                          <td><center><b>Hours</b></center></td>
+                          <td><center><b>Cycles</b></center></td>
+                        </tr>
+                        <t t-foreach="data.premature" t-as="pre">
+                            <tr>
+                                <td> <div t-field="pre.create_date" /></td>
+                                <td> <div t-field="pre.fleet_id" /></td>
+                                <td> <div t-field="pre.type" /></td>
+                                <td><div t-field="pre.engine_id" /></td>
+                                <td><div t-field="pre.engine_id.esn" /></td>
+                                <td><div t-field="pre.engine_replacement_id.esn" /></td>
+                                <td><div t-field="pre.ac_hours" /></td>
+                                <td><div t-field="pre.ac_cycles" /></td>
+                                <td><div t-field="pre.hours" /></td>
+                                <td><div t-field="pre.cycles" /></td>
+                            </tr>
+                            <t t-if="pre.reason">
+                              <tr>
+                                <td colspan="10">
+                                  Reason : <div t-field="pre.reason" /> 
+                                </td>
+                              </tr>
+                            </t>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+  <data>
+        <record id="paperon_prermature" model="report.paperformat">
+            <field name="name">Premature Value</field>
+            <field name="orientation">Landscape</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+       <report
+                id="print_premature_pdf"
+                string="Premature Value"
+                model="ams.premature.value.report"
+                report_type="qweb-html"
+                file="ams_report.premature_pdf"
+                name="ams_report.premature_pdf"
+                paperformat="ams_report.paperon_prermature"
+            />
+
+
+      <record id="premature_report_form" model="ir.ui.view">
+        <field name="name">ams.premature.value.report.form</field>
+        <field name="model">ams.premature.value.report</field>
+        <field name="view_mode">form</field>
+        <field name="arch" type="xml">
+            <form string="Premature Value">
+          <group>
+            <field name="component"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="ata"/>
+            <field name="fleet"/>
+            <field name="order_by" widget="radio" options="{'horizontal':True}"/>
+          </group>
+          <group string="Data Tool" attrs="{'invisible':True}">
+            <field name="premature">
+<!--               <tree>
+                  <field name="tool"/>
+                  <field name="sn"/>
+                  <field name="location"/>
+                  <field name="last_calibration"/>
+                  <field name="next_calibration"/>
+              </tree> -->
+            </field>
+          </group>
+
+          <footer>
+            <button name="print_premature_pdf" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+            <button special="cancel" string="Cancel"/>
+          </footer>
+            </form>
+        </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="premature_report_action">
+      <field name="name">Premature Value</field>
+      <field name="res_model">ams.premature.value.report</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+      <field name="target">new</field>
+    </record>   
+  </data>
+</odoo>

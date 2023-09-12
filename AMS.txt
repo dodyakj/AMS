@@ -1,0 +1,69 @@
+=========== AMS ===========
+
+====== 20-06-2019 =========
+OC 	- remaining masih minus (2-3 day)
+MDR - sort by remaning day  kecil k besar (1/4 day)
+FML - tambah notebook after engine monitoring power asurance (done)
+MP 	- sort est date  (3 day)
+discripencies - filter component affected (1 day)
+MTR - optimasi data lemot (1-2 day)
+MDR - default mdr (1/4 day)
+	- print collom tanggal k banyakan (1/4 day)
+aircraft status - nama pesawat kejepit (1/4 day)
+
+
+====== 25-06-2019 =========
+aircraft (inspection) => global math (done)
+fml => last jam trbang pesawat  view 
+sorting component name
+complied insption
+modifity
+	SB => typ A/C => MSN => sesuai typ pesawat (done)
+
+====== 27-06-2019 =========
+upload document menu reability perpesawat
+fml => component change
+mp = > ikut inspection boolean mp (done)
+information dll => complied sheet sesuai dengan information tersebut MI OTI EO STC  (done)
+
+====== 1-07-2019 =========
+MDR XLS (done)
+ADC => report AC,ENG,PROP,APLIECE (done)
+MI OTI EO STC  WO MWO  => upload document (done)
+
+====== 5-07-2019 =========
+status part removal report.. premature.. 
+premature value report 
+alteration modificatin alteration repaire report (done)
+alteration  => status =>  open sama close
+wo mwo description inspection (done)
+
+
+
+====== 23-07-2019 =========
+macam pekerjaan : entry manual ?
+flow
+WO : inspection type ? serial number ?
+warning due bbrp kali
+component report header cek n rapikan 
+mtr speed 
+data propeller
+compare plan vs realisasi -> fml 
+logbook print sticker
+state wo/mwo todo progress done
+inspeksi bisa -> komponen ?
+set warning time default value
+header report mdr
+pengelompokan menu
+mdr set warna prioriti
+dashboard aircraft maintenance now jadi due
+
+====== 23-07-2019 =========
+MDR &  MTR
+	header center
+		Title Hour
+		serial number AC
+	page , Format tgl, table, last flight, 
+MTR
+	OC TSN ??
+	

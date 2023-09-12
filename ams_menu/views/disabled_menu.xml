@@ -1,0 +1,36 @@
+<odoo>
+  <data noupdate="0">
+    <!-- <function model="ir.module.module" name="update_list"/> -->
+    <record id="make_invisible" model="res.groups">
+        <field name="name">Invisible</field>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+  </data>
+
+  <data>
+    <record model="ir.ui.menu" id="maintenance.menu_equipment_form">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="maintenance.menu_m_request_form">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="maintenance.menu_m_request_calendar">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="maintenance.menu_equipment_form">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+    
+    <record model="ir.ui.menu" id="maintenance.menu_m_dashboard">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+
+
+    
+    
+  </data>
+
+</odoo>

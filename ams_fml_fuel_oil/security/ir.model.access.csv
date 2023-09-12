@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_model_fuel_fw,access_model_fuel_fw,ams_fml_fuel_oil.model_fuel_fw,,1,1,1,1
+access_model_fuel_rw,access_model_fuel_rw,ams_fml_fuel_oil.model_fuel_rw,,1,1,1,1
+access_model_oil_engine_1,access_model_oil_engine_1,ams_fml_fuel_oil.model_oil_engine_1,,1,1,1,1
+access_model_oil_engine_2,access_model_oil_engine_2,ams_fml_fuel_oil.model_oil_engine_2,,1,1,1,1
+access_model_oil_engine_3,access_model_oil_engine_3,ams_fml_fuel_oil.model_oil_engine_3,,1,1,1,1
+access_model_oil_engine_4,access_model_oil_engine_4,ams_fml_fuel_oil.model_oil_engine_4,,1,1,1,1

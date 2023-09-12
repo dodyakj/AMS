@@ -1,0 +1,712 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="ams_fml_log_tree">
+      <field name="name">ams.fml.log.tree</field>
+      <field name="model">ams_fml.log</field>
+      <field name="arch" type="xml">
+        <tree default_order="create_date desc" delete="0" decoration-danger="status=='unverified'">
+          <field name="name" />
+          <field name="create_uid" />
+          <field name="total_hours" string="AC Hours"/>
+          <field name="total_cycles" string="AC Cycles"/>
+          <!-- <field name="aircraft_hours" string="AC Hours Added"/> -->
+          <!-- <field name="aircraft_cycles" string="AC Cycles Added"/> -->
+          <field name="engine_comp_text" string="Engines" />
+          <field name="auxiliary_comp_text"  string="Auxiliarys"/>
+          <field name="create_date" />
+          <field name="status" />
+          <!-- <field name="propeller_comp_text" string="Propellers"/> -->
+          <!-- <field name="aircraft_id" /> -->
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ams_fml_log_forms">
+      <field name="name">ams_fml.log.form</field>
+      <field name="model">ams_fml.log</field>
+      <field name="arch" type="xml">
+        <form string="Flight Maintenance Log" duplicate="false" delete="0">
+          <header>
+            <button name="change_status" string="Verify" type="object" class="oe_highlight" attrs="{'invisible':[('status','=','verified')]}" groups="ams_security.group_verify_fml" confirm="Are you sure to verify this FML ?" />
+            <!-- <button string="Discard" special="cancel" class="oe_link" /> -->
+            
+            <field name="status" widget="statusbar"/>
+          </header>
+            <group row="2">
+              <group>
+                <field name="id" invisible="1"/>
+                <field name="contextable" invisible="1"/>
+                <field name="name" required="1" group="ams_security.group_fml_edit"/>
+                <field name="log_id" attrs="{'invisible':True}"/>
+                <!-- <field name="log_id_text"/> -->
+                <field name="date" attrs="{'readonly':[('log_id','!=',False)]}" required="1"/>
+                <field name="aircraft_id" attrs="{'readonly':['|',('log_id','!=',False),'|',('contextable','>',0),('id','!=',False)]}" required="1"/>
+                <field name="ac_type" invisible="1" />
+                <field name="rin_active" attrs="{'invisible':True}"/>
+              </group>
+              <group>
+                <field name="flight_number"/>
+                <field name="aircraft_type"/>
+                <field name="etd"/>
+                <field name="eta"/>
+                <field name="date_lt"/>
+              </group>
+            </group>
+            <group>
+              <group>
+                <field name="issued_by" />
+              </group>
+            </group>
+            <notebook>
+              <page string="Hours and Cycles">
+                <group col="4" colspan="4" string="Airframe">
+                  <group col="2">
+                    <field name="total_hours" string="Hours Before" readonly="1"/>
+                    <field name="total_cycles" string="Cycles Before" readonly="1"/>
+                  </group>
+                  <group col="2">
+                    <field name="aircraft_hours" string="Hours Added" />
+                    <field name="aircraft_cycles" string="Cycles Added" />
+                    <field name="aircraft_rin" attrs="{'invisible':[('rin_active','=',False)]}"/>
+                  </group>
+                  <group col="2" attrs="{'invisible':[('id','=','False')]}">
+                    <field name="total_after_hours" string="Hours After" readonly="1"/>
+                    <field name="total_after_cycles" string="Cycles After" readonly="1"/>
+                  </group>
+                </group>
+                <group>
+                  <field name="aircraft_comp_ids" attrs="{'invisible':[('aircraft_comp_ids','=',[])]}">
+                    <tree string='Aircraft Component' editable="bottom" create="false" delete="false">
+                      <field name="component_id"/>
+                      <!-- <field name="hours"/> -->
+                      <field name="cycles_before" readonly="1" />
+                      <field name="cycles"/>
+                      <field name="cycles_after" readonly="1" />
+                    </tree>
+                  </field>
+                </group>
+                <!-- ENGINE -->
+                <group attrs="{'invisible':[('engine1_id','=',False)]}">
+                  <field name="engine1_id" rowspan="3" attrs="{'invisible':True}"/>
+                  <field name="engine1_id_text" rowspan="3" attrs="{'readonly':True}"/>
+                  <field name="engine1_reason_change" invisible="1" />
+                  <field name="engine1_reason" attrs="{'invisible': [('engine1_reason_change', '=', False)]}"/>
+                </group>
+                <group col="4" attrs="{'invisible':[('engine1_id','=',False)]}">
+                  <group col="2">
+                    <field name="engine1_hours_before_flight" attrs="{'invisible':[('engine1_id','=',False)]}"/>
+                    <field name="engine1_cycles_before_flight" attrs="{'invisible':[('engine1_id','=',False)]}"/>
+                  </group>
+                  <group col="2">
+                    <field name="engine1_hours" attrs="{'invisible':[('engine1_id','=',False)]}"/>
+                    <field name="engine1_cycles" attrs="{'invisible':[('engine1_id','=',False)]}"/>
+                  </group>
+                  <group col="2">
+                    <field name="engine1_hours_added" attrs="{'invisible':[('engine1_id','=',False)],'readonly':1}" />
+                    <field name="engine1_cycles_added" attrs="{'invisible':[('engine1_id','=',False)],'readonly':1}" />
+                  </group>
+                </group>
+                <group>  
+                  <field name="engine1_comp_ids" attrs="{'invisible':['|',('engine1_id','=',False),('engine1_comp_ids','=',[])]}">
+                    <tree string='Free Turbine Engine #1' editable="bottom" create="false" delete="false">
+                      <field name="component_id" string="Free Turbine Engine #1"/>
+                      <!-- <field name="hours"/> -->
+                      <field name="cycles_before" readonly="1" />
+                      <field name="cycles"/>
+                      <field name="cycles_after" readonly="1" />
+                    </tree>
+                  </field>
+                </group>
+
+                <group attrs="{'invisible':[('engine1_id','=',False)]}">  
+                  <field name="engine2_id" rowspan="3" attrs="{'invisible':True}"/>
+                  <field name="engine2_id_text" rowspan="3" attrs="{'readonly':True}"/>
+                  <field name="engine2_reason_change" invisible="1" />
+                  <field name="engine2_reason" attrs="{'invisible': [('engine2_reason_change', '=', False)]}"/>
+                </group>
+                <group col="4" attrs="{'invisible':[('engine2_id','=',False)]}">
+                  <group col="2">
+                    <field name="engine2_hours_before_flight" attrs="{'invisible':[('engine2_id','=',False)]}"/>
+                    <field name="engine2_cycles_before_flight" attrs="{'invisible':[('engine2_id','=',False)]}"/>
+                  </group>
+                  <group col="2">
+                    <field name="engine2_hours" attrs="{'invisible':[('engine2_id','=',False)]}"/>
+                    <field name="engine2_cycles" attrs="{'invisible':[('engine2_id','=',False)]}"/>
+                  </group>
+                  <group col="2">
+                    <field name="engine2_hours_added" attrs="{'invisible':[('engine2_id','=',False)],'readonly':1}" />
+                    <field name="engine2_cycles_added" attrs="{'invisible':[('engine2_id','=',False)],'readonly':1}" />
+                  </group>
+                </group>
+                <group>
+                  <field name="engine2_comp_ids" attrs="{'invisible':['|',('engine2_id','=',False),('engine2_comp_ids','=',[])]}">
+                    <tree string='Free Turbine Engine #2' editable="bottom" create="false" delete="false">
+                      <field name="component_id" string="Free Turbine Engine #2"/>
+                      <!-- <field name="hours"/> -->
+                      <field name="cycles_before" readonly="1" />
+                      <field name="cycles"/>
+                      <field name="cycles_after" readonly="1" />
+                    </tree>
+                  </field>
+                </group>
+
+                <group attrs="{'invisible':[('engine3_id','=',False)]}">
+                  <field name="engine3_id" rowspan="3" attrs="{'invisible':True}"/>
+                  <field name="engine3_id_text" rowspan="3" attrs="{'readonly':True}"/>
+                  <field name="engine3_reason_change" invisible="1" />
+                  <field name="engine3_reason" attrs="{'invisible': [('engine3_reason_change', '=', False)]}"/>
+                </group>
+                <group col="4" attrs="{'invisible':[('engine3_id','=',False)]}">
+                  <group col="2">
+                    <field name="engine3_hours_before_flight" attrs="{'invisible':[('engine3_id','=',False)]}"/>
+                    <field name="engine3_cycles_before_flight" attrs="{'invisible':[('engine3_id','=',False)]}"/>
+                  </group>
+                  <group col="2">
+                    <field name="engine3_hours" attrs="{'invisible':[('engine3_id','=',False)]}"/>
+                    <field name="engine3_cycles" attrs="{'invisible':[('engine3_id','=',False)]}"/>
+                  </group>
+                  <group col="2">
+                    <field name="engine3_hours_added" attrs="{'invisible':[('engine3_id','=',False)],'readonly':1}" />
+                    <field name="engine3_cycles_added" attrs="{'invisible':[('engine3_id','=',False)],'readonly':1}" />
+                  </group>
+                </group>
+                <group>
+                  <field name="engine3_comp_ids" attrs="{'invisible':['|',('engine3_id','=',False),('engine3_comp_ids','=',[])]}">
+                    <tree string='Free Turbine Engine #3' editable="bottom" create="false" delete="false">
+                      <field name="component_id" string="Free Turbine Engine #3"/>
+                      <!-- <field name="hours"/> -->
+                      <field name="cycles_before" readonly="1" />
+                      <field name="cycles"/>
+                      <field name="cycles_after" readonly="1" />
+                    </tree>
+                  </field>
+                </group>
+
+                <group attrs="{'invisible':[('engine4_id','=',False)]}">
+                  <field name="engine4_id" rowspan="3" attrs="{'invisible':True}"/>
+                  <field name="engine4_id_text" rowspan="3" attrs="{'readonly':True}"/>
+                  <field name="engine4_reason_change" invisible="1" />
+                  <field name="engine4_reason" attrs="{'invisible': [('engine4_reason_change', '=', False)]}"/>
+                </group>
+                <group col="4" attrs="{'invisible':[('engine4_id','=',False)]}">
+                  <group col="2">
+                    <field name="engine4_hours_before_flight" attrs="{'invisible':[('engine4_id','=',False)]}"/>
+                    <field name="engine4_cycles_before_flight" attrs="{'invisible':[('engine4_id','=',False)]}"/>
+                  </group>
+                  <group col="2">
+                    <field name="engine4_hours" attrs="{'invisible':[('engine4_id','=',False)]}"/>
+                    <field name="engine4_cycles" attrs="{'invisible':[('engine4_id','=',False)]}"/>
+                  </group>
+                  <group col="2">
+                    <field name="engine4_hours_added" attrs="{'invisible':[('engine4_id','=',False)],'readonly':1}" />
+                    <field name="engine4_cycles_added" attrs="{'invisible':[('engine4_id','=',False)],'readonly':1}" />
+                  </group>
+                </group>
+                <group>
+                  <field name="engine4_comp_ids" attrs="{'invisible':['|',('engine4_id','=',False),('engine4_comp_ids','=',[])]}">
+                    <tree string='Free Turbine Engine #4' editable="bottom" create="false" delete="false">
+                      <field name="component_id" string="Free Turbine Engine #4"/>
+                      <!-- <field name="hours"/> -->
+                      <field name="cycles_before" readonly="1" />
+                      <field name="cycles"/>
+                      <field name="cycles_after" readonly="1" />
+                    </tree>
+                  </field>
+                </group>
+
+                <!-- PROPELLER -->
+                <group attrs="{'invisible':[('propeller1_id','=',False)]}">
+                  <field name="propeller1_id" rowspan="3" attrs="{'invisible':True}"/>
+                  <field name="propeller1_id_text" rowspan="3" attrs="{'invisible':[('propeller1_id','=',False)]}"/>
+                </group>
+                <group col="4" attrs="{'invisible':[('propeller1_id','=',False)]}">
+                  <group col="2">
+                    <field name="propeller1_hours_before_flight" attrs="{'invisible':[('propeller1_id','=',False)],'readonly':1}"/>
+                    <!-- <field name="propeller1_cycles_before_flight" attrs="{'invisible':[('propeller1_id','=',False)],'readonly':1}"/> -->
+                  </group>
+                  <group col="2">
+                    <field name="propeller1_hours" attrs="{'invisible':[('propeller1_id','=',False)]}"/>
+                    <!-- <field name="propeller1_cycles" attrs="{'invisible':[('propeller1_id','=',False)]}"/> -->
+                  </group>
+                  <group col="2">
+                    <field name="propeller1_hours_added" attrs="{'invisible':[('propeller1_id','=',False)],'readonly':1}"/>
+                    <!-- <field name="propeller1_cycles_added" attrs="{'invisible':[('propeller1_id','=',False)],'readonly':1}"/> -->
+                  </group>
+                </group>
+                <group>
+                  <field name="propeller1_comp_ids" attrs="{'invisible':['|',('propeller1_id','=',False),('propeller1_comp_ids','=',[])]}">
+                    <tree string='Propeller #1 Component' editable="bottom" create="false" delete="false">
+                      <field name="component_id"/>
+                      <!-- <field name="hours"/> -->
+                      <field name="cycles_before" readonly="1" />
+                      <field name="cycles"/>
+                      <field name="cycles_after" readonly="1" />
+                    </tree>
+                  </field>
+                </group>
+
+                <group attrs="{'invisible':[('propeller2_id','=',False)]}">
+                  <field name="propeller2_id" rowspan="3" attrs="{'invisible':True}"/>
+                  <field name="propeller2_id_text" rowspan="3" attrs="{'invisible':[('propeller2_id','=',False)]}"/>
+                </group>
+                <group col="4" attrs="{'invisible':[('propeller2_id','=',False)]}">
+                  <group col="2">
+                    <field name="propeller2_hours_before_flight" attrs="{'invisible':[('propeller2_id','=',False)],'readonly':1}"/>
+                    <!-- <field name="propeller2_cycles_before_flight" attrs="{'invisible':[('propeller2_id','=',False)],'readonly':1}"/> -->
+                  </group>
+                  <group col="2">
+                    <field name="propeller2_hours" attrs="{'invisible':[('propeller2_id','=',False)]}"/>
+                    <!-- <field name="propeller2_cycles" attrs="{'invisible':[('propeller2_id','=',False)]}"/> -->
+                  </group>
+                  <group col="2">
+                    <field name="propeller2_hours_added" attrs="{'invisible':[('propeller2_id','=',False)],'readonly':1}"/>
+                    <!-- <field name="propeller2_cycles_added" attrs="{'invisible':[('propeller2_id','=',False)],'readonly':1}"/> -->
+                  </group>
+                </group>
+                <group>
+                  <field name="propeller2_comp_ids" attrs="{'invisible':['|',('propeller2_id','=',False),('propeller2_comp_ids','=',[])]}">
+                    <tree string='Propeller #2 Component' editable="bottom" create="false" delete="false">
+                      <field name="component_id"/>
+                      <!-- <field name="hours"/> -->
+                      <field name="cycles_before" readonly="1" />
+                      <field name="cycles"/>
+                      <field name="cycles_after" readonly="1" />
+                    </tree>
+                  </field>
+                </group>
+
+                <group attrs="{'invisible':[('propeller3_id','=',False)]}">
+                  <field name="propeller3_id" rowspan="3" attrs="{'invisible':True}"/>
+                  <field name="propeller3_id_text" rowspan="3" attrs="{'invisible':[('propeller3_id','=',False)]}"/>
+                </group>
+                <group col="4" attrs="{'invisible':[('propeller3_id','=',False)]}">
+                  <group col="2">
+                    <field name="propeller3_hours_before_flight" attrs="{'invisible':[('propeller3_id','=',False)],'readonly':1}"/>
+                    <!-- <field name="propeller3_cycles_before_flight" attrs="{'invisible':[('propeller3_id','=',False)],'readonly':1}"/> -->
+                  </group>
+                  <group col="2">
+                    <field name="propeller3_hours" attrs="{'invisible':[('propeller3_id','=',False)]}"/>
+                    <!-- <field name="propeller3_cycles" attrs="{'invisible':[('propeller3_id','=',False)]}"/> -->
+                  </group>
+                  <group col="2">
+                    <field name="propeller3_hours_added" attrs="{'invisible':[('propeller3_id','=',False)],'readonly':1}"/>
+                    <!-- <field name="propeller3_cycles_added" attrs="{'invisible':[('propeller3_id','=',False)],'readonly':1}"/> -->
+                  </group>
+                </group>
+                <group>
+                  <field name="propeller3_comp_ids" attrs="{'invisible':['|',('propeller3_id','=',False),('propeller3_comp_ids','=',[])]}">
+                    <tree string='Propeller #3 Component' editable="bottom" create="false" delete="false">
+                      <field name="component_id"/>
+                      <!-- <field name="hours"/> -->
+                      <field name="cycles_before" readonly="1" />
+                      <field name="cycles"/>
+                      <field name="cycles_after" readonly="1" />
+                    </tree>
+                  </field>
+                </group>
+
+                <group attrs="{'invisible':[('propeller4_id','=',False)]}">
+                  <field name="propeller4_id" rowspan="3" attrs="{'invisible':True}"/>
+                  <field name="propeller4_id_text" rowspan="3" attrs="{'invisible':[('propeller4_id','=',False)]}"/>
+                </group>
+                <group col="4" attrs="{'invisible':[('propeller4_id','=',False)]}">
+                  <group col="2">
+                    <field name="propeller4_hours_before_flight" attrs="{'invisible':[('propeller4_id','=',False)],'readonly':1}"/>
+                    <!-- <field name="propeller4_cycles_before_flight" attrs="{'invisible':[('propeller4_id','=',False)],'readonly':1}"/> -->
+                  </group>
+                  <group col="2">
+                    <field name="propeller4_hours" attrs="{'invisible':[('propeller4_id','=',False)]}"/>
+                    <!-- <field name="propeller4_cycles" attrs="{'invisible':[('propeller4_id','=',False)]}"/> -->
+                  </group>
+                  <group col="2">
+                    <field name="propeller4_hours_added" attrs="{'invisible':[('propeller4_id','=',False)],'readonly':1}"/>
+                    <!-- <field name="propeller4_cycles_added" attrs="{'invisible':[('propeller4_id','=',False)],'readonly':1}"/> -->
+                  </group>
+                </group>
+                <group>
+                  <field name="propeller4_comp_ids" attrs="{'invisible':['|',('propeller4_id','=',False),('propeller4_comp_ids','=',[])]}">
+                    <tree string='Propeller #4 Component' editable="bottom" create="false" delete="false">
+                      <field name="component_id"/>
+                      <!-- <field name="hours"/> -->
+                      <field name="cycles_before" readonly="1" />
+                      <field name="cycles"/>
+                      <field name="cycles_after" readonly="1" />
+                    </tree>
+                  </field>
+                </group>
+
+                <group attrs="{'invisible':[('auxiliary1_id','=',False)]}">
+                  <field name="auxiliary1_id" rowspan="3" attrs="{'invisible':True}"/>
+                  <field name="auxiliary1_id_text" rowspan="3" attrs="{'invisible':[('auxiliary1_id','=',False)]}"/>
+                </group>
+                <group col="4" attrs="{'invisible':[('auxiliary1_id','=',False)]}">
+                  <group>
+                    <field name="auxiliary1_hours_before_flight"  attrs="{'invisible':[('auxiliary1_id','=',False)]}" />
+                    <field name="auxiliary1_cycles_before_flight" attrs="{'invisible':[('auxiliary1_id','=',False)]}" />
+                  </group>
+                  <group>
+                    <field name="auxiliary1_hours" attrs="{'invisible':[('auxiliary1_id','=',False)]}"/>
+                    <field name="auxiliary1_cycles" attrs="{'invisible':[('auxiliary1_id','=',False)]}"/>
+                  </group>
+                  <group>
+                    <field name="auxiliary1_hours_added" attrs="{'invisible':[('auxiliary1_id','=',False)],'readonly':1}"/>
+                    <field name="auxiliary1_cycles_added" attrs="{'invisible':[('auxiliary1_id','=',False)],'readonly':1}"/>
+                  </group>
+                </group>
+                <group>
+                  <field name="auxiliary1_comp_ids" attrs="{'invisible':['|',('auxiliary1_id','=',False),('auxiliary1_comp_ids','=',[])]}">
+                    <tree string='Auxiliary #1 Component' editable="bottom" create="false" delete="false">
+                      <field name="component_id"/>
+                      <field name="hours"/>
+                      <field name="cycles_before" readonly="1" />
+                      <field name="cycles"/>
+                      <field name="cycles_after" readonly="1" />
+                    </tree>
+                  </field>
+                </group>
+                
+              </page>
+              <page string="FML Detail">
+                <group>
+                      <field name="flight_schedule_id"/>
+                      <field name="flight_order_number"/>
+                      <field name="location_id"/>
+                      <field name="customer_id"/>
+                      <field name="schedule_commercial_id"/>
+                      <field name="flight_category"/>
+                      <field name="flight_type"/>
+                      <field name="internal_flight_type_id"/>
+                      <field name="schedule_date"/>
+                    </group>
+              </page>
+
+              <page string='Mtc Fixed Wing' attrs="{'invisible':[('aircraft_type', '!=', 'fixedwing')]}">
+                      <field name='maintenance_fixed_ids' help="Maintenance Log [Fixed Wing Type]">
+                          <form string='Fixed Wing'>
+                              <field name='fl_acquisition_id' invisible="True" />
+                              <separator string="Crew List" colspan="4"/>
+                              <field name='fixed_crew_ids'>
+                                  <tree editable='buttom'>
+                                      <field name='aircraft_id' invisible="True" />
+                                      <field name='crew_id' required="True"/>
+                                      <field name='qualification'/>
+                                      <field name='is_instructor'/>
+                                      <field name='crew_type_id'/>
+                                      <field name='type_duty_id'/>
+                                         <!-- <field name='payment_type' string='Type Duty'/> -->
+                                      <field name='brief_time' attrs="{'required':[('is_instructor', '=', True)]}"/>
+                                      <field name='flt'/>
+                                      <field name='total_time'/>
+                                      <field name='fl_hours_price_id' required="True"/>
+                                  </tree>
+                                  <form>
+                                      <group>
+                                          <field name='aircraft_id' invisible="True"/>
+                                          <field name='crew_id' required="True"/>
+                                          <field name='crew_type_id'/>
+                                          <field name='qualification'/>
+                                          <field name='is_instructor'/>
+                                          <field name='type_duty_id'/>
+                                          <!-- <field name='payment_type'/> -->
+                                          <field name='brief_time' attrs="{'required':[('is_instructor', '=', True)]}"/>
+                                          <field name='flt'/>
+                                          <field name='total_time'/>
+                                          <field name='fl_hours_price_id' required="True"/>
+                                      </group>
+                                  </form>
+                              </field>
+                              <group>
+                                  <group>
+                                      <field name='route_id'/>
+                                      <label for="from_id" string="Area (From-To)" />
+                                      <div name="from_to_route">
+                                          <field name='from_id' class="oe_inline" nolabel="1" readonly="1"/>
+                                          <label string="  to " class="oe_inline"/>
+                                          <field name='to_id' class="oe_inline" nolabel="1" readonly="1"/>
+                                      </div>
+                                      <label for="distance_nm" string="Distance" />
+                                      <div name="distance_route">
+                                          <label string="NM: " class="oe_inline"/>
+                                          <field name='distance_nm' class="oe_inline" nolabel="1" readonly="1"/>
+                                          <label string="  | KM: " class="oe_inline"/>
+                                          <field name='distance_km' class="oe_inline" nolabel="1" readonly="1"/>
+                                      </div>
+                                      <field name='take_off' widget="float_time" string="Take Off"/>
+                                      <field name='landing' widget="float_time"/>
+                                      <field name='flight_hours' widget="float_time"/>
+                                      <field name='flight_hour_matrix'/>
+                                  </group>
+                                  <group>
+                                      <field name='customer_id'/>
+                                      <field name='block_off' widget="float_time" required="True"/>
+                                      <field name='block_on' widget="float_time" required="True"/>
+                                      <field name='flight_time' widget="float_time" invisible="True"/>
+                                      <field name='flt_time' widget="float_time"/>
+                                      <field name='flight_time_matrix' widget="float_time" invisible="True"/>
+                                      <field name='flt_time_mtx'/>
+                                      <field name='no_pax'/>
+                                  </group>
+                                  <group string='PAX'>
+                                      <field name='pax'/>
+                                      <field name='uom_pax'/>
+                                  </group>
+                                  <group string='Lugg'>
+                                      <field name='lugg'/>
+                                      <field name='uom_lugg'/>
+                                  </group>
+                                  <group string='Freight'>
+                                      <field name='freight'/>
+                                      <field name='uom_freight'/>
+                                  </group>
+                                  <group string='Total'>
+                                      <field name='total'/>
+                                      <field name='uom_total'/>
+                                  </group>
+                                  <group>
+                                      <field name='fuel_payload_available'/>
+                                  </group>
+                                  <group string='Fuel' colspan='4'>
+                                      <group>
+                                          <field name='fuel_uplift'/>
+                                          <field name='uom_uplift'/>
+                                      </group>
+                                      <group>
+                                          <field name='fuel_cons'/>
+                                          <field name='uom_cons'/>
+                                      </group>
+                                      <group>
+                                          <field name='fuel_rem'/>
+                                          <field name='uom_rem'/>
+                                      </group>
+                                      <group>
+                                          <field name='fuel_total'/>
+                                          <field name='uom_fuel_total'/>
+                                      </group>
+                                  </group>
+                                  <group string='Oil'>
+                                      <field name='oil_added1'/>
+                                      <field name='oil_added2'/>
+                                      <field name='oil_added3'/>
+                                      <field name='oil_added4'/>
+                                  </group>
+                                  <group>
+                                      <field name='remark'/>
+                                      <field name='current_user'/>
+                                      <field name='otr_no'/>
+                                  </group>
+                              </group>
+                          </form>
+                          <tree> <!-- icon="STOCK_COPY"-->
+                              <button name="action_duplicate_line" string="Copy Lines" type="object" class="oe_edit_only" icon="fa-files-o" help="Copy this line in FML"/>
+                              <field name='aircraft_type' string='Type'/>
+                              <field name='from_id'/>
+                              <field name='to_id'/>
+                              <field name='customer_id'/>
+                              <field name='take_off' widget="float_time" string="Take Off"/>
+                              <field name='landing' widget="float_time"/>
+                              <field name='flight_hours' widget="float_time"/>
+                              <field name='flight_hour_matrix' sum='flight_hour_matrix'/>
+                              <field name='block_off' widget="float_time" required="True"/>
+                              <field name='block_on' widget="float_time" required="True"/>
+                              <field name='flight_time' widget="float_time" invisible="True"/>
+                              <field name='flight_time_matrix' sum='flight_time_matrix' invisible="True"/>
+                              <field name='flt_time' widget="float_time"/>
+                              <field name='flt_time_mtx' sum='flight_time_matrix'/>
+                              <field name='no_pax'/>
+                              <field name='pax'/>
+                              <field name='lugg'/>
+                              <field name='freight'/>
+                              <field name='total'/>
+                              <field name='fuel_payload_available'/>
+                              <field name='fuel_uplift'/>
+                              <field name='fuel_cons'/>
+                              <field name='fuel_rem'/>
+                              <field name='fuel_total'/>
+                              <field name='oil_added1'/>
+                              <field name='oil_added2'/>
+                              <field name='oil_added3'/>
+                              <field name='oil_added4'/>
+                              <field name='remark'/>
+                              <field name='current_user'/>
+                              <field name='otr_no'/>
+                              <!--<field name='state' invisible="True"/>-->
+                          </tree>
+                      </field>
+              </page>
+
+              <page string='Mtc Rotary' attrs="{'invisible':[('aircraft_type', '!=', 'rotary')]}">
+                  <field name='maintenance_rotary_ids' help="Maintenance Log [Rotary Type]">
+                      <form>
+                          <field name='fl_acquisition_id' invisible="True"/>
+                          <separator string="Crew List" colspan="4"/>
+                          <field name='rotary_crew_ids'>
+                              <tree editable='buttom'>
+                                  <field name='aircraft_id' invisible="True"/>
+                                  <field name='crew_id' required="True"/>
+                                  <field name='qualification'/>
+                                  <field name='crew_type_id'/>
+                                  <field name='is_instructor'/>
+                                  <field name='type_duty_id'/>
+                                  <field name='brief_time' attrs="{'required':[('is_instructor', '=', True)]}"/>
+                                  <field name='flt'/>
+                                  <field name='total_time'/>
+                                  <field name='fl_hours_price_id' required="True"/>
+                              </tree>
+                              <form>
+                                  <group>
+                                      <field name='aircraft_id' invisible="True"/>
+                                      <field name='crew_id' required="True"/>
+                                      <field name='crew_type_id'/>
+                                      <field name='qualification'/>
+                                      <field name='is_instructor'/>
+                                      <field name='type_duty_id'/>
+                                     <!-- <field name='payment_type'/> -->
+                                      <field name='brief_time' attrs="{'required':[('is_instructor', '=', True)]}"/>
+                                      <field name='flt'/>
+                                      <field name='total_time'/>
+                                      <field name='fl_hours_price_id' required="True"/>
+                                  </group>
+                              </form>
+                          </field>
+                          <separator string="Routes" colspan="4"/>
+                          <field name='rotary_route_ids'>
+                              <tree editable='buttom'>
+                                  <field name='route_id'/>
+                                  <field name='distance_nm'/>
+                                  <field name='distance_km'/>
+                                  <field name='penumpang'/>
+                                  <field name='ldg' sum='ldg'/>
+                                  <field name='cycle_start1' sum='cycle_start1'/>
+                                  <field name='cycle_start2' sum='cycle_start2'/>
+                                  <field name='cycle_gg' sum='cycle_gg'/>
+                                  <field name='cycle_ft' sum='cycle_ft'/>
+                                  <field name='cargo' sum='cargo'/>
+                                  <field name='fuel_added' sum='fuel_added'/>
+                                  <field name='fuel_total' sum='fuel_total'/>
+                                  <field name='customer_id'/>
+                              </tree>
+                          </field>
+                          <separator string="Time" colspan="4"/>
+                          <field name='rotary_time_ids'>
+                              <tree editable='buttom'>
+                                 <field name="lift_off" widget='float_time'/>
+                                  <field name="landing" widget='float_time'/>
+                                  <field name="in_service" widget='float_time'/>
+                                  <field name="in_service_matrix"/>
+                              </tree>
+                          </field>
+                          <group>
+                              <group>
+                                  <field name="rotor_engage" widget='float_time' required="True"/>
+                                  <field name="rotor_stop" widget='float_time' required="True"/>
+                                  <field name="block" widget='float_time'/>
+                                  <field name='block_matrix'/>
+                              <!--<field name='inservice' widget='float_time'/> -->
+                              </group>
+                              <group>
+                                  <field name="pax_no"/>
+                                  <field name="cargo"/>
+                                  <field name="uom_cargo" string='Cargo Weight'/>
+                                  <field name="cargo_conversi_kgs"/>
+                                  <field name="cargo_conversi_lbs"/>
+                              </group>
+                              <group>
+                                  <field name="sing_hoist_no"/>
+                                  <field name="ldg"/>
+                              </group>
+                              <group string='Cycle'>
+                                  <field name="cycle_start1"/>
+                                  <field name="cycle_start2"/>
+                                  <field name="cycle_gg"/>
+                                  <field name="cycle_ft"/>
+                              </group>
+                              <group string='Engine Oil' colspan='4'>
+                                  <group>
+                                      <field name="oil_added1"/>
+                                      <field name="uom_oil1"/>
+                                  </group>
+                                  <group>
+                                      <field name="oil_added2"/>
+                                      <field name="uom_oil2"/>
+                                  </group>
+                              </group>
+                              <group string='Fuel' colspan='4'>
+                                  <group>
+                                      <field name="fuel_added"/>
+                                      <field name="uom_fuel_added"/>
+                                  </group>
+                                  <group>
+                                      <field name="fuel_total"/>
+                                      <field name="uom_fuel_total"/>
+                                      <field name='fuel_consumption'/>
+                                  </group>
+                              </group>
+                              <group>
+                                  <field name='current_user'/>
+                                  <field name='otr_no'/>
+                              </group>
+                              <field name="remark" nolabel="True" class="oe_inline"
+                                     placeholder="Remarks or Internal Note."/>
+                              <div class="oe_clear"/>
+                          </group>
+                      </form>
+                      <tree> <!--attrs="{'invisible':[('state','!=','draft')]}"-->
+                          <button name="action_duplicate_line" string="Copy Lines" type="object" class="oe_edit_only" icon="fa-files-o" help="Copy this line in FML"/>
+                          <field name="rotor_engage" widget='float_time' required="True"/>
+                          <field name="rotor_stop" widget='float_time' required="True"/>
+                          <field name="block" widget='float_time'/>
+                          <field name="block_matrix" sum='block_matrix'/>
+                          <field name="pax_no"/>
+                          <field name="cargo"/>
+                          <field name="cargo_conversi_kgs"/>
+                          <field name="cargo_conversi_lbs"/>
+                          <field name="sing_hoist_no"/>
+                          <field name="ldg"/>
+                          <field name="cycle_start1"/>
+                          <field name="cycle_start2"/>
+                          <field name="cycle_gg"/>
+                          <field name="cycle_ft"/>
+                          <field name="fuel_added"/>
+                          <field name="fuel_total"/>
+                          <field name='fuel_consumption' sum='fuel_consumption'/>
+                          <field name="oil_added1"/>
+                          <field name="oil_added1"/>
+                          <field name='current_user'/>
+                          <field name='otr_no'/>
+                      </tree>
+                  </field>
+              </page>
+            </notebook>
+            <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+              <field name="message_ids" widget="mail_thread"/>
+            </div>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="fml_list_filter">
+      <field name="name">ams.fml.list.filter</field>
+      <field name="model">ams_fml.log</field>
+      <field name="arch" type="xml">
+        <search string="Flight Maintenance Log">
+          <filter string="Aircraft Registration" name="fml_filter" icon="terp-accessories-archiver-minus" domain="[('aircraft_id','=', context.get('aircraft_id',False))]" />
+        </search>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fml_wizard">
+      <field name="name">Flight Maintenance Log</field>
+      <field name="res_model">wizard.fml</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="fml_action">
+      <field name="name">Flight Maintenance Log</field>
+      <field name="res_model">ams_fml.log</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+  </data>
+</odoo>

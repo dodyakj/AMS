@@ -1,0 +1,159 @@
+<odoo>
+  <data>
+    <!-- <record model="ir.ui.view" id="verify_flight_tree">
+      <field name="name">verify.flight.tree</field>
+      <field name="model">verify.flight</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="quick_view"/>
+          <field name="quick_desc"/>
+        </tree>
+      </field>
+    </record>
+    
+     <record model="ir.ui.view" id="verify_flight_form">
+          <field name="name">verify.flight.form</field>
+          <field name="model">verify.flight</field>
+          <field name="arch" type="xml">
+              <form string="Verify Flight Time">
+                  <sheet string="Verify Flight Time">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <h3>Print Units</h3>
+                      </div>
+                      <div class="col-md-5">
+                      </div>
+                      <div class="col-md-2">
+                      </div>
+                      <div class="col-md-3">
+                        <h3>Print Destination</h3>
+                      </div>
+                    </div>
+                      <div class="row">
+                          <div class="col-md-2">
+                            <field name="verify_flight" widget="radio"/>
+                          </div>
+                          <div class="col-md-5">
+                            <field name="verify_airframe" placeholder="Airframes" attrs="{'readonly':[('verify_flight','!=','airframes')]}"/> 
+                            <field name="verify_engines" placeholder="Engine" attrs="{'readonly':[('verify_flight','!=','engine')]}"/>
+                            <field name="verify_auxiliary" placeholder="Auxiliary" attrs="{'readonly':[('verify_flight','!=','auxiliary')]}"/>
+                          </div>
+                          <div class="col-md-2">
+                            <field name="include"/>  Include Attached Units
+                          </div>
+                          <div class="col-md-3">
+                            <field name="verify_print_des" widget="radio"/>
+                          </div>
+                      </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <h3>Date Range</h3>
+                      </div>
+                      <div class="col-md-2">
+                        <h3>Sort Option</h3>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <group>
+                          <field name="start_date"/>
+                          <field name="end_date"/>
+                        </group>
+                      </div>
+                      <div class="col-md-2">
+                        <field name="sort_option" widget="radio"/>
+                      </div>
+                      <div class="col-md-2">
+                        <button string="Print"></button>
+                        <button string="Close"></button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <group>
+                        <field name="quick_view"/>
+                      </group>
+                      <field name="quick_desc"/>
+                    </div>
+                  </sheet>
+                  <footer>
+                    <button name="complied" type="object" string="Print" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel"/>
+                  </footer>
+              </form>
+          </field>
+      </record> -->
+
+
+    <record model="ir.ui.view" id="verify_manualchange_tree">
+      <field name="name">verify.manualchange.tree</field>
+      <field name="model">verify.manualchange</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="start_date"/>
+            <field name="end_date"/>
+        </tree>
+      </field>
+    </record>
+    
+     <record model="ir.ui.view" id="verify_manualchange_form">
+          <field name="name">verify.manualchange.form</field>
+          <field name="model">verify.manualchange</field>
+          <field name="arch" type="xml">
+              <form string="Manual Changes">
+                  <sheet string="Manual Changes">
+                    <group>
+                      <group>
+                        <field name="all_airframe"/>
+                        <field name="all_engine"/>
+                        <field name="all_auxiliary"/>
+                      </group>
+                      <group col="12">
+                        <field name="airframe" colspan="10"/>
+                        <field name="no_airframe" colspan="2"/>
+                        <field name="engines" colspan="10"/>
+                        <field name="no_engines" colspan="2"/>
+                        <field name="auxiliary" colspan="10"/>
+                        <field name="no_auxiliary" colspan="2"/>
+                      </group>
+                    </group>
+                    <group>
+                      <field name="start_date"/>
+                      <field name="end_date"/>
+                    </group>
+                  </sheet>
+              <footer>
+              <button name="complied" type="object" string="Print" class="oe_highlight"/>
+              or
+              <button special="cancel" string="Cancel"/>
+              </footer>
+              </form>
+          </field>
+      </record>
+
+    <!-- <record model="ir.actions.act_window" id="verify_flight_action">
+      <field name="name">Verify Flight Time</field>
+      <field name="res_model">verify.flight</field>
+      <field name="view_mode">tree,form</field>
+    </record> -->
+
+<!--     <record model="ir.actions.act_window" id="verify_manual_action">
+      <field name="name">Manual Changes</field>
+      <field name="res_model">verify.manualchange</field>
+      <field name="view_mode">tree,form</field>
+    </record> -->
+    <!-- <act_window id="verify_flight_action"
+      name="Verify Flight Time"
+      res_model="verify.flight"
+      view_mode="form"
+      view_id="verify_flight_form" 
+      target="new"/> -->
+    <act_window id="verify_manual_action"
+      name="Manual Changes"
+      res_model="verify.manualchange"
+      view_mode="form"
+      view_id="verify_manualchange_form" 
+      target="new"/>
+
+  </data>
+</odoo>

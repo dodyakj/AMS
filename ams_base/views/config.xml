@@ -1,0 +1,46 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="ams_setting_form">
+			<field name="name">ams.setting.form</field>
+			<field name="model">ams.setting</field>
+			<field name="arch" type="xml">
+				<form string="description">
+					<sheet>
+						<div class="row">
+							<div class="col-md-6">
+								<h1>Warning Default Configuration</h1>
+								<group>
+									<field name="warning_hours"/>
+									<field name="warning_cycles"/>
+									<field name="warning_rins"/>
+									<field name="warning_calendars"/>
+								</group>
+							</div>
+							<div class="col-md-6">
+								<h1>Warning Limit Configuration</h1>
+								<group>
+									<field name="warning_hours_limit"/>
+									<field name="warning_cycles_limit"/>
+									<field name="warning_rins_limit"/>
+									<field name="warning_calendars_limit"/>
+								</group>
+							</div>
+						</div>
+			          <footer>
+			              <button string="Save" name="action_save" class="oe_link btn-primary"/>
+			              <button string="Cancel" class="oe_link" special="cancel"/>
+			          </footer>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="setting_action" model="ir.actions.act_window">
+			<field name="name">Warning</field>
+			<field name="res_model">ams.setting</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	</data>
+</odoo>

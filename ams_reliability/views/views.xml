@@ -1,0 +1,426 @@
+<odoo>
+    <template id="report_comp_reliability">
+            <t t-if="not o and doc">
+              <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+              <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+              <t t-set="company" t-value="res_company"></t>
+            </t>
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="data">
+                    <t t-call="ams_document.internal_layout">
+                         <div class="page">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                      <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                                </div>
+                                <div class="col-xs-8">
+                                    <h2 class="text-left">Component Reliability Report</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <br/>
+                              </div>
+                            </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                            	A/C TYPE : <t t-esc="data.fleet.aircraft_name.name" /> <br/>
+                            	A/C REG : <t t-esc="data.fleet.name" /> 
+                            </div>
+                            <div class="col-xs-2">
+                            </div>
+                            <div class="col-xs-6">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <br/>
+                            </div>
+                        </div>
+
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <!-- <td><center><b>ATA</b></center></td> -->
+                                <td><center><b>DATE</b></center></td>
+                                <!-- <td><center><b>DISCREPANCIES</b></center></td> -->
+                                <!-- <td><center><b>CORRECTIVE ACTIONS</b></center></td> -->
+                                <td><center><b>COMP CHANGES</b></center></td>
+                                <td><center><b>P/N</b></center></td>
+                                <td><center><b>S/N Off</b></center></td>
+                                <td><center><b>S/N On</b></center></td>
+                                <td><center><b>A/C Hrs</b></center></td>
+                                <td><center><b>A/C Cyc</b></center></td>
+                            </tr>
+                            <t t-foreach="data.ch_id" t-as="ch">
+                                <tr>
+                                    <!-- <td><center> <div t-field="ch.id" /> </center></td> -->
+                                    <td><center> <div t-field="ch.date" /> </center></td>
+                                    <!-- <td><center> <div t-field="ch.id" /> </center></td> -->
+                                    <!-- <td><center> <div t-field="ch.id" /> </center></td> -->
+                                    <td><center> <div t-field="ch.component_id" /> </center></td>
+                                    <td><center> <div t-field="ch.component_id.default_code" /> </center></td>
+                                    <td><center> <div t-field="ch.serial_id" /> </center></td>
+                                    <td><center> <div t-field="ch.serial_replacement_id" /> </center></td>
+                                    <td><center> <div t-field="ch.ac_hours" /> </center></td>
+                                    <td><center> <div t-field="ch.ac_cycles" /> </center></td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <data>
+
+        <record id="papercomp_rea" model="report.paperformat">
+            <field name="name">Component Reliability Report</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="print_comp_reliability"
+                string="Component Reliability Report"
+                model="ams.component.reliability"
+                report_type="qweb-html"
+                file="ams_reliability.report_comp_reliability"
+                name="ams_reliability.report_comp_reliability"
+                paperformat="ams_reliability.papercomp_rea"                
+            />
+
+      <record model="ir.ui.view" id="component_reliability_form">
+        <field name="name">ams.component.reliability.form</field>
+        <field name="model">ams.component.reliability</field>
+        <field name="arch" type="xml">
+          <form string="Component Reliability">
+            <sheet>
+            	<group>
+            		<field name="fleet" attrs="{'required':True}"/>
+            		<field name="component"/>
+            	</group>
+            	<group>
+            		<field name="ch_id" attrs="{'invisible':True}"/>
+            	</group>
+            </sheet>
+            	<footer>
+                    <button name="print_comp_reliability" type="object" icon="fa-download" string="Print PDF" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+            	</footer>
+          </form>
+        </field>
+      </record>
+
+      <record id="action_component_reliability" model="ir.actions.act_window">
+        <field name="name">Component Reliability</field>
+        <field name="res_model">ams.component.reliability</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>      
+        <field name="limit">1</field>
+      	<field name="target">new</field>
+      </record>
+
+
+
+	</data>
+    <data>
+        <template id="report_engine_reliability">
+                <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="data">
+                     <t t-call="ams_document.internal_layout">
+                        <div class="page">
+                            <div class="row">
+                                    <div class="col-xs-4">
+                                      <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <h2 class="text-left">Engine Reliability Report</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-xs-12">
+                                    <br/>
+                                  </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    Engine : <t t-esc="data.engine.name" /> <br/>
+                                </div>
+                                <div class="col-xs-2">
+                                </div>
+                                <div class="col-xs-6">
+                                </div>
+                            </div>
+
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td rowspan="2"><center><b>DATE</b></center></td>
+                                    <td rowspan="2"><center><b>STA</b></center></td>
+                                    <td rowspan="2"><center><b>A/C</b></center></td>
+                                    <td rowspan="2"><center><b>POST</b></center></td>
+                                    <td colspan="3"><center><b>ENGINE SERIAL NUMBER</b></center></td>
+                                    <td rowspan="2"><center><b>TSO</b></center></td>
+                                    <td rowspan="2"><center><b>CSO</b></center></td>
+                                    <td rowspan="2"><center><b>TSN</b></center></td>
+                                    <td rowspan="2"><center><b>CSN</b></center></td>
+                                    <td rowspan="2"><center><b>REMARK</b></center></td>
+                                </tr>
+                                <tr>
+                                    <td><center><b>SCHEDULE REMOVAL/ON</b></center></td>
+                                    <td><center><b>UNSCHEDULE REMOVAL/OFF</b></center></td>
+                                    <td><center><b>SHUT DOWN IN FLIGHT</b></center></td>
+                                </tr>
+                                <t t-foreach="data.cr_id" t-as="cr">
+                                    <tr>
+                                        <td><center> <div t-field="cr.date_installed" /> </center></td>
+                                        <td><center> <div t-field="cr.warehouse_id.base_id" /> </center></td>
+                                        <td><center> <div t-field="cr.component.engine_id.fleet_id.name" /> </center></td>
+                                        <td><center> <div t-field="cr.component" /> </center></td>
+                                        <td><center></center></td>
+                                        <td><center></center></td>
+                                        <td><center></center></td>
+                                        <td><center> <div t-field="cr.component.engine_id.engine_tslsv" /> </center></td>
+                                        <td><center> <div t-field="cr.component.engine_id.engine_cslsv" /> </center></td>
+                                        <td><center> <div t-field="cr.component.engine_id.engine_tsn" /> </center></td>
+                                        <td><center> <div t-field="cr.component.engine_id.engine_csn" /> </center></td>
+                                        <td><center> <div t-field="cr.reason" /> </center></td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+    <data>
+
+
+        <report
+                id="print_engine_reliability"
+                string="Engine Reliability Report"
+                model="ams.engine.reliability"
+                report_type="qweb-html"
+                file="ams_reliability.report_engine_reliability"
+                name="ams_reliability.report_engine_reliability"
+                paperformat="ams_reliability.papercomp_rea"                
+
+            />
+
+      <record model="ir.ui.view" id="engine_reliability_form">
+        <field name="name">ams.engine.reliability.form</field>
+        <field name="model">ams.engine.reliability</field>
+        <field name="arch" type="xml">
+          <form string="Engine Reliability">
+            <sheet>
+                <group>
+                    <field name="engine" attrs="{'required':True}"/>
+                    <field name="base"/>
+                </group>
+                <group>
+                    <field name="cr_id" attrs="{'invisible':True}"/>
+                </group>
+            </sheet>
+                <footer>
+                    <button name="print_engine_reliability" type="object" icon="fa-download" string="Print PDF" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+          </form>
+        </field>
+      </record>
+
+      <record id="action_engine_reliability" model="ir.actions.act_window">
+        <field name="name">Engine Reliability</field>
+        <field name="res_model">ams.engine.reliability</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>      
+        <field name="limit">1</field>
+        <field name="target">new</field>
+      </record>
+
+
+
+    </data>
+    <data>
+        <template id="report_repetitive_dicripencies">
+                <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="data">
+                     <t t-call="ams_document.internal_layout">
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                      <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                                </div>
+                                <div class="col-xs-8">
+                                  <h2 class="text-left">Repetitive Discrepencies Report</h2>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <t t-if="data.ac_reg">
+                                        AC REG : 
+                                        <t t-esc="data.ac_reg.name" /> <br/>
+                                    </t> 
+                                </div>
+                                <div class="col-xs-2">
+                                </div>
+                                <div class="col-xs-6">
+                                </div>
+                            </div>
+
+
+                            <table class="table table-bordered">
+                            	<tr>
+                                    <td><center><b>Discrepencies</b></center></td>
+                                    <td><center><b>Status</b></center></td>
+                                    <td><center><b>Action</b></center></td>
+                                    <td><center><b>Component</b></center></td>
+                        	   </tr>
+                                <t t-foreach="data.dis_id" t-as="d">
+                                    <tr>
+                                        <td><center> <div t-field="d.name" /> </center></td>
+                                        <td><center> <div t-field="d.status" /> </center></td>
+                                        <td><center> <div t-field="d.action_take" /> </center></td>
+                                        <td><center> <div t-field="d.component" /> </center></td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+    <data>
+
+
+        <report
+                id="print_repetitive_dicripencies"
+                string="Repetitive Discrepencies Report"
+                model="ams.repetitive.dicripencies"
+                report_type="qweb-html"
+                file="ams_reliability.report_repetitive_dicripencies"
+                name="ams_reliability.report_repetitive_dicripencies"
+                paperformat="ams_reliability.papercomp_rea"                
+            />
+
+        <record model="ir.ui.view" id="repetitive_dicripencies_form">
+            <field name="name">ams.repetitive.dicripencies.form</field>
+            <field name="model">ams.repetitive.dicripencies</field>
+            <field name="arch" type="xml">
+              <form string="Repetitive Discrepencies Report">
+                <sheet>
+                	<group>
+                		<field name="ac_reg" attrs="{'required':False}"/>
+                    </group>
+                    <group>
+                        <group>
+                          <field name="start_date"/>
+                        </group>
+                        <group>
+                		  <field name="end_date"/>
+                        </group>
+                    </group>
+                	<group>
+                		<field name="dis_id" attrs="{'invisible':True}"/>
+                	</group>
+                </sheet>
+                	<footer>
+                        <button name="print_repetitive_dicripencies" type="object" icon="fa-download" string="Print PDF" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                	</footer>
+              </form>
+        </field>
+        </record>
+
+        <record id="action_repetitive_dicripencies" model="ir.actions.act_window">
+            <field name="name">Repetitive Discrepencies Report</field>
+            <field name="res_model">ams.repetitive.dicripencies</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>      
+            <field name="limit">1</field>
+          	<field name="target">new</field>
+        </record>
+
+
+
+    </data>
+    <data>
+
+        <record model="ir.ui.view" id="ams_engine_reliability_tree">
+             <field name="name">ams.engine.reliability.tree</field>
+             <field name="model">ams.reliability</field>
+             <field name="arch" type="xml">
+                 <tree>
+                     <field name="fleet" />
+                     <field name="upload_file" filename="filename" />
+                     <field name="filename" invisible="1" />
+                 </tree>
+             </field>
+        </record>
+
+        <record model="ir.ui.view" id="ams_engine_reliability_form">
+            <field name="name">ams.engine.reliability.form</field>
+            <field name="model">ams.reliability</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="fleet" />
+                            <field name="action" />
+                            <field name="upload_file" filename="filename" attrs="{'invisible':[('action', '!=', 'entry')]}" />
+                            <field name="filename" invisible="1" />
+                            <button name="compute_fml" type="object" icon="fa-file" string="Compute" class="oe_highlight" attrs="{'invisible':[('action', '!=', 'compute')]}" />
+                        </group>
+                    </sheet>    
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="ams_engine_realibility_window_action">
+            <field name="name">Engine Reliability</field>
+            <field name="res_model">ams.reliability</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Engine Reliability" id="ams_engine_reliability_menu" parent="ams_menu.maintenance_reliability" action="ams_reliability.ams_engine_realibility_window_action" sequence="35" groups="ams_security.group_airframe_managers,ams_security.group_airframe_users"/>
+    </data>
+</odoo>

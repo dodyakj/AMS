@@ -1,0 +1,36 @@
+<odoo>
+  <data>
+  	<record id="config_warning_hours" model="ams.config">
+        <field name="name">warning_hours</field>
+        <field name="int_value">10</field>
+    </record>
+    <record id="config_warning_cycles" model="ams.config">
+        <field name="name">warning_cycles</field>
+        <field name="int_value">10</field>
+    </record>
+    <record id="config_warning_rins" model="ams.config">
+        <field name="name">warning_rins</field>
+        <field name="int_value">10</field>
+    </record>
+    <record id="config_warning_calendars" model="ams.config">
+        <field name="name">warning_calendars</field>
+        <field name="int_value">10</field>
+    </record>
+    <record id="config_warning_hours_limit" model="ams.config">
+        <field name="name">warning_hours_limit</field>
+        <field name="int_value">30</field>
+    </record>
+    <record id="config_warning_cycles_limit" model="ams.config">
+        <field name="name">warning_cycles_limit</field>
+        <field name="int_value">30</field>
+    </record>
+    <record id="config_warning_rins_limit" model="ams.config">
+        <field name="name">warning_rins_limit</field>
+        <field name="int_value">30</field>
+    </record>
+    <record id="config_warning_calendars_limit" model="ams.config">
+        <field name="name">warning_calendars_limit</field>
+        <field name="int_value">30</field>
+    </record>
+  </data>
+</odoo>

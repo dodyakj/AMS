@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <template id="assets_backend" name="stock_barcode assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+            
+                <link rel="stylesheet" href="/ctu_dashboard_odoo_10/static/src/css/dashboard.css"/>
+                <link rel="stylesheet" href="/ctu_dashboard_odoo_10/static/src/css/Chart.css"/>
+                <link rel="stylesheet" href="/ctu_dashboard_odoo_10/static/src/css/Chart.min.css"/>
+                <script type="text/javascript" src="/ctu_dashboard_odoo_10/static/src/js/Chart.js"></script>
+                <script type="text/javascript" src="/ctu_dashboard_odoo_10/static/src/js/Chart.min.js"></script>
+                <script type="text/javascript" src="/ctu_dashboard_odoo_10/static/src/js/dashboard.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

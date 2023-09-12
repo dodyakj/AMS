@@ -1,0 +1,116 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="ams_inventory.list">
+      <field name="name">ams_inventory list</field>
+      <field name="model">ams_inventory.ams_inventory</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="ams_inventory.action_window">
+      <field name="name">ams_inventory window</field>
+      <field name="res_model">ams_inventory.ams_inventory</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="ams_inventory.action_server">
+      <field name="name">ams_inventory server</field>
+      <field name="model_id" ref="model_ams_inventory_ams_inventory"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="ams_inventory" id="ams_inventory.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="ams_inventory.menu_1" parent="ams_inventory.menu_root"/>
+    <menuitem name="Menu 2" id="ams_inventory.menu_2" parent="ams_inventory.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="ams_inventory.menu_1_list" parent="ams_inventory.menu_1"
+              action="ams_inventory.action_window"/>
+    <menuitem name="Server to list" id="ams_inventory" parent="ams_inventory.menu_2"
+              action="ams_inventory.action_server"/>
+    -->
+
+    <record model="ir.ui.view" id="ams_inventory_import_form">
+      <field name="name">ams_inventory.import.form</field>
+      <field name="model">ams_inventory.import</field>
+      <field name="arch" type="xml">
+          <form string="Description">
+            <!-- <header>
+              <button type="object" name="process_data_master_part" string="IMPORT"/>
+            </header> -->
+            <sheet>
+              <group>
+                <field name="date_import"/>
+                <field name="name_ih" invisible="1"/>
+                <field name="ih_09" filename="name_ih"/>
+                <field name="name_iq" invisible="1"/>
+                <field name="iq_09" filename="name_iq"/>
+                <field name="name_mb" invisible="1"/>
+                <field name="mb_52" filename="name_mb"/>
+                <field name="status" invisible="1" />
+                <label string="Import Inventory Success" invisible="[('status','!=', True)]" nolabel="1" style="color:green" />
+              </group>
+            </sheet>
+          </form>
+      </field>      
+    </record>
+
+
+
+
+    <record id="action_inventory_import" model="ir.actions.act_window">
+      <field name="name">Inventory Import</field>
+      <field name="res_model">ams_inventory.import</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_company_filter" model="ir.ui.view">
+        <field name="name">res.partner.select</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search string="Search Partner">
+              <filter string="Companies" name="type_company" domain="[('is_company','=',1)]"/>
+              <field name="name"/>
+              <field name="street"/>
+              <field name="category_id"/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="vendors_screen_action">
+      <field name="name">Vendors</field>
+      <field name="res_model">res.partner</field>
+      <field name="context">{'search_default_type_company':1}</field>
+      <field name="search_view_id" ref="view_company_filter"/>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+  </data>
+</odoo>

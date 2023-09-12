@@ -1,0 +1,45 @@
+<odoo>
+  <data>
+
+    <record model='ir.ui.view' id='calm_correction_tree'>
+      <field name='name'>calm_correction.tree</field>
+      <field name='model'>calm.correction</field>
+      <field name='arch' type='xml'>
+        <tree string='Calm Correction'>
+          <field name='fleet_id'/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="calm_correction_form">
+      <field name="name">calm_correction.form</field>
+      <field name="model">calm.correction</field>
+      <field name="arch" type="xml">
+        <form string="Calm Correction">
+          <sheet>
+            <group>
+              <field name="fleet_id"/>
+              <field name="logs"/>
+              <!-- <div id="gi_socket">
+              </div>
+              <main id="app">
+              </main> -->
+              <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+              <!-- <script src="/calm_correction/static/script.js"></script> -->
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_calm_correction" model="ir.actions.act_window">
+      <field name="name">Calm Correction</field>
+      <field name="res_model">calm.correction</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem name="Calm Correction" id="calm_correction.menu_root" sequence="0" action="action_calm_correction"/>
+
+  </data>
+</odoo>

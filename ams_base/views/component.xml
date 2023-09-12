@@ -1,0 +1,785 @@
+<odoo>
+  <data>
+    <record model='ir.ui.view' id='ams_component_tree'>
+      <field name='name'>ams_component.tree</field>
+      <field name='model'>ams.component.part</field>
+      <field name='arch' type='xml'>
+        <tree string='Component'>
+          <field name="product_id"/>
+          <field name="part_number"/>
+          <field name="serial_number"/>
+          <field name="date_installed"/>
+          <field name="ata_code"/>
+          <field name="item"/>
+        </tree>
+      </field>
+    </record>
+
+    <act_window name="Component Replacement" id="return_action_replace"
+        res_model="ams.component.replace"
+        view_mode="form" target="new" context="{'search_default_config_id': [active_id],'default_config_id': active_id}"
+        />
+
+    <act_window name="Component Value Override" id="return_action_override"
+        res_model="ams.component.override"
+        view_mode="form" target="new" context="{'search_default_config_id': [active_id],'default_config_id': active_id}"
+        />
+
+    <record id="fleet_part_form_views" model="ir.ui.view">
+        <field name="name">ams.component.part.form</field>
+        <field name="model">ams.component.part</field>
+        <field name="view_mode">tree,form</field>
+        <field name="arch" type="xml">
+            <form string="Components">
+              <group>
+                <group>
+                  <field name="have_cycles" attrs="{'invisible':True}"/>
+                  <field name="have_hours" attrs="{'invisible':True}"/>
+                  <field name="have_rins" attrs="{'invisible':True}"/>
+                  <field name="have_overhaul" attrs="{'invisible':True}"/>
+                  <field name="have_inspection" attrs="{'invisible':True}"/>
+                  <field name="have_service" attrs="{'invisible':True}"/>
+                  <field name="no_component" attrs="{'invisible':True}"/>
+                  <field name="id" attrs="{'invisible':True}"/>
+
+                  <field name="is_bel"/>
+                  <field name="product_id" attrs="{'readonly':[('id','!=',False)]}" domain="[('default_code','not like','PK')]"/>
+                  <field name="part_number"/>
+                  <field name="serial_number" attrs="{'readonly':[('id','!=',False)],'invisible':[('no_component','=',True)]}"/>
+                  <field name="date_installed" attrs="{'invisible':[('no_component','=',True)]}"/>
+                  <field name="ata_code"/>
+                  <field name="item"/>
+                  <field name="is_subcomp" attrs="{'invisible':True}"/>
+                </group>
+                <group>
+                  <div class="oe_button_box" name="button_box">
+                    <button name="%(return_action_override)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-exclamation-triangle"
+                        help="change hours / cycles value of this component"
+                        string="Override" attrs="{'invisible':['|',('no_component','=',True),('id','=',False)]}">
+                        <!-- <field name="some_count" widget="statinfo" string="Replace"/> -->
+                    </button>
+                    <button name="%(return_action_replace)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-exchange"
+                        help="replace this component"
+                        string="Replace" attrs="{'invisible':[('id','=',False)]}">
+                        <!-- <field name="some_count" widget="statinfo" string="Replace"/> -->
+                    </button>
+                    <button name="do_inspection"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-user"
+                            help="do an aircraft inspection"
+                            string="Inspection" attrs="{'invisible':['|','|',('have_inspection','=',False),('no_component','=',True),('id','=',False)]}"> 
+                            <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+                        </button>
+                    <button name="do_service"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-plane"
+                            help="do an aircraft service"
+                            string="Service" attrs="{'invisible':['|','|',('have_service','=',False),('no_component','=',True),('id','=',False)]}"> 
+                            <!-- <field name="some_count" widget="statinfo" string="Service"/> -->
+                        </button>
+                    <button name="do_overhaul"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-plane"
+                            help="do an aircraft overhaul"
+                            string="Overhaul" attrs="{'invisible':['|','|',('have_overhaul','=',False),('no_component','=',True),('id','=',False)]}"> 
+                            <!-- <field name="some_count" widget="statinfo" string="Inspection"/> -->
+                        </button>
+                  </div>
+                </group>
+              </group>
+              <group attrs="{'invisible':[('no_component','!=',True)]}">
+                <h1 style="color:#F00;text-align:center;">No Component Installed !!!</h1>
+              </group>
+              <group attrs="{'invisible':[('no_component','=',True)]}">
+                <notebook>
+                  <page string="Service Life">
+                    <group col="2">
+                        <group>
+                            <field name="is_overhaul" attrs="{'readonly':[('id','!=',False)]}"/>
+                            <field name="not_follow_parent" />
+                        </group>
+                        <group>
+                            <field name="unknown_new"/>
+                        </group>
+                    </group>
+                    <group col="2">
+                        <group>
+                          <field name="show_tsn" attrs="{'invisible':True}"></field>
+                          <field name="show_csn" attrs="{'invisible':True}"></field>
+                          <field name="show_tso" attrs="{'invisible':True}"></field>
+                          <field name="show_cso" attrs="{'invisible':True}"></field>
+                          
+                          <field name="tsn" attrs="{'invisible':['&amp;',('id','!=',False),'|',('unknown_new', '=', True),('show_tsn','=',False)]}"/>
+                          <field name="tso" attrs="{'invisible':['&amp;',('id','!=',False),('show_tso','=',False)]}"/>
+                          <field name="ac_timeinstallation" attrs="{'invisible':['&amp;',('id','!=',False),('show_tsn','=',False)]}"/>
+                          <field name="comp_timeinstallation" attrs="{'invisible':['&amp;',('id','!=',False),('show_tsn','=',False)]}"/>
+                        </group>
+                        <group>
+                          <field name="csn" attrs="{'invisible':['&amp;',('id','!=',False),'|',('unknown_new', '=', True),('show_csn','=',False)]}"/>
+                          <field name="cso" attrs="{'invisible':['&amp;',('id','!=',False),('show_cso','=',False)]}"/>
+                          <field name="ac_cyclesinstallation" attrs="{'invisible':['&amp;',('id','!=',False),('show_csn','=',False)]}"/>
+                          <field name="comp_cyclesinstallation" attrs="{'invisible':['&amp;',('id','!=',False),('show_csn','=',False)]}"/>
+                        </group>
+                    </group>
+                    <!-- <group>
+                          <field name="merge_mp"/>
+                    </group> -->
+                    <group>
+                        <field name="serfice_life">
+                          <tree string='Service Life'>
+                            <field name="action_type"/>
+                            <!-- <field name="last_done"/> -->
+                            <!-- <field name="current_text" attrs="{'readonly':True}"/> -->
+                            <!-- <field name="current_display"/> -->
+                            <field name="text_value" attrs="{'required':True}"/>
+                            <field name="text_unit"/>
+                            <field name="extension" invisible="True"/>
+                            <field name="text_extension" attrs="{'readonly':True}"/>
+                            <field name="text_next_due" attrs="{'readonly':True}"/>
+                            <!-- <field name="remaining_display"/> -->
+                            <field name="text_remaining" attrs="{'readonly':True}"/>
+                            <field name="since_new_text" attrs="{'readonly':True}" groups="base.group_no_one"/>
+                            <field name="since_overhaul_text" attrs="{'readonly':True}" groups="base.group_no_one"/>
+                            <field name="installed_at"/>
+                            <field name="at_install"/>
+                            <field name="comments_text"/>
+                            <button name="do_ste" type="object" string="STE" class="oe_highlight" attrs="{'invisible':[('extension','!=',0)]}"/>
+                          </tree>
+                        </field>
+                    </group>
+
+                      
+                  </page>
+                  <page string="Sub Components" attrs="{'invisible':[('is_subcomp', '=', True)]}">
+                      <field name="sub_part_ids" context="{'subcomponent':True}" widget="datatable">
+                          <tree>
+                              <field name="product_id"/>
+                              <field name="part_number"/>
+                              <field name="serial_number"/>
+                              <field name="date_installed"/>
+                              <field name="ata_code"/>
+                              <field name="item"/>
+                          </tree>
+                      </field>
+                  </page>
+                  <page string="Document">
+                      <button name="get_document"
+                            type="object"
+                            class="oe_stat_button pull-right"
+                            icon="fa-refresh"
+                            help="Refresh"
+                            string="Refresh" attrs="{'invisible':['|',('no_component','=',True),('id','=',False)]}"> 
+                            <!-- <field name="some_count" widget="statinfo" string="Service"/> -->
+                        </button>
+                      <button name="return_action_upload"
+                            type="object"
+                            class="oe_stat_button pull-right"
+                            icon="fa-upload"
+                            help="upload document"
+                            string="Upload" attrs="{'invisible':['|',('no_component','=',True),('id','=',False)]}"> 
+                            <!-- <field name="some_count" widget="statinfo" string="Service"/> -->
+                        </button>
+                      <field name="document_ids">
+                        <tree string='Documents'>
+                          <field name='file_name'/>
+                          <field name='file'/>
+                        </tree>
+                      </field>
+                  </page>
+                </notebook>
+              </group>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- <record id="fleet_insp_form_views" model="ir.ui.view">
+        <field name="name">ams.component.inspection.form</field>
+        <field name="model">ams.component.inspection</field>
+        <field name="view_mode">tree,form</field>
+        <field name="arch" type="xml">
+            <form string="Inspection">
+              <group>
+                <field name="inspection_type"/>
+                <field name="desc"/>
+                <field name="ata_code"/>
+              </group>
+              <group>
+                  <notebook>
+                    <page string="Detail">
+                      <group>
+                        <group>
+                          <field name="item"/>
+                          <field name="na_reason"/>
+                          <field name="master_insp_type"/>
+                          <field name="show"/>
+                        </group>
+                        <group>
+                          <field name="return_uncomplied"/>
+                          <field name="hoobs"/>
+                          <field name="employee_id"/>
+                          <field name="work_order_id"/>
+                        </group>
+                      </group>
+                    </page>
+                    <page string="Service Life">
+                      <group>
+                          <group style="width:100%%">
+                            <div style="width:100%%">
+                              <field name="hours_on" nolabel="1" style="width:10%%"/>
+                              <label for="hours" style="width:40%%"/>
+                              <field name="hours" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%">
+                              <field name="cycles_on" nolabel="1" style="width:10%%"/>
+                              <label for="cycles" style="width:40%%"/>
+                              <field name="cycles" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%">
+                              <field name="days_on" nolabel="1" style="width:10%%"/>
+                              <label for="days" style="width:40%%"/>
+                              <field name="days" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%">
+                              <field name="months_on" nolabel="1" style="width:10%%"/>
+                              <label for="months" style="width:40%%"/>
+                              <field name="months" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%">
+                              <field name="end_of_month_on" nolabel="1" style="width:10%%"/>
+                              <label for="end_of_month" style="width:40%%"/>
+                              <field name="end_of_month" style="width:37%%"/>
+                            </div>
+                          </group>
+                        </group>
+                  </page>
+                  </notebook>
+                </group>
+            </form>
+        </field>
+    </record> -->
+
+    <!-- <record id="fleet_sub_part_form_views" model="ir.ui.view">
+        <field name="name">ams.component.subpart.form</field>
+        <field name="model">ams.component.subpart</field>
+        <field name="view_mode">tree,form</field>
+        <field name="arch" type="xml">
+            <form string="Components">
+              <group>
+                <field name="product_id"/>
+                <field name="part_number"/>
+                <field name="serial_number"/>
+                <field name="date_installed"/>
+                <field name="ata_code"/>
+                <field name="item"/>
+              </group>
+              <group>
+                <notebook>
+                  <page string="Service Life">
+                      <group>
+                          <group style="width:100%%">
+                            <div style="width:100%%">
+                              <field name="cycles_on" nolabel="1" style="width:10%%"/>
+                              <label for="cycles" style="width:40%%"/>
+                              <field name="cycles" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%">
+                              <field name="inspection_on" nolabel="1" style="width:10%%"/>
+                              <label for="inspection" style="width:40%%"/>
+                              <field name="inspection" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%">
+                              <field name="overhaul_on" nolabel="1" style="width:10%%"/>
+                              <label for="overhaul" style="width:40%%"/>
+                              <field name="overhaul" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%">
+                              <field name="retirement_on" nolabel="1" style="width:10%%"/>
+                              <label for="retirement" style="width:40%%"/>
+                              <field name="retirement" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%">
+                              <field name="on_condition_on" nolabel="1" style="width:10%%"/>
+                              <label for="on_condition" style="width:40%%"/>
+                              <field name="on_condition" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%">
+                              <field name="condition_monitored_on" nolabel="1" style="width:10%%"/>
+                              <label for="condition_monitored" style="width:40%%"/>
+                              <field name="condition_monitored" style="width:37%%"/>
+                            </div>
+                          </group>
+                          <group style="width:100%%">
+                            <div style="width:100%%"> 
+                              <field name="sl_months_on" nolabel="1" style="width:10%%"/>
+                              <label for="sl_months" style="width:40%%"/>
+                              <field name="sl_months" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%"> 
+                              <field name="sl_days_on" nolabel="1" style="width:10%%"/>
+                              <label for="sl_days" style="width:40%%"/>
+                              <field name="sl_days" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%"> 
+                              <field name="sl_rin_on" nolabel="1" style="width:10%%"/>
+                              <label for="sl_rin" style="width:40%%"/>
+                              <field name="sl_rin" style="width:37%%"/>
+                            </div>
+                            <div style="width:100%%"> 
+                              <field name="sl_lcf1_on" nolabel="1" style="width:10%%"/>
+                              <label for="sl_lcf1" style="width:40%%"/>
+                              <field name="sl_lcf1" style="width:37%%"/>
+                            </div>
+                            
+                          </group>
+                        </group>
+                  </page>
+                </notebook>
+              </group>
+
+            </form>
+        </field>
+    </record> -->
+    <record model="ir.ui.view" id="ams_component_replace_form">
+      <field name="name">ams.component.replace.form</field>
+      <field name="model">ams.component.replace</field>
+      <field name="arch" type="xml">
+        <form string="Component Replacement">
+          <sheet>
+            <group>
+              <field name="no_component"/>
+              <field name="date_installed" string="Date Removed/Installed"/>
+            </group>
+            <group>
+              <field name="warehouse_id" attrs="{'invisible':True}"/>
+              <field name="component" attrs="{'invisible':True}"/>
+              
+              <field name="show_tsn" attrs="{'invisible':True}"></field>
+              <field name="show_csn" attrs="{'invisible':True}"></field>
+              <field name="show_tso" attrs="{'invisible':True}"></field>
+              <field name="show_cso" attrs="{'invisible':True}"></field>
+
+              <field name="current_serial"/> <field name="sn_us"/>
+              <field name="reason" string="Reason"/>
+              <field name="product_id" attrs="{'invisible':[('no_component','=',True)]}"/>
+              <field name="serial_number" context="{'product_id':product_id}" attrs="{'invisible':[('no_component','=',True)]}"/>
+              <field name="rin_enable" attrs="{'invisible':True}"/>
+              <field name="component_of" attrs="{'invisible':True}"/>
+            </group>
+            <group>
+              <group>
+                <field name="component_of" attrs="{'invisible':True}"/>
+                <h4 attrs="{'invisible':[('component_of','!=','airframe')]}" >Current Aircraft</h4>
+                <h4 attrs="{'invisible':[('component_of','!=','propeller')]}" >Current Aircraft</h4>
+                <h4 attrs="{'invisible':[('component_of','!=','engine')]}" >Current Engine</h4>
+                <h4 attrs="{'invisible':[('component_of','!=','auxiliary')]}" >Current Auxiliary</h4>
+                <field name="current_hours" string="hours"/>
+                <field name="current_cycles" string="cycles"/>
+                <field name="current_rins" string="rins" attrs="{'invisible':[('current_rins','=',0)]}"/>
+              </group>
+              <group string="Replace At">
+                <group>
+                  <div>
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','airframe')]}" string="Aircraft Hours" />
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','propeller')]}" string="Aircraft Hours" />
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','engine')]}" string="Engine Hours" />
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','auxiliary')]}" string="Auxiliary Hours" />
+                  </div>
+                  <field class="gi_custom_input" nolabel="1" name="ac_timeinstallation"/>
+
+                  <div attrs="{'invisible':[('rin_enable','=',False)]}">
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','airframe')]}" string="Aircraft RIN" />
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','propeller')]}" string="Aircraft RIN" />
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','engine')]}" string="Engine RIN" />
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','auxiliary')]}" string="Auxiliary RIN" />
+                  </div>
+                  <field class="gi_custom_input" name="ac_rininstallation" attrs="{'invisible':[('rin_enable','=',False)]}"/>
+                </group>
+                <group>
+                  <div>
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','airframe')]}" string="Aircraft Cycles" />
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','propeller')]}" string="Aircraft Cycles" />
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','engine')]}" string="Engine Cycles" />
+                    <label class="gi_custom_label" attrs="{'invisible':[('component_of','!=','auxiliary')]}" string="Auxiliary Cycles" />
+                  </div>
+                  <field class="gi_custom_input" nolabel="1" name="ac_cyclesinstallation"/>
+                </group>
+              </group>
+
+            </group>
+            <group attrs="{'invisible':[('no_component','=',True)]}">
+              <group>
+                <!-- <field name="ac_timeinstallation"/> -->
+                <field name="tsn" attrs="{'invisible':['|',('unknown_new','=',True),('show_tsn','=',False)]}"/>
+                <field name="comp_timeinstallation" attrs="{'invisible':[('show_tso','=',False)]}"/>
+              </group>
+              <group>
+                <!-- <field name="ac_cyclesinstallation"/> -->
+                <field name="csn" attrs="{'invisible':['|',('unknown_new','=',True),('show_csn','=',False)]}"/>
+                <field name="comp_cyclesinstallation" attrs="{'invisible':[('show_cso','=',False)]}"/>
+              </group>
+              <group attrs="{'invisible':[('rin_enable','=',False)]}">
+                <!-- <field name="ac_rininstallation" attrs="{'invisible':[('rin_enable','=',False)]}"/> -->
+                <field name="comp_rininstallation" attrs="{'invisible':[('rin_enable','=',False)]}"/>
+              </group>
+            </group>
+            <group col="4">
+              <field name="use_comp_hour"/>
+            </group>
+
+            <field name="slive_1" attrs="{'invisible':True}"/>
+            <field name="slive_1_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_1_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_1_action_type','in',['overhaul','retirement']),('slive_1_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_1_action_type','=',False),('slive_1_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_1" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_1_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_1" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_1_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_1" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_1_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_1" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_1_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_1" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_1_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_1" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_1_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_1" nolabel="1" attrs="{'invisible':[('slive_1_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_1" nolabel="1" attrs="{'invisible':[('slive_1_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_2" attrs="{'invisible':True}"/>
+            <field name="slive_2_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_2_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_2_action_type','in',['overhaul','retirement']),('slive_2_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_2_action_type','=',False),('slive_2_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_2" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_2_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_2" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_2_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_2" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_2_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_2" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_2_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_2" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_2_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_2" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_2_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_2" nolabel="1" attrs="{'invisible':[('slive_2_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_2" nolabel="1" attrs="{'invisible':[('slive_2_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_3" attrs="{'invisible':True}"/>
+            <field name="slive_3_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_3_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_3_action_type','in',['overhaul','retirement']),('slive_3_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_3_action_type','=',False),('slive_3_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_3" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_3_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_3" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_3_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_3" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_3_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_3" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_3_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_3" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_3_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_3" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_3_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_3" nolabel="1" attrs="{'invisible':[('slive_3_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_3" nolabel="1" attrs="{'invisible':[('slive_3_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_4" attrs="{'invisible':True}"/>
+            <field name="slive_4_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_4_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_4_action_type','in',['overhaul','retirement']),('slive_4_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_4_action_type','=',False),('slive_4_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_4" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_4_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_4" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_4_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_4" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_4_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_4" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_4_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_4" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_4_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_4" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_4_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_4" nolabel="1" attrs="{'invisible':[('slive_4_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_4" nolabel="1" attrs="{'invisible':[('slive_4_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_5" attrs="{'invisible':True}"/>
+            <field name="slive_5_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_5_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_5_action_type','in',['overhaul','retirement']),('slive_5_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_5_action_type','=',False),('slive_5_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_5" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_5_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_5" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_5_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_5" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_5_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_5" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_5_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_5" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_5_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_5" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_5_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_5" nolabel="1" attrs="{'invisible':[('slive_5_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_5" nolabel="1" attrs="{'invisible':[('slive_5_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_6" attrs="{'invisible':True}"/>
+            <field name="slive_6_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_6_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_6_action_type','in',['overhaul','retirement']),('slive_6_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_6_action_type','=',False),('slive_6_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_6" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_6_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_6" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_6_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_6" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_6_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_6" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_6_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_6" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_6_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_6" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_6_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_6" nolabel="1" attrs="{'invisible':[('slive_6_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_6" nolabel="1" attrs="{'invisible':[('slive_6_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_7" attrs="{'invisible':True}"/>
+            <field name="slive_7_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_7_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_7_action_type','in',['overhaul','retirement']),('slive_7_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_7_action_type','=',False),('slive_7_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_7" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_7_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_7" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_7_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_7" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_7_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_7" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_7_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_7" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_7_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_7" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_7_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_7" nolabel="1" attrs="{'invisible':[('slive_7_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_7" nolabel="1" attrs="{'invisible':[('slive_7_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_8" attrs="{'invisible':True}"/>
+            <field name="slive_8_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_8_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_8_action_type','in',['overhaul','retirement']),('slive_8_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_8_action_type','=',False),('slive_8_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_8" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_8_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_8" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_8_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_8" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_8_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_8" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_8_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_8" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_8_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_8" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_8_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_8" nolabel="1" attrs="{'invisible':[('slive_8_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_8" nolabel="1" attrs="{'invisible':[('slive_8_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_9" attrs="{'invisible':True}"/>
+            <field name="slive_9_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_9_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_9_action_type','in',['overhaul','retirement']),('slive_9_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_9_action_type','=',False),('slive_9_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_9" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_9_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_9" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_9_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_9" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_9_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_9" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_9_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_9" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_9_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_9" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_9_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_9" nolabel="1" attrs="{'invisible':[('slive_9_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_9" nolabel="1" attrs="{'invisible':[('slive_9_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_10" attrs="{'invisible':True}"/>
+            <field name="slive_10_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_10_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_10_action_type','in',['overhaul','retirement']),('slive_10_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_10_action_type','=',False),('slive_10_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_10" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_10_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_10" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_10_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_10" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_10_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_10" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_10_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_10" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_10_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_10" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_10_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_10" nolabel="1" attrs="{'invisible':[('slive_10_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_10" nolabel="1" attrs="{'invisible':[('slive_10_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_11" attrs="{'invisible':True}"/>
+            <field name="slive_11_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_11_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_11_action_type','in',['overhaul','retirement']),('slive_11_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_11_action_type','=',False),('slive_11_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_11" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_11_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_11" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_11_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_11" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_11_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_11" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_11_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_11" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_11_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_11" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_11_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_11" nolabel="1" attrs="{'invisible':[('slive_11_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_11" nolabel="1" attrs="{'invisible':[('slive_11_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_12" attrs="{'invisible':True}"/>
+            <field name="slive_12_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_12_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_12_action_type','in',['overhaul','retirement']),('slive_12_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_12_action_type','=',False),('slive_12_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_12" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_12_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_12" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_12_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_12" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_12_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_12" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_12_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_12" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_12_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_12" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_12_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_12" nolabel="1" attrs="{'invisible':[('slive_12_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_12" nolabel="1" attrs="{'invisible':[('slive_12_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_13" attrs="{'invisible':True}"/>
+            <field name="slive_13_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_13_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_13_action_type','in',['overhaul','retirement']),('slive_13_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_13_action_type','=',False),('slive_13_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_13" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_13_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_13" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_13_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_13" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_13_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_13" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_13_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_13" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_13_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_13" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_13_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_13" nolabel="1" attrs="{'invisible':[('slive_13_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_13" nolabel="1" attrs="{'invisible':[('slive_13_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_14" attrs="{'invisible':True}"/>
+            <field name="slive_14_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_14_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_14_action_type','in',['overhaul','retirement']),('slive_14_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_14_action_type','=',False),('slive_14_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_14" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_14_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_14" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_14_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_14" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_14_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_14" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_14_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_14" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_14_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_14" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_14_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_14" nolabel="1" attrs="{'invisible':[('slive_14_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_14" nolabel="1" attrs="{'invisible':[('slive_14_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+
+            <field name="slive_15" attrs="{'invisible':True}"/>
+            <field name="slive_15_action_type" attrs="{'invisible':True}"/>
+            <field name="slive_15_unit" attrs="{'invisible':True}"/>
+            <group col="4" attrs="{'invisible':['|','&amp;',('slive_15_action_type','in',['overhaul','retirement']),('slive_15_unit','in',['hours','cycles']),'|',('no_component','=',True),'|',('slive_15_action_type','=',False),('slive_15_action_type','in',['oncondition','conditionmonitoring'])]}">
+              <field name="ac_string_15" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_15_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="ac_int_15" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_15_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_string_15" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_15_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="comp_int_15" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','=',True),('slive_15_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_string_15" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_15_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="since_new_int_15" nolabel="1" attrs="{'invisible':['|',('use_comp_hour','!=',True),('slive_15_unit','not in',['hours','cycles','rin'])]}"/>
+              <field name="date_string_15" nolabel="1" attrs="{'invisible':[('slive_15_unit','in',['hours','cycles','rin'])]}"/>
+              <field name="comp_date_15" nolabel="1" attrs="{'invisible':[('slive_15_unit','in',['hours','cycles','rin'])]}"/>
+            </group>
+            <group attrs="{'invisible':[('no_component','=',True)]}">
+              <group attrs="{'invisible':[('no_component','=',True)]}">
+                <field name="unknown_new"/>
+                <field name="is_overhaul"/>
+              </group>
+              <group>
+                <field name="premature"/>
+              </group>
+            </group>
+
+          </sheet>
+          <footer>
+              <button name="replace" type="object" string="Replace" class="oe_highlight"/>
+              <button special="cancel" string="Cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ams_component_override_form">
+      <field name="name">ams.component.override.form</field>
+      <field name="model">ams.component.override</field>
+      <field name="arch" type="xml">
+        <form string="Component Replacement">
+          <sheet>
+            <group>
+              <field name="component" attrs="{'invisible':True}"/>
+              <field name="current_serial"/> 
+              <field name="rin_enable" attrs="{'invisible':True}"/>
+            </group>
+              
+            <group >
+              <group>
+                <field name="comp_timeinstallation"/>
+                <field name="timeinstallation"/>
+                <!-- <field name="timeinstallation" groups="ams_security.group_write_hours_cycles"/> -->
+              </group>
+              <group>
+                <field name="comp_cyclesinstallation"/>
+                <field name="cyclesinstallation"/>
+                <!-- <field name="cyclesinstallation" groups="ams_security.group_write_hours_cycles"/> -->
+              </group>
+              <group>
+                <field name="comp_rininstallation" attrs="{'invisible':[('rin_enable','=',False)]}"/>
+                <field name="rininstallation" attrs="{'invisible':[('rin_enable','=',False)]}"/>
+              </group>
+            </group>
+          </sheet>
+          <footer>
+              <button name="override" type="object" string="Override" class="oe_highlight"/>
+              <button special="cancel" string="Cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record model='ir.ui.view' id='ams_component_history_tree'>
+      <field name='name'>ams.component_history.tree</field>
+      <field name='model'>ams.component_history</field>
+      <field name='arch' type='xml'>
+        <tree string='Component History' create="0" duplicate="0" delete="0" edit="0">
+          <field name="fleet_id"/>
+          <field name="part_id"/>
+          <field name="serial_id"/>
+          <field name="date"/>
+          <field name="ac_hours"/>
+          <field name="ac_cycles"/>
+          <field name="type"/>
+          <field name="reason"/>
+          <field name="premature_removal"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ams_component_history_search_view">
+        <field name="name">ams.component_history.search</field>
+        <field name="model">ams.component_history</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="fleet_id"/>
+              <field name="date"/>
+              <field name="ac_hours"/>
+              <field name="ac_cycles"/>
+              <field name="type"/>
+              <field name="reason"/>
+              <field name="premature_removal"/>             
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_production_lot_document_form">
+      <field name="name">stock_production_lot_document.form</field>
+      <field name="model">stock.production.lot_document</field>
+      <field name="arch" type="xml">
+        <form string="Upload">
+          <sheet>
+            <group>
+              <field name="lot_id"/>
+              <field name="file" filename="file_name"/>
+              <field name="file_name" invisible="1"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ams_component_history_form">
+      <field name="name">ams.component_history.form</field>
+      <field name="model">ams.component_history</field>
+      <field name="arch" type="xml">
+        <form string="Component History" create="0" duplicate="0" delete="0" edit="0">
+          <sheet>
+            <group>
+<!--               <field name="component_id" attrs="{'readonly':True, 'required':True}"/>
+              <field name="serial_id" attrs="{'readonly':True}"/>
+              <field name="date" attrs="{'readonly':True}"/> -->
+              <field name="component_id" attrs="{'invisible':[('component_id','=',False)]}"/>
+              <field name="serial_id" attrs="{'invisible':[('component_id','=',False)]}"/>
+              <field name="date" attrs="{'invisible':[('component_id','=',False)]}"/>
+              
+              <field name="fleet_id" attrs="{'invisible':[('component_id','!=',False)]}"/>
+              <field name="type" attrs="{'invisible':[('component_id','!=',False)]}"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="action_component_history" model="ir.actions.act_window">
+      <field name="name">Component History</field>
+      <field name="res_model">ams.component_history</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+  </data>
+  
+
+</odoo>

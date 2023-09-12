@@ -1,0 +1,33 @@
+<odoo>
+  <data>
+
+    <record model="ir.actions.act_window" id="dashboard_action">
+      <field name="name">Dashboard</field>
+      <field name="res_model">aircraft.acquisition</field>
+      <field name="view_type">form</field>
+      <!-- <field name="view_id" ref="aircraft_acquisition_tree"/> -->
+      <field name="view_mode">tree,form,kanban</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">Input Dashboard Type</p>
+      </field>
+    </record>
+
+    <record id="action_dashboard" model="ir.actions.client">
+      <field name="name">Aircraft Dashboard</field>
+      <field name="tag">aircraft.acquisition.dashboard</field>
+    </record>
+
+    <record id="action_mdr_dashboard" model="ir.actions.client">
+      <field name="name">MDR Dashboard</field>
+      <field name="tag">mdr.dashboard</field>
+    </record>
+
+    <record id="action_chart_dashboard" model="ir.actions.client">
+      <field name="name">Chart JS</field>
+      <field name="tag">chart.dashboard</field>
+    </record>
+
+    <!-- <menuitem name="Chart JS" id="action_chart_dashboard" parent="maintenance.menu_maintenance_title" action="ams_dashboard.action_chart_dashboard" sequence="0" /> -->
+
+  </data>
+</odoo>

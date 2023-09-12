@@ -1,0 +1,493 @@
+<odoo>
+
+<template id="ams_manual_changes_pdf">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                  <style>
+                    table,tr,td{
+                      border:none;
+                    }
+                  </style>
+                    <center><h2>Manual Changes of Time</h2></center>
+
+                    <table class="table">
+                      <tr>
+                        <td></td>
+                        <td><h5>Previous Value</h5></td>
+                        <td><h5>Changed Value</h5></td>
+                        <td><h5>Difference</h5></td>
+                        <td><h5>Date Time</h5></td>
+                        <td><h5>Employee</h5></td>
+                      </tr>
+
+                      <t t-set="fleet_category" t-value="[]"/>
+                      <t t-set="fleet" t-value="0"/>
+                          <t t-foreach="data.mc_id" t-as="mc">
+                              <t t-set="fleet_category" t-value="fleet_category+[mc.fleet_id]"/>
+                              <t t-set="fleet" t-value="fleet+1" t-if="mc.fleet_id"/>
+                          </t>
+                          <t t-if="data.none_fleet == False">
+                            <t t-if="fleet > 0">
+                              <tr>
+                                <td><h3>Airframes</h3></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </t>
+                          <t t-foreach="set(fleet_category)" t-as="category">
+                            <tr>
+                              <td style="padding-left:110px;"><h4 t-esc="category.name"/></td>
+                              <!-- <td><h5>Previous Value</h5></td>
+                              <td><h5>Changed Value</h5></td>
+                              <td><h5>Difference</h5></td>
+                              <td><h5>Date Time</h5></td>
+                              <td><h5>Employee</h5></td> -->
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            <t t-foreach="data.mc_id" t-as="mc" t-if="mc.fleet_id">
+                                <t t-if="category.name==mc.fleet_id.name">
+                                  <tr>
+                                      <td><h5>Hours</h5></td>
+                                      <td><div t-field="mc.current_hours"/></td>
+                                      <td><div t-field="mc.hours"/></td>
+                                      <td><div t-esc="mc.current_hours - mc.hours"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h5>Cycles</h5></td>
+                                      <td><div t-field="mc.current_cycles"/></td>
+                                      <td><div t-field="mc.cycles"/></td>
+                                      <td><div t-esc="mc.current_cycles - mc.cycles"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h5>Rin</h5></td>
+                                      <td><div t-field="mc.current_rin"/></td>
+                                      <td><div t-field="mc.rin"/></td>
+                                      <td><div t-esc="mc.current_rin - mc.rin"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                </t>
+                            </t>
+                          </t>
+                        </t>
+                        
+
+                      <t t-set="engine_category" t-value="[]"/>
+                      <t t-set="engine" t-value="0"/>
+                          <t t-foreach="data.mc_id" t-as="mc">
+                              <t t-set="engine_category" t-value="engine_category+[mc.engine_id]"/>
+                              <t t-set="engine" t-value="engine+1" t-if="mc.engine_id"/>
+                          </t>
+                          <t t-if="data.none_engine == False">
+                            <t t-if="engine > 0">
+                              <tr>
+                                <td><h3>Engine</h3></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </t>
+                          <t t-foreach="set(engine_category)" t-as="category">
+                            <tr>
+                              <td style="padding-left:110px;"><h4 t-esc="category.name"/></td>
+                              <!-- <td><h5>Previous Value</h5></td>
+                              <td><h5>Changed Value</h5></td>
+                              <td><h5>Difference</h5></td>
+                              <td><h5>Date Time</h5></td>
+                              <td><h5>Employee</h5></td> -->
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            <t t-foreach="data.mc_id" t-as="mc" t-if="mc.engine_id">
+                                <t t-if="category.name==mc.engine_id.name">
+                                  <tr>
+                                      <td><h5>Hours</h5></td>
+                                      <td><div t-field="mc.current_hours"/></td>
+                                      <td><div t-field="mc.hours"/></td>
+                                      <td><div t-esc="mc.current_hours - mc.hours"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h5>Cycles</h5></td>
+                                      <td><div t-field="mc.current_cycles"/></td>
+                                      <td><div t-field="mc.cycles"/></td>
+                                      <td><div t-esc="mc.current_cycles - mc.cycles"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h5>Rin</h5></td>
+                                      <td><div t-field="mc.current_rin"/></td>
+                                      <td><div t-field="mc.rin"/></td>
+                                      <td><div t-esc="mc.current_rin - mc.rin"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                </t>
+                              </t>
+                            </t>
+                          </t>
+                        
+
+                      <t t-set="auxiliary_category" t-value="[]"/>
+                      <t t-set="auxiliary" t-value="0"/>
+                          <t t-foreach="data.mc_id" t-as="mc">
+                              <t t-set="auxiliary_category" t-value="auxiliary_category+[mc.auxiliary_id]"/>
+                              <t t-set="auxiliary" t-value="auxiliary+1" t-if="mc.auxiliary_id"/>
+                          </t>
+                          <t t-if="data.none_auxiliary == False">
+                            <t t-if="auxiliary > 0">
+                              <tr>
+                                <td><h3>Auxiliary</h3></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </t>
+                          <t t-foreach="set(auxiliary_category)" t-as="category">
+                            <tr>
+                              <td style="padding-left:110px;"><h4 t-esc="category.name"/></td>
+                              <!-- <td><h5>Previous Value</h5></td>
+                              <td><h5>Changed Value</h5></td>
+                              <td><h5>Difference</h5></td>
+                              <td><h5>Date Time</h5></td>
+                              <td><h5>Employee</h5></td> -->
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            <t t-foreach="data.mc_id" t-as="mc" t-if="mc.auxiliary_id">
+                                <t t-if="category.name==mc.auxiliary_id.name">
+                                  <tr>
+                                      <td><h5>Hours</h5></td>
+                                      <td><div t-field="mc.current_hours"/></td>
+                                      <td><div t-field="mc.hours"/></td>
+                                      <td><div t-esc="mc.current_hours - mc.hours"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h5>Cycles</h5></td>
+                                      <td><div t-field="mc.current_cycles"/></td>
+                                      <td><div t-field="mc.cycles"/></td>
+                                      <td><div t-esc="mc.current_cycles - mc.cycles"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h5>Rin</h5></td>
+                                      <td><div t-field="mc.current_rin"/></td>
+                                      <td><div t-field="mc.rin"/></td>
+                                      <td><div t-esc="mc.current_rin - mc.rin"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                </t>
+                            </t>
+                          </t>
+                        </t>
+                        
+
+                      <t t-set="propeller_category" t-value="[]"/>
+                      <t t-set="propeller" t-value="0"/>
+                          <t t-foreach="data.mc_id" t-as="mc">
+                              <t t-set="propeller_category" t-value="propeller_category+[mc.propeller_id]"/>
+                              <t t-set="propeller" t-value="propeller+1" t-if="mc.propeller_id"/>
+                          </t>
+                          <t t-if="data.none_propeller == False">
+                            <t t-if="propeller > 0">
+                              <tr>
+                                <td><h3>Propeller</h3></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </t>
+                          <t t-foreach="set(propeller_category)" t-as="category">
+                            <tr>
+                              <td style="padding-left:110px;"><h4 t-esc="category.name"/></td>
+                              <!-- <td><h5>Previous Value</h5></td>
+                              <td><h5>Changed Value</h5></td>
+                              <td><h5>Difference</h5></td>
+                              <td><h5>Date Time</h5></td>
+                              <td><h5>Employee</h5></td> -->
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            <t t-foreach="data.mc_id" t-as="mc" t-if="mc.propeller_id">
+                                <t t-if="category.name==mc.propeller_id.name">
+                                  <tr>
+                                      <td><h5>Hours</h5></td>
+                                      <td><div t-field="mc.current_hours"/></td>
+                                      <td><div t-field="mc.hours"/></td>
+                                      <td><div t-esc="mc.current_hours - mc.hours"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h5>Cycles</h5></td>
+                                      <td><div t-field="mc.current_cycles"/></td>
+                                      <td><div t-field="mc.cycles"/></td>
+                                      <td><div t-esc="mc.current_cycles - mc.cycles"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h5>Rin</h5></td>
+                                      <td><div t-field="mc.current_rin"/></td>
+                                      <td><div t-field="mc.rin"/></td>
+                                      <td><div t-esc="mc.current_rin - mc.rin"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                </t>
+                            </t>
+                          </t>
+                        </t>
+                        
+
+                      <t t-set="part_category" t-value="[]"/>
+                      <t t-set="part" t-value="0"/>
+                          <t t-foreach="data.mc_id" t-as="mc">
+                              <t t-set="part_category" t-value="part_category+[mc.part_id.product_id]"/>
+                              <t t-set="part" t-value="part+1" t-if="mc.part_id"/>
+
+                          </t>
+                          <t t-if="data.none_part == False">
+                            <t t-if="part > 0">
+                              <tr>
+                                <td><h3>Part</h3></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </t>
+                            </t>
+                          <t t-if="data.none_part == False">
+                          <t t-foreach="set(part_category)" t-as="category">
+                            <tr>
+                              <td style="padding-left:110px;"><h4 t-esc="category.name"/></td>
+                              <!-- <td><h5>Previous Value</h5></td>
+                              <td><h5>Changed Value</h5></td>
+                              <td><h5>Difference</h5></td>
+                              <td><h5>Date Time</h5></td>
+                              <td><h5>Employee</h5></td> -->
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            <t t-foreach="data.mc_id" t-as="mc" t-if="mc.part_id">
+                                <t t-if="category.name==mc.part_id.product_id.name">
+                                  <tr>
+                                      <td><h5>Hours</h5></td>
+                                      <td><div t-field="mc.current_hours"/></td>
+                                      <td><div t-field="mc.hours"/></td>
+                                      <td><div t-esc="mc.current_hours - mc.hours"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h5>Cycles</h5></td>
+                                      <td><div t-field="mc.current_cycles"/></td>
+                                      <td><div t-field="mc.cycles"/></td>
+                                      <td><div t-esc="mc.current_cycles - mc.cycles"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td><h5>Rin</h5></td>
+                                      <td><div t-field="mc.current_rin"/></td>
+                                      <td><div t-field="mc.rin"/></td>
+                                      <td><div t-esc="mc.current_rin - mc.rin"/></td>
+                                      <td><div t-field="mc.timestamp"/></td>
+                                      <td><div t-field="mc.employee"/></td>
+                                  </tr>
+                                </t>
+                            </t>
+                          </t>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+
+
+
+  <data>
+
+        <record id="paperformat_manual_changes" model="report.paperformat">
+            <field name="name">Manual Changes Report</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+       <report
+                id="print_manual_changes_reports"
+                string="Manual Changes Report"
+                model="ams.manual_changes.report"
+                report_type="qweb-html"
+                file="ams_report.ams_manual_changes_pdf"
+                name="ams_report.ams_manual_changes_pdf"
+                paperformat="ams_report.paperformat_manual_changes"
+            />
+
+
+      <record id="ams_manual_change_report_form" model="ir.ui.view">
+        <field name="name">ams.manual_changes.report.form</field>
+        <field name="model">ams.manual_changes.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="arch" type="xml">
+            <form string="Manual Changes Report">
+              <div class="row">
+                <div class="col-xs-2">
+                  All Aircraft 
+                </div>
+                <div class="col-xs-1">
+                  <field name="all_fleet"/>
+                </div>
+                <div class="col-xs-7">
+                  <field name="fleet_id" attrs="{'invisible':['|',('none_fleet','=',True),('all_fleet','=',True)], 'required':[('all_fleet','!=',True),('none_fleet','!=',True)]}"/>
+                </div>
+                <div class="col-xs-2">
+                  <field name="none_fleet"/>
+                  None
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-2">
+                  All Engine
+                </div>
+                <div class="col-xs-1">
+                  <field name="all_engine"/>
+                </div>
+                <div class="col-xs-7">
+                  <field name="engine_id" attrs="{'invisible':['|',('none_engine','=',True),('all_engine','=',True)], 'required':[('all_engine','!=',True),('none_engine','!=',True)]}"/>
+                </div>
+                <div class="col-xs-2">
+                  <field name="none_engine"/>
+                  None
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-2">
+                  All Auxiliary 
+                </div>
+                <div class="col-xs-1">
+                  <field name="all_auxiliary"/>
+                </div>
+                <div class="col-xs-7">
+                  <field name="auxiliary_id" attrs="{'invisible':['|',('none_auxiliary','=',True),('all_auxiliary','=',True)], 'required':[('all_auxiliary','!=',True),('none_auxiliary','!=',True)]}"/>
+                </div>
+                <div class="col-xs-2">
+                  <field name="none_auxiliary"/>
+                  None
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-2">
+                  All Propeller
+                </div>
+                <div class="col-xs-1">
+                  <field name="all_propeller"/>
+                </div>
+                <div class="col-xs-7">
+                  <field name="propeller_id" attrs="{'invisible':['|',('none_propeller','=',True),('all_propeller','=',True)], 'required':[('all_propeller','!=',True),('none_propeller','!=',True)]}"/>
+                </div>
+                <div class="col-xs-2">
+                  <field name="none_propeller"/>
+                  None
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-2">
+                  All Part
+                </div>
+                <div class="col-xs-1">
+                  <field name="all_part"/>
+                </div>
+                <div class="col-xs-7">
+                  <field name="part_id" attrs="{'invisible':['|',('none_part','=',True),('all_part','=',True)], 'required':[('all_part','!=',True),('none_part','!=',True)]}"/>
+                </div>
+                <div class="col-xs-2">
+                  <field name="none_part"/>
+                  None
+                </div>
+              </div>
+              <group>
+                <group>
+                  <field name="start_date"/>
+                  <field name="end_date"/>
+                </group>
+              </group>
+              <group attrs="{'invisible': True}">
+                  <field name="mc_id" string="Data Manual Changes">
+                    <tree>
+                      <field name="fleet_id"/>
+                      <field name="engine_id"/>
+                      <field name="auxiliary_id"/>
+                      <field name="propeller_id"/>
+                      <field name="part_id"/>
+                    </tree>
+                  </field>
+              </group>
+              <footer>
+                <!-- <button name="export_xls"  context="{'xls_export':1}" icon="fa-download" type="object" string="Print XLS" class="oe_highlight"/> -->
+                <button name="print_manual_changes_reports" type="object" icon="fa-download" string="Print PDF" class="oe_highlight"/>
+                <button special="cancel" string="Cancel"/>
+              </footer>
+            </form>
+        </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="ams_manual_changes_report_action">
+      <field name="name">Manual Changes of Time</field>
+      <field name="res_model">ams.manual_changes.report</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+      <field name="target">new</field>
+    </record>   
+  </data>
+</odoo>

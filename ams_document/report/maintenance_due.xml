@@ -1,0 +1,235 @@
+<odoo>
+  <data>
+            <record id="paperformat_maintenance_due_report_landscape" model="report.paperformat">
+                <field name="name">Maintenance Due Report</field>
+                <field name="orientation">Landscape</field>
+                <field name="margin_top">50</field>
+                <field name="margin_bottom">20</field>
+                <field name="margin_left">7</field>
+                <field name="margin_right">7</field>
+                <field name="header_line" eval="False"/>
+                <field name="header_spacing">50</field>
+                <field name="dpi">90</field>
+            </record>
+            
+            <report
+                    id="print_main_due_pdf_print"
+                    string="Maintenance Due Report"
+                    model="maintenance.due.report.print"
+                    report_type="qweb-html"
+                    file="ams_document.report_maintenance_due_print"
+                    name="ams_document.report_maintenance_due_print"
+                    paperformat="ams_document.paperformat_maintenance_due_report_landscape"
+                />
+<!--       <report
+            id="print_main_due_pdf"
+            string="Maintenance Due Report"
+            model="maintenance.due.report"
+            report_type="qweb-html"
+            file="ams_document.report_maintenance_due"
+            name="ams_document.report_maintenance_due"
+            paperformat="ams_document.paperformat_maintenance_due_report_landscape"
+        /> -->
+
+    <record id="maintenance_due_tree" model="ir.ui.view">
+      <field name="name">maintenance.due.report.tree</field>
+      <field name="model">maintenance.due.report</field>
+      <field name="arch" type="xml">
+          <tree string="Maintenance Due Report" colors="red:states=='create_by';">
+              <field name="mdr_seq" />
+              <field name="fleet_id"/>
+              <field name="states"/>
+              <field name="warning_hours"/>
+              <field name="warning_cycles"/>
+              <field name="warning_rins"/>
+              <field name="warning_calendars"/>
+              <field name="create_by"/>
+              <!-- <button name="print_main_due_pdf" type="object" icon="fa-download" string="Print" class="oe_highlight" /> -->
+          </tree>
+      </field>      
+    </record>
+
+      <record model="ir.ui.view" id="maintenance_due_report_search_view">
+        <field name="name">maintenance.due.report.search</field>
+        <field name="model">maintenance.due.report</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="fleet_id"/>
+              <field name="type"/>
+              <field name="warning_hours"/>
+              <field name="warning_cycles"/>
+              <field name="warning_rins"/>
+              <field name="warning_calendars"/>
+              <field name="create_by"/>           
+            </search>
+        </field>
+      </record>
+
+    <record model="ir.ui.view" id="maintenance_due_search_view">
+        <field name="name">maintenance.due.search</field>
+        <field name="model">maintenance.due.report</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name="fleet_id"/>
+              <field name="type"/>
+              <field name="warning_hours"/>
+              <field name="warning_cycles"/>
+              <field name="warning_rins"/>
+              <field name="warning_calendars"/>
+              <field name="create_by"/>             
+            </search>
+        </field>
+      </record>
+
+
+    <record model="ir.ui.view" id="main_due_report_form">
+      <field name="name">maintenance.due.report.form</field>
+      <field name="model">maintenance.due.report</field>
+      <field name="arch" type="xml">
+        <form string="description" edit="false">
+           <header>
+                    <button name="print_main_due_wizard" type="object" string="Print" class="oe_highlight" attrs="{'invisible':[('id','=',False)]}"/>
+                    <button string="Approve" name="create_by_" type="object" class="oe_highlight o_wow" attrs="{'invisible':['|',('states','!=','create_by'),('id','=',False)]}" groups="ams_security.group_button_mdr_approve"/>
+                    <!-- <button string="Check" name="checked_by_" type="object" class="oe_highlight o_wow" attrs="{'invisible':[('states','!=','checked_by')]}" groups="ams_security.group_button_mdr_check"/> -->
+                    <button string="QC Approve" name="approved_by_" type="object" class="oe_highlight o_wow" attrs="{'invisible':[('states','!=','approved_by')]}" groups="ams_security.group_button_mdr_qc"/>
+                    <field name="states" attrs="{'invisible':True}" />
+                    <field name="id" attrs="{'invisible':True}" />
+                    <field name="states" widget="statusbar" statusbar_visible="create_by,approved_by,done"/>
+            </header>
+          <sheet>
+              
+            <group>
+              <field name="mdr_seq" readonly="1"/>
+              <field name="type"/>
+              <field name="fleet_id" attrs="{'invisible':['|',('type','!=','fleet')]}"/>
+              <field name="rin_active" attrs="{'invisible':True}"/>
+              <!-- <field name="include_attach" attrs="{'invisible':['|',('type','!=','fleet')]}"/> -->
+              <!-- <field name="show_nearly" attrs="{'invisible':['|',('type','!=','fleet')]}"/> -->
+              <field name="engine_id" attrs="{'invisible':['|',('type','!=','engine')]}"/>
+              <field name="auxiliary_id" attrs="{'invisible':['|',('type','!=','auxiliary')]}"/>
+              <field name="propeller_id" attrs="{'invisible':['|',('type','!=','propeller')]}"/>
+            </group>
+            <group>
+              <field name="warning_hours"/>
+              <field name="warning_cycles"/>
+              <field name="warning_rins" attrs="{'invisible':[('rin_active','=',False)]}"/>
+              <field name="warning_calendars"/>
+            </group>
+            <!-- 
+            <group>
+              <field name="orderby" widget="radio"/>
+            </group>
+            <group string="Filter">
+              <field name="filter_ata" widget="mask" data-inputmask-mask="99-99-99"/>
+              <field name="fill_component"/>
+              <field name="fill_inspection"/>
+              <field name="fill_bulletin"/>
+            </group> -->
+            <group>
+              <!-- <field name="hour_limit_id"/> -->
+              <!-- <field name="calendar_limit"/> -->
+            </group>
+            <group>
+              <group>
+                <field name="create_by" string="Create by"/>
+                <!-- <field name="checked_by" string="Checked by"/> -->
+                <field name="approved_by" string="Approve by"/>
+              </group>
+            </group>
+          </sheet>
+          <footer>
+            <!-- <button name="print_main_due_pdf" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+            <button special="cancel" string="Cancel"/> -->
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="main_due_report_form_print_wizard">
+      <field name="name">maintenance.due.report.print.wizard</field>
+      <field name="model">maintenance.due.report.print</field>
+      <field name="arch" type="xml">
+          <form string="Description">
+            <sheet>
+              <group>
+                <field name="fleet_id" string="Aircraft" readonly="1" />
+                <field name="source_id" invisible="1" />
+                <field name="mdr_id" invisible="1" />
+                <field name="warning_hours" invisible="1" />
+                <field name="warning_cycles" invisible="1" />
+                <field name="warning_rins" invisible="1" />
+                <field name="warning_calendars" invisible="1" />
+                <field name="create_by" invisible="1" />
+                <field name="approved_by" invisible="1" />
+                <field name="orderby" widget="radio"/>
+              </group>
+              <group string="Filter">
+                <field name="filter_ata" widget="mask" data-inputmask-mask="99-99-99"/>
+                <field name="fill_component"/>
+                <field name="fill_inspection"/>
+                <field name="fill_bulletin"/>
+                <field name="header_html" invisible="1"/>
+                <field name="footer_html" invisible="1"/>
+              </group>
+            </sheet>
+            <footer>
+              <button name="print_main_due_pdf" type="object" icon="fa-download" string="Preview PDF" class="oe_highlight" />
+              <button name="print_main_due_with_excel" context="{'xls_export':1}" type="object" icon="fa-download" string="Print Excel" class="oe_highlight" />
+              <button special="cancel" string="Cancel"/>
+            </footer>
+          </form>
+      </field>      
+    </record>
+
+    
+    <report
+            id="ams_mdr_datas_excel"
+            model="maintenance.due.report.print"
+            string=" "
+            report_type="xlsx"
+            name="ams_document.mdr_data_xls.xlsx"
+            file="ams_document.mdr_data_xls.xlsx"
+            attachment_use="False"
+        />
+
+    <record id="action_main_due_report" model="ir.actions.act_window">
+      <field name="name">Maintenance Due Report</field>
+      <field name="res_model">maintenance.due.report</field>
+      <field name="view_mode">tree,form</field>
+      <!-- <field name="domain">[]</field> -->
+      <field name="domain">[('states','!=','expired')]</field>
+    </record>
+
+    <record id="action_main_due_report_wizard" model="ir.actions.act_window">
+      <field name="name">Maintenance Due Report Wizard</field>
+      <field name="res_model">maintenance.due.report.print</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+  </data>
+
+  <record id="mtr_seq" model="ir.sequence">
+    <field name="name">MDR Sequence</field>
+    <field name="code">mdr_seq</field>
+    <field name="prefix">MDR </field>
+    <field name="padding">3</field>
+  </record>
+
+  <data noupdate="0">
+    <!-- TIDAK PUNYA HAK CONFIRM -->
+    <record id="mdr_create_only" model="ir.rule">
+        <field name="name">Create MDR Only</field>
+        <field ref="model_maintenance_due_report" name="model_id"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['&amp;',('states','!=','expired'),'|',('states','!=','create_by'),('create_uid','=',user.id)]</field>
+    </record>
+    
+    <!-- PUNYA HAK CONFIRM -->
+    <record id="mdr_confirm_only" model="ir.rule">
+        <field name="name">Create MDR and Confirm</field>
+        <field ref="model_maintenance_due_report" name="model_id"/>
+        <field name="groups" eval="[(4, ref('ams_security.group_button_mdr_approve'))]"/>
+        <field name="domain_force">[('states','!=','expired')]</field>
+    </record>
+  </data>
+</odoo>

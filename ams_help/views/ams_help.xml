@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Dashboard Action for Menu HR Dashboard -->
+        <record id="action_help_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">ams.dashboard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">ias_manual_dashboard</field>
+            <field name="context">{
+            'ias_manual_dashboard_view_ref' : 'ams_help.ias_manual_dashboard'
+            }</field>
+        </record>
+        <!-- Default View for Hr Dashboard, which is extended to make Dashboard View -->
+        <record model="ir.ui.view" id="ias">
+            <field name="name">Hr Dashboard</field>
+            <field name="model">ams.dashboard</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <!--<field name="name"/>-->
+                </kanban>
+            </field>
+        </record>
+        <!-- Menu HR Dashbaord -->
+        <menuitem id="menu_hr_dashboard"
+                  name="Help"
+                  action="action_help_dashboard"
+                  sequence="10"/>
+        <!--SubMenu-->
+        <!--<menuitem id="menu_hr_dashboard_child"-->
+                  <!--name="Dashboard"-->
+                  <!--parent="menu_hr_dashboard"-->
+                  <!--action="action_hr_dashboard"-->
+                  <!--sequence="1"/>-->
+        <!-- HR Dashboard Assests. We are making changes on assets backend -->
+        <template id="assets_backend" name="manual assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/ams_help/static/src/js/ams_help.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/charts/Chart.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/charts/Chart.bundle.min.js"/>
+                <!-- Datatable scripts -->
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/datatables.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/dataTables.buttons.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/buttons.flash.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/buttons.html5.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/buttons.print.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/pdfmake.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/vfs_fonts.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/jszip.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/buttons.bootstrap.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/buttons.bootstrap4.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/dataTables/buttons.colVis.min.js"/>
+                <!-- Scripts to export html to pdf -->
+                <script type="text/javascript" src="/ams_help/static/lib/jsPdf/jspdf.min.js"/>
+                <script type="text/javascript" src="/ams_help/static/lib/jsPdf/jspdf.debug.js"/>
+                <!-- Css scripts for dashboard view and table -->
+                <link rel="stylesheet" href="/ams_help/static/src/css/dashboard.css"/>
+                <link rel="stylesheet" href="/ams_help/static/lib/dataTables/datatables.min.css"/>
+                <link rel="stylesheet" href="/ams_help/static/lib/dataTables/buttons.dataTables.min.css"/>
+                <!-- CSS and JS For Book -->
+                <!-- <link rel="stylesheet" type="text/css" href="/ams_help/static/src/css/normalize.css" /> -->
+                <!-- <link rel="stylesheet" type="text/css" href="/ams_help/static/src/css/demo.css" /> -->
+                <link rel="stylesheet" type="text/css" href="/ams_help/static/src/css/book.css" />
+                <script src="/ams_help/static/src/js/modernizr.custom.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

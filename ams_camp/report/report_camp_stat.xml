@@ -1,0 +1,123 @@
+<odoo>
+
+    <template id="report_camp_stat">
+            <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="data">
+                 <t t-call="ams_document.internal_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                  <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                            </div>
+                            <div class="col-xs-8">
+                                <h2 class="text-left">Maintenance Program Report</h2>
+                            </div>
+                        </div>
+
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><center><b>A/C Model</b></center></td>
+                                <td><center><b>Date Issued</b></center></td>
+                                <td><center><b>Revision Number</b></center></td>
+                            </tr>
+                            <t t-foreach="data.cam_id" t-as="cam">
+                                <tr>
+                                    <td><center> <div t-field="cam.aircraft_model_id.name" /> </center></td>
+                                    <td><center> <div t-field="cam.date_issued" /> </center></td>
+                                    <td><center> <div t-field="cam.number" /> </center></td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+  <data>
+
+        <record id="paperformat_camp" model="report.paperformat">
+            <field name="name">Maintenance Program</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="print_camp_pdf_report"
+                string="Maintenance Program Report"
+                model="ams.camp.report"
+                report_type="qweb-html"
+                file="ams_camp.report_camp_stat"
+                name="ams_camp.report_camp_stat"
+                paperformat="ams_camp.paperformat_camp"
+            />
+
+    <record model="ir.ui.view" id="document_camp_type_form_report">
+        <field name="name">ams.camp.report.form</field>
+        <field name="model">ams.camp.report</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Program Report">
+                <sheet string="Maintenance Program Report">
+                    <group>
+                        <group attrs="{'invisible':True}">
+                            <field name="aircraft_model_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                        <center><h1>Print Maintenance Program Report ?</h1></center>
+                </sheet>
+                    <footer>
+                        <button name="print_camp_pdf_report" type="object" icon="fa-download" string="Print PDF" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_report_camp" model="ir.actions.act_window">
+      <field name="name">Maintenance Program Report</field>
+      <field name="res_model">ams.camp.report</field>
+      <field name="view_mode">form</field>
+      <field name="licampt">1</field>
+      <field name="target">new</field>
+    </record>
+
+            <record id="action_make_camp" model="ir.actions.server">
+                <field name="name">Maintenance Program</field>
+                <field name="model_id" ref="ams_camp.model_ams_camp_report"/>
+                <field name="state">code</field>
+                <field name="code">
+                    action = env['report'].get_action(env['ams.camp.report'].search([]),'ams_camp.report_camp_stat')
+                </field>
+            </record>
+                    <!-- action = model.print_camp_pdf_report() -->
+                    <!-- action = env['ams.camp.report'].print_camp_pdf_report(env['ams.camp.report'].search([])) -->
+            
+            <record id="test_more_item" model="ir.values">
+                <field eval="'client_action_multi'" name="key2"/>
+                <field eval="'ams.camp.report'" name="model"/>
+                <field name="name">Test Item</field>
+                <field eval="'ir.actions.server,%d'%action_make_camp" name="value"/>
+            </record>
+  </data>
+</odoo>

@@ -1,0 +1,1441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Marketing -->
+    <t t-name="dashboard_marketing">
+        
+        <div class="py-5">
+            <section id="menu" class="text-center">
+                <div class="navigation_menu_dashboard">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><button type="button" id="btn_project_requisition" class="btn btn-warning btn-circle btn-xl button_menu"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+                                <br></br>
+                                <span class="button-label">New Project</span></td>
+                                <td><button type="button" id="btn_rab" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#46b3e6"><i class="fa fa-money"></i></button>
+                                <br></br>
+                                <span class="button-label">RAB</span></td>
+                                <td><button type="button" id="btn_nup" class="btn btn-success btn-circle btn-xl button_menu"><i class="fa fa-line-chart"></i></button>
+                                <br></br>
+                                <span class="button-label">NUP</span></td>
+                                <td><button type="button" id="btn_help_app" class="btn btn-warning btn-circle btn-xl button_menu"><i class="fa fa-question"></i></button>
+                                <br></br>
+                                <span class="button-label">Help</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="chart" class="border-top border-success">
+                <div class="text-center table">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
+                            <canvas id="myLineChart"></canvas>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                            <canvas id="myBarChart"></canvas>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                            <canvas id="myPolarAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="datas" class="border-top pt-5 border-success">
+                    <table class="table border table-striped border border-dark" >
+                            <thead style="background-color: #708090">
+                                <tr style="color:white;">
+                                    <th>Order Number</th>
+                                    <th>NUP</th>
+                                    <th>Project Progress</th>
+                                    <th>Order Date</th>
+                                    <th>Customer</th>
+                                    <th>Project</th>
+                                    <th>Sales Person</th>
+                                    <th>Invoice Status</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                            </tbody>
+                    </table>
+            </section>
+        </div>
+        <script>
+            var ctx_line_chart = document.getElementById('myLineChart');
+            var ctx_bar_chart = document.getElementById('myBarChart');
+            var ctx_polar_area_chart = document.getElementById('myPolarAreaChart');
+            var myLineChart = new Chart(ctx_line_chart, {
+                // The type of chart we want to create
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: 'My First dataset',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, 2, 20, 30, 45, 5, 2, 20, 30, 45]
+                    }]
+                },
+
+                // Configuration options go here
+                options: {}
+            });
+            var myBarChart = new Chart(ctx_bar_chart, {
+                type: 'bar',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: 'My First dataset',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, 2, 20, 30, 45, 5, 2, 20, 30, 45]
+                    }]
+                },
+                options: {}
+            });
+            var myPolarAreaChart = new Chart(ctx_polar_area_chart, {
+                type: 'polarArea',
+                data: {
+                    labels: ['January', 'February', 'March',],
+                    datasets: [{
+                        
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, ]
+                    }]
+                },
+                options: {}
+                
+            });
+            function button_project_requisition_onclick(){
+                console.log("Button Prj Req berhasil di klik");
+            };
+        </script>
+    </t>
+    <t t-name="dashboard_ppc">
+        
+        <div class="py-5">
+            <section id="menu" class="text-center">
+                <div class="navigation_menu_dashboard">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><button type="button" id="btn_rab" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#46b3e6"><i class="fa fa-money"></i></button>
+                                <br></br>
+                                <span class="button-label">RAB</span></td>
+                                <td><button type="button" id="btn_mrl" class="btn btn-warning btn-circle btn-xl button_menu"><i class="fa fa-shopping-cart"></i></button>
+                                <br></br>
+                                <span class="button-label">MRL</span></td>
+                                <td><button type="button" id="btn_pjpb" class="btn btn-success btn-circle btn-xl button_menu"><i class="fa fa-shopping-cart"></i></button>
+                                <br></br>
+                                <span class="button-label">PJPB</span></td>
+                                <td><button type="button" id="btn_project" class="btn btn-circle btn-xl button_menu" style="background-color:#617be3;color:white;"><i class="fa fa-plane"></i></button>
+                                <br></br>
+                                <span class="button-label">Project</span></td>
+                                <!-- <td><button type="button" id="btn_tasks" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#111d5e"><i class="fa fa-tasks"></i></button>
+                                <br></br>
+                                <span class="button-label">Tasks</span></td> -->
+                                <td><button type="button" id="btn_job_order" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#fd7792"><i class="fa fa-user-md"></i></button>
+                                <br></br>
+                                <span class="button-label">Job Order</span></td>
+                                <td><button type="button" id="btn_help_app" class="btn btn-warning btn-circle btn-xl button_menu"><i class="fa fa-question"></i></button>
+                                <br></br>
+                                <span class="button-label">Help</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="chart" class="border-top border-success">
+                <div class="text-center table">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <canvas id="myBarChart"></canvas>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <canvas id="myPolarAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="datas" class="border-top pt-5 border-success">
+                    <table class="table border table-striped border border-dark" >
+                            <thead style="background-color: #708090">
+                                <tr style="color:white;">
+                                    <th>Order Number</th>
+                                    <th>NUP</th>
+                                    <th>Project Progress</th>
+                                    <th>Order Date</th>
+                                    <th>Customer</th>
+                                    <th>Project</th>
+                                    <th>Sales Person</th>
+                                    <th>Invoice Status</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                            </tbody>
+                    </table>
+            </section>
+        </div>
+        <script>
+            var ctx_line_chart = document.getElementById('myLineChart');
+            var ctx_bar_chart = document.getElementById('myBarChart');
+            var ctx_polar_area_chart = document.getElementById('myPolarAreaChart');
+           
+            var myBarChart = new Chart(ctx_bar_chart, {
+                type: 'bar',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: 'My First dataset',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, 2, 20, 30, 45, 5, 2, 20, 30, 45]
+                    }]
+                },
+                options: {}
+            });
+            var myPolarAreaChart = new Chart(ctx_polar_area_chart, {
+                type: 'polarArea',
+                data: {
+                    labels: ['January', 'February', 'March',],
+                    datasets: [{
+                        
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, ]
+                    }]
+                },
+                options: {}
+                
+            });
+            function button_project_requisition_onclick(){
+                console.log("Button Prj Req berhasil di klik");
+            };
+        </script>
+    </t>
+    <t t-name="dashboard_scm">
+        
+        <div class="py-5">
+            <section id="menu" class="text-center">
+                <div class="navigation_menu_dashboard">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><button type="button" id="btn_mrl" class="btn btn-warning btn-circle btn-xl button_menu"><i class="fa fa-shopping-cart"></i></button>
+                                <br></br>
+                                <span class="button-label">MRL</span></td>
+                                <td><button type="button" id="btn_pjpb" class="btn btn-success btn-circle btn-xl button_menu"><i class="fa fa-shopping-cart"></i></button>
+                                <br></br>
+                                <span class="button-label">PJPB</span></td>
+                                <td><button type="button" id="btn_purchase_agreement" class="btn btn-circle btn-xl button_menu" style="background-color:#f75f00;color:white"><i class="fa fa-check"></i></button>
+                                <br></br>
+                                <span class="button-label">Purchase Agreement</span></td>
+                                <td><button type="button" id="btn_purchase_order" class="btn btn-success btn-circle btn-xl button_menu"><i class="fa fa-dollar"></i></button>
+                                <br></br>
+                                <span class="button-label">Purchase Order</span></td>
+                                <td><button type="button" id="btn_work_order" class="btn btn-circle btn-xl button_menu" style="background-color:#0c093c;color:white"><i class="fa fa-tasks"></i></button>
+                                <br></br>
+                                <span class="button-label">Work Order</span></td>
+                                <td><button type="button" id="btn_spk" class="btn btn-circle btn-xl button_menu" style="background-color:#df42d1;color:white"><i class="fa fa-user-md"></i></button>
+                                <br></br>
+                                <span class="button-label">SPK</span></td>
+                                <td><button type="button" id="btn_inventory_movement" class="btn btn-circle btn-xl button_menu" style="background-color:#1089ff;color:white"><i class="fa fa-truck"></i></button>
+                                <br></br>
+                                <span class="button-label">Inventory Movement</span></td>
+                                <td><button type="button" id="btn_help_app" class="btn btn-warning btn-circle btn-xl button_menu"><i class="fa fa-question"></i></button>
+                                <br></br>
+                                <span class="button-label">Help</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="chart" class="border-top border-success">
+                <div class="text-center table">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <canvas id="myBarChart"></canvas>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <canvas id="myPolarAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="datas" class="border-top pt-5 border-success">
+                    <table class="table border table-striped border border-dark" >
+                            <thead style="background-color: #708090">
+                                <tr style="color:white;">
+                                    <th>Order Number</th>
+                                    <th>NUP</th>
+                                    <th>Project Progress</th>
+                                    <th>Order Date</th>
+                                    <th>Customer</th>
+                                    <th>Project</th>
+                                    <th>Sales Person</th>
+                                    <th>Invoice Status</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                            </tbody>
+                    </table>
+            </section>
+        </div>
+        <script>
+            var ctx_line_chart = document.getElementById('myLineChart');
+            var ctx_bar_chart = document.getElementById('myBarChart');
+            var ctx_polar_area_chart = document.getElementById('myPolarAreaChart');
+           
+            var myBarChart = new Chart(ctx_bar_chart, {
+                type: 'bar',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: 'My First dataset',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, 2, 20, 30, 45, 5, 2, 20, 30, 45]
+                    }]
+                },
+                options: {}
+            });
+            var myPolarAreaChart = new Chart(ctx_polar_area_chart, {
+                type: 'polarArea',
+                data: {
+                    labels: ['January', 'February', 'March',],
+                    datasets: [{
+                        
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, ]
+                    }]
+                },
+                options: {}
+                
+            });
+            function button_project_requisition_onclick(){
+                console.log("Button Prj Req berhasil di klik");
+            };
+        </script>
+    </t>
+    <t t-name="dashboard_toolroom">
+        
+        <div class="py-5">
+            <section id="menu" class="text-center">
+                <div class="navigation_menu_dashboard">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><button type="button" id="btn_tools" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#46b3e6;color:white"><i class="fa fa-wrench"></i></button>
+                                <br></br>
+                                <span class="button-label">Tools</span></td>
+                                <td><button type="button" id="btn_tools_forecast" class="btn btn-success btn-circle btn-xl button_menu"><i class="fa fa-calendar"></i></button>
+                                <br></br>
+                                <span class="button-label">Tools Forecast</span></td>
+                                <td><button type="button" id="btn_tools_borrowing" class="btn btn-success btn-circle btn-xl button_menu" style="background-color:"><i class="fa fa-level-up"></i></button>
+                                <br></br>
+                                <span class="button-label">Tools Borrowing</span></td>
+                                <td><button type="button" id="btn_tools_returned" class="btn btn-warning btn-circle btn-xl button_menu"><i class="fa fa-level-down"></i></button>
+                                <br></br>
+                                <span class="button-label">Tools Returned</span></td>
+                                <td><button type="button" id="btn_tools_quarantine" class="btn btn-danger btn-circle btn-xl button_menu"><i class="fa fa-bell"></i></button>
+                                <br></br>
+                                <span class="button-label">Tools Quarantine</span></td>
+                                <td><button type="button" id="btn_tools_calibration" class="btn btn-circle btn-xl button_menu" style="background-color:#df42d1;color:white"><i class="fa fa-gears"></i></button>
+                                <br></br>
+                                <span class="button-label">Tools Calibration</span></td>
+                                <td><button type="button" id="btn_tools_movement" class="btn btn-circle btn-xl button_menu" style="background-color:#1089ff;color:white"><i class="fa fa-truck"></i></button>
+                                <br></br>
+                                <span class="button-label">Tools Movement</span></td>
+                                <td><button type="button" id="btn_help_app" class="btn btn-warning btn-circle btn-xl button_menu"><i class="fa fa-question"></i></button>
+                                <br></br>
+                                <span class="button-label">Help</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="chart" class="border-top border-success">
+                <div class="text-center table">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <canvas id="myBarChart"></canvas>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <canvas id="myPolarAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="datas" class="border-top pt-5 border-success">
+                    <table class="table border table-striped border border-dark" >
+                            <thead style="background-color: #708090">
+                                <tr style="color:white;">
+                                    <th>Order Number</th>
+                                    <th>NUP</th>
+                                    <th>Project Progress</th>
+                                    <th>Order Date</th>
+                                    <th>Customer</th>
+                                    <th>Project</th>
+                                    <th>Sales Person</th>
+                                    <th>Invoice Status</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                            </tbody>
+                    </table>
+            </section>
+        </div>
+        <script>
+            var ctx_line_chart = document.getElementById('myLineChart');
+            var ctx_bar_chart = document.getElementById('myBarChart');
+            var ctx_polar_area_chart = document.getElementById('myPolarAreaChart');
+           
+            var myBarChart = new Chart(ctx_bar_chart, {
+                type: 'bar',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: 'My First dataset',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, 2, 20, 30, 45, 5, 2, 20, 30, 45]
+                    }]
+                },
+                options: {}
+            });
+            var myPolarAreaChart = new Chart(ctx_polar_area_chart, {
+                type: 'polarArea',
+                data: {
+                    labels: ['January', 'February', 'March',],
+                    datasets: [{
+                        
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, ]
+                    }]
+                },
+                options: {}
+                
+            });
+            function button_project_requisition_onclick(){
+                console.log("Button Prj Req berhasil di klik");
+            };
+        </script>
+    </t>
+    <t t-name="dashboard_quality">
+        
+        <div class="py-5">
+            <section id="menu" class="text-center">
+                <div class="navigation_menu_dashboard">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><button type="button" id="btn_vendor_approved" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#4fdb89;color:white"><i class="fa fa-check"></i></button>
+                                <br></br>
+                                <span class="button-label">Approved Vendor</span></td>
+                                
+                                <td><button type="button" id="btn_mddr" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#46b3e6;color:white"><i class="fa fa-gears"></i></button>
+                                <br></br>
+                                <span class="button-label">MDDR</span></td>
+                                
+                                <td><button type="button" id="btn_projects" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#ed66ed;color:white"><i class="fa fa-wrench"></i></button>
+                                <br></br>
+                                <span class="button-label">Projects</span></td>
+                                
+                                <td><button type="button" id="btn_rts" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#ffb83d;color:white"><i class="fa fa-suitcase"></i></button>
+                                <br></br>
+                                <span class="button-label">RTS</span></td>
+
+                                <td><button type="button" id="btn_inventory_movement" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#54d1b8;color:white"><i class="fa fa-truck"></i></button>
+                                <br></br>
+                                <span class="button-label">Inventory Movement</span></td>
+
+                                <td><button type="button" id="btn_help_app" class="btn btn-warning btn-circle btn-xl button_menu"><i class="fa fa-question"></i></button>
+                                <br></br>
+                                <span class="button-label">Help</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="chart" class="border-top border-success">
+                <div class="text-center table">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <canvas id="myBarChart"></canvas>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <canvas id="myPolarAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="datas" class="border-top pt-5 border-success">
+                    <table class="table border table-striped border border-dark" >
+                            <thead style="background-color: #708090">
+                                <tr style="color:white;">
+                                    <th>Order Number</th>
+                                    <th>NUP</th>
+                                    <th>Project Progress</th>
+                                    <th>Order Date</th>
+                                    <th>Customer</th>
+                                    <th>Project</th>
+                                    <th>Sales Person</th>
+                                    <th>Invoice Status</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                            </tbody>
+                    </table>
+            </section>
+        </div>
+        <script>
+            var ctx_line_chart = document.getElementById('myLineChart');
+            var ctx_bar_chart = document.getElementById('myBarChart');
+            var ctx_polar_area_chart = document.getElementById('myPolarAreaChart');
+           
+            var myBarChart = new Chart(ctx_bar_chart, {
+                type: 'bar',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: 'My First dataset',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, 2, 20, 30, 45, 5, 2, 20, 30, 45]
+                    }]
+                },
+                options: {}
+            });
+            var myPolarAreaChart = new Chart(ctx_polar_area_chart, {
+                type: 'polarArea',
+                data: {
+                    labels: ['January', 'February', 'March',],
+                    datasets: [{
+                        
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, ]
+                    }]
+                },
+                options: {}
+                
+            });
+            function button_project_requisition_onclick(){
+                console.log("Button Prj Req berhasil di klik");
+            };
+        </script>
+    </t>
+    <t t-name="dashboard_hr">
+        
+        <div class="py-5">
+            <section id="menu" class="text-center">
+                <div class="navigation_menu_dashboard">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><button type="button" id="btn_employees" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#4fdb89;color:white"><i class="fa fa-group"></i></button>
+                                <br></br>
+                                <span class="button-label">Employees</span></td>
+
+                                <td><button type="button" id="btn_manpower_request" class="btn btn-primary btn-circle btn-xl button_menu" style="background-color:#ffb83d;color:white"><i class="fa fa-book"></i></button>
+                                <br></br>
+                                <span class="button-label">Manpower Request</span></td>
+
+                                <td><button type="button" id="btn_help_app" class="btn btn-warning btn-circle btn-xl button_menu"><i class="fa fa-question"></i></button>
+                                <br></br>
+                                <span class="button-label">Help</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="chart" class="border-top border-success">
+                <div class="text-center table">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <canvas id="myBarChart"></canvas>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <canvas id="myPolarAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="datas" class="border-top pt-5 border-success">
+                    <table class="table border table-striped border border-dark" >
+                            <thead style="background-color: #708090">
+                                <tr style="color:white;">
+                                    <th>Order Number</th>
+                                    <th>NUP</th>
+                                    <th>Project Progress</th>
+                                    <th>Order Date</th>
+                                    <th>Customer</th>
+                                    <th>Project</th>
+                                    <th>Sales Person</th>
+                                    <th>Invoice Status</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-013/2019</td>
+                                    <td>P19-010053</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>   
+                                    <td>29-10-2019</td>
+                                    <td>Alfa Flying School</td>
+                                    <td>P19-010053 ( Project 0036/AMR/X/19) A320a</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>Rp689.095.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-012/2019</td>
+                                    <td>P19-010054</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>22-10-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010054 ( Project 0010/AMR/IX/19) False</td>
+                                    <td>Administrator</td>
+                                    <td>Fully Invoiced</td>
+                                    <td>$4.950.000,00</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                                <tr>
+                                    <td>MKT/MR/IAS-016/2019</td>
+                                    <td>P19-010055</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>10-12-2019</td>
+                                    <td>AERO Nusantara Indonesia</td>
+                                    <td>P19-010055 ( Project 0050/AMR/XII/19) PK-PKL</td>
+                                    <td>Marketing (Aviation)</td>
+                                    <td>Progress</td>
+                                    <td>$56.773,77</td>
+                                </tr>
+                            </tbody>
+                    </table>
+            </section>
+        </div>
+        <script>
+            var ctx_line_chart = document.getElementById('myLineChart');
+            var ctx_bar_chart = document.getElementById('myBarChart');
+            var ctx_polar_area_chart = document.getElementById('myPolarAreaChart');
+           
+            var myBarChart = new Chart(ctx_bar_chart, {
+                type: 'bar',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: 'My First dataset',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, 2, 20, 30, 45, 5, 2, 20, 30, 45]
+                    }]
+                },
+                options: {}
+            });
+            var myPolarAreaChart = new Chart(ctx_polar_area_chart, {
+                type: 'polarArea',
+                data: {
+                    labels: ['January', 'February', 'March',],
+                    datasets: [{
+                        
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, ]
+                    }]
+                },
+                options: {}
+                
+            });
+            function button_project_requisition_onclick(){
+                console.log("Button Prj Req berhasil di klik");
+            };
+        </script>
+    </t>
+</templates>

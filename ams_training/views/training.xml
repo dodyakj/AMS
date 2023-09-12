@@ -1,0 +1,195 @@
+<odoo>
+  <data>
+
+
+<!--TRAINING-->
+    
+    <record id='training_ams_tree' model='ir.ui.view'>
+              <field name="name">ams.training.tree.custom</field>
+              <field name="model">ams.training</field>
+              <field name="arch" type="xml">
+                  <tree string="Training">
+                    <field name='crew'/>
+                    <field name='type_psw'/>
+                    <field name='initial'/>
+                    <!-- <field name='rec_stat'/> -->
+                    <!-- <field name='rec'/> -->
+                    <field name='customer'/>
+                    <field name='training'/>
+                  </tree>
+              </field>
+      </record>
+
+      <record model="ir.ui.view" id="training_ams_search_view">
+        <field name="name">ams.training.search</field>
+        <field name="model">ams.training</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name='crew'/>
+              <field name='type_psw'/>
+              <field name='initial'/>
+              <!-- <field name='rec_stat'/> -->
+              <!-- <field name='rec'/> -->
+              <field name='customer'/>
+              <field name='training'/>             
+            </search>
+        </field>
+      </record>
+
+     <record id='training_ams_form' model='ir.ui.view'>
+          <field name="name">ams.training.custom</field>
+          <field name="model">ams.training</field>
+          <field name="arch" type="xml">
+          <form string="Training">
+              <sheet>
+                <group col="4">
+                    <field name='crew' colspan="4"/>
+                    <field name='type_psw' colspan="4"/>
+                    <field name='initial' colspan="4"/>
+                    <field name='rec_stat'/>
+                    <field name='rec' attrs="{'invisible':[('rec_stat','!=',True)]}"/>
+                    <field name='customer' colspan="4"/>
+                    <field name='training' colspan="4"/>
+                </group>
+              </sheet>
+          </form>
+          </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="training_ams_action">
+      <field name="name">Training</field>
+      <field name="res_model">ams.training</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Training
+            </p>
+        </field>
+    </record>   
+
+
+
+<!-- TRAINING PROGRAM -->
+
+
+
+    <record id='training_program_tree' model='ir.ui.view'>
+              <field name="name">training.program.tree.custom</field>
+              <field name="model">training.program</field>
+              <field name="arch" type="xml">
+                  <tree string="Training Program">
+                    <field name='project'/>
+                    <field name='name'/>
+                    <!-- <field name='man_pos'/> -->
+                    <!-- <field name='mandatory'/> -->
+                  </tree>
+              </field>
+      </record>
+
+      <record model="ir.ui.view" id="training_program_search_view">
+        <field name="name">training.program.search</field>
+        <field name="model">training.program</field>
+        <field name="arch" type="xml">
+            <search>
+              <field name='project'/>
+              <field name='name'/>
+              <!-- <field name='man_pos'/> -->
+              <!-- <field name='mandatory'/> -->             
+            </search>
+        </field>
+      </record>
+
+     <record id='training_program_form' model='ir.ui.view'>
+          <field name="name">training.program.custom</field>
+          <field name="model">training.program</field>
+          <field name="arch" type="xml">
+          <form string="Training Program">
+              <sheet>
+                <group col="2">
+                    <field name='project'/>
+                    <field name='name'/>
+                    <field name='man_pos'/>
+                    <field name='mandatory' attrs="{'invisible':[('man_pos','!=',True)]}"/>
+                </group>
+              </sheet>
+          </form>
+          </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="training_program_action">
+      <field name="name">Training Program</field>
+      <field name="res_model">training.program</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Training Program
+            </p>
+        </field>
+    </record>
+
+<!--EMPLOYEE SEETTING-->
+
+
+
+    <record id='employee_setting_tree' model='ir.ui.view'>
+              <field name="name">employee.setting.tree.custom</field>
+              <field name="model">employee.setting</field>
+              <field name="arch" type="xml">
+                  <tree string="Employee Setting">
+                    <field name='name'/>
+                    <field name='position'/>
+                  </tree>
+              </field>
+      </record>
+
+     <record id='employee_setting_form' model='ir.ui.view'>
+          <field name="name">employee.setting.custom</field>
+          <field name="model">employee.setting</field>
+          <field name="arch" type="xml">
+          <form string="Employee Setting">
+              <sheet>
+                <group col="2">
+                    <field name='name'/>
+                    <field name='position'>
+                      <tree editable="bottom">
+                        <field name="name"/>
+                        <field name="type_aircraft"/>
+                      </tree>
+                    </field>
+                </group>
+              </sheet>
+          </form>
+          </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="employee_setting_action">
+      <field name="name">Employee Setting</field>
+      <field name="res_model">employee.setting</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Employee Setting
+            </p>
+        </field>
+    </record>
+
+
+     <record id='employee_position_form' model='ir.ui.view'>
+          <field name="name">employee.position.custom</field>
+          <field name="model">employee.position</field>
+          <field name="arch" type="xml">
+          <form string="Position">
+              <sheet>
+                <group col="2">
+                    <field name='name'/>
+                </group>
+              </sheet>
+          </form>
+          </field>
+      </record>
+
+  </data>
+</odoo>

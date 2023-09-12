@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_complied">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                 <div class="page">
+                    <div class="row">
+                        <div class="col-xs-4">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-8">
+                            <h2 class="text-left">Bulletin Complied Report</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <br/>
+                      </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <tr>
+                          <td><center><b>Aircraft</b></center></td>
+                          <td><center><b>Bulletin</b></center></td>
+                          <td><center><b>Install At</b></center></td>
+                          <td><center><b>Current</b></center></td>
+                          <td><center><b>Next Due</b></center></td>
+                          <td><center><b>Compliance</b></center></td>
+                          <td><center><b>Compli With</b></center></td>
+                        </tr>
+                        <t t-foreach="data.bulletin_id" t-as="comp">
+                            <tr>
+                                <td> <div t-field="comp.fleet_id" /></td>
+                                <td> <div t-field="comp.bulletin_id.name" /></td>
+                                <td> <div t-field="comp.current_date" /></td>
+                                <td> <div t-field="comp.current_text" /> </td>
+                                <td> <div t-field="comp.next_text" /> </td>
+                                <td> <div t-field="comp.bulletin_compliance_id" /></td>
+                                <td> <div t-field="comp.comply_with" /></td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+ 
+</odoo>

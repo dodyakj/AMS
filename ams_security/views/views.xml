@@ -1,0 +1,27 @@
+<odoo>
+  <data>
+    <template id="assets_backend" name="underconstruct_assets" inherit_id="web.assets_backend">
+          <xpath expr="." position="inside">
+              <link rel="stylesheet" href="/ams_security/static/src/css/underconstruct.css"/>
+              <script type="text/javascript" src="/ams_security/static/src/js/underconstruct.js"/>
+          </xpath>
+    </template>
+    <record model="ir.ui.view" id="underconstruct_form">
+      <field name="name">under.construct.form</field>
+      <field name="model">under.construct</field>
+      <field name="arch" type="xml">
+        <form string="description" create="0">
+          <sheet>
+            <h1>
+              Under Construction
+            </h1>
+          </sheet>
+        </form>
+      </field>
+    </record>
+      <record id="uc_action" model="ir.actions.client">
+          <field name="name">Under Construct</field>
+          <field name="tag">under.construct</field>
+      </record>
+  </data>
+</odoo>

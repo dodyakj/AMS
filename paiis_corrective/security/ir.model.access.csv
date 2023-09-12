@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_paiis_corrective_paiis_corrective,paiis_corrective.paiis_corrective,model_paiis_corrective_paiis_corrective,,1,0,0,0

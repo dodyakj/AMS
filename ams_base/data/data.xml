@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+
+    <record id="vendor_code_sequence" model="ir.sequence">
+        <field name="name">Vendor Code</field>
+        <field name="code">res.partner.code</field>
+    </record>
+
+    <record id="repair_code_sequence" model="ir.sequence">
+        <field name="name">Repair Order Code</field>
+        <field name="code">ams.repair_order.code</field>
+    </record>
+
+  </data>
+</odoo>

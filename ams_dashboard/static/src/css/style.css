@@ -1,0 +1,200 @@
+.oe_products_item {
+	display: inline-block;
+	padding: 3px;
+	margin: 5px;
+	border: 1px solid black;
+	border-radius: 3px;
+}
+
+.paper {
+	background-color: white;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 100%;
+}
+
+.item_group {
+	-ms-flex-flow: row wrap;
+	-moz-flex-flow: row wrap;
+	-webkit-flex-flow: row wrap;
+	flex-flow: row wrap;
+	-moz-justify-content: flex-start;
+	-webkit-justify-content: flex-start;
+	justify-content: flex-start;
+	padding: 12px 12px;
+}
+
+.oe_aircrafts_item {
+	border-radius: 8px;
+	background-color: white;
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.05);
+	/*padding: 8px 8px;*/
+	position: relative;
+	min-width: 150px;
+	margin: 6px;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1 1 300px;
+	flex: 1 1 300px
+}
+
+.oe_aircrafts_item:hover {
+	box-shadow: 0 0.0625rem 20px 0 rgba(0,0,0,.05);
+	/*-webkit-transform: translateY(-.0625rem);
+	transform: translateY(-.0625rem);*/
+}
+
+.oe_aircrafts_body {
+	padding: 8px 8px 0px 8px;
+}
+
+.aircraft_status_us{
+	padding: 6px;
+	border-radius: 6px;
+	background-color: #feefef;
+}
+
+.aircraft_status_s{
+	padding: 6px;
+	border-radius: 6px;
+	background-color: #e2fedd;
+}
+
+.serviceable_text{
+	color: green;
+}
+
+.unserviceable_text{
+	color: red;
+}
+
+.status_ball {
+	
+}
+
+.aircraft_img {
+	object-fit: cover;
+    height: 250px;
+	border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+	padding: 1px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.maintenance_requests{
+	padding: 8px 8px 50px 8px;
+}
+
+.maintenance_list{
+	margin-top: 16px;
+}
+
+.card_divider {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	border: 0;
+	border-top: 1px solid #d6d6d6;
+}
+
+.modal_aircraft {
+	display: none; /* Hidden by default */
+	position: absolute; /* Stay in place */
+	z-index: 2; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal_content_aircraft {
+	border-radius: 8px;
+	background-color: #fefefe;
+	margin: 2% auto; /* 15% from the top and centered */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+	color: #000;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.custom_btn {
+	padding: 12px;
+	position: absolute;
+	width: -webkit-fill-available;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	border: 1px solid transparent;
+	color: #eeeeee;
+	background-color: #393e46
+}
+
+.custom_btn:hover {
+	background-color: #222831;
+}
+
+
+.modal_wrapper {
+	padding: 5px;
+	margin: 20px auto;
+}
+
+.custom_row {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	margin: 5px 0;
+}
+
+.custom_column {
+	flex: 1;
+	margin: 2px;
+	padding: 10px;
+	&:first-child { margin-left: 0; }
+	&:last-child { margin-right: 0; }
+	
+}
+
+@media screen and (max-width: 720px) {
+  .custom_row .custom_column {
+		margin-bottom: 5px;
+    flex-basis: 40%;
+		&:nth-last-child(2) {
+			margin-right: 0;
+		}
+		&:last-child {
+			flex-basis: 100%;
+			margin: 0;
+		}
+	}
+}
+
+@media screen and (max-width: 680px) {
+	.custom_row .custom_column {
+		flex-basis: 100%;
+		margin: 0 0 5px 0;
+	}
+}

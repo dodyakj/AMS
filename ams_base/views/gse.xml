@@ -1,0 +1,211 @@
+<odoo>
+  <data>
+
+
+    <act_window name="Calibrate Tools" id="return_calibarted"
+        res_model="gse.calibrated"
+        view_mode="form" target="new" context="{'search_default_config_id': [active_id],'default_config_id': active_id}"
+        />
+    <record id='custom_gse_type_view_form' model='ir.ui.view'>
+        <field name="name">gse.type.form</field>
+        <field name="model">gse.type</field>
+        <field name="arch" type="xml">
+            <form string="Form Engine Type">
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+
+              <button name="toggle_active" type="action" class="oe_stat_button" icon="fa-archive">
+                      <field name="aircraft_status" widget="boolean_button" options="{'terminology':{'string_true': 'Serviceable','hover_true': 'Serviceable','string_false': 'UnServiceable','hover_false': 'UnServiceable'}}"/>
+                  </button>
+              <button name="return_action_to_open"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-book"
+                  help="show the contract for this vehicle">
+                  <field name="some_count" widget="statinfo" string="Document"/>
+              </button>
+              <button name="return_action_to_open"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-tasks"
+                  help="show the contract for this vehicle">
+                  <field name="some_count" widget="statinfo" string="Log"/>
+              </button>
+              <button name="return_action_to_open"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-user"
+                  help="show the contract for this vehicle">
+                  <field name="some_count" widget="statinfo" string="Inspection"/>
+              </button>
+              <button name="%(return_calibarted)d"
+                  type="action"
+                  class="oe_stat_button"
+                  icon="fa-plane"
+                  help="show the contract for this vehicle">
+                  <field name="count_calibrate" widget="statinfo" string="Calibrated"/>
+              </button>
+              <button name="return_action_to_open"
+                  type="object"
+                  class="oe_stat_button"
+                  icon="fa-fire"
+                  help="show the contract for this vehicle">
+                  <field name="some_count" widget="statinfo" string="Service"/>
+              </button>
+            </div>
+            <group>
+              <group>
+                 <field name='name'/>
+                 <!-- <field name='category'/> -->
+                 <field name='ownership'/>
+                  <field name='delivery_date' attrs="{'invisible':[('ownership', '!=', 'owner')]}"/>
+              <field name='lessor' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+              <field name='start_lease' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+              <field name='normal_termination' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+               <field name='date_manufacture'/>
+               <field name='vendors'/>
+                <field name='gse_lastcb'/>
+                <field name='gse_nextdue'/>
+                 <!-- <field name='propeller_type_id' string="propeller" attrs="{'invisible':[('category', '==', 'rotary')]}"/>       -->
+               </group>
+              <group>
+                <field name='esn'/>
+                <!-- <field name='type'/> -->
+                <!-- <field name='fleet_id'/> -->
+                <field name='base_id'/>
+              <!--   <field name='rgb'/> -->
+              <!--
+                <field name='tsn'/>
+                 <field name='csn'/>
+                 <field name='tslsv'/>
+                 <field name='cslsv'/>
+                 <field name='last_oh'/>
+              -->
+              </group>
+              </group>
+              <!-- <notebook> -->
+<!--               <page string='Ground Service Equipment'>
+                <group col="4">
+                <field name='gse_tsn'/>
+                <field name='gse_csn'/>
+                <field name='gse_tslsvcb'/>
+                <field name='gse_tslsv_hsi'/>
+                <field name='gse_cslsv'/>
+                <field name='gse_cslsv_hsi'/>
+                <field name='gse_lastcb'/>
+                <field name='gse_hsi'/>
+                </group>
+            </page>
+ -->  <!--           <page string="Service">
+              <group> -->
+                <!-- <field/> -->
+              <!-- </group> -->
+            <!-- </page> -->
+            <!-- <page string='Propeller' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+              <group>
+                <group>
+                 <field name='propeller'/>
+                <field name='propeller_tsn' string='TSN'/>
+                <field name='propeller_tslsv' string='TSLSV'/> 
+                <field name='propeller_lastoh' string='Last OH'/>
+                </group>
+               </group>
+            </page> -->
+<!--             <page string="Components">
+                <field name="component_ids" mode="tree">
+                    <tree>
+                        <field name="product_id"/>
+                        <field name="part_number"/>
+                        <field name="serial_number"/>
+                        <field name="date_installed"/>
+                        <field name="ata_code"/>
+                        <field name="item"/>
+                    </tree>
+                </field>
+              </page>
+              <page string="Inspection">
+                <field name="inspection_ids" mode="tree">
+                    <tree>
+                        <field name="inspection_type"/>
+                        <field name="desc"/>
+                        <field name="ata_code"/>
+                    </tree>
+                </field>
+              </page>
+              <page string="History">
+                <field name="history_line">
+                  <tree>
+                    <field name="fleet_id"/> -->
+                    <!-- <field name="ac_hours"/>
+                    <field name="ac_cycles"/>
+                    <field name="hours"/>
+                    <field name="cycles"/> -->
+                    <!-- <field name="type"/>
+                    <field name="reason"/>
+                  </tree>
+                </field>
+              </page> -->
+           
+            <!-- </notebook> -->
+            </sheet>
+            </form>
+        </field>
+</record>  
+
+<record id='custom_gse_type_view_tree' model='ir.ui.view'>
+        <field name="name">gse.type.tree</field>
+        <field name="model">gse.type</field>
+        <field name="arch" type="xml">
+            <tree string="Ground Service Equipment">
+                 <field name='name'/>
+                 <field name='ownership'/>
+                 <field name='delivery_date'/>
+                 <field name='lessor'/>
+                 <field name='start_lease'/>
+                 <field name='normal_termination'/>
+                 <field name='date_manufacture'/>
+                 <field name='vendors'/>
+              <!--   <field name='propeller_type_id'/>  -->
+            </tree>
+        </field>
+</record>  
+
+    <record model="ir.ui.view" id="gse_custom_type_search_view">
+        <field name="name">gse.type.search</field>
+        <field name="model">gse.type</field>
+        <field name="arch" type="xml">
+            <search>
+                 <field name='name'/>
+                 <field name='ownership'/>
+                 <field name='delivery_date'/>
+                 <field name='lessor'/>
+                 <field name='start_lease'/>
+                 <field name='normal_termination'/>
+                 <field name='date_manufacture'/>
+                 <field name='vendors'/>           
+            </search>
+        </field>
+    </record> 
+
+    <record model="ir.actions.act_window" id="custom_gse_type_action">
+      <field name="name">Ground Service Equipment</field>
+      <field name="res_model">gse.type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id='custom_gse_view_form' model='ir.ui.view'>
+            <field name="name">gse.calibrated.form</field>
+            <field name="model">gse.calibrated</field>
+            <field name="arch" type="xml">
+                <form string="Calibrated">
+                  <group>
+                    <group>
+                      <field name='calibrate_last'/>
+                      <field name='calibrate_next'/>
+                    </group>
+                  </group>
+                </form>
+            </field>
+    </record>  
+  </data>
+</odoo>

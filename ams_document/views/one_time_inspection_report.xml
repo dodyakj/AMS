@@ -1,0 +1,119 @@
+<odoo>
+
+    <template id="report_oti_report">
+            <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="data">
+                 <t t-call="ams_document.internal_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                  <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                            </div>
+                            <div class="col-xs-8">
+                                <h2 class="text-left">One Time Inspection Report</h2>
+                            </div>
+                        </div>
+
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><center><b>No</b></center></td>
+                                <td><center><b>Date</b></center></td>
+                                <td><center><b>A/C Reg.</b></center></td>
+                                <td><center><b>Subject</b></center></td>
+                                <td><center><b>Reference</b></center></td>
+                                <td><center><b>ATA</b></center></td>
+                                <td><center><b>Eff. Date</b></center></td>
+                                <td><center><b>Compliance</b></center></td>
+                            </tr>
+                            <t t-foreach="data.oti_id" t-as="oti">
+                                <tr>
+                                    <td><center> <div t-field="oti.no" /> </center></td>
+                                    <td><center> <div t-field="oti.date" /> </center></td>
+                                    <td><center> <div t-field="oti.ac_type" /> </center></td>
+                                    <td><center> <div t-field="oti.subject" /> </center></td>
+                                    <td><center> <div t-field="oti.reference" /> </center></td>
+                                    <td><center> <div t-field="oti.system_ata" /> </center></td>
+                                    <td><center> <div t-field="oti.eff_date" /> </center></td>
+                                    <td><center> <div t-field="oti.compliance" /> </center></td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+  <data>
+
+        <record id="paperformat_oti" model="report.paperformat">
+            <field name="name">One Time Inspection</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="print_oti_pdf_report"
+                string="One Time Inspection Report"
+                model="document.oti.report"
+                report_type="qweb-html"
+                file="ams_document.report_oti_report"
+                name="ams_document.report_oti_report"
+                paperformat="ams_document.paperformat_oti"
+            />
+
+    <record model="ir.ui.view" id="document_oti_type_form_report">
+        <field name="name">document.oti.report.form</field>
+        <field name="model">document.oti.report</field>
+        <field name="arch" type="xml">
+            <form string="One Time Inspection">
+                <sheet string="One Time Inspection">
+                    <group>
+                        <group>
+                            <field name="ac_type"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="ata"/>
+                            <field name="compliance"/>
+                            <field name="sort_by" widget="radio" options="{'horizontal':true}"/>
+                            <field name="order_by" widget="radio" options="{'horizontal':true}"/>
+                        </group>
+                    </group>
+                </sheet>
+                    <footer>
+                        <!-- <button name="export_xls"  context="{'xls_export':1}" icon="fa-download" type="object" string="Print XLS" class="oe_highlight" attrs="{'invisible':[('type_print','!=','xls')]}"/> -->
+                        <button name="print_oti_pdf_report" type="object" icon="fa-download" string="Print PDF" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_report_oti" model="ir.actions.act_window">
+      <field name="name">One Time Inspection Report</field>
+      <field name="res_model">document.oti.report</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+      <field name="target">new</field>
+    </record>
+  </data>
+</odoo>

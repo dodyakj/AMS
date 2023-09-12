@@ -1,0 +1,152 @@
+<odoo>
+
+<template id="report_ins">
+    <t t-if="not o and doc">
+      <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+      <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+      <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="data">
+            <t t-call="ams_document.internal_layout">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-4">
+                              <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                        </div>
+                        <div class="col-xs-8">
+                            <h2 class="text-left">Inspection Report</h2>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table table-bordered">
+                        <tr>
+                            <t t-if="data.type == 'fleet'">
+                              <td><center><b>Aircraft</b></center></td>
+                            </t>
+                            <t t-if="data.type == 'engine'">
+                                <td><center><b>Engine</b></center></td>
+                            </t>
+                            <t t-if="data.type == 'auxiliary'">
+                              <td><center><b>Auxiliary</b></center></td>
+                            </t>
+                            <t t-if="data.type == 'propeller'">
+                                <td><center><b>Propeller</b></center></td>
+                            </t>
+                          <td><center><b>Inspection</b></center></td>
+                          <td><center><b>Service Life</b></center></td>
+                          <td><center><b>Current</b></center></td>
+                          <td><center><b>Next Due</b></center></td>
+                          <td><center><b>Start Date</b></center></td>
+                          <td><center><b>End Date</b></center></td>
+                          <td><center><b>Aircraft Hours</b></center></td>
+                          <td><center><b>Aircraft Cycles</b></center></td>
+                          <td><center><b>Inspection By</b></center></td>
+                        </tr>
+                        <t t-foreach="data.ins_id" t-as="ins">
+                            <tr>
+                                <t t-if="ins.fleet_id">
+                                  <td><center><div t-field="ins.fleet_id" /></center></td>
+                                </t>
+                                <t t-if="ins.engine_id">
+                                  <td><center><div t-field="ins.engine_id" /></center></td>
+                                </t>
+                                <t t-if="ins.auxiliary_id">
+                                  <td><center><div t-field="ins.auxiliary_id" /></center></td>
+                                </t>
+                                <t t-if="ins.propeller_id">
+                                  <td><center><div t-field="ins.propeller_id" /></center></td>
+                                </t>
+                                <td> <center><div t-field="ins.inspection_id" /></center></td>
+                                <td> <center><div t-field="ins.service_life_id" /></center></td>
+                                <td> <center><div t-field="ins.current_text" /></center></td>
+                                <td> <center><div t-field="ins.next_text" /></center></td>
+                                <td> <center><div t-field="ins.date" /></center></td>
+                                <td> <center><div t-field="ins.date_finish" /></center></td>
+                                <td> <center><div t-field="ins.hours" /></center></td>
+                                <td> <center><div t-field="ins.cycles" /></center></td>
+                                <td> <center><div t-field="ins.employee_id" /></center></td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+  <data>
+        <record id="paperins" model="report.paperformat">
+            <field name="name">Inspection Report</field>
+            <field name="orientation">Landscape</field>
+            <field name="default" eval="True" />
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+       <report
+                id="print_ins_reports"
+                string="Inspection Report"
+                model="ams.inspection.report"
+                report_type="qweb-html"
+                file="ams_report.report_ins"
+                name="ams_report.report_ins"
+                paperformat="ams_report.paperins"
+            />
+
+
+      <record id="ins_report_form" model="ir.ui.view">
+        <field name="name">ams.inspection.report.form</field>
+        <field name="model">ams.inspection.report</field>
+        <field name="view_mode">form</field>
+        <field name="arch" type="xml">
+            <form string="Inspection Report">
+          <group>
+            <field name="type"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <!-- <field name="status"/> -->
+          </group>
+
+          <footer>
+            <button name="print_ins_reports" type="object" icon="fa-download" string="Print PDF" class="oe_highlight" />
+            <button special="cancel" string="Cancel"/>
+          </footer>
+            </form>
+        </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="ins_report_action">
+      <field name="name">Inspection Report</field>
+      <field name="res_model">ams.inspection.report</field>
+      <field name="view_mode">form</field>
+      <field name="limit">1</field>
+      <field name="target">new</field>
+    </record>   
+            <record id="action_make_ins" model="ir.actions.server">
+                <field name="name">Inspection Status</field>
+                <field name="model_id" ref="model_ams_inspection_report"/>
+                <field name="state">code</field>
+                <field name="code">
+                    action = env['report'].get_action(env['ams.inspection.report'].search([]),'ams_report.report_ins')
+                </field>
+            </record>
+            
+            <record id="test_more_item_ins" model="ir.values">
+                <field eval="'client_action_multi'" name="key2"/>
+                <field eval="'ams.inspection.report'" name="model"/>
+                <field name="name">Test Item</field>
+                <field eval="'ir.actions.server,%d'%action_make_ins" name="value"/>
+            </record>
+  </data>
+</odoo>

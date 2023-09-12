@@ -1,0 +1,154 @@
+<odoo>
+  <data>
+    <!-- MAINTENANCE -->
+
+    <record model="ir.ui.menu" id="maintenance.menu_m_request">
+      <field name="name">Aircraft Maintenance</field>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_maintenance_title">
+      <field name="name">Maintenance</field>
+      <field name="sequence">0</field>
+    </record>
+
+    <menuitem name="Airframes" id="maintenance_airframe" parent="maintenance.menu_m_request" action="ams_base.fleet_action" sequence="10"/>
+    <menuitem name="Engine" id="maintenance_engine_type" parent="maintenance.menu_m_request" action="ams_base.custom_engine_type_action" sequence="20"/>
+    <menuitem name="Propeller" id="maintenance_propeller" parent="maintenance.menu_m_request" action="ams_base.auxiliary_action" sequence="30"/>
+    <menuitem name="Auxiliary" id="maintenance_auxiliary" parent="maintenance.menu_m_request" action="ams_base.auxiliary_action" sequence="40"/>
+    <menuitem name="GSE / Ground Service Equipment" id="maintenance_GSE" parent="maintenance.menu_m_request" action="ams_fml.fml_action" sequence="50"/>
+    <menuitem name="Daily Utilization" id="maintenance_inspection" parent="maintenance.menu_m_request" action="ams_fml.fml_action" sequence="60"/>
+    <menuitem name="Log" id="maintenance_log" parent="maintenance.menu_m_request" action="ams_fml.fml_action" sequence="70"/>
+
+
+    <menuitem name="Reliability" id="maintenance_reliability" parent="maintenance.menu_m_request" action="ams_fml.fml_action" sequence="70"/>
+        <menuitem name="Power Assurance Check" id="maintenance_powerassurancecheck" parent="maintenance_reliability" action="ams_fml.fml_action" sequence="10"/>
+        <menuitem name="Engine Reliability" id="maintenance_enginereliability" parent="maintenance_reliability" action="ams_fml.fml_action" sequence="20"/>
+        <menuitem name="Component Reliability" id="maintenance_componentreliability" parent="maintenance_reliability" action="ams_fml.fml_action" sequence="30"/>
+    
+    <menuitem name="Flight Maintenance Log" id="maintenance_fml" parent="maintenance.menu_m_request" action="ams_fml.fml_action" sequence="80"/>
+        <menuitem name="Add FML" id="maintenance_addfml" parent="maintenance_fml" action="ams_fml.fml_action" sequence="10"/>
+        <menuitem name="Verify FML" id="maintenance_verifyfml" parent="maintenance_fml" action="ams_fml.fml_action" sequence="20"/>
+        <menuitem name="Manual Changes" id="maintenance_manualchanges" parent="maintenance_fml" action="ams_fml.fml_action" sequence="30"/>
+
+    <menuitem name="Complied Inspection" id="maintenance_complied_inspection" parent="maintenance.menu_m_request" action="ams_fml.fml_action" sequence="90"/>
+
+    <menuitem name="Basic Equipment List" id="maintenance_basic_equiment_list" parent="maintenance.menu_m_request" action="ams_fml.fml_action" sequence="100"/>
+        <menuitem name="Airframe" id="basic_airframe" parent="maintenance_basic_equiment_list" action="ams_fml.fml_action" sequence="10"/>
+        <menuitem name="Engine" id="basic_engine" parent="maintenance_basic_equiment_list" action="ams_fml.fml_action" sequence="20"/>
+        <menuitem name="Auxiliary" id="basic_auxiliary" parent="maintenance_basic_equiment_list" action="ams_fml.fml_action" sequence="30"/>
+
+    <menuitem name="Engine Spare" id="maintenance_engine" parent="maintenance.menu_m_request" action="ams_base.engine_action" sequence="110"/>
+    
+    <menuitem name="BEL Parts" id="maintenance_bel" parent="maintenance.menu_m_request" sequence="120"/>
+        <menuitem name="Airframes" id="maintenance_bel_aircraft" parent="maintenance_bel" action="ams_base.fleet_bel_action" sequence="1"/>
+        <menuitem name="Engine" id="maintenance_bulletin_engine" parent="maintenance_bel" action="ams_base.fleet_bel_action" sequence="2"/>
+        <menuitem name="Auxiliary" id="maintenance_bulletin_auxiliary" parent="maintenance_bel" action="ams_base.fleet_bel_action" sequence="3"/>
+    
+    <menuitem name="Modification" id="bulletin_main_menu" parent="maintenance.menu_maintenance_title" sequence="2"/>
+        <menuitem name="Airframes" id="bulletin_airframe" parent="bulletin_main_menu" action="ams_fml.fml_action" sequence="1"/>
+
+<menuitem name="Modification" id="modification_main_menu" sequence="1"/>
+    <!-- <menuitem name="Dashboard" id="dashboard_mainmenu" parent="modification_main_menu" sequence="0"/> -->
+    <menuitem name="Modification" id="main_menu_modification" parent="modification_main_menu" sequence="1"/>
+      <menuitem name="SB / ASB" id="modification_sborasb" parent="main_menu_modification" action="ams_fml.fml_action" sequence="1"/>
+      <menuitem name="AD" id="modification_ad" parent="main_menu_modification" action="ams_fml.fml_action" sequence="2"/>
+      <menuitem name="STC" id="modification_ica" parent="main_menu_modification" action="ams_fml.fml_action" sequence="3"/>
+      <menuitem name="Aircraft Alteration" id="modification_airframe_alterration" parent="main_menu_modification" action="ams_fml.fml_action" sequence="4"/>
+      <menuitem name="Fleetwide Bulletin Report" id="modification_fleet" parent="main_menu_modification" action="ams_fml.fml_action" sequence="5"/>
+      <menuitem name="Complied Bulletin" id="modification_complied" parent="main_menu_modification" action="ams_fml.fml_action" sequence="6"/>
+          <menuitem name="Complied Bulletin" id="modification_complied_bulletin" parent="modification_complied" action="ams_fml.fml_action" sequence="7"/>
+          <menuitem name="Report" id="modification_report" parent="modification_complied" action="ams_fml.fml_action" sequence="8"/>
+      <menuitem name="Bulletin Agency Setup" id="modification_bulletin" parent="main_menu_modification" sequence="9"/>
+
+
+
+<record model="ir.ui.menu" id="stock.menu_stock_root">
+  <field name="name">Inventory</field>
+  <field name="sequence">2</field>
+</record>
+    <!-- <menuitem name="Dashboard" id="dashboard_mainmenu" parent="inventory_main_menu" sequence="0"/> -->
+    <menuitem name="Inventory" id="main_menu_inventory" parent="stock.menu_stock_root" sequence="1"/>
+      <menuitem name="Master Part List" id="inventory_airframe" parent="main_menu_inventory" action="ams_fml.fml_action" sequence="2"/>
+      <menuitem name="Inventory" id="inventory_engine" parent="main_menu_inventory" action="ams_fml.fml_action" sequence="3"/>
+      <menuitem name="Component Serial Number" id="inventory_component" parent="main_menu_inventory" action="ams_fml.fml_action" sequence="4"/>
+      <menuitem name="Component History" id="inventory_history" parent="main_menu_inventory" action="ams_fml.fml_action" sequence="5"/>
+      <menuitem name="Vendors" id="inventory_vendors" parent="main_menu_inventory" action="ams_fml.fml_action" sequence="6"/>
+      <menuitem name="Data Import" id="inventory_data" parent="main_menu_inventory" action="ams_fml.fml_action" sequence="7"/>
+      <menuitem name="Tools Calibration" id="inventory_tool" parent="main_menu_inventory" action="ams_fml.fml_action" sequence="8"/>
+
+
+<menuitem name="Work Order" id="workorder_main_menu" sequence="3"/>
+    <!-- <menuitem name="Dashboard" id="dashboard_mainmenu" parent="workorder_main_menu" sequence="0"/> -->
+    <menuitem name="Work Order" id="main_menu_workorder" parent="workorder_main_menu" sequence="1"/>
+      <menuitem name="Work Order" id="workorder_workorder" parent="main_menu_workorder"  action="ams_fml.fml_action" sequence="2"/>
+      <menuitem name="Work Task Layout" id="workorder_worktasklayout" parent="main_menu_workorder"  action="ams_fml.fml_action" sequence="3"/>
+      <menuitem name="Inventory Request" id="workorder_inventory" parent="main_menu_workorder"  action="ams_fml.fml_action" sequence="4"/>
+
+<menuitem name="Planning" id="planing_main_menu" sequence="4"/>
+    <!-- <menuitem name="Dashboard" id="dashboard_mainmenu" parent="planing_main_menu" sequence="0"/> -->
+    <menuitem name="Planning" id="main_menu_planing" parent="planing_main_menu"  action="ams_fml.fml_action" sequence="1"/>
+      <menuitem name="Maintenance Planning" id="planing_maintenance" parent="main_menu_planing"  action="ams_fml.fml_action" sequence="2"/>
+      <menuitem name="Timeline" id="planing_timeline" parent="main_menu_planing"  action="ams_fml.fml_action" sequence="3"/>
+      <menuitem name="Budget Planning" id="planing_budgetplan" parent="main_menu_planing"  action="ams_fml.fml_action" sequence="4"/>
+
+
+<menuitem name="Flight Maintenance" id="flightmaintenance_mainmenu" sequence="5"/>
+    <!-- <menuitem name="Dashboard" id="dashboard_mainmenu" parent="flightmaintenance_mainmenu" sequence="0"/> -->
+    <menuitem name="Flight Maintenance" id="main_menu_flightmaintenance" parent="flightmaintenance_mainmenu" sequence="1"/>
+      <menuitem name="Discrepencies Log" id="flightmaintenance_dis" parent="main_menu_flightmaintenance" action="ams_fml.fml_action" sequence="2"/>
+      <menuitem name="Corrective Action" id="flightmaintenance_cor" parent="main_menu_flightmaintenance" action="ams_fml.fml_action" sequence="3"/>
+      <menuitem name="MEL" id="flightmaintenance_mel" parent="main_menu_flightmaintenance" action="ams_fml.fml_action" sequence="4"/>
+      <menuitem name="Short Term Escalation" id="flightmaintenance_short" parent="main_menu_flightmaintenance" action="ams_fml.fml_action" sequence="5"/>
+
+<menuitem name="Training" id="training_main_menu" sequence="6"/>
+    <menuitem name="Training" id="main_menu_training" parent="training_main_menu" sequence="1"/>
+      <menuitem name="Training" id="training_training" parent="main_menu_training" action="ams_fml.fml_action" sequence="1"/>
+
+<menuitem name="Settings" id="setting_main_menu" sequence="7"/>
+    <!-- <menuitem name="Dashboard" id="dashboard_mainmenu" parent="setting_main_menu" sequence="0"/> -->
+    <menuitem name="Settings" id="main_menu_setting" parent="setting_main_menu" sequence="1"/>
+      <menuitem name="ATA Definition" id="setting_atadef" parent="main_menu_setting" action="ams_fml.fml_action" sequence="1"/>
+      <menuitem name="Base Operation" id="setting_baseoperation" parent="main_menu_setting" action="ams_fml.fml_action" sequence="2"/>
+      <menuitem name="Area" id="setting_area" parent="main_menu_setting" action="ams_fml.fml_action" sequence="3"/>
+      <menuitem name="Bulletin Agency Setup" id="setting_bulletin" parent="main_menu_setting" action="ams_fml.fml_action" sequence="4"/>
+      <menuitem name="Set Warning Time" id="setting_settime" parent="main_menu_setting" action="ams_fml.fml_action" sequence="5"/>
+      <menuitem name="Inventory Location" id="setting_inventory" parent="main_menu_setting" action="ams_fml.fml_action" sequence="6"/>
+
+
+<menuitem name="Report" id="report_main_menu" sequence="8"/>
+    <!-- <menuitem name="Dashboard" id="dashboard_mainmenu" parent="report_main_menu" sequence="0"/> -->
+    <menuitem name="Report" id="main_menu_report" parent="report_main_menu" sequence="1"/>
+      <menuitem name="Maintenance Due Report" id="report_maintenance" parent="main_menu_report" action="ams_fml.fml_action" sequence="2"/>
+      <menuitem name="Aircraft Data / Spesification" id="report_aircraft" parent="main_menu_report" action="ams_fml.fml_action" sequence="3"/>
+      <menuitem name="Aircraft Status" id="report_status" parent="main_menu_report" action="ams_fml.fml_action" sequence="4"/>
+      <menuitem name="Maintenance Tracking Report" id="report_tracking" parent="main_menu_report" action="ams_fml.fml_action" sequence="5"/>
+      <menuitem name="Fleetwide Report" id="report_fleet" parent="main_menu_report" action="ams_fml.fml_action" sequence="6"/>
+      <menuitem name="Part Removal Report" id="report_part" parent="main_menu_report" action="ams_fml.fml_action" sequence="7"/>
+      <menuitem name="Bulletin Report" id="report_bulletin" parent="main_menu_report" action="ams_fml.fml_action" sequence="8"/>
+      <menuitem name="Inspection Report" id="report_inspection" parent="main_menu_report" action="ams_fml.fml_action" sequence="9"/>
+      <menuitem name="Inventory Request Report" id="report_inventory" parent="main_menu_report" action="ams_fml.fml_action" sequence="10"/>
+      <menuitem name="Reserve Value" id="report_reserve" parent="main_menu_report" action="ams_fml.fml_action" sequence="11"/>
+      <menuitem name="Premature Failures" id="report_premature" parent="main_menu_report" action="ams_fml.fml_action" sequence="12"/>
+      <menuitem name="Repetitive Discripencies" id="report_repetitive" parent="main_menu_report" action="ams_fml.fml_action" sequence="13"/>
+      <menuitem name="Tool List" id="report_toollist" parent="main_menu_report" action="ams_fml.fml_action" sequence="14"/>
+      <menuitem name="Tools Calibration Report" id="report_calibration" parent="main_menu_report" action="ams_fml.fml_action" sequence="15"/>
+
+
+<menuitem name="Publication" id="publication_main_menu" sequence="9"/>
+    <!-- <menuitem name="Dashboard" id="dashboard_mainmenu" parent="report_main_menu" sequence="0"/> -->
+    <menuitem name="Report" id="main_menu_publication" parent="publication_main_menu" sequence="1"/>
+      <menuitem name="Aircraft Maintenance Program" id="publication_maintenance" parent="main_menu_publication" action="ams_fml.fml_action" sequence="2"/>
+          <menuitem name="CAMP" id="publication_camp" parent="publication_maintenance" action="ams_fml.fml_action" sequence="3"/>
+          <menuitem name="Checklist" id="publication_check" parent="publication_maintenance" action="ams_fml.fml_action" sequence="4"/>
+      <menuitem name="Technical Publication" id="publication_tech" parent="main_menu_publication" action="ams_fml.fml_action" sequence="5"/>
+
+
+
+  </data>
+
+  <data>
+    <menuitem name="Report" id="maintenance_reeport" parent="maintenance.menu_maintenance_title" action="ams_base.fleet_bel_action" sequence="999"/>
+        <menuitem name="Verify Flight Times" id="maintenance_vft" parent="maintenance_reeport" action="ams_base.verify_flight_action" sequence="999"/>
+        <menuitem name="Manual" id="maintenance_manual" parent="maintenance_reeport" action="ams_base.verify_manual_action" sequence="999"/>
+  </data>
+
+</odoo>

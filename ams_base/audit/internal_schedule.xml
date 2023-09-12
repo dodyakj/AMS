@@ -1,0 +1,42 @@
+<odoo>
+  <data>
+    
+    <record id='internal_audit_schedule_tree' model='ir.ui.view'>
+              <field name="name">internal.audit.schedule.tree</field>
+              <field name="model">internal.audit.schedule</field>
+              <field name="arch" type="xml">
+                  <tree string="Schedule">
+                    <field name='name'/>
+                    <field name='from_datetime'/> 
+                    <field name='to_datetime'/>
+                    <field name='user_id'/>
+                  </tree>
+              </field>
+      </record>
+
+     <record id='internal_audit_schedule_form' model='ir.ui.view'>
+          <field name="name">internal.audit.schedule.custom</field>
+          <field name="model">internal.audit.schedule</field>
+          <field name="arch" type="xml">
+            <calendar string="Schedule" date_start="from_datetime" date_stop="to_datetime" color="user_id" avatar_model="res.users" display="[name]" mode="month">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="from_datetime"/>
+                <field name="to_datetime"/>
+            </calendar>
+          </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="internal_audit_schedule_action">
+      <field name="name">Schedule</field>
+      <field name="res_model">internal.audit.schedule</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">calendar</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Schedule
+            </p>
+        </field>
+    </record>
+  </data>
+</odoo>

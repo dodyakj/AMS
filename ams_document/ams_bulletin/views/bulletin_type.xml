@@ -1,0 +1,30 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="ams_bulletin_type_tree">
+      <field name="name">bulletin.type.tree</field>
+      <field name="model">bulletin.type</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="desc"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="ams_bulletin_type_form">
+        <field name="name">bulletin.type.form</field>
+        <field name="model">bulletin.type</field>
+        <field name="arch" type="xml">
+            <form string="Bulletin Type Setup">
+                <sheet string="Bulletin Type Setup">
+                    <group col="2">
+                        <field name="name" colspan="2"/>
+                        <field name="desc"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+  </data>
+</odoo>

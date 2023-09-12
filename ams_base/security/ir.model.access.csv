@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_airframe_managers_product_template_perm,product.template,product.model_product_template,ams_security.group_airframe_managers,1,1,1,1
+access_airframe_managers_product_product_perm,product.product,ams_inventory.model_product_product,ams_security.group_airframe_managers,1,1,1,1
+access_airframe_manages_stock_production_document_lot,stock.production.lot_document,ams_base.model_stock_production_lot_document,ams_security.group_airframe_managers,1,1,1,1
